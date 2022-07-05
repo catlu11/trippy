@@ -1,0 +1,602 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 55;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		F0F335752874A0E700470507 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F0F335742874A0E700470507 /* AppDelegate.m */; };
+		F0F335782874A0E700470507 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F0F335772874A0E700470507 /* SceneDelegate.m */; };
+		F0F3357B2874A0E700470507 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F0F3357A2874A0E700470507 /* ViewController.m */; };
+		F0F3357E2874A0E700470507 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F0F3357C2874A0E700470507 /* Main.storyboard */; };
+		F0F335802874A0EB00470507 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F0F3357F2874A0EB00470507 /* Assets.xcassets */; };
+		F0F335832874A0EB00470507 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F0F335812874A0EB00470507 /* LaunchScreen.storyboard */; };
+		F0F335862874A0EB00470507 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F0F335852874A0EB00470507 /* main.m */; };
+		F0F335902874A0EB00470507 /* TrippyTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F0F3358F2874A0EB00470507 /* TrippyTests.m */; };
+		F0F3359A2874A0EB00470507 /* TrippyUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = F0F335992874A0EB00470507 /* TrippyUITests.m */; };
+		F0F3359C2874A0EB00470507 /* TrippyUITestsLaunchTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F0F3359B2874A0EB00470507 /* TrippyUITestsLaunchTests.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		F0F3358C2874A0EB00470507 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F0F335682874A0E700470507 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F0F3356F2874A0E700470507;
+			remoteInfo = Trippy;
+		};
+		F0F335962874A0EB00470507 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F0F335682874A0E700470507 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F0F3356F2874A0E700470507;
+			remoteInfo = Trippy;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		F0F335702874A0E700470507 /* Trippy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Trippy.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		F0F335732874A0E700470507 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		F0F335742874A0E700470507 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		F0F335762874A0E700470507 /* SceneDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SceneDelegate.h; sourceTree = "<group>"; };
+		F0F335772874A0E700470507 /* SceneDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SceneDelegate.m; sourceTree = "<group>"; };
+		F0F335792874A0E700470507 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		F0F3357A2874A0E700470507 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		F0F3357D2874A0E700470507 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		F0F3357F2874A0EB00470507 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		F0F335822874A0EB00470507 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		F0F335842874A0EB00470507 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F0F335852874A0EB00470507 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		F0F3358B2874A0EB00470507 /* TrippyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TrippyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		F0F3358F2874A0EB00470507 /* TrippyTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TrippyTests.m; sourceTree = "<group>"; };
+		F0F335952874A0EB00470507 /* TrippyUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TrippyUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		F0F335992874A0EB00470507 /* TrippyUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TrippyUITests.m; sourceTree = "<group>"; };
+		F0F3359B2874A0EB00470507 /* TrippyUITestsLaunchTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TrippyUITestsLaunchTests.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		F0F3356D2874A0E700470507 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F0F335882874A0EB00470507 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F0F335922874A0EB00470507 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		F0F335672874A0E700470507 = {
+			isa = PBXGroup;
+			children = (
+				F0F335722874A0E700470507 /* Trippy */,
+				F0F3358E2874A0EB00470507 /* TrippyTests */,
+				F0F335982874A0EB00470507 /* TrippyUITests */,
+				F0F335712874A0E700470507 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		F0F335712874A0E700470507 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F0F335702874A0E700470507 /* Trippy.app */,
+				F0F3358B2874A0EB00470507 /* TrippyTests.xctest */,
+				F0F335952874A0EB00470507 /* TrippyUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		F0F335722874A0E700470507 /* Trippy */ = {
+			isa = PBXGroup;
+			children = (
+				F0F335732874A0E700470507 /* AppDelegate.h */,
+				F0F335742874A0E700470507 /* AppDelegate.m */,
+				F0F335762874A0E700470507 /* SceneDelegate.h */,
+				F0F335772874A0E700470507 /* SceneDelegate.m */,
+				F0F335792874A0E700470507 /* ViewController.h */,
+				F0F3357A2874A0E700470507 /* ViewController.m */,
+				F0F3357C2874A0E700470507 /* Main.storyboard */,
+				F0F3357F2874A0EB00470507 /* Assets.xcassets */,
+				F0F335812874A0EB00470507 /* LaunchScreen.storyboard */,
+				F0F335842874A0EB00470507 /* Info.plist */,
+				F0F335852874A0EB00470507 /* main.m */,
+			);
+			path = Trippy;
+			sourceTree = "<group>";
+		};
+		F0F3358E2874A0EB00470507 /* TrippyTests */ = {
+			isa = PBXGroup;
+			children = (
+				F0F3358F2874A0EB00470507 /* TrippyTests.m */,
+			);
+			path = TrippyTests;
+			sourceTree = "<group>";
+		};
+		F0F335982874A0EB00470507 /* TrippyUITests */ = {
+			isa = PBXGroup;
+			children = (
+				F0F335992874A0EB00470507 /* TrippyUITests.m */,
+				F0F3359B2874A0EB00470507 /* TrippyUITestsLaunchTests.m */,
+			);
+			path = TrippyUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		F0F3356F2874A0E700470507 /* Trippy */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F0F3359F2874A0EB00470507 /* Build configuration list for PBXNativeTarget "Trippy" */;
+			buildPhases = (
+				F0F3356C2874A0E700470507 /* Sources */,
+				F0F3356D2874A0E700470507 /* Frameworks */,
+				F0F3356E2874A0E700470507 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Trippy;
+			productName = Trippy;
+			productReference = F0F335702874A0E700470507 /* Trippy.app */;
+			productType = "com.apple.product-type.application";
+		};
+		F0F3358A2874A0EB00470507 /* TrippyTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F0F335A22874A0EB00470507 /* Build configuration list for PBXNativeTarget "TrippyTests" */;
+			buildPhases = (
+				F0F335872874A0EB00470507 /* Sources */,
+				F0F335882874A0EB00470507 /* Frameworks */,
+				F0F335892874A0EB00470507 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				F0F3358D2874A0EB00470507 /* PBXTargetDependency */,
+			);
+			name = TrippyTests;
+			productName = TrippyTests;
+			productReference = F0F3358B2874A0EB00470507 /* TrippyTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		F0F335942874A0EB00470507 /* TrippyUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F0F335A52874A0EB00470507 /* Build configuration list for PBXNativeTarget "TrippyUITests" */;
+			buildPhases = (
+				F0F335912874A0EB00470507 /* Sources */,
+				F0F335922874A0EB00470507 /* Frameworks */,
+				F0F335932874A0EB00470507 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				F0F335972874A0EB00470507 /* PBXTargetDependency */,
+			);
+			name = TrippyUITests;
+			productName = TrippyUITests;
+			productReference = F0F335952874A0EB00470507 /* TrippyUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		F0F335682874A0E700470507 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastUpgradeCheck = 1340;
+				TargetAttributes = {
+					F0F3356F2874A0E700470507 = {
+						CreatedOnToolsVersion = 13.4.1;
+					};
+					F0F3358A2874A0EB00470507 = {
+						CreatedOnToolsVersion = 13.4.1;
+						TestTargetID = F0F3356F2874A0E700470507;
+					};
+					F0F335942874A0EB00470507 = {
+						CreatedOnToolsVersion = 13.4.1;
+						TestTargetID = F0F3356F2874A0E700470507;
+					};
+				};
+			};
+			buildConfigurationList = F0F3356B2874A0E700470507 /* Build configuration list for PBXProject "Trippy" */;
+			compatibilityVersion = "Xcode 13.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = F0F335672874A0E700470507;
+			productRefGroup = F0F335712874A0E700470507 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				F0F3356F2874A0E700470507 /* Trippy */,
+				F0F3358A2874A0EB00470507 /* TrippyTests */,
+				F0F335942874A0EB00470507 /* TrippyUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		F0F3356E2874A0E700470507 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F0F335832874A0EB00470507 /* LaunchScreen.storyboard in Resources */,
+				F0F335802874A0EB00470507 /* Assets.xcassets in Resources */,
+				F0F3357E2874A0E700470507 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F0F335892874A0EB00470507 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F0F335932874A0EB00470507 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		F0F3356C2874A0E700470507 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F0F3357B2874A0E700470507 /* ViewController.m in Sources */,
+				F0F335752874A0E700470507 /* AppDelegate.m in Sources */,
+				F0F335862874A0EB00470507 /* main.m in Sources */,
+				F0F335782874A0E700470507 /* SceneDelegate.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F0F335872874A0EB00470507 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F0F335902874A0EB00470507 /* TrippyTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F0F335912874A0EB00470507 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F0F3359C2874A0EB00470507 /* TrippyUITestsLaunchTests.m in Sources */,
+				F0F3359A2874A0EB00470507 /* TrippyUITests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		F0F3358D2874A0EB00470507 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F0F3356F2874A0E700470507 /* Trippy */;
+			targetProxy = F0F3358C2874A0EB00470507 /* PBXContainerItemProxy */;
+		};
+		F0F335972874A0EB00470507 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F0F3356F2874A0E700470507 /* Trippy */;
+			targetProxy = F0F335962874A0EB00470507 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		F0F3357C2874A0E700470507 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F0F3357D2874A0E700470507 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		F0F335812874A0EB00470507 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F0F335822874A0EB00470507 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		F0F3359D2874A0EB00470507 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		F0F3359E2874A0EB00470507 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		F0F335A02874A0EB00470507 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = Z5SZ8N67M2;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Trippy/Info.plist;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.codepath.czlu.Trippy;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		F0F335A12874A0EB00470507 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = Z5SZ8N67M2;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Trippy/Info.plist;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.codepath.czlu.Trippy;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		F0F335A32874A0EB00470507 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = Z5SZ8N67M2;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.codepath.czlu.TrippyTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Trippy.app/Trippy";
+			};
+			name = Debug;
+		};
+		F0F335A42874A0EB00470507 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = Z5SZ8N67M2;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.codepath.czlu.TrippyTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Trippy.app/Trippy";
+			};
+			name = Release;
+		};
+		F0F335A62874A0EB00470507 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = Z5SZ8N67M2;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.codepath.czlu.TrippyUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Trippy;
+			};
+			name = Debug;
+		};
+		F0F335A72874A0EB00470507 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = Z5SZ8N67M2;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.codepath.czlu.TrippyUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Trippy;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		F0F3356B2874A0E700470507 /* Build configuration list for PBXProject "Trippy" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F0F3359D2874A0EB00470507 /* Debug */,
+				F0F3359E2874A0EB00470507 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F0F3359F2874A0EB00470507 /* Build configuration list for PBXNativeTarget "Trippy" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F0F335A02874A0EB00470507 /* Debug */,
+				F0F335A12874A0EB00470507 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F0F335A22874A0EB00470507 /* Build configuration list for PBXNativeTarget "TrippyTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F0F335A32874A0EB00470507 /* Debug */,
+				F0F335A42874A0EB00470507 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F0F335A52874A0EB00470507 /* Build configuration list for PBXNativeTarget "TrippyUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F0F335A62874A0EB00470507 /* Debug */,
+				F0F335A72874A0EB00470507 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = F0F335682874A0E700470507 /* Project object */;
+}
