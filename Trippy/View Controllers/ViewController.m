@@ -47,6 +47,10 @@
     // TODO: Implement collections dropdown
 }
 
+- (IBAction)tapAdd:(id)sender {
+    // TODO: Add to collection and close view
+}
+
 #pragma mark - GMSAutocompleteTableDataSourceDelegate
 
 -(void)didUpdateAutocompletePredictionsForTableDataSource:(GMSAutocompleteTableDataSource *)tableDataSource {
