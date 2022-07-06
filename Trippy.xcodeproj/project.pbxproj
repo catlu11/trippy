@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1E2165B2D5F014BB051A732B /* Pods_Trippy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10168E399602D24025083105 /* Pods_Trippy.framework */; };
+		39635EBD5AADFDA072C66B6B /* Pods_Trippy_TrippyUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E7784A9A894059B22B18E2E /* Pods_Trippy_TrippyUITests.framework */; };
+		C975C9D09D83C46EC203BCB6 /* Pods_TrippyTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0EC8446A41048D3C116B11EB /* Pods_TrippyTests.framework */; };
 		F0F335752874A0E700470507 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F0F335742874A0E700470507 /* AppDelegate.m */; };
 		F0F335782874A0E700470507 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F0F335772874A0E700470507 /* SceneDelegate.m */; };
 		F0F3357B2874A0E700470507 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F0F3357A2874A0E700470507 /* ViewController.m */; };
@@ -17,6 +20,9 @@
 		F0F335902874A0EB00470507 /* TrippyTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F0F3358F2874A0EB00470507 /* TrippyTests.m */; };
 		F0F3359A2874A0EB00470507 /* TrippyUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = F0F335992874A0EB00470507 /* TrippyUITests.m */; };
 		F0F3359C2874A0EB00470507 /* TrippyUITestsLaunchTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F0F3359B2874A0EB00470507 /* TrippyUITestsLaunchTests.m */; };
+		F0F335AE2875F0B400470507 /* SelectableMap.m in Sources */ = {isa = PBXBuildFile; fileRef = F0F335AD2875F0B400470507 /* SelectableMap.m */; };
+		F0F335B32875F18700470507 /* Location.m in Sources */ = {isa = PBXBuildFile; fileRef = F0F335B22875F18700470507 /* Location.m */; };
+		F0F335B72875F2E100470507 /* MapUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = F0F335B62875F2E100470507 /* MapUtils.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,6 +43,15 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0EC8446A41048D3C116B11EB /* Pods_TrippyTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TrippyTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		10168E399602D24025083105 /* Pods_Trippy.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Trippy.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		21341CAF207ECB6E4069795F /* Pods-TrippyTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TrippyTests.release.xcconfig"; path = "Target Support Files/Pods-TrippyTests/Pods-TrippyTests.release.xcconfig"; sourceTree = "<group>"; };
+		2A13D49510DDF03DBABB456F /* Pods-Trippy-TrippyUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Trippy-TrippyUITests.debug.xcconfig"; path = "Target Support Files/Pods-Trippy-TrippyUITests/Pods-Trippy-TrippyUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		4AAB8C2C2D2733EEBE11455F /* Pods-Trippy-TrippyUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Trippy-TrippyUITests.release.xcconfig"; path = "Target Support Files/Pods-Trippy-TrippyUITests/Pods-Trippy-TrippyUITests.release.xcconfig"; sourceTree = "<group>"; };
+		8E7784A9A894059B22B18E2E /* Pods_Trippy_TrippyUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Trippy_TrippyUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B8D3E6DA2519CA6D60DBFF53 /* Pods-Trippy.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Trippy.debug.xcconfig"; path = "Target Support Files/Pods-Trippy/Pods-Trippy.debug.xcconfig"; sourceTree = "<group>"; };
+		C453D7B45B0BB1D11B0EE346 /* Pods-Trippy.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Trippy.release.xcconfig"; path = "Target Support Files/Pods-Trippy/Pods-Trippy.release.xcconfig"; sourceTree = "<group>"; };
+		CCA5DB2AB9E0DEA96B5E2177 /* Pods-TrippyTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TrippyTests.debug.xcconfig"; path = "Target Support Files/Pods-TrippyTests/Pods-TrippyTests.debug.xcconfig"; sourceTree = "<group>"; };
 		F0F335702874A0E700470507 /* Trippy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Trippy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F0F335732874A0E700470507 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		F0F335742874A0E700470507 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -54,6 +69,12 @@
 		F0F335952874A0EB00470507 /* TrippyUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TrippyUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F0F335992874A0EB00470507 /* TrippyUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TrippyUITests.m; sourceTree = "<group>"; };
 		F0F3359B2874A0EB00470507 /* TrippyUITestsLaunchTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TrippyUITestsLaunchTests.m; sourceTree = "<group>"; };
+		F0F335AC2875F0B400470507 /* SelectableMap.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SelectableMap.h; sourceTree = "<group>"; };
+		F0F335AD2875F0B400470507 /* SelectableMap.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SelectableMap.m; sourceTree = "<group>"; };
+		F0F335B12875F18700470507 /* Location.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Location.h; sourceTree = "<group>"; };
+		F0F335B22875F18700470507 /* Location.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Location.m; sourceTree = "<group>"; };
+		F0F335B52875F2E100470507 /* MapUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MapUtils.h; sourceTree = "<group>"; };
+		F0F335B62875F2E100470507 /* MapUtils.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MapUtils.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,6 +82,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1E2165B2D5F014BB051A732B /* Pods_Trippy.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -68,6 +90,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C975C9D09D83C46EC203BCB6 /* Pods_TrippyTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -75,12 +98,36 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				39635EBD5AADFDA072C66B6B /* Pods_Trippy_TrippyUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0EB03A504895C37D109920AC /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				10168E399602D24025083105 /* Pods_Trippy.framework */,
+				8E7784A9A894059B22B18E2E /* Pods_Trippy_TrippyUITests.framework */,
+				0EC8446A41048D3C116B11EB /* Pods_TrippyTests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		978D6A90CDC7054F7DED69E4 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				B8D3E6DA2519CA6D60DBFF53 /* Pods-Trippy.debug.xcconfig */,
+				C453D7B45B0BB1D11B0EE346 /* Pods-Trippy.release.xcconfig */,
+				2A13D49510DDF03DBABB456F /* Pods-Trippy-TrippyUITests.debug.xcconfig */,
+				4AAB8C2C2D2733EEBE11455F /* Pods-Trippy-TrippyUITests.release.xcconfig */,
+				CCA5DB2AB9E0DEA96B5E2177 /* Pods-TrippyTests.debug.xcconfig */,
+				21341CAF207ECB6E4069795F /* Pods-TrippyTests.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		F0F335672874A0E700470507 = {
 			isa = PBXGroup;
 			children = (
@@ -88,6 +135,8 @@
 				F0F3358E2874A0EB00470507 /* TrippyTests */,
 				F0F335982874A0EB00470507 /* TrippyUITests */,
 				F0F335712874A0E700470507 /* Products */,
+				978D6A90CDC7054F7DED69E4 /* Pods */,
+				0EB03A504895C37D109920AC /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -104,12 +153,15 @@
 		F0F335722874A0E700470507 /* Trippy */ = {
 			isa = PBXGroup;
 			children = (
+				F0F335B42875F2BD00470507 /* Utils */,
+				F0F335AB2875F08D00470507 /* API */,
+				F0F335A92875F07300470507 /* View Controllers */,
+				F0F335A82875F06900470507 /* Views */,
+				F0F335AA2875F08500470507 /* Models */,
 				F0F335732874A0E700470507 /* AppDelegate.h */,
 				F0F335742874A0E700470507 /* AppDelegate.m */,
 				F0F335762874A0E700470507 /* SceneDelegate.h */,
 				F0F335772874A0E700470507 /* SceneDelegate.m */,
-				F0F335792874A0E700470507 /* ViewController.h */,
-				F0F3357A2874A0E700470507 /* ViewController.m */,
 				F0F3357C2874A0E700470507 /* Main.storyboard */,
 				F0F3357F2874A0EB00470507 /* Assets.xcassets */,
 				F0F335812874A0EB00470507 /* LaunchScreen.storyboard */,
@@ -136,6 +188,50 @@
 			path = TrippyUITests;
 			sourceTree = "<group>";
 		};
+		F0F335A82875F06900470507 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				F0F335AC2875F0B400470507 /* SelectableMap.h */,
+				F0F335AD2875F0B400470507 /* SelectableMap.m */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		F0F335A92875F07300470507 /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				F0F335792874A0E700470507 /* ViewController.h */,
+				F0F3357A2874A0E700470507 /* ViewController.m */,
+			);
+			path = "View Controllers";
+			sourceTree = "<group>";
+		};
+		F0F335AA2875F08500470507 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				F0F335B12875F18700470507 /* Location.h */,
+				F0F335B22875F18700470507 /* Location.m */,
+			);
+			name = Models;
+			path = ..;
+			sourceTree = "<group>";
+		};
+		F0F335AB2875F08D00470507 /* API */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = API;
+			sourceTree = "<group>";
+		};
+		F0F335B42875F2BD00470507 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				F0F335B52875F2E100470507 /* MapUtils.h */,
+				F0F335B62875F2E100470507 /* MapUtils.m */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -143,9 +239,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = F0F3359F2874A0EB00470507 /* Build configuration list for PBXNativeTarget "Trippy" */;
 			buildPhases = (
+				B537E7CDA10A5A5375CBB1B1 /* [CP] Check Pods Manifest.lock */,
 				F0F3356C2874A0E700470507 /* Sources */,
 				F0F3356D2874A0E700470507 /* Frameworks */,
 				F0F3356E2874A0E700470507 /* Resources */,
+				BB65531D2EA9A338829A7822 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -160,6 +258,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = F0F335A22874A0EB00470507 /* Build configuration list for PBXNativeTarget "TrippyTests" */;
 			buildPhases = (
+				23F7B8E7C48B2158A2AF1B16 /* [CP] Check Pods Manifest.lock */,
 				F0F335872874A0EB00470507 /* Sources */,
 				F0F335882874A0EB00470507 /* Frameworks */,
 				F0F335892874A0EB00470507 /* Resources */,
@@ -178,9 +277,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = F0F335A52874A0EB00470507 /* Build configuration list for PBXNativeTarget "TrippyUITests" */;
 			buildPhases = (
+				6AE3A40332FC33E9E1F6D24E /* [CP] Check Pods Manifest.lock */,
 				F0F335912874A0EB00470507 /* Sources */,
 				F0F335922874A0EB00470507 /* Frameworks */,
 				F0F335932874A0EB00470507 /* Resources */,
+				ADFF6EB938B042EA126F5A26 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -261,6 +362,109 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		23F7B8E7C48B2158A2AF1B16 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-TrippyTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		6AE3A40332FC33E9E1F6D24E /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Trippy-TrippyUITests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		ADFF6EB938B042EA126F5A26 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Trippy-TrippyUITests/Pods-Trippy-TrippyUITests-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Trippy-TrippyUITests/Pods-Trippy-TrippyUITests-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Trippy-TrippyUITests/Pods-Trippy-TrippyUITests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B537E7CDA10A5A5375CBB1B1 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Trippy-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		BB65531D2EA9A338829A7822 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Trippy/Pods-Trippy-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Trippy/Pods-Trippy-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Trippy/Pods-Trippy-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		F0F3356C2874A0E700470507 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -268,7 +472,10 @@
 			files = (
 				F0F3357B2874A0E700470507 /* ViewController.m in Sources */,
 				F0F335752874A0E700470507 /* AppDelegate.m in Sources */,
+				F0F335AE2875F0B400470507 /* SelectableMap.m in Sources */,
+				F0F335B72875F2E100470507 /* MapUtils.m in Sources */,
 				F0F335862874A0EB00470507 /* main.m in Sources */,
+				F0F335B32875F18700470507 /* Location.m in Sources */,
 				F0F335782874A0E700470507 /* SceneDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -437,12 +644,14 @@
 		};
 		F0F335A02874A0EB00470507 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B8D3E6DA2519CA6D60DBFF53 /* Pods-Trippy.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = Z5SZ8N67M2;
+				EXCLUDED_ARCHS = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Trippy/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -455,6 +664,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.codepath.czlu.Trippy;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -464,12 +674,14 @@
 		};
 		F0F335A12874A0EB00470507 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C453D7B45B0BB1D11B0EE346 /* Pods-Trippy.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = Z5SZ8N67M2;
+				EXCLUDED_ARCHS = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Trippy/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -482,6 +694,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.codepath.czlu.Trippy;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -491,6 +704,7 @@
 		};
 		F0F335A32874A0EB00470507 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = CCA5DB2AB9E0DEA96B5E2177 /* Pods-TrippyTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
@@ -509,6 +723,7 @@
 		};
 		F0F335A42874A0EB00470507 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 21341CAF207ECB6E4069795F /* Pods-TrippyTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
@@ -527,6 +742,7 @@
 		};
 		F0F335A62874A0EB00470507 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2A13D49510DDF03DBABB456F /* Pods-Trippy-TrippyUITests.debug.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -543,6 +759,7 @@
 		};
 		F0F335A72874A0EB00470507 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4AAB8C2C2D2733EEBE11455F /* Pods-Trippy-TrippyUITests.release.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
