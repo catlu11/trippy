@@ -78,6 +78,7 @@
         }
         else {
             Location *placeLoc = [[Location alloc] initWithPlace:result];
+            [self.mapView clearMarkers];
             [self.mapView addMarker:placeLoc];
             [self.mapView setCameraToLoc:placeLoc.coord animate:YES];
         }

@@ -13,6 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface SelectableMap : UIView
 - (void) initWithCenter:(CLLocationCoordinate2D)location;
 - (void) addMarker:(Location *)location;
+- (void) clearMarkers;
 - (void) setCameraToLoc:(CLLocationCoordinate2D)location animate:(BOOL)animate;
 - (CLLocationCoordinate2D) getCenter;
 @end

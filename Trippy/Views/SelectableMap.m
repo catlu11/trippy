@@ -13,6 +13,7 @@
 
 @interface SelectableMap ()
 @property (strong, nonatomic) GMSMapView *mapView;
+@property (strong, nonatomic) NSMutableArray *markersArray;
 @end
 
 @implementation SelectableMap
@@ -36,6 +37,15 @@
     marker.title = location.title;
     marker.snippet = location.snippet;
     marker.map = self.mapView;
+    
+    [self.markersArray addObject:marker];
+}
+
+- (void) clearMarkers {
+    for(GMSMarker *marker in self.markersArray) {
+        marker.map = nil;
+    }
+    self.markersArray = [[NSMutableArray alloc] init];
 }
 
 - (void) setCameraToLoc:(CLLocationCoordinate2D)location animate:(BOOL)animate {
