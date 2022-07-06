@@ -17,7 +17,7 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    NSString *path = [[NSBundle mainBundle] pathForResource:@"Info" ofType:@"plist"];
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"Keys" ofType:@"plist"];
     NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile:path];
     
     [GMSServices provideAPIKey:dict[@"GMapsKey"]];

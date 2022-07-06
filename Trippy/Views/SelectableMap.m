@@ -7,6 +7,7 @@
 
 #import "SelectableMap.h"
 #import "Location.h"
+#import "MapUtils.h"
 @import GoogleMaps;
 @import GooglePlaces;
 
@@ -16,10 +17,10 @@
 
 @implementation SelectableMap
 
-- (void) initWithCenter:(Location *)location {
+- (void) initWithCenter:(CLLocationCoordinate2D)location {
     GMSCameraPosition *camera = [GMSCameraPosition cameraWithLatitude:location.latitude
                                                           longitude:location.longitude
-                                                               zoom:16];
+                                                               zoom:DEFAULT_ZOOM];
     GMSMapView *map = [GMSMapView mapWithFrame:self.frame camera:camera];
     map.myLocationEnabled = YES;
     
@@ -31,10 +32,25 @@
 - (void) addMarker:(Location *)location {
     GMSMarker *marker = [[GMSMarker alloc] init];
 
-    marker.position = CLLocationCoordinate2DMake(location.latitude, location.longitude);
+    marker.position = location.coord;
     marker.title = location.title;
     marker.snippet = location.snippet;
     marker.map = self.mapView;
+}
+
+- (void) setCameraToLoc:(CLLocationCoordinate2D)location animate:(BOOL)animate {
+    GMSCameraPosition *pos = [GMSCameraPosition cameraWithLatitude:location.latitude longitude:location.longitude zoom:DEFAULT_ZOOM];
+    if(animate) {
+        [self.mapView animateToCameraPosition:pos];
+    }
+    else {
+        [self.mapView setCamera:pos];
+    }
+}
+
+- (CLLocationCoordinate2D) getCenter {
+    CGPoint point = self.mapView.center;
+    return [self.mapView.projection coordinateForPoint:point];
 }
 
 @end

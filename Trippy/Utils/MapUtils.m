@@ -6,6 +6,7 @@
 //
 
 #import "MapUtils.h"
+#import "Location.h"
 @import GoogleMaps;
 @import GooglePlaces;
 

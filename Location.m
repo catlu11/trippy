@@ -6,6 +6,7 @@
 //
 
 #import "Location.h"
+@import GooglePlaces;
 
 @implementation Location
 
@@ -15,8 +16,19 @@
     if (self) {
         self.title = title;
         self.snippet = snippet;
-        self.latitude = latitude;
-        self.longitude = longitude;
+        self.coord = CLLocationCoordinate2DMake(latitude, longitude);
+    }
+    
+    return self;
+}
+
+- (instancetype) initWithPlace:(GMSPlace *)place {
+    self = [super init];
+    
+    if (self) {
+        self.title = place.name;
+        self.snippet = place.description;
+        self.coord = place.coordinate;
     }
     
     return self;

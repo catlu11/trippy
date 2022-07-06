@@ -6,13 +6,13 @@
 //
 
 #import <Foundation/Foundation.h>
-@import GoogleMaps;
-@import GooglePlaces;
 
 NS_ASSUME_NONNULL_BEGIN
 
+#define DEFAULT_ZOOM 16
+
 @interface MapUtils : NSObject
-// Util functions related to Maps platform
+
 @end
 
 NS_ASSUME_NONNULL_END

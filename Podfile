@@ -13,6 +13,7 @@ target 'Trippy' do
   #pod 'MapQuestMaps'
   pod 'GoogleMaps', '7.0.0'
   pod 'GooglePlaces', '7.0.0'
+  pod 'DropDown', '2.3.2'
 
   target 'TrippyTests' do
     inherit! :search_paths
