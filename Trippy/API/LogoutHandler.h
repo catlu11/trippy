@@ -11,7 +11,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @protocol LogoutHandlerDelegate
 - (void) logoutSuccess;
-- (void) logoutFail:(NSError *)error; // TODO: Extend for more specific error behaviors
+- (void) logoutFail:(NSError *)error; 
 @end
 
 @interface LogoutHandler : NSObject
