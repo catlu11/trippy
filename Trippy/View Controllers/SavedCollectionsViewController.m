@@ -7,25 +7,28 @@
 
 #import "SceneDelegate.h"
 #import "SavedCollectionsViewController.h"
+#import "ListTableViewController.h"
 #import "LoginViewController.h"
 #import "LogoutHandler.h"
 
 @interface SavedCollectionsViewController () <LogoutHandlerDelegate>
-@property (strong, nonatomic) LogoutHandler *handler;
+@property (strong, nonatomic) LogoutHandler *logoutHandler;
 @end
 
 @implementation SavedCollectionsViewController
 
 - (void)viewDidLoad {
+    self.listType = kCollection;
+    
     [super viewDidLoad];
     
     // Set up Parse interface
-    self.handler = [[LogoutHandler alloc] init];
-    self.handler.delegate = self;
+    self.logoutHandler = [[LogoutHandler alloc] init];
+    self.logoutHandler.delegate = self;
 }
 
 - (IBAction)tapLogout:(id)sender {
-    [self.handler logoutCurrentUser];
+    [self.logoutHandler logoutCurrentUser];
 }
 
 # pragma mark - LogoutHandlerDelegate

@@ -6,6 +6,7 @@
 //
 
 #import "Collection.h"
+#import "Parse/Parse.h"
 
 @implementation Collection
 

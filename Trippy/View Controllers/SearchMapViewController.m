@@ -8,6 +8,7 @@
 #import "SearchMapViewController.h"
 #import "SelectableMap.h"
 #import "Location.h"
+#import "ParseUtils.h"
 @import GooglePlaces;
 @import GoogleMaps;
 
@@ -77,7 +78,7 @@
             NSLog(@"An error occurred fetching place details%@", [error localizedDescription]);
         }
         else {
-            Location *placeLoc = [[Location alloc] initWithPlace:result];
+            Location *placeLoc = [[Location alloc] initWithPlace:result user:[ParseUtils getLoggedInUserId]];
             [self.mapView clearMarkers];
             [self.mapView addMarker:placeLoc];
             [self.mapView setCameraToLoc:placeLoc.coord animate:YES];

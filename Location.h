@@ -16,8 +16,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) NSString *snippet;
 @property (strong, nonatomic) NSString *userId;
 
-- (instancetype) initWithParams:(NSString *)title snippet:(NSString *)snippet latitude:(double)latitude longitude:(double)longitude;
-- (instancetype) initWithPlace:(GMSPlace *)place;
+- (instancetype) initWithParams:(NSString *)title snippet:(NSString *)snippet latitude:(double)latitude longitude:(double)longitude user:(NSString *)user;
+- (instancetype) initWithPlace:(GMSPlace *)place user:(NSString *)user;
 @end
 
 NS_ASSUME_NONNULL_END
