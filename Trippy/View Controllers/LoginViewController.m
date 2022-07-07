@@ -6,11 +6,14 @@
 //
 
 #import "LoginViewController.h"
+#import "ParseHandler.h"
 
-@interface LoginViewController ()
+@interface LoginViewController () <ParseHandlerDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *usernameField;
 @property (weak, nonatomic) IBOutlet UITextField *passwordField;
-@property (strong, nonatomic) UIAlertController *alert;
+@property (strong, nonatomic) UIAlertController *warningAlert;
+@property (strong, nonatomic) UIAlertController *registerAlert;
+@property (strong, nonatomic) ParseHandler *handler;
 @end
 
 @implementation LoginViewController
@@ -18,35 +21,72 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    // Set up Parse interface
+    self.handler = [[ParseHandler alloc] init];
+    self.handler.delegate = self;
+    
     // Set up empty field warning
-    self.alert = [UIAlertController alertControllerWithTitle:@"Warning"
+    self.warningAlert = [UIAlertController alertControllerWithTitle:@"Warning"
                                                   message:@"Cannot have empty username or password."
                                                   preferredStyle:(UIAlertControllerStyleAlert)];
     UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK"
                                              style:UIAlertActionStyleDefault
                                               handler:^(UIAlertAction * _Nonnull action) {}];
-    [self.alert addAction:okAction];
+    [self.warningAlert addAction:okAction];
+    
+    // Set up registration alert
+    self.registerAlert = [UIAlertController alertControllerWithTitle:@"Register Success"
+                                                  message:@"Please re-enter your password to log in."
+                                                  preferredStyle:(UIAlertControllerStyleAlert)];
+    UIAlertAction *doneAction = [UIAlertAction actionWithTitle:@"Done"
+                                             style:UIAlertActionStyleDefault
+                                              handler:^(UIAlertAction * _Nonnull action) {}];
+    [self.registerAlert addAction:doneAction];
 }
 
 - (IBAction)tapRegister:(id)sender {
-    if([self.usernameField.text isEqual:@""] || [self.passwordField.text isEqual:@""]) {
-            [self presentViewController:self.alert animated:YES completion:nil];
-            return;
-        }
-        
-        // TODO: Register and log in using Parse client
+    NSString *username = self.usernameField.text;
+    NSString *password = self.passwordField.text;
+    
+    if([username isEqual:@""] || [password isEqual:@""]) {
+        [self presentViewController:self.warningAlert animated:YES completion:nil];
+        return;
+    }
+    [self.handler signUpWithUsername:username password:password];
 }
 
 - (IBAction)tapLogin:(id)sender {
-    if([self.usernameField.text isEqual:@""] || [self.passwordField.text isEqual:@""]) {
-            [self presentViewController:self.alert animated:YES completion:nil];
-            return;
-        }
-        
-        NSString *username = self.usernameField.text;
-        NSString *password = self.passwordField.text;
-        
-        // TODO: Log in using Parse client
+    NSString *username = self.usernameField.text;
+    NSString *password = self.passwordField.text;
+    
+    if([username isEqual:@""] || [password isEqual:@""]) {
+        [self presentViewController:self.warningAlert animated:YES completion:nil];
+        return;
+    }
+    [self.handler logInWithUsername:username password:password];
+}
+
+// Enable tapping outside field to dismiss keyboard
+- (IBAction)tapView:(id)sender {
+    [self.usernameField resignFirstResponder];
+    [self.passwordField resignFirstResponder];
+}
+
+# pragma mark - ParseHandlerDelegate
+
+- (void)generalRequestFail:(NSError *)error {
+    NSLog(@"Parse request failed: %@", error.description);
+}
+
+- (void)loggedInSuccess {
+    NSLog(@"User logged in successfully");
+    [self performSegueWithIdentifier:@"loginSegue" sender:nil];
+}
+
+- (void)signUpSuccess {
+    NSLog(@"User registered successfully");
+    [self presentViewController:self.registerAlert animated:YES completion:nil];
+    self.passwordField.text = @"";
 }
 
 @end
