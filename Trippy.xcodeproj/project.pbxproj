@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1E2165B2D5F014BB051A732B /* Pods_Trippy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10168E399602D24025083105 /* Pods_Trippy.framework */; };
 		39635EBD5AADFDA072C66B6B /* Pods_Trippy_TrippyUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E7784A9A894059B22B18E2E /* Pods_Trippy_TrippyUITests.framework */; };
 		C975C9D09D83C46EC203BCB6 /* Pods_TrippyTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0EC8446A41048D3C116B11EB /* Pods_TrippyTests.framework */; };
 		F0C75F6D287642C10015BB74 /* Keys.plist in Resources */ = {isa = PBXBuildFile; fileRef = F0C75F6C287642C10015BB74 /* Keys.plist */; };
@@ -45,7 +44,6 @@
 
 /* Begin PBXFileReference section */
 		0EC8446A41048D3C116B11EB /* Pods_TrippyTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TrippyTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		10168E399602D24025083105 /* Pods_Trippy.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Trippy.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		21341CAF207ECB6E4069795F /* Pods-TrippyTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TrippyTests.release.xcconfig"; path = "Target Support Files/Pods-TrippyTests/Pods-TrippyTests.release.xcconfig"; sourceTree = "<group>"; };
 		2A13D49510DDF03DBABB456F /* Pods-Trippy-TrippyUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Trippy-TrippyUITests.debug.xcconfig"; path = "Target Support Files/Pods-Trippy-TrippyUITests/Pods-Trippy-TrippyUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		4AAB8C2C2D2733EEBE11455F /* Pods-Trippy-TrippyUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Trippy-TrippyUITests.release.xcconfig"; path = "Target Support Files/Pods-Trippy-TrippyUITests/Pods-Trippy-TrippyUITests.release.xcconfig"; sourceTree = "<group>"; };
@@ -84,7 +82,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1E2165B2D5F014BB051A732B /* Pods_Trippy.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -110,7 +107,6 @@
 		0EB03A504895C37D109920AC /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				10168E399602D24025083105 /* Pods_Trippy.framework */,
 				8E7784A9A894059B22B18E2E /* Pods_Trippy_TrippyUITests.framework */,
 				0EC8446A41048D3C116B11EB /* Pods_TrippyTests.framework */,
 			);
@@ -656,6 +652,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = Z5SZ8N67M2;
 				EXCLUDED_ARCHS = "";
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Trippy/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
