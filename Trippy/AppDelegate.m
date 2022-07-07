@@ -6,6 +6,8 @@
 //
 
 #import "AppDelegate.h"
+@import GoogleMaps;
+@import GooglePlaces;
 
 @interface AppDelegate ()
 
@@ -15,7 +17,12 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"Keys" ofType:@"plist"];
+    NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile:path];
+    
+    [GMSServices provideAPIKey:dict[@"GMapsKey"]];
+    [GMSPlacesClient provideAPIKey:dict[@"GMapsKey"]];
+    
     return YES;
 }
 
