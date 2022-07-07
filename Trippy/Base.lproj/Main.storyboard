@@ -12,7 +12,7 @@
         <!--Login View Controller-->
         <scene sceneID="jle-fh-YsF">
             <objects>
-                <viewController id="rlJ-A6-uRu" customClass="LoginViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="LoginViewController" id="rlJ-A6-uRu" customClass="LoginViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="I16-jG-gIX">
                         <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -94,7 +94,7 @@
         <!--Tab Bar Controller-->
         <scene sceneID="gFv-UP-bNs">
             <objects>
-                <tabBarController id="1BK-xO-oHe" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="TabNavigationController" id="1BK-xO-oHe" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" id="CgA-I9-RWT"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="165-Ys-0PF">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="49"/>
@@ -130,14 +130,26 @@
         <!--Collections-->
         <scene sceneID="6m5-vM-u1a">
             <objects>
-                <viewController id="PK5-6C-yGh" sceneMemberID="viewController">
+                <viewController id="PK5-6C-yGh" customClass="SavedCollectionsViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="uAd-QY-QKg">
                         <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <viewLayoutGuide key="safeArea" id="s2U-8f-iNl"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Collections" id="JTR-v4-Fsm"/>
+                    <navigationItem key="navigationItem" title="Collections" id="JTR-v4-Fsm">
+                        <barButtonItem key="leftBarButtonItem" style="plain" id="bBx-aJ-QUR">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" id="4cX-Ra-tpF">
+                                <rect key="frame" x="16" y="5" width="86" height="34.333333333333336"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Logout"/>
+                                <connections>
+                                    <action selector="tapLogout:" destination="PK5-6C-yGh" eventType="touchUpInside" id="nBB-L5-4sv"/>
+                                </connections>
+                            </button>
+                        </barButtonItem>
+                    </navigationItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wV3-6H-lOe" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

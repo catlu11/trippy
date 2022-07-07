@@ -5,10 +5,10 @@
 //  Created by Catherine Lu on 7/7/22.
 //
 
-#import "ParseHandler.h"
+#import "UserAuthHandler.h"
 #import "Parse/Parse.h"
 
-@implementation ParseHandler
+@implementation UserAuthHandler
 
 - (void) logInWithUsername:(NSString *)username password:(NSString *)password {
     [PFUser logInWithUsernameInBackground:username password:password block:^(PFUser * user, NSError * error) {

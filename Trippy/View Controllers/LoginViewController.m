@@ -6,14 +6,14 @@
 //
 
 #import "LoginViewController.h"
-#import "ParseHandler.h"
+#import "UserAuthHandler.h"
 
-@interface LoginViewController () <ParseHandlerDelegate>
+@interface LoginViewController () <UserAuthHandlerDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *usernameField;
 @property (weak, nonatomic) IBOutlet UITextField *passwordField;
 @property (strong, nonatomic) UIAlertController *warningAlert;
 @property (strong, nonatomic) UIAlertController *registerAlert;
-@property (strong, nonatomic) ParseHandler *handler;
+@property (strong, nonatomic) UserAuthHandler *handler;
 @end
 
 @implementation LoginViewController
@@ -22,7 +22,7 @@
     [super viewDidLoad];
     
     // Set up Parse interface
-    self.handler = [[ParseHandler alloc] init];
+    self.handler = [[UserAuthHandler alloc] init];
     self.handler.delegate = self;
     
     // Set up empty field warning
@@ -72,7 +72,7 @@
     [self.passwordField resignFirstResponder];
 }
 
-# pragma mark - ParseHandlerDelegate
+# pragma mark - UserAuthHandlerDelegate
 
 - (void)generalRequestFail:(NSError *)error {
     NSLog(@"Parse request failed: %@", error.description);

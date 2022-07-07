@@ -9,14 +9,14 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@protocol ParseHandlerDelegate
+@protocol UserAuthHandlerDelegate
 - (void) loggedInSuccess;
 - (void) signUpSuccess;
 - (void) generalRequestFail:(NSError *)error; // TODO: Extend for more specific error behaviors
 @end
 
-@interface ParseHandler : NSObject
-@property (nonatomic, weak) id<ParseHandlerDelegate> delegate;
+@interface UserAuthHandler : NSObject
+@property (nonatomic, weak) id<UserAuthHandlerDelegate> delegate;
 - (void) logInWithUsername:(NSString *)username password:(NSString *)password;
 - (void) signUpWithUsername:(NSString *)username password:(NSString *)password;
 @end
