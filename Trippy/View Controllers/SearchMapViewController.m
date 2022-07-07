@@ -5,20 +5,20 @@
 //  Created by Catherine Lu on 7/5/22.
 //
 
-#import "ViewController.h"
+#import "SearchMapViewController.h"
 #import "SelectableMap.h"
 #import "Location.h"
 @import GooglePlaces;
 @import GoogleMaps;
 
-@interface ViewController () <UISearchBarDelegate, GMSAutocompleteTableDataSourceDelegate>
+@interface SearchMapViewController () <UISearchBarDelegate, GMSAutocompleteTableDataSourceDelegate>
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 @property (weak, nonatomic) IBOutlet SelectableMap *mapView;
 @property (weak, nonatomic) IBOutlet UITableView *itemsTableView;
 @property (strong, nonatomic) GMSAutocompleteTableDataSource *tableDataSource;
 @end
 
-@implementation ViewController
+@implementation SearchMapViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];

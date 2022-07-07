@@ -11,9 +11,11 @@
 		37BFEDB819F6C25727E9585C /* libPods-Trippy-TrippyUITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 409098130AD350DD29BBFE22 /* libPods-Trippy-TrippyUITests.a */; };
 		9CF6EE9CA200A32BA2A3B48B /* libPods-Trippy.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E8218BA8D89106AC9CEDA871 /* libPods-Trippy.a */; };
 		F0C75F6D287642C10015BB74 /* Keys.plist in Resources */ = {isa = PBXBuildFile; fileRef = F0C75F6C287642C10015BB74 /* Keys.plist */; };
+		F0C75F72287747A20015BB74 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F0C75F71287747A20015BB74 /* LoginViewController.m */; };
+		F0C75F7528774F940015BB74 /* ParseHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = F0C75F7428774F940015BB74 /* ParseHandler.m */; };
 		F0F335752874A0E700470507 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F0F335742874A0E700470507 /* AppDelegate.m */; };
 		F0F335782874A0E700470507 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F0F335772874A0E700470507 /* SceneDelegate.m */; };
-		F0F3357B2874A0E700470507 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F0F3357A2874A0E700470507 /* ViewController.m */; };
+		F0F3357B2874A0E700470507 /* SearchMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F0F3357A2874A0E700470507 /* SearchMapViewController.m */; };
 		F0F3357E2874A0E700470507 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F0F3357C2874A0E700470507 /* Main.storyboard */; };
 		F0F335802874A0EB00470507 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F0F3357F2874A0EB00470507 /* Assets.xcassets */; };
 		F0F335832874A0EB00470507 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F0F335812874A0EB00470507 /* LaunchScreen.storyboard */; };
@@ -54,13 +56,17 @@
 		CCA5DB2AB9E0DEA96B5E2177 /* Pods-TrippyTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TrippyTests.debug.xcconfig"; path = "Target Support Files/Pods-TrippyTests/Pods-TrippyTests.debug.xcconfig"; sourceTree = "<group>"; };
 		E8218BA8D89106AC9CEDA871 /* libPods-Trippy.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Trippy.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F0C75F6C287642C10015BB74 /* Keys.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Keys.plist; sourceTree = "<group>"; };
+		F0C75F70287747A20015BB74 /* LoginViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
+		F0C75F71287747A20015BB74 /* LoginViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
+		F0C75F7328774F940015BB74 /* ParseHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ParseHandler.h; sourceTree = "<group>"; };
+		F0C75F7428774F940015BB74 /* ParseHandler.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ParseHandler.m; sourceTree = "<group>"; };
 		F0F335702874A0E700470507 /* Trippy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Trippy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F0F335732874A0E700470507 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		F0F335742874A0E700470507 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		F0F335762874A0E700470507 /* SceneDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SceneDelegate.h; sourceTree = "<group>"; };
 		F0F335772874A0E700470507 /* SceneDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SceneDelegate.m; sourceTree = "<group>"; };
-		F0F335792874A0E700470507 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		F0F3357A2874A0E700470507 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		F0F335792874A0E700470507 /* SearchMapViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SearchMapViewController.h; sourceTree = "<group>"; };
+		F0F3357A2874A0E700470507 /* SearchMapViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SearchMapViewController.m; sourceTree = "<group>"; };
 		F0F3357D2874A0E700470507 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		F0F3357F2874A0EB00470507 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F0F335822874A0EB00470507 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -203,8 +209,10 @@
 		F0F335A92875F07300470507 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				F0F335792874A0E700470507 /* ViewController.h */,
-				F0F3357A2874A0E700470507 /* ViewController.m */,
+				F0F335792874A0E700470507 /* SearchMapViewController.h */,
+				F0F3357A2874A0E700470507 /* SearchMapViewController.m */,
+				F0C75F70287747A20015BB74 /* LoginViewController.h */,
+				F0C75F71287747A20015BB74 /* LoginViewController.m */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -222,6 +230,8 @@
 		F0F335AB2875F08D00470507 /* API */ = {
 			isa = PBXGroup;
 			children = (
+				F0C75F7328774F940015BB74 /* ParseHandler.h */,
+				F0C75F7428774F940015BB74 /* ParseHandler.m */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -474,8 +484,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F0F3357B2874A0E700470507 /* ViewController.m in Sources */,
+				F0C75F72287747A20015BB74 /* LoginViewController.m in Sources */,
+				F0F3357B2874A0E700470507 /* SearchMapViewController.m in Sources */,
 				F0F335752874A0E700470507 /* AppDelegate.m in Sources */,
+				F0C75F7528774F940015BB74 /* ParseHandler.m in Sources */,
 				F0F335AE2875F0B400470507 /* SelectableMap.m in Sources */,
 				F0F335B72875F2E100470507 /* MapUtils.m in Sources */,
 				F0F335862874A0EB00470507 /* main.m in Sources */,
