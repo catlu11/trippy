@@ -14,6 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (assign, nonatomic) CLLocationCoordinate2D coord;
 @property (strong, nonatomic) NSString *title;
 @property (strong, nonatomic) NSString *snippet;
+@property (strong, nonatomic) NSString *userId;
 
 - (instancetype) initWithParams:(NSString *)title snippet:(NSString *)snippet latitude:(double)latitude longitude:(double)longitude;
 - (instancetype) initWithPlace:(GMSPlace *)place;
