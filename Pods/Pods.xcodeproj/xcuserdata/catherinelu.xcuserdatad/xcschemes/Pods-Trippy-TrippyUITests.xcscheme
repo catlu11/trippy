@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "91BD489983123AB396E539FC6952E69A"
-               BuildableName = "Pods_Trippy_TrippyUITests.framework"
+               BuildableName = "libPods-Trippy-TrippyUITests.a"
                BlueprintName = "Pods-Trippy-TrippyUITests"
                ReferencedContainer = "container:Pods.xcodeproj">
             </BuildableReference>

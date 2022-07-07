@@ -7,8 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		39635EBD5AADFDA072C66B6B /* Pods_Trippy_TrippyUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E7784A9A894059B22B18E2E /* Pods_Trippy_TrippyUITests.framework */; };
-		C975C9D09D83C46EC203BCB6 /* Pods_TrippyTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0EC8446A41048D3C116B11EB /* Pods_TrippyTests.framework */; };
+		2DF15D1367714A4316AF2B55 /* libPods-TrippyTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 156439883F4B5DACB7B72C57 /* libPods-TrippyTests.a */; };
+		37BFEDB819F6C25727E9585C /* libPods-Trippy-TrippyUITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 409098130AD350DD29BBFE22 /* libPods-Trippy-TrippyUITests.a */; };
+		9CF6EE9CA200A32BA2A3B48B /* libPods-Trippy.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E8218BA8D89106AC9CEDA871 /* libPods-Trippy.a */; };
 		F0C75F6D287642C10015BB74 /* Keys.plist in Resources */ = {isa = PBXBuildFile; fileRef = F0C75F6C287642C10015BB74 /* Keys.plist */; };
 		F0F335752874A0E700470507 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F0F335742874A0E700470507 /* AppDelegate.m */; };
 		F0F335782874A0E700470507 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F0F335772874A0E700470507 /* SceneDelegate.m */; };
@@ -43,14 +44,15 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		0EC8446A41048D3C116B11EB /* Pods_TrippyTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TrippyTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		156439883F4B5DACB7B72C57 /* libPods-TrippyTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-TrippyTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		21341CAF207ECB6E4069795F /* Pods-TrippyTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TrippyTests.release.xcconfig"; path = "Target Support Files/Pods-TrippyTests/Pods-TrippyTests.release.xcconfig"; sourceTree = "<group>"; };
 		2A13D49510DDF03DBABB456F /* Pods-Trippy-TrippyUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Trippy-TrippyUITests.debug.xcconfig"; path = "Target Support Files/Pods-Trippy-TrippyUITests/Pods-Trippy-TrippyUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		409098130AD350DD29BBFE22 /* libPods-Trippy-TrippyUITests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Trippy-TrippyUITests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4AAB8C2C2D2733EEBE11455F /* Pods-Trippy-TrippyUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Trippy-TrippyUITests.release.xcconfig"; path = "Target Support Files/Pods-Trippy-TrippyUITests/Pods-Trippy-TrippyUITests.release.xcconfig"; sourceTree = "<group>"; };
-		8E7784A9A894059B22B18E2E /* Pods_Trippy_TrippyUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Trippy_TrippyUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B8D3E6DA2519CA6D60DBFF53 /* Pods-Trippy.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Trippy.debug.xcconfig"; path = "Target Support Files/Pods-Trippy/Pods-Trippy.debug.xcconfig"; sourceTree = "<group>"; };
 		C453D7B45B0BB1D11B0EE346 /* Pods-Trippy.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Trippy.release.xcconfig"; path = "Target Support Files/Pods-Trippy/Pods-Trippy.release.xcconfig"; sourceTree = "<group>"; };
 		CCA5DB2AB9E0DEA96B5E2177 /* Pods-TrippyTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TrippyTests.debug.xcconfig"; path = "Target Support Files/Pods-TrippyTests/Pods-TrippyTests.debug.xcconfig"; sourceTree = "<group>"; };
+		E8218BA8D89106AC9CEDA871 /* libPods-Trippy.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Trippy.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F0C75F6C287642C10015BB74 /* Keys.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Keys.plist; sourceTree = "<group>"; };
 		F0F335702874A0E700470507 /* Trippy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Trippy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F0F335732874A0E700470507 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -82,6 +84,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9CF6EE9CA200A32BA2A3B48B /* libPods-Trippy.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -89,7 +92,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C975C9D09D83C46EC203BCB6 /* Pods_TrippyTests.framework in Frameworks */,
+				2DF15D1367714A4316AF2B55 /* libPods-TrippyTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -97,7 +100,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				39635EBD5AADFDA072C66B6B /* Pods_Trippy_TrippyUITests.framework in Frameworks */,
+				37BFEDB819F6C25727E9585C /* libPods-Trippy-TrippyUITests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -107,8 +110,9 @@
 		0EB03A504895C37D109920AC /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				8E7784A9A894059B22B18E2E /* Pods_Trippy_TrippyUITests.framework */,
-				0EC8446A41048D3C116B11EB /* Pods_TrippyTests.framework */,
+				E8218BA8D89106AC9CEDA871 /* libPods-Trippy.a */,
+				409098130AD350DD29BBFE22 /* libPods-Trippy-TrippyUITests.a */,
+				156439883F4B5DACB7B72C57 /* libPods-TrippyTests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
