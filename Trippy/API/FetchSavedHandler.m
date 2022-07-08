@@ -12,7 +12,27 @@
 
 @implementation FetchSavedHandler
 
-- (void) fetchSavedCollections:(PFUser *)user {
+- (void) postNewLocation:(Location *)location collection:(Collection *)collection {
+    PFObject *newLocation = [ParseUtils newPFObjFromLocation:location];
+    [newLocation saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
+        if(succeeded) {
+            PFQuery *query = [PFQuery queryWithClassName:@"Collection"];
+            [query whereKey:@"createdBy" equalTo:[PFUser currentUser]];
+            [query whereKey:@"title" equalTo:collection.title];
+            [query getFirstObjectInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
+                if (error) {
+                    [self.delegate generalRequestFail:error];
+                } else {
+                    PFRelation *relation = [object relationForKey:@"locations"];
+                    [relation addObject:newLocation];
+                    [object saveInBackground];
+                }
+            }];
+        }
+    }];
+}
+
+- (void) fetchSavedCollections {
     PFQuery *query = [PFQuery queryWithClassName:@"Collection"];
     [query whereKey:@"createdBy" equalTo:[PFUser currentUser]];
     [query includeKeys:[ParseUtils getCollectionKeys]];

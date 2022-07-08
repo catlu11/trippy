@@ -20,7 +20,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface FetchSavedHandler : NSObject
 @property (nonatomic, weak) id<FetchSavedHandlerDelegate> delegate;
-- (void) fetchSavedCollections:(PFUser *)user;
+- (void) fetchSavedCollections;
+- (void) postNewLocation:(Location *)location collection:(Collection *)collection;
 @end
 
 NS_ASSUME_NONNULL_END

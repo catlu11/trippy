@@ -10,7 +10,7 @@
 
 @implementation Location
 
-- (instancetype) initWithParams:(NSString *)title snippet:(NSString *)snippet latitude:(double)latitude longitude:(double)longitude user:(NSString *)user {
+- (instancetype) initWithParams:(NSString *)title snippet:(NSString *)snippet latitude:(double)latitude longitude:(double)longitude user:(NSString *)user placeId:(NSString *)placeId {
     self = [super init];
     
     if (self) {
@@ -18,6 +18,7 @@
         self.snippet = snippet;
         self.coord = CLLocationCoordinate2DMake(latitude, longitude);
         self.userId = user;
+        self.placeId = placeId;
     }
     
     return self;
@@ -31,6 +32,7 @@
         self.snippet = place.description;
         self.coord = place.coordinate;
         self.userId = user;
+        self.placeId = place.placeID;
     }
     
     return self;

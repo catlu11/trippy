@@ -232,11 +232,11 @@
 		F0F335A92875F07300470507 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				F0F335792874A0E700470507 /* SearchMapViewController.h */,
 				F0C75F7628775A680015BB74 /* SavedCollectionsViewController.h */,
 				F0C75F7728775A680015BB74 /* SavedCollectionsViewController.m */,
 				F0C75F81287786B60015BB74 /* ListTableViewController.h */,
 				F0C75F82287786B60015BB74 /* ListTableViewController.m */,
+				F0F335792874A0E700470507 /* SearchMapViewController.h */,
 				F0F3357A2874A0E700470507 /* SearchMapViewController.m */,
 				F0C75F70287747A20015BB74 /* LoginViewController.h */,
 				F0C75F71287747A20015BB74 /* LoginViewController.m */,

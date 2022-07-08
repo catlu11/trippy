@@ -39,7 +39,7 @@
 
 - (void) refreshData {
     if(self.listType == kCollection) {
-        [self.handler fetchSavedCollections:[PFUser currentUser]];
+        [self.handler fetchSavedCollections];
     } else if (self.listType == kLocation) {
         // TODO: Implement location fetch
     }
