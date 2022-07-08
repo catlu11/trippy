@@ -19,7 +19,9 @@ NS_ASSUME_NONNULL_BEGIN
 + (NSString *)getLoggedInUserId;
 + (void) collectionFromPFObj:(PFObject *)obj completion:(void (^)(Collection *collection, NSError *))completion;
 + (Location *)locationFromPFObj:(PFObject *)obj;
++ (PFObject *)newPFObjFromCollection:(Collection *)collection;
 + (PFObject *)newPFObjFromLocation:(Location *)loc;
++ (PFObject *)oldPFObjFromLocation:(Location *)loc;
 @end
 
 NS_ASSUME_NONNULL_END

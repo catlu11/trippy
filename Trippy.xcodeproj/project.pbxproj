@@ -20,6 +20,7 @@
 		F0C75F86287786D70015BB74 /* StaticMapCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F0C75F85287786D70015BB74 /* StaticMapCell.m */; };
 		F0C75F8C28778FED0015BB74 /* FetchSavedHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = F0C75F8B28778FED0015BB74 /* FetchSavedHandler.m */; };
 		F0C75F92287799070015BB74 /* ParseUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = F0C75F91287799070015BB74 /* ParseUtils.m */; };
+		F0C75F982878D7750015BB74 /* CreateCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F0C75F972878D7750015BB74 /* CreateCollectionViewController.m */; };
 		F0F335752874A0E700470507 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F0F335742874A0E700470507 /* AppDelegate.m */; };
 		F0F335782874A0E700470507 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F0F335772874A0E700470507 /* SceneDelegate.m */; };
 		F0F3357B2874A0E700470507 /* SearchMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F0F3357A2874A0E700470507 /* SearchMapViewController.m */; };
@@ -81,6 +82,8 @@
 		F0C75F8B28778FED0015BB74 /* FetchSavedHandler.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FetchSavedHandler.m; sourceTree = "<group>"; };
 		F0C75F90287799070015BB74 /* ParseUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ParseUtils.h; sourceTree = "<group>"; };
 		F0C75F91287799070015BB74 /* ParseUtils.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ParseUtils.m; sourceTree = "<group>"; };
+		F0C75F962878D7750015BB74 /* CreateCollectionViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CreateCollectionViewController.h; sourceTree = "<group>"; };
+		F0C75F972878D7750015BB74 /* CreateCollectionViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CreateCollectionViewController.m; sourceTree = "<group>"; };
 		F0F335702874A0E700470507 /* Trippy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Trippy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F0F335732874A0E700470507 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		F0F335742874A0E700470507 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -240,6 +243,8 @@
 				F0F3357A2874A0E700470507 /* SearchMapViewController.m */,
 				F0C75F70287747A20015BB74 /* LoginViewController.h */,
 				F0C75F71287747A20015BB74 /* LoginViewController.m */,
+				F0C75F962878D7750015BB74 /* CreateCollectionViewController.h */,
+				F0C75F972878D7750015BB74 /* CreateCollectionViewController.m */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -521,6 +526,7 @@
 			files = (
 				F0C75F72287747A20015BB74 /* LoginViewController.m in Sources */,
 				F0F3357B2874A0E700470507 /* SearchMapViewController.m in Sources */,
+				F0C75F982878D7750015BB74 /* CreateCollectionViewController.m in Sources */,
 				F0C75F8C28778FED0015BB74 /* FetchSavedHandler.m in Sources */,
 				F0C75F92287799070015BB74 /* ParseUtils.m in Sources */,
 				F0C75F83287786B60015BB74 /* ListTableViewController.m in Sources */,

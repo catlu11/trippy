@@ -6,11 +6,9 @@
 //
 
 #import "ListTableViewController.h"
-#import "StaticMapCell.h"
 #import "FetchSavedHandler.h"
 
 @interface ListTableViewController () <UITableViewDelegate, UITableViewDataSource, FetchSavedHandlerDelegate>
-@property (strong, nonatomic) NSMutableArray *data;
 @property (strong, nonatomic) UIRefreshControl *refreshControl;
 @property (strong, nonatomic) FetchSavedHandler *handler;
 @end
@@ -41,7 +39,7 @@
     if(self.listType == kCollection) {
         [self.handler fetchSavedCollections];
     } else if (self.listType == kLocation) {
-        // TODO: Implement location fetch
+        [self.handler fetchSavedLocations];
     }
 }
 
@@ -54,15 +52,14 @@
 # pragma mark - UITableViewDataSource
 
 - (nonnull UITableViewCell *)tableView:(nonnull UITableView *)tableView cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
+    StaticMapCell *cell = [tableView dequeueReusableCellWithIdentifier:@"StaticMapCell" forIndexPath:indexPath];
     if(self.listType == kCollection) {
-        StaticMapCell *cell = [tableView dequeueReusableCellWithIdentifier:@"StaticMapCell" forIndexPath:indexPath];
         cell.collection = self.data[indexPath.row];
-        [cell updateUIElements];
-        return cell;
     } else if (self.listType == kLocation) {
-        // TODO: Implement location cells
+        cell.location = self.data[indexPath.row];
     }
-    return nil;
+    [cell updateUIElements:self.listType];
+    return cell;
 }
 
 - (NSInteger)tableView:(nonnull UITableView *)tableView numberOfRowsInSection:(NSInteger)section {

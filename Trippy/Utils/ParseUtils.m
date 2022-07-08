@@ -31,6 +31,7 @@
     newColl.userId = user.username;
     newColl.lastUpdated = obj.updatedAt;
     newColl.createdAt = obj.createdAt;
+    newColl.objectId = obj.objectId;
     
     // query locations
     PFRelation *locations = obj[@"locations"];
@@ -55,7 +56,20 @@
 + (Location *)locationFromPFObj:(PFObject *)obj {
     PFGeoPoint *coord = obj[@"coord"];
     PFUser *user = obj[@"createdBy"];
-    return [[Location alloc] initWithParams:obj[@"title"] snippet:obj[@"snippet"] latitude:coord.latitude longitude:coord.longitude user:user.username placeId:obj[@"placeId"]];
+    return [[Location alloc] initWithParams:obj[@"title"] snippet:obj[@"snippet"] latitude:coord.latitude longitude:coord.longitude user:user.username placeId:obj[@"placeId"] objectId:obj.objectId];
+}
+
++ (PFObject *)newPFObjFromCollection:(Collection *)collection {
+    PFObject *obj = [PFObject objectWithClassName:@"Collection"];
+    obj[@"title"] = collection.title;
+    obj[@"snippet"] = collection.snippet;
+    obj[@"createdBy"] = [PFUser currentUser];
+    PFRelation *relation = [obj relationForKey:@"locations"];
+    for(Location *loc in collection.locations) {
+        PFObject *newObj = [self oldPFObjFromLocation:loc];
+        [relation addObject: newObj];
+    }
+    return obj;
 }
 
 + (PFObject *)newPFObjFromLocation:(Location *)loc {
@@ -66,6 +80,12 @@
     obj[@"coord"] = [PFGeoPoint geoPointWithLatitude:loc.coord.latitude longitude:loc.coord.longitude];
     obj[@"createdBy"] = [PFUser currentUser];
     return obj;
+}
+
++ (PFObject *)oldPFObjFromLocation:(Location *)loc {
+    PFQuery *query = [PFQuery queryWithClassName:@"Location"];
+    [query whereKey:@"objectId" equalTo:loc.objectId];
+    return [query getFirstObject];
 }
 
 @end

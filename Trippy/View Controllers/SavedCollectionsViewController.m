@@ -7,11 +7,12 @@
 
 #import "SceneDelegate.h"
 #import "SavedCollectionsViewController.h"
+#import "CreateCollectionViewController.h"
 #import "ListTableViewController.h"
 #import "LoginViewController.h"
 #import "LogoutHandler.h"
 
-@interface SavedCollectionsViewController () <LogoutHandlerDelegate>
+@interface SavedCollectionsViewController () <LogoutHandlerDelegate, CreateCollectionDelegate>
 @property (strong, nonatomic) LogoutHandler *logoutHandler;
 @end
 
@@ -31,6 +32,12 @@
     [self.logoutHandler logoutCurrentUser];
 }
 
+# pragma mark - Navigation
+- (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    CreateCollectionViewController *vc = [segue destinationViewController];
+    vc.delegate = self;
+}
+
 # pragma mark - LogoutHandlerDelegate
 
 - (void) logoutSuccess {
@@ -43,6 +50,12 @@
 
 - (void) logoutFail:(NSError *)error {
     NSLog(@"Failed to log out user: %@", error.description);
+}
+
+# pragma mark - CreateCollectionDelegate
+- (void) createdNew:(Collection *)col {
+    [self.data insertObject:col atIndex:0];
+    [self.listTableView reloadData];
 }
 
 @end

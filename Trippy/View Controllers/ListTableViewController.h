@@ -6,16 +6,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "StaticMapCell.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-typedef NS_ENUM(NSInteger, ListType) {
-    kCollection,
-    kLocation
-};
-
 @interface ListTableViewController : UIViewController
 @property (weak, nonatomic) IBOutlet UITableView *listTableView;
+@property (strong, nonatomic) NSMutableArray *data;
 @property (assign, nonatomic) ListType listType;
 @end
 
