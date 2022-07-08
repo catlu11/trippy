@@ -10,7 +10,6 @@
 #import "FetchSavedHandler.h"
 
 @interface ListTableViewController () <UITableViewDelegate, UITableViewDataSource, FetchSavedHandlerDelegate>
-@property (weak, nonatomic) IBOutlet UITableView *listTableView;
 @property (strong, nonatomic) NSMutableArray *data;
 @property (strong, nonatomic) UIRefreshControl *refreshControl;
 @property (strong, nonatomic) FetchSavedHandler *handler;
@@ -20,6 +19,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.data = [[NSMutableArray alloc] init];
+    
     self.listTableView.dataSource = self;
     self.listTableView.delegate = self;
     self.listTableView.rowHeight = UITableViewAutomaticDimension;
@@ -31,6 +32,7 @@
     
     // Fetch handler
     self.handler = [[FetchSavedHandler alloc] init];
+    self.handler.delegate = self;
         
     [self refreshData];
 }
@@ -38,13 +40,15 @@
 - (void) refreshData {
     if(self.listType == kCollection) {
         [self.handler fetchSavedCollections:[PFUser currentUser]];
-    } else if (*(self.listType) == kLocation) {
+    } else if (self.listType == kLocation) {
         // TODO: Implement location fetch
     }
 }
 
 - (void)beginRefresh:(UIRefreshControl *)refreshControl {
+    self.data = [[NSMutableArray alloc] init];
     [self refreshData];
+    [self.refreshControl endRefreshing];
 }
 
 # pragma mark - UITableViewDataSource
@@ -55,7 +59,7 @@
         cell.collection = self.data[indexPath.row];
         [cell updateUIElements];
         return cell;
-    } else if (*(self.listType) == kLocation) {
+    } else if (self.listType == kLocation) {
         // TODO: Implement location cells
     }
     return nil;

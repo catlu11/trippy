@@ -7,12 +7,16 @@
 
 #import <UIKit/UIKit.h>
 
-enum ListType {kCollection, kLocation};
-
 NS_ASSUME_NONNULL_BEGIN
 
+typedef NS_ENUM(NSInteger, ListType) {
+    kCollection,
+    kLocation
+};
+
 @interface ListTableViewController : UIViewController
-@property (assign, nonatomic) enum ListType *listType;
+@property (weak, nonatomic) IBOutlet UITableView *listTableView;
+@property (assign, nonatomic) ListType listType;
 @end
 
 NS_ASSUME_NONNULL_END

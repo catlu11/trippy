@@ -25,6 +25,7 @@
 - (void) updateUIElements {
     self.collectionNameLabel.text = self.collection.title;
     self.descriptionLabel.text = self.collection.snippet;
+    [self.descriptionLabel sizeToFit];
     
     // Format date
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
