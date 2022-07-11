@@ -11,7 +11,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @protocol CreateCollectionDelegate
-- (void) createdNew:(Collection *)col ;
+- (void)createdNew:(LocationCollection *)col ;
 @end
 
 @interface CreateCollectionViewController : ListTableViewController

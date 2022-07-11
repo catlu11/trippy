@@ -23,12 +23,19 @@
 }
 
 - (void) updateUIElements:(ListType)type {
-    if (type == kCollection) {
-        [self updateUIElementsCollection];
+    switch (type) {
+        case kCollection:
+            [self updateUIElementsCollection];
+            break;
+        case kLocation: [self updateUIElementsLocation];
+            break;
     }
-    else if (type == kLocation) {
-        [self updateUIElementsLocation];
-    }
+//    if (type == kCollection) {
+//        [self updateUIElementsCollection];
+//    }
+//    else if (type == kLocation) {
+//        [self updateUIElementsLocation];
+//    }
 }
 
 - (void) updateUIElementsCollection {

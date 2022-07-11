@@ -6,13 +6,13 @@
 //
 
 #import "CreateCollectionViewController.h"
-#import "FetchSavedHandler.h"
+#import "CacheDataHandler.h"
 #import "SavedCollectionsViewController.h"
 
-@interface CreateCollectionViewController () <FetchSavedHandlerDelegate>
+@interface CreateCollectionViewController () <CacheDataHandlerDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *nameField;
 @property (weak, nonatomic) IBOutlet UITextView *descTextView;
-@property (strong, nonatomic) FetchSavedHandler *postHandler;
+@property (strong, nonatomic) CacheDataHandler *postHandler;
 @end
 
 @implementation CreateCollectionViewController
@@ -28,7 +28,7 @@
     [[self.descTextView layer] setCornerRadius: self.descTextView.frame.size.width*0.03];
     
     // Set post handler
-    self.postHandler = [[FetchSavedHandler alloc] init];
+    self.postHandler = [[CacheDataHandler alloc] init];
     self.postHandler.delegate = self;
 }
 
@@ -48,14 +48,14 @@
             }
         }
     }
-    Collection *col = [[Collection alloc] init];
+    LocationCollection *col = [[LocationCollection alloc] init];
     col.title = self.nameField.text;
     col.snippet = self.descTextView.text;
     col.locations = locations;
     [self.postHandler postNewCollection:col];
 }
 
-- (void) postedCollectionSuccess:(Collection *)col {
+- (void) postedCollectionSuccess:(LocationCollection *)col {
     [self.delegate createdNew:col];
     [self dismissViewControllerAnimated:YES completion:nil];
 }

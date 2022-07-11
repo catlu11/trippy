@@ -22,8 +22,8 @@
     return [PFUser currentUser].username;
 }
 
-+ (void) collectionFromPFObj:(PFObject *)obj completion:(void (^)(Collection *collection, NSError *))completion {
-    Collection *newColl = [[Collection alloc] init];
++ (void) collectionFromPFObj:(PFObject *)obj completion:(void (^)(LocationCollection *collection, NSError *))completion {
+    LocationCollection *newColl = [[LocationCollection alloc] init];
     PFUser *user = obj[@"createdBy"];
     
     newColl.title = obj[@"title"];
@@ -31,7 +31,7 @@
     newColl.userId = user.username;
     newColl.lastUpdated = obj.updatedAt;
     newColl.createdAt = obj.createdAt;
-    newColl.objectId = obj.objectId;
+    newColl.parseObjectId = obj.objectId;
     
     // query locations
     PFRelation *locations = obj[@"locations"];
@@ -56,10 +56,10 @@
 + (Location *)locationFromPFObj:(PFObject *)obj {
     PFGeoPoint *coord = obj[@"coord"];
     PFUser *user = obj[@"createdBy"];
-    return [[Location alloc] initWithParams:obj[@"title"] snippet:obj[@"snippet"] latitude:coord.latitude longitude:coord.longitude user:user.username placeId:obj[@"placeId"] objectId:obj.objectId];
+    return [[Location alloc] initWithParams:obj[@"title"] snippet:obj[@"snippet"] latitude:coord.latitude longitude:coord.longitude user:user.username placeId:obj[@"placeId"] parseObjectId:obj.objectId];
 }
 
-+ (PFObject *)newPFObjFromCollection:(Collection *)collection {
++ (PFObject *)newPFObjWithCollection:(LocationCollection *)collection {
     PFObject *obj = [PFObject objectWithClassName:@"Collection"];
     obj[@"title"] = collection.title;
     obj[@"snippet"] = collection.snippet;
@@ -72,7 +72,7 @@
     return obj;
 }
 
-+ (PFObject *)newPFObjFromLocation:(Location *)loc {
++ (PFObject *)newPFObjWithLocation:(Location *)loc {
     PFObject *obj = [PFObject objectWithClassName:@"Location"];
     obj[@"placeId"] = loc.placeId;
     obj[@"title"] = loc.title;
@@ -84,7 +84,7 @@
 
 + (PFObject *)oldPFObjFromLocation:(Location *)loc {
     PFQuery *query = [PFQuery queryWithClassName:@"Location"];
-    [query whereKey:@"objectId" equalTo:loc.objectId];
+    [query whereKey:@"objectId" equalTo:loc.parseObjectId];
     return [query getFirstObject];
 }
 
