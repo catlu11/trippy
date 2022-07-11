@@ -18,7 +18,7 @@
     return @[@"updatedAt", @"createdAt", @"title", @"snippet", @"createdBy", @"placeId", @"coord"];
 }
 
-+ (NSString *)getLoggedInUserId {
++ (NSString *)getLoggedInUsername {
     return [PFUser currentUser].username;
 }
 

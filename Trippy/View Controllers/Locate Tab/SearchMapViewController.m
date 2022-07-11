@@ -50,13 +50,12 @@
     self.itemsTableView.delegate = self.tableDataSource;
     self.itemsTableView.dataSource = self.tableDataSource;
     
-    
     // Set up Parse handler
     self.handler = [[CacheDataHandler alloc] init];
     self.handler.delegate = self;
     
     // Set up picker
-    self.collectionPickerView.delegate = self; // Also, can be done from IB, if you're using
+    self.collectionPickerView.delegate = self;
     self.collectionPickerView.dataSource = self;
     self.data = [[NSMutableArray alloc] init];
     
@@ -100,7 +99,7 @@
             NSLog(@"An error occurred fetching place details%@", [error localizedDescription]);
         }
         else {
-            Location *placeLoc = [[Location alloc] initWithPlace:result user:[ParseUtils getLoggedInUserId]];
+            Location *placeLoc = [[Location alloc] initWithPlace:result user:[ParseUtils getLoggedInUsername]];
             [self.mapView clearMarkers];
             [self.mapView addMarker:placeLoc];
             [self.mapView setCameraToLoc:placeLoc.coord animate:YES];

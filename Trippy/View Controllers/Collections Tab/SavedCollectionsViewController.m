@@ -8,7 +8,7 @@
 #import "SceneDelegate.h"
 #import "SavedCollectionsViewController.h"
 #import "CreateCollectionViewController.h"
-#import "ListTableViewController.h"
+#import "MapItemListViewController.h"
 #import "LoginViewController.h"
 #import "LogoutHandler.h"
 

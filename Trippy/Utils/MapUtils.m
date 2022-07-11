@@ -7,6 +7,7 @@
 
 #import "MapUtils.h"
 #import "Location.h"
+#import "LocationCollection.h"
 @import GoogleMaps;
 @import GooglePlaces;
 
@@ -28,5 +29,12 @@
     UIImage *image = [UIImage imageWithData:data];
     return image;
 }
+
+//+ (NSString *) generateRouteApiRequestUrl:(LocationCollection *)collection
+//                                 optimize:(BOOL)optimize
+//                            departureTime:(NSDate *)departureTime
+//                              arrivalTime:(NSDate *)arrivalTime {
+//
+//}
 
 @end

@@ -6,7 +6,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "ListTableViewController.h"
+#import "MapItemListViewController.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -14,7 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)createdNew:(LocationCollection *)col ;
 @end
 
-@interface CreateCollectionViewController : ListTableViewController
+@interface CreateCollectionViewController : MapItemListViewController
 @property (nonatomic, weak) id<CreateCollectionDelegate> delegate;
 @end
 

@@ -16,11 +16,14 @@
 		F0C75F7828775A680015BB74 /* SavedCollectionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F0C75F7728775A680015BB74 /* SavedCollectionsViewController.m */; };
 		F0C75F7B28775C7F0015BB74 /* LogoutHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = F0C75F7A28775C7F0015BB74 /* LogoutHandler.m */; };
 		F0C75F80287778640015BB74 /* LocationCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = F0C75F7F287778640015BB74 /* LocationCollection.m */; };
-		F0C75F83287786B60015BB74 /* ListTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F0C75F82287786B60015BB74 /* ListTableViewController.m */; };
+		F0C75F83287786B60015BB74 /* MapItemListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F0C75F82287786B60015BB74 /* MapItemListViewController.m */; };
 		F0C75F86287786D70015BB74 /* StaticMapCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F0C75F85287786D70015BB74 /* StaticMapCell.m */; };
 		F0C75F8C28778FED0015BB74 /* CacheDataHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = F0C75F8B28778FED0015BB74 /* CacheDataHandler.m */; };
 		F0C75F92287799070015BB74 /* ParseUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = F0C75F91287799070015BB74 /* ParseUtils.m */; };
 		F0C75F982878D7750015BB74 /* CreateCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F0C75F972878D7750015BB74 /* CreateCollectionViewController.m */; };
+		F0C75F9E287C9EBF0015BB74 /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F0C75F9D287C9EBF0015BB74 /* HomeViewController.m */; };
+		F0C75FA1287C9F4E0015BB74 /* CreateItineraryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F0C75FA0287C9F4E0015BB74 /* CreateItineraryViewController.m */; };
+		F0C75FA4287CA2430015BB74 /* ItineraryDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F0C75FA3287CA2430015BB74 /* ItineraryDetailViewController.m */; };
 		F0F335752874A0E700470507 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F0F335742874A0E700470507 /* AppDelegate.m */; };
 		F0F335782874A0E700470507 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F0F335772874A0E700470507 /* SceneDelegate.m */; };
 		F0F3357B2874A0E700470507 /* SearchMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F0F3357A2874A0E700470507 /* SearchMapViewController.m */; };
@@ -74,8 +77,8 @@
 		F0C75F7A28775C7F0015BB74 /* LogoutHandler.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LogoutHandler.m; sourceTree = "<group>"; };
 		F0C75F7E287778640015BB74 /* LocationCollection.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LocationCollection.h; sourceTree = "<group>"; };
 		F0C75F7F287778640015BB74 /* LocationCollection.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LocationCollection.m; sourceTree = "<group>"; };
-		F0C75F81287786B60015BB74 /* ListTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ListTableViewController.h; sourceTree = "<group>"; };
-		F0C75F82287786B60015BB74 /* ListTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ListTableViewController.m; sourceTree = "<group>"; };
+		F0C75F81287786B60015BB74 /* MapItemListViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MapItemListViewController.h; sourceTree = "<group>"; };
+		F0C75F82287786B60015BB74 /* MapItemListViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MapItemListViewController.m; sourceTree = "<group>"; };
 		F0C75F84287786D70015BB74 /* StaticMapCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StaticMapCell.h; sourceTree = "<group>"; };
 		F0C75F85287786D70015BB74 /* StaticMapCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = StaticMapCell.m; sourceTree = "<group>"; };
 		F0C75F8A28778FED0015BB74 /* CacheDataHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CacheDataHandler.h; sourceTree = "<group>"; };
@@ -84,6 +87,12 @@
 		F0C75F91287799070015BB74 /* ParseUtils.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ParseUtils.m; sourceTree = "<group>"; };
 		F0C75F962878D7750015BB74 /* CreateCollectionViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CreateCollectionViewController.h; sourceTree = "<group>"; };
 		F0C75F972878D7750015BB74 /* CreateCollectionViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CreateCollectionViewController.m; sourceTree = "<group>"; };
+		F0C75F9C287C9EBF0015BB74 /* HomeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HomeViewController.h; sourceTree = "<group>"; };
+		F0C75F9D287C9EBF0015BB74 /* HomeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HomeViewController.m; sourceTree = "<group>"; };
+		F0C75F9F287C9F4E0015BB74 /* CreateItineraryViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CreateItineraryViewController.h; sourceTree = "<group>"; };
+		F0C75FA0287C9F4E0015BB74 /* CreateItineraryViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CreateItineraryViewController.m; sourceTree = "<group>"; };
+		F0C75FA2287CA2430015BB74 /* ItineraryDetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ItineraryDetailViewController.h; sourceTree = "<group>"; };
+		F0C75FA3287CA2430015BB74 /* ItineraryDetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ItineraryDetailViewController.m; sourceTree = "<group>"; };
 		F0F335702874A0E700470507 /* Trippy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Trippy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F0F335732874A0E700470507 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		F0F335742874A0E700470507 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -158,6 +167,57 @@
 				21341CAF207ECB6E4069795F /* Pods-TrippyTests.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		F0C75FA5287CC1BA0015BB74 /* Collections Tab */ = {
+			isa = PBXGroup;
+			children = (
+				F0C75F7628775A680015BB74 /* SavedCollectionsViewController.h */,
+				F0C75F7728775A680015BB74 /* SavedCollectionsViewController.m */,
+				F0C75F962878D7750015BB74 /* CreateCollectionViewController.h */,
+				F0C75F972878D7750015BB74 /* CreateCollectionViewController.m */,
+			);
+			path = "Collections Tab";
+			sourceTree = "<group>";
+		};
+		F0C75FA6287CC1D50015BB74 /* Locate Tab */ = {
+			isa = PBXGroup;
+			children = (
+				F0F335792874A0E700470507 /* SearchMapViewController.h */,
+				F0F3357A2874A0E700470507 /* SearchMapViewController.m */,
+			);
+			path = "Locate Tab";
+			sourceTree = "<group>";
+		};
+		F0C75FA7287CC1EC0015BB74 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				F0C75F70287747A20015BB74 /* LoginViewController.h */,
+				F0C75F71287747A20015BB74 /* LoginViewController.m */,
+			);
+			path = Login;
+			sourceTree = "<group>";
+		};
+		F0C75FA8287CC2020015BB74 /* Itinerary Tab */ = {
+			isa = PBXGroup;
+			children = (
+				F0C75F9C287C9EBF0015BB74 /* HomeViewController.h */,
+				F0C75F9D287C9EBF0015BB74 /* HomeViewController.m */,
+				F0C75F9F287C9F4E0015BB74 /* CreateItineraryViewController.h */,
+				F0C75FA0287C9F4E0015BB74 /* CreateItineraryViewController.m */,
+				F0C75FA2287CA2430015BB74 /* ItineraryDetailViewController.h */,
+				F0C75FA3287CA2430015BB74 /* ItineraryDetailViewController.m */,
+			);
+			path = "Itinerary Tab";
+			sourceTree = "<group>";
+		};
+		F0C75FA9287CC2190015BB74 /* Templates */ = {
+			isa = PBXGroup;
+			children = (
+				F0C75F81287786B60015BB74 /* MapItemListViewController.h */,
+				F0C75F82287786B60015BB74 /* MapItemListViewController.m */,
+			);
+			path = Templates;
 			sourceTree = "<group>";
 		};
 		F0F335672874A0E700470507 = {
@@ -235,16 +295,11 @@
 		F0F335A92875F07300470507 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				F0C75F7628775A680015BB74 /* SavedCollectionsViewController.h */,
-				F0C75F7728775A680015BB74 /* SavedCollectionsViewController.m */,
-				F0C75F81287786B60015BB74 /* ListTableViewController.h */,
-				F0C75F82287786B60015BB74 /* ListTableViewController.m */,
-				F0F335792874A0E700470507 /* SearchMapViewController.h */,
-				F0F3357A2874A0E700470507 /* SearchMapViewController.m */,
-				F0C75F70287747A20015BB74 /* LoginViewController.h */,
-				F0C75F71287747A20015BB74 /* LoginViewController.m */,
-				F0C75F962878D7750015BB74 /* CreateCollectionViewController.h */,
-				F0C75F972878D7750015BB74 /* CreateCollectionViewController.m */,
+				F0C75FA9287CC2190015BB74 /* Templates */,
+				F0C75FA8287CC2020015BB74 /* Itinerary Tab */,
+				F0C75FA7287CC1EC0015BB74 /* Login */,
+				F0C75FA6287CC1D50015BB74 /* Locate Tab */,
+				F0C75FA5287CC1BA0015BB74 /* Collections Tab */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -529,7 +584,10 @@
 				F0C75F982878D7750015BB74 /* CreateCollectionViewController.m in Sources */,
 				F0C75F8C28778FED0015BB74 /* CacheDataHandler.m in Sources */,
 				F0C75F92287799070015BB74 /* ParseUtils.m in Sources */,
-				F0C75F83287786B60015BB74 /* ListTableViewController.m in Sources */,
+				F0C75F9E287C9EBF0015BB74 /* HomeViewController.m in Sources */,
+				F0C75FA1287C9F4E0015BB74 /* CreateItineraryViewController.m in Sources */,
+				F0C75FA4287CA2430015BB74 /* ItineraryDetailViewController.m in Sources */,
+				F0C75F83287786B60015BB74 /* MapItemListViewController.m in Sources */,
 				F0F335752874A0E700470507 /* AppDelegate.m in Sources */,
 				F0C75F7528774F940015BB74 /* UserAuthHandler.m in Sources */,
 				F0C75F7828775A680015BB74 /* SavedCollectionsViewController.m in Sources */,

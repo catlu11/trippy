@@ -30,12 +30,6 @@
         case kLocation: [self updateUIElementsLocation];
             break;
     }
-//    if (type == kCollection) {
-//        [self updateUIElementsCollection];
-//    }
-//    else if (type == kLocation) {
-//        [self updateUIElementsLocation];
-//    }
 }
 
 - (void) updateUIElementsCollection {
@@ -65,7 +59,9 @@
     [self.descriptionLabel sizeToFit];
     
     // Get static thumbnail
-    self.mapImageView.image = [MapUtils getStaticMapImage:self.location.coord width:self.mapImageView.frame.size.width height:self.mapImageView.frame.size.height];
+    if (self.mapImageView != nil) {
+        self.mapImageView.image = [MapUtils getStaticMapImage:self.location.coord width:self.mapImageView.frame.size.width height:self.mapImageView.frame.size.height];
+    }
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

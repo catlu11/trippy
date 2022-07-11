@@ -5,15 +5,15 @@
 //  Created by Catherine Lu on 7/7/22.
 //
 
-#import "ListTableViewController.h"
+#import "MapItemListViewController.h"
 #import "CacheDataHandler.h"
 
-@interface ListTableViewController () <UITableViewDelegate, UITableViewDataSource, CacheDataHandlerDelegate>
+@interface MapItemListViewController () <UITableViewDelegate, UITableViewDataSource, CacheDataHandlerDelegate>
 @property (strong, nonatomic) UIRefreshControl *refreshControl;
 @property (strong, nonatomic) CacheDataHandler *handler;
 @end
 
-@implementation ListTableViewController
+@implementation MapItemListViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
