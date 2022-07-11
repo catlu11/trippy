@@ -15,6 +15,12 @@
 		F0C75F7528774F940015BB74 /* UserAuthHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = F0C75F7428774F940015BB74 /* UserAuthHandler.m */; };
 		F0C75F7828775A680015BB74 /* SavedCollectionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F0C75F7728775A680015BB74 /* SavedCollectionsViewController.m */; };
 		F0C75F7B28775C7F0015BB74 /* LogoutHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = F0C75F7A28775C7F0015BB74 /* LogoutHandler.m */; };
+		F0C75F80287778640015BB74 /* LocationCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = F0C75F7F287778640015BB74 /* LocationCollection.m */; };
+		F0C75F83287786B60015BB74 /* ListTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F0C75F82287786B60015BB74 /* ListTableViewController.m */; };
+		F0C75F86287786D70015BB74 /* StaticMapCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F0C75F85287786D70015BB74 /* StaticMapCell.m */; };
+		F0C75F8C28778FED0015BB74 /* CacheDataHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = F0C75F8B28778FED0015BB74 /* CacheDataHandler.m */; };
+		F0C75F92287799070015BB74 /* ParseUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = F0C75F91287799070015BB74 /* ParseUtils.m */; };
+		F0C75F982878D7750015BB74 /* CreateCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F0C75F972878D7750015BB74 /* CreateCollectionViewController.m */; };
 		F0F335752874A0E700470507 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F0F335742874A0E700470507 /* AppDelegate.m */; };
 		F0F335782874A0E700470507 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F0F335772874A0E700470507 /* SceneDelegate.m */; };
 		F0F3357B2874A0E700470507 /* SearchMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F0F3357A2874A0E700470507 /* SearchMapViewController.m */; };
@@ -66,6 +72,18 @@
 		F0C75F7728775A680015BB74 /* SavedCollectionsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SavedCollectionsViewController.m; sourceTree = "<group>"; };
 		F0C75F7928775C7F0015BB74 /* LogoutHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LogoutHandler.h; sourceTree = "<group>"; };
 		F0C75F7A28775C7F0015BB74 /* LogoutHandler.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LogoutHandler.m; sourceTree = "<group>"; };
+		F0C75F7E287778640015BB74 /* LocationCollection.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LocationCollection.h; sourceTree = "<group>"; };
+		F0C75F7F287778640015BB74 /* LocationCollection.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LocationCollection.m; sourceTree = "<group>"; };
+		F0C75F81287786B60015BB74 /* ListTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ListTableViewController.h; sourceTree = "<group>"; };
+		F0C75F82287786B60015BB74 /* ListTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ListTableViewController.m; sourceTree = "<group>"; };
+		F0C75F84287786D70015BB74 /* StaticMapCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StaticMapCell.h; sourceTree = "<group>"; };
+		F0C75F85287786D70015BB74 /* StaticMapCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = StaticMapCell.m; sourceTree = "<group>"; };
+		F0C75F8A28778FED0015BB74 /* CacheDataHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CacheDataHandler.h; sourceTree = "<group>"; };
+		F0C75F8B28778FED0015BB74 /* CacheDataHandler.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CacheDataHandler.m; sourceTree = "<group>"; };
+		F0C75F90287799070015BB74 /* ParseUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ParseUtils.h; sourceTree = "<group>"; };
+		F0C75F91287799070015BB74 /* ParseUtils.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ParseUtils.m; sourceTree = "<group>"; };
+		F0C75F962878D7750015BB74 /* CreateCollectionViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CreateCollectionViewController.h; sourceTree = "<group>"; };
+		F0C75F972878D7750015BB74 /* CreateCollectionViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CreateCollectionViewController.m; sourceTree = "<group>"; };
 		F0F335702874A0E700470507 /* Trippy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Trippy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F0F335732874A0E700470507 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		F0F335742874A0E700470507 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -208,6 +226,8 @@
 			children = (
 				F0F335AC2875F0B400470507 /* SelectableMap.h */,
 				F0F335AD2875F0B400470507 /* SelectableMap.m */,
+				F0C75F84287786D70015BB74 /* StaticMapCell.h */,
+				F0C75F85287786D70015BB74 /* StaticMapCell.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -215,12 +235,16 @@
 		F0F335A92875F07300470507 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				F0F335792874A0E700470507 /* SearchMapViewController.h */,
 				F0C75F7628775A680015BB74 /* SavedCollectionsViewController.h */,
 				F0C75F7728775A680015BB74 /* SavedCollectionsViewController.m */,
+				F0C75F81287786B60015BB74 /* ListTableViewController.h */,
+				F0C75F82287786B60015BB74 /* ListTableViewController.m */,
+				F0F335792874A0E700470507 /* SearchMapViewController.h */,
 				F0F3357A2874A0E700470507 /* SearchMapViewController.m */,
 				F0C75F70287747A20015BB74 /* LoginViewController.h */,
 				F0C75F71287747A20015BB74 /* LoginViewController.m */,
+				F0C75F962878D7750015BB74 /* CreateCollectionViewController.h */,
+				F0C75F972878D7750015BB74 /* CreateCollectionViewController.m */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -230,6 +254,8 @@
 			children = (
 				F0F335B12875F18700470507 /* Location.h */,
 				F0F335B22875F18700470507 /* Location.m */,
+				F0C75F7E287778640015BB74 /* LocationCollection.h */,
+				F0C75F7F287778640015BB74 /* LocationCollection.m */,
 			);
 			name = Models;
 			path = ..;
@@ -242,6 +268,8 @@
 				F0C75F7428774F940015BB74 /* UserAuthHandler.m */,
 				F0C75F7928775C7F0015BB74 /* LogoutHandler.h */,
 				F0C75F7A28775C7F0015BB74 /* LogoutHandler.m */,
+				F0C75F8A28778FED0015BB74 /* CacheDataHandler.h */,
+				F0C75F8B28778FED0015BB74 /* CacheDataHandler.m */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -251,6 +279,8 @@
 			children = (
 				F0F335B52875F2E100470507 /* MapUtils.h */,
 				F0F335B62875F2E100470507 /* MapUtils.m */,
+				F0C75F90287799070015BB74 /* ParseUtils.h */,
+				F0C75F91287799070015BB74 /* ParseUtils.m */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -496,6 +526,10 @@
 			files = (
 				F0C75F72287747A20015BB74 /* LoginViewController.m in Sources */,
 				F0F3357B2874A0E700470507 /* SearchMapViewController.m in Sources */,
+				F0C75F982878D7750015BB74 /* CreateCollectionViewController.m in Sources */,
+				F0C75F8C28778FED0015BB74 /* CacheDataHandler.m in Sources */,
+				F0C75F92287799070015BB74 /* ParseUtils.m in Sources */,
+				F0C75F83287786B60015BB74 /* ListTableViewController.m in Sources */,
 				F0F335752874A0E700470507 /* AppDelegate.m in Sources */,
 				F0C75F7528774F940015BB74 /* UserAuthHandler.m in Sources */,
 				F0C75F7828775A680015BB74 /* SavedCollectionsViewController.m in Sources */,
@@ -503,8 +537,10 @@
 				F0F335B72875F2E100470507 /* MapUtils.m in Sources */,
 				F0F335862874A0EB00470507 /* main.m in Sources */,
 				F0C75F7B28775C7F0015BB74 /* LogoutHandler.m in Sources */,
+				F0C75F86287786D70015BB74 /* StaticMapCell.m in Sources */,
 				F0F335B32875F18700470507 /* Location.m in Sources */,
 				F0F335782874A0E700470507 /* SceneDelegate.m in Sources */,
+				F0C75F80287778640015BB74 /* LocationCollection.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

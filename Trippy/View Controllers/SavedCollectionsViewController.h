@@ -6,10 +6,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ListTableViewController.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface SavedCollectionsViewController : UIViewController
+@interface SavedCollectionsViewController : ListTableViewController
 
 @end
 
