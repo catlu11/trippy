@@ -30,11 +30,16 @@
     return image;
 }
 
-//+ (NSString *) generateRouteApiRequestUrl:(LocationCollection *)collection
-//                                 optimize:(BOOL)optimize
-//                            departureTime:(NSDate *)departureTime
-//                              arrivalTime:(NSDate *)arrivalTime {
-//
-//}
++ (NSDictionary *) generateRouteApiRequestParams:(LocationCollection *)collection
+                                 optimize:(BOOL)optimize
+                            departureTime:(NSDate *)departureTime
+                              arrivalTime:(NSDate *)arrivalTime {
+//    (Location *)origin
+//                              waypoints:(NSArray *)waypoints
+//                              stopovers:(NSArray *)stopovers
+//                          departureTime:(NSDate *)departureTime
+//                               optimize:(BOOL)optimize
+    // TODO: Implement
+}
 
 @end

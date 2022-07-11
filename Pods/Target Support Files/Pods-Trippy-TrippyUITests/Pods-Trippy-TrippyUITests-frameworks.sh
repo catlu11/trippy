@@ -176,18 +176,14 @@ code_sign_if_enabled() {
 }
 
 if [[ "$CONFIGURATION" == "Debug" ]]; then
-  install_framework "${PODS_ROOT}/MQCore/MQCore-1.0.0/MQCore.framework"
-  install_framework "${PODS_ROOT}/MQNavigation/MQNavigation-3.5.0/MQNavigation.framework"
-  install_framework "${PODS_ROOT}/MapQuestMaps/MapQuestMaps-4.2.0/MapQuestMaps.framework"
-  install_framework "${PODS_ROOT}/Mapbox-iOS-SDK/dynamic/Mapbox.framework"
-  install_framework "${BUILT_PRODUCTS_DIR}/Protobuf/Protobuf.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/AFNetworking/AFNetworking.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/Bolts/Bolts.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/Parse/Parse.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
-  install_framework "${PODS_ROOT}/MQCore/MQCore-1.0.0/MQCore.framework"
-  install_framework "${PODS_ROOT}/MQNavigation/MQNavigation-3.5.0/MQNavigation.framework"
-  install_framework "${PODS_ROOT}/MapQuestMaps/MapQuestMaps-4.2.0/MapQuestMaps.framework"
-  install_framework "${PODS_ROOT}/Mapbox-iOS-SDK/dynamic/Mapbox.framework"
-  install_framework "${BUILT_PRODUCTS_DIR}/Protobuf/Protobuf.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/AFNetworking/AFNetworking.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/Bolts/Bolts.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/Parse/Parse.framework"
 fi
 if [ "${COCOAPODS_PARALLEL_CODE_SIGN}" == "true" ]; then
   wait

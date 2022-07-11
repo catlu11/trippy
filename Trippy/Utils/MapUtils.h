@@ -15,6 +15,10 @@ NS_ASSUME_NONNULL_BEGIN
 @interface MapUtils : NSObject
 + (NSString *)getApiKey;
 + (UIImage *)getStaticMapImage:(CLLocationCoordinate2D)location width:(int)width height:(int)height;
++ (NSDictionary *) generateRouteApiRequestParams:(LocationCollection *)collection
+                                 optimize:(BOOL)optimize
+                            departureTime:(NSDate *)departureTime
+                                     arrivalTime:(NSDate *)arrivalTime;
 @end
 
 NS_ASSUME_NONNULL_END

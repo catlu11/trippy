@@ -7,7 +7,7 @@
 
 #import <Foundation/Foundation.h>
 #import "Location.h"
-#import "Collection.h"
+#import "LocationCollection.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
