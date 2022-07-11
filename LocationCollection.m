@@ -5,9 +5,9 @@
 //  Created by Catherine Lu on 7/7/22.
 //
 
-#import "Collection.h"
+#import "LocationCollection.h"
 #import "Parse/Parse.h"
 
-@implementation Collection
+@implementation LocationCollection
 
 @end

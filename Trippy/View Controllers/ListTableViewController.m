@@ -6,11 +6,11 @@
 //
 
 #import "ListTableViewController.h"
-#import "FetchSavedHandler.h"
+#import "CacheDataHandler.h"
 
-@interface ListTableViewController () <UITableViewDelegate, UITableViewDataSource, FetchSavedHandlerDelegate>
+@interface ListTableViewController () <UITableViewDelegate, UITableViewDataSource, CacheDataHandlerDelegate>
 @property (strong, nonatomic) UIRefreshControl *refreshControl;
-@property (strong, nonatomic) FetchSavedHandler *handler;
+@property (strong, nonatomic) CacheDataHandler *handler;
 @end
 
 @implementation ListTableViewController
@@ -29,17 +29,20 @@
     [self.listTableView insertSubview:self.refreshControl atIndex:0];
     
     // Fetch handler
-    self.handler = [[FetchSavedHandler alloc] init];
+    self.handler = [[CacheDataHandler alloc] init];
     self.handler.delegate = self;
         
     [self refreshData];
 }
 
 - (void) refreshData {
-    if(self.listType == kCollection) {
-        [self.handler fetchSavedCollections];
-    } else if (self.listType == kLocation) {
-        [self.handler fetchSavedLocations];
+    switch (self.listType) {
+        case kCollection:
+            [self.handler fetchSavedCollections];
+            break;
+        case kLocation:
+            [self.handler fetchSavedLocations];
+            break;
     }
 }
 
@@ -53,10 +56,13 @@
 
 - (nonnull UITableViewCell *)tableView:(nonnull UITableView *)tableView cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
     StaticMapCell *cell = [tableView dequeueReusableCellWithIdentifier:@"StaticMapCell" forIndexPath:indexPath];
-    if(self.listType == kCollection) {
-        cell.collection = self.data[indexPath.row];
-    } else if (self.listType == kLocation) {
-        cell.location = self.data[indexPath.row];
+    switch (self.listType) {
+        case kCollection:
+            cell.collection = self.data[indexPath.row];
+            break;
+        case kLocation:
+            cell.location = self.data[indexPath.row];
+            break;
     }
     [cell updateUIElements:self.listType];
     return cell;
@@ -66,9 +72,9 @@
     return self.data.count;
 }
 
-# pragma mark - FetchSavedHandlerDelegate
+# pragma mark - CacheDataHandlerDelegate
 
-- (void) addFetchedCollection:(Collection *)collection {
+- (void) addFetchedCollection:(LocationCollection *)collection {
     if(self.listType == kCollection) {
         [self.data addObject:collection];
     }

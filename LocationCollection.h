@@ -14,7 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface LocationCollection : NSObject
 @property (strong, nonatomic) NSArray *locations;
 @property (strong, nonatomic) NSString *userId;
-@property (strong, nonatomic) NSString *objectId;
+@property (strong, nonatomic) NSString *parseObjectId;
 @property (strong, nonatomic) NSDate *createdAt;
 @property (strong, nonatomic) NSDate *lastUpdated;
 @property (strong, nonatomic) NSString *title;

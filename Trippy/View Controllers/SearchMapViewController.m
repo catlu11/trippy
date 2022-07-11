@@ -9,20 +9,20 @@
 #import "SelectableMap.h"
 #import "Location.h"
 #import "ParseUtils.h"
-#import "FetchSavedHandler.h"
+#import "CacheDataHandler.h"
 @import GooglePlaces;
 @import GoogleMaps;
 
-@interface SearchMapViewController () <UISearchBarDelegate, GMSAutocompleteTableDataSourceDelegate, UIPickerViewDelegate, UIPickerViewDataSource, FetchSavedHandlerDelegate>
+@interface SearchMapViewController () <UISearchBarDelegate, GMSAutocompleteTableDataSourceDelegate, UIPickerViewDelegate, UIPickerViewDataSource, CacheDataHandlerDelegate>
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 @property (weak, nonatomic) IBOutlet SelectableMap *mapView;
 @property (weak, nonatomic) IBOutlet UITableView *itemsTableView;
 @property (strong, nonatomic) GMSAutocompleteTableDataSource *tableDataSource;
 @property (weak, nonatomic) IBOutlet UIButton *collectionButton;
 @property (weak, nonatomic) IBOutlet UIPickerView *collectionPickerView;
-@property (strong, nonatomic) FetchSavedHandler *handler;
+@property (strong, nonatomic) CacheDataHandler *handler;
 @property (strong, nonatomic) Location *selectedLoc;
-@property (strong, nonatomic) Collection *selectedCol;
+@property (strong, nonatomic) LocationCollection *selectedCol;
 @property (strong, nonatomic) NSMutableArray *data;
 @end
 
@@ -52,7 +52,7 @@
     
     
     // Set up Parse handler
-    self.handler = [[FetchSavedHandler alloc] init];
+    self.handler = [[CacheDataHandler alloc] init];
     self.handler.delegate = self;
     
     // Set up picker
@@ -143,22 +143,22 @@
 }
 
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
-    Collection *col = self.data[row];
+    LocationCollection *col = self.data[row];
     return col.title;
 }
 
 # pragma mark - UIPickerViewDelegate
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
-    Collection *selected = self.data[row];
+    LocationCollection *selected = self.data[row];
     [self.collectionButton setTitle:selected.title forState:UIControlStateNormal];
     self.selectedCol = selected;
     self.collectionPickerView.hidden = YES;
 }
 
-# pragma mark - FetchSavedHandlerDelegate
+# pragma mark - CacheDataHandlerDelegate
 
-- (void) addFetchedCollection:(Collection *)collection {
+- (void) addFetchedCollection:(LocationCollection *)collection {
     [self.data addObject:collection];
     [self.collectionPickerView reloadAllComponents];
 }

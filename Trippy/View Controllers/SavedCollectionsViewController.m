@@ -53,7 +53,7 @@
 }
 
 # pragma mark - CreateCollectionDelegate
-- (void) createdNew:(Collection *)col {
+- (void) createdNew:(LocationCollection *)col {
     [self.data insertObject:col atIndex:0];
     [self.listTableView reloadData];
 }
