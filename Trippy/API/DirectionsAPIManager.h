@@ -6,12 +6,14 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "AFNetworking.h"
+#import "AFHTTPSessionManager.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface DirectionsAPIManager : AFHTTPSessionManager
-+ (instancetype)shared;
++ (DirectionsAPIManager *)shared;
+- (instancetype)initWithBaseURL:(NSURL *)url;
+- (void)getDirectionsWithCompletion:(NSString *)url completion:(void (^)(NSDictionary *response, NSError *))completion;
 @end
 
 NS_ASSUME_NONNULL_END

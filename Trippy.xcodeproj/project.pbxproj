@@ -245,6 +245,19 @@
 			path = "Itinerary Models";
 			sourceTree = "<group>";
 		};
+		F0C75FBF287DE3190015BB74 /* Query Handlers */ = {
+			isa = PBXGroup;
+			children = (
+				F0C75F7328774F940015BB74 /* UserAuthHandler.h */,
+				F0C75F7428774F940015BB74 /* UserAuthHandler.m */,
+				F0C75F7928775C7F0015BB74 /* LogoutHandler.h */,
+				F0C75F7A28775C7F0015BB74 /* LogoutHandler.m */,
+				F0C75F8A28778FED0015BB74 /* CacheDataHandler.h */,
+				F0C75F8B28778FED0015BB74 /* CacheDataHandler.m */,
+			);
+			path = "Query Handlers";
+			sourceTree = "<group>";
+		};
 		F0F335672874A0E700470507 = {
 			isa = PBXGroup;
 			children = (
@@ -270,6 +283,7 @@
 		F0F335722874A0E700470507 /* Trippy */ = {
 			isa = PBXGroup;
 			children = (
+				F0C75FBF287DE3190015BB74 /* Query Handlers */,
 				F0F335B42875F2BD00470507 /* Utils */,
 				F0F335AB2875F08D00470507 /* API */,
 				F0F335A92875F07300470507 /* View Controllers */,
@@ -347,12 +361,6 @@
 			children = (
 				F0C75FBC287CE4CB0015BB74 /* DirectionsAPIManager.h */,
 				F0C75FBD287CE4CB0015BB74 /* DirectionsAPIManager.m */,
-				F0C75F7328774F940015BB74 /* UserAuthHandler.h */,
-				F0C75F7428774F940015BB74 /* UserAuthHandler.m */,
-				F0C75F7928775C7F0015BB74 /* LogoutHandler.h */,
-				F0C75F7A28775C7F0015BB74 /* LogoutHandler.m */,
-				F0C75F8A28778FED0015BB74 /* CacheDataHandler.h */,
-				F0C75F8B28778FED0015BB74 /* CacheDataHandler.m */,
 			);
 			path = API;
 			sourceTree = "<group>";
