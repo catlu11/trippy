@@ -9,6 +9,8 @@
 #import "CacheDataHandler.h"
 #import "ItineraryDetailViewController.h"
 #import "Location.h"
+#import "DirectionsAPIManager.h"
+#import "MapUtils.h"
 
 @interface CreateItineraryViewController () <UIPickerViewDelegate, UIPickerViewDataSource, CacheDataHandlerDelegate>
 @property (weak, nonatomic) IBOutlet UIButton *collectionButton;
@@ -75,9 +77,17 @@
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if([[segue identifier] isEqualToString:@"itineraryDetailSegue"]) {
         ItineraryDetailViewController *vc = segue.destinationViewController;
-        vc.collection = self.selectedCol;
-        vc.originLoc = self.selectedLoc;
-        vc.itineraryName = self.nameField.text;
+        // Post itinerary
+        NSString *apiUrl = [MapUtils generateDirectionsApiUrl:self.selectedCol origin:self.selectedLoc optimize:TRUE departureTime:nil];
+        [[DirectionsAPIManager shared] getDirectionsWithCompletion:apiUrl completion:^(NSDictionary * _Nonnull response, NSError * _Nonnull) {
+            if (response) {
+                vc.itinerary = [[Itinerary alloc] initWithDictionary:response];
+                vc.itinerary.sourceCollection = self.selectedCol;
+                vc.itinerary.originLocation = self.selectedLoc;
+                vc.itinerary.name = self.nameField.text;
+                [self.colHandler postNewItinerary:vc.itinerary];
+            }
+        }];
     }
 }
 
@@ -110,6 +120,10 @@
 - (void) addFetchedCollection:(LocationCollection *)collection {
     [self.collectionData addObject:collection];
     [self.collectionPickerView reloadAllComponents];
+}
+
+- (void) postedItinerarySuccess {
+    // do something
 }
 
 # pragma mark - UITableViewDataSource

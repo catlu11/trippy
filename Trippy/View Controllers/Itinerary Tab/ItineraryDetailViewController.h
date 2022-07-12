@@ -13,9 +13,6 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface ItineraryDetailViewController : UIViewController
-@property (strong, nonatomic) LocationCollection *collection;
-@property (strong, nonatomic) Location *originLoc;
-@property (strong, nonatomic) NSString *itineraryName;
 @property (strong, nonatomic) Itinerary *itinerary;
 @end
 

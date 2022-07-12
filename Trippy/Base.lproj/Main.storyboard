@@ -355,7 +355,7 @@
                                                 <state key="normal" title="Button"/>
                                                 <buttonConfiguration key="configuration" style="plain" title="&lt; Back"/>
                                                 <connections>
-                                                    <action selector="tapBack:" destination="h0c-gf-E4D" eventType="touchUpInside" id="01F-hf-gYs"/>
+                                                    <action selector="tapBack:" destination="h0c-gf-E4D" eventType="touchUpInside" id="IeU-cH-EN0"/>
                                                 </connections>
                                             </button>
                                         </subviews>
