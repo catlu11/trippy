@@ -23,10 +23,10 @@
 		F0C75F9E287C9EBF0015BB74 /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F0C75F9D287C9EBF0015BB74 /* HomeViewController.m */; };
 		F0C75FA1287C9F4E0015BB74 /* CreateItineraryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F0C75FA0287C9F4E0015BB74 /* CreateItineraryViewController.m */; };
 		F0C75FA4287CA2430015BB74 /* ItineraryDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F0C75FA3287CA2430015BB74 /* ItineraryDetailViewController.m */; };
-		F0C75FAC287CCF4C0015BB74 /* ItineraryItem.m in Sources */ = {isa = PBXBuildFile; fileRef = F0C75FAB287CCF4C0015BB74 /* ItineraryItem.m */; };
 		F0C75FAF287CCF580015BB74 /* Itinerary.m in Sources */ = {isa = PBXBuildFile; fileRef = F0C75FAE287CCF580015BB74 /* Itinerary.m */; };
 		F0C75FB3287CD0FF0015BB74 /* RouteLeg.m in Sources */ = {isa = PBXBuildFile; fileRef = F0C75FB2287CD0FF0015BB74 /* RouteLeg.m */; };
 		F0C75FBE287CE4CB0015BB74 /* DirectionsAPIManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F0C75FBD287CE4CB0015BB74 /* DirectionsAPIManager.m */; };
+		F0C75FC2287DE8690015BB74 /* RouteStep.m in Sources */ = {isa = PBXBuildFile; fileRef = F0C75FC1287DE8690015BB74 /* RouteStep.m */; };
 		F0F335752874A0E700470507 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F0F335742874A0E700470507 /* AppDelegate.m */; };
 		F0F335782874A0E700470507 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F0F335772874A0E700470507 /* SceneDelegate.m */; };
 		F0F3357B2874A0E700470507 /* SearchMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F0F3357A2874A0E700470507 /* SearchMapViewController.m */; };
@@ -97,14 +97,14 @@
 		F0C75FA0287C9F4E0015BB74 /* CreateItineraryViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CreateItineraryViewController.m; sourceTree = "<group>"; };
 		F0C75FA2287CA2430015BB74 /* ItineraryDetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ItineraryDetailViewController.h; sourceTree = "<group>"; };
 		F0C75FA3287CA2430015BB74 /* ItineraryDetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ItineraryDetailViewController.m; sourceTree = "<group>"; };
-		F0C75FAA287CCF4C0015BB74 /* ItineraryItem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ItineraryItem.h; sourceTree = "<group>"; };
-		F0C75FAB287CCF4C0015BB74 /* ItineraryItem.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ItineraryItem.m; sourceTree = "<group>"; };
 		F0C75FAD287CCF580015BB74 /* Itinerary.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Itinerary.h; sourceTree = "<group>"; };
 		F0C75FAE287CCF580015BB74 /* Itinerary.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Itinerary.m; sourceTree = "<group>"; };
 		F0C75FB1287CD0FF0015BB74 /* RouteLeg.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RouteLeg.h; sourceTree = "<group>"; };
 		F0C75FB2287CD0FF0015BB74 /* RouteLeg.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RouteLeg.m; sourceTree = "<group>"; };
 		F0C75FBC287CE4CB0015BB74 /* DirectionsAPIManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DirectionsAPIManager.h; sourceTree = "<group>"; };
 		F0C75FBD287CE4CB0015BB74 /* DirectionsAPIManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DirectionsAPIManager.m; sourceTree = "<group>"; };
+		F0C75FC0287DE8690015BB74 /* RouteStep.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RouteStep.h; sourceTree = "<group>"; };
+		F0C75FC1287DE8690015BB74 /* RouteStep.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RouteStep.m; sourceTree = "<group>"; };
 		F0F335702874A0E700470507 /* Trippy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Trippy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F0F335732874A0E700470507 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		F0F335742874A0E700470507 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -235,12 +235,12 @@
 		F0C75FB0287CD0D30015BB74 /* Itinerary Models */ = {
 			isa = PBXGroup;
 			children = (
-				F0C75FAA287CCF4C0015BB74 /* ItineraryItem.h */,
-				F0C75FAB287CCF4C0015BB74 /* ItineraryItem.m */,
 				F0C75FAD287CCF580015BB74 /* Itinerary.h */,
 				F0C75FAE287CCF580015BB74 /* Itinerary.m */,
 				F0C75FB1287CD0FF0015BB74 /* RouteLeg.h */,
 				F0C75FB2287CD0FF0015BB74 /* RouteLeg.m */,
+				F0C75FC0287DE8690015BB74 /* RouteStep.h */,
+				F0C75FC1287DE8690015BB74 /* RouteStep.m */,
 			);
 			path = "Itinerary Models";
 			sourceTree = "<group>";
@@ -658,7 +658,6 @@
 				F0C75F92287799070015BB74 /* ParseUtils.m in Sources */,
 				F0C75F9E287C9EBF0015BB74 /* HomeViewController.m in Sources */,
 				F0C75FB3287CD0FF0015BB74 /* RouteLeg.m in Sources */,
-				F0C75FAC287CCF4C0015BB74 /* ItineraryItem.m in Sources */,
 				F0C75FA1287C9F4E0015BB74 /* CreateItineraryViewController.m in Sources */,
 				F0C75FA4287CA2430015BB74 /* ItineraryDetailViewController.m in Sources */,
 				F0C75F83287786B60015BB74 /* MapItemListViewController.m in Sources */,
@@ -669,6 +668,7 @@
 				F0F335B72875F2E100470507 /* MapUtils.m in Sources */,
 				F0F335862874A0EB00470507 /* main.m in Sources */,
 				F0C75F7B28775C7F0015BB74 /* LogoutHandler.m in Sources */,
+				F0C75FC2287DE8690015BB74 /* RouteStep.m in Sources */,
 				F0C75F86287786D70015BB74 /* StaticMapCell.m in Sources */,
 				F0F335B32875F18700470507 /* Location.m in Sources */,
 				F0C75FBE287CE4CB0015BB74 /* DirectionsAPIManager.m in Sources */,

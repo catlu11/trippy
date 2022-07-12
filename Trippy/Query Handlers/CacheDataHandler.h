@@ -9,6 +9,7 @@
 #import "Parse/Parse.h"
 #import "LocationCollection.h"
 #import "Location.h"
+#import "Itinerary.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -16,6 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void) addFetchedCollection:(LocationCollection *)collection;
 - (void) addFetchedLocation:(Location *)location;
 - (void) postedCollectionSuccess:(LocationCollection *)collection;
+- (void) postedItinerarySuccess;
 - (void) generalRequestFail:(NSError *)error;
 @end
 
@@ -25,6 +27,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void) fetchSavedLocations;
 - (void) postNewLocation:(Location *)location collection:(LocationCollection *)collection;
 - (void) postNewCollection:(LocationCollection *)collection;
+- (void) postNewItinerary:(Itinerary *)it;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -16,7 +16,7 @@
                       longitude:(double)longitude
                            user:(NSString *)user
                         placeId:(NSString *)placeId
-                  parseObjectId:(NSString *)parseObjectId{
+                  parseObjectId:(NSString *)parseObjectId {
     self = [super init];
     
     if (self) {

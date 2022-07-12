@@ -8,6 +8,7 @@
 #import <UIKit/UIKit.h>
 #import "LocationCollection.h"
 #import "Location.h"
+#import "Itinerary.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -15,6 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) LocationCollection *collection;
 @property (strong, nonatomic) Location *originLoc;
 @property (strong, nonatomic) NSString *itineraryName;
+@property (strong, nonatomic) Itinerary *itinerary;
 @end
 
 NS_ASSUME_NONNULL_END

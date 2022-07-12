@@ -36,7 +36,7 @@
                                         optimize:(BOOL)optimize
                                    departureTime:(NSDate *)departureTime {
     // TODO: Enable via waypoints instead of just stopovers
-    NSString *stops = optimize ? @"optimize=true" : @"";
+    NSString *stops = optimize ? @"optimize:true" : @"";
     for(Location *loc in collection.locations) {
         stops = [stops stringByAppendingString:[NSString stringWithFormat:@"|place_id:%@", loc.placeId]];
     }

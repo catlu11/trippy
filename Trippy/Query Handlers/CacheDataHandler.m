@@ -6,8 +6,6 @@
 //
 
 #import "CacheDataHandler.h"
-#import "LocationCollection.h"
-#import "Parse/Parse.h"
 #import "ParseUtils.h"
 
 @implementation CacheDataHandler
@@ -44,6 +42,20 @@
             collection.parseObjectId = newCollection.objectId;
             collection.lastUpdated = collection.createdAt;
             [self.delegate postedCollectionSuccess:collection];
+        }
+    }];
+}
+
+- (void) postNewItinerary:(Itinerary *)it {
+    PFObject *newItinerary = [ParseUtils newPFObjFromItinerary:it];
+    __weak CacheDataHandler *self_weak_ = self;
+    [newItinerary saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
+        if (succeeded) {
+            __strong CacheDataHandler *self = self_weak_;
+            it.createdAt = newItinerary.createdAt;
+            it.parseObjectId = newItinerary.objectId;
+            it.userId = [PFUser currentUser].username;
+            [self.delegate postedItinerarySuccess];
         }
     }];
 }

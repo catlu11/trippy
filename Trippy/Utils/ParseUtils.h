@@ -9,6 +9,7 @@
 #import "Parse/Parse.h"
 #import "LocationCollection.h"
 #import "Location.h"
+#import "Itinerary.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -21,6 +22,8 @@ NS_ASSUME_NONNULL_BEGIN
 + (PFObject *)newPFObjWithCollection:(LocationCollection *)collection;
 + (PFObject *)newPFObjWithLocation:(Location *)loc;
 + (PFObject *)oldPFObjFromLocation:(Location *)loc;
++ (PFObject *)oldPFObjFromCollection:(LocationCollection *)col;
++ (PFObject *)newPFObjFromItinerary:(Itinerary *)it;
 @end
 
 NS_ASSUME_NONNULL_END

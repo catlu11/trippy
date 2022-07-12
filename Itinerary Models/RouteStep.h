@@ -1,24 +1,25 @@
 //
-//  RouteLeg.h
+//  RouteStep.h
 //  Trippy
 //
-//  Created by Catherine Lu on 7/11/22.
+//  Created by Catherine Lu on 7/12/22.
 //
 
 #import <Foundation/Foundation.h>
-#import "RouteStep.h"
+@import GoogleMaps;
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface RouteLeg : NSObject
+@interface RouteStep : NSObject
 @property (strong, nonatomic) NSString *distanceText;
 @property (strong, nonatomic) NSNumber *distanceVal;
 @property (strong, nonatomic) NSString *durationText;
 @property (strong, nonatomic) NSNumber *durationVal;
+@property (strong, nonatomic) NSString *instruction;
 @property (assign, nonatomic) CLLocationCoordinate2D startCoord;
 @property (assign, nonatomic) CLLocationCoordinate2D endCoord;
-@property (strong, nonatomic) NSArray *routeSteps;
-// TODO: via waypoint attribute
+@property (strong, nonatomic) NSString *polyline;
+@property (strong, nonatomic) NSString *travelMode;
 
 - (instancetype) initWithDictionary:(NSDictionary *)dict;
 @end

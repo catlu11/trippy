@@ -6,7 +6,6 @@
 //
 
 #import "ParseUtils.h"
-#import "Location.h"
 
 @implementation ParseUtils
 
@@ -86,6 +85,24 @@
     PFQuery *query = [PFQuery queryWithClassName:@"Location"];
     [query whereKey:@"objectId" equalTo:loc.parseObjectId];
     return [query getFirstObject];
+}
+
++ (PFObject *)oldPFObjFromCollection:(LocationCollection *)col {
+    PFQuery *query = [PFQuery queryWithClassName:@"Collection"];
+    [query whereKey:@"objectId" equalTo:col.parseObjectId];
+    return [query getFirstObject];
+}
+
++ (PFObject *)newPFObjFromItinerary:(Itinerary *)it {
+    PFObject *obj = [PFObject objectWithClassName:@"Itinerary"];
+    obj[@"name"] = it.name;
+    obj[@"createdBy"] = [PFUser currentUser];
+    obj[@"origin"] = [self oldPFObjFromLocation:it.originLocation];
+    obj[@"sourceCollection"] = [self oldPFObjFromCollection:it.sourceCollection];
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:it.directionsJson options:0 error:nil];
+    PFFileObject *jsonFile = [PFFileObject fileObjectWithName:@"directions.json" data:jsonData];
+    obj[@"directionsJson"] = jsonFile;
+    return obj;
 }
 
 @end

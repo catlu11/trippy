@@ -8,23 +8,30 @@
 #import <Foundation/Foundation.h>
 #import "Location.h"
 #import "LocationCollection.h"
+#import "RouteLeg.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface Itinerary : NSObject
 // General attributes
-@property NSString *name;
-@property NSString *parseObjectId;
-@property NSDate *createdAt;
-@property NSString *userId;
-// Itinerary-specific attributes
-@property LocationCollection *sourceCollection;
-@property Location *originLocation;
-@property NSArray *itineraryItems;
-@property NSArray *viaPoints;
-@property NSArray *routeLegs;
+@property (strong, nonatomic) NSString *name;
+@property (strong, nonatomic) NSString *parseObjectId;
+@property (strong, nonatomic) NSDate *createdAt;
+@property (strong, nonatomic) NSString *userId;
 
-+ (instancetype) initWithDictionary:(NSDictionary *)dict;
+// Itinerary-specific attributes
+@property (strong, nonatomic) LocationCollection *sourceCollection;
+@property (strong, nonatomic) Location *originLocation;
+@property (strong, nonatomic) NSDictionary *directionsJson;
+@property (strong, nonatomic) NSDictionary *preferencesJson;
+
+// JSON fields
+@property (strong, nonatomic) NSArray *routeLegs;
+@property (strong, nonatomic) NSDictionary *bounds;
+@property (strong, nonatomic) NSString *overviewPolyline;
+@property (strong, nonatomic) NSArray *waypointOrder;
+
+- (instancetype) initWithDictionary:(NSDictionary *)dict;
 @end
 
 NS_ASSUME_NONNULL_END
