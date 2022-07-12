@@ -55,7 +55,33 @@
             it.createdAt = newItinerary.createdAt;
             it.parseObjectId = newItinerary.objectId;
             it.userId = [PFUser currentUser].username;
-            [self.delegate postedItinerarySuccess];
+            [self.delegate postedItinerarySuccess:it];
+        }
+    }];
+}
+
+- (void) fetchSavedItineraries {
+    PFQuery *query = [PFQuery queryWithClassName:@"Itinerary"];
+    [query whereKey:@"createdBy" equalTo:[PFUser currentUser]];
+    [query includeKeys:[ParseUtils getItineraryKeys]];
+    [query orderByDescending:@"createdAt"];
+    
+    __weak CacheDataHandler *self_weak_ = self;
+    [query findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
+        if (error) {
+            __strong CacheDataHandler *self = self_weak_;
+            [self.delegate generalRequestFail:error];
+        } else {
+            for(PFObject *obj in objects) {
+                [ParseUtils itineraryFromPFObj:obj completion:^(Itinerary * _Nonnull itinerary, NSError * _Nonnull) {
+                    __strong CacheDataHandler *self = self_weak_;
+                    if(error) {
+                        [self.delegate generalRequestFail:error];
+                    } else {
+                        [self.delegate addFetchedItinerary:itinerary];
+                    }
+                }];
+            }
         }
     }];
 }

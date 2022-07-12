@@ -9,6 +9,7 @@
 #import "Location.h"
 #import "LocationCollection.h"
 #import "RouteLeg.h"
+@import GoogleMaps;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -27,7 +28,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 // JSON fields
 @property (strong, nonatomic) NSArray *routeLegs;
-@property (strong, nonatomic) NSDictionary *bounds;
+@property (strong, nonatomic) GMSCoordinateBounds *bounds;
 @property (strong, nonatomic) NSString *overviewPolyline;
 @property (strong, nonatomic) NSArray *waypointOrder;
 

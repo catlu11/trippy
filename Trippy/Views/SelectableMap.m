@@ -30,6 +30,19 @@
     [self addSubview:map];
 }
 
+- (void) initWithBounds:(GMSCoordinateBounds *)bounds {
+    GMSCameraPosition *camera = [GMSCameraPosition cameraWithLatitude:0
+                                                          longitude:0
+                                                               zoom:DEFAULT_ZOOM];
+    GMSMapView *map = [GMSMapView mapWithFrame:self.frame camera:camera];
+    [map animateWithCameraUpdate:[GMSCameraUpdate fitBounds:bounds withPadding:60.0f]];
+    map.myLocationEnabled = YES;
+    
+    map.frame = self.bounds;
+    self.mapView = map;
+    [self addSubview:map];
+}
+
 - (void) addMarker:(Location *)location {
     GMSMarker *marker = [[GMSMarker alloc] init];
 
@@ -39,6 +52,22 @@
     marker.map = self.mapView;
     
     [self.markersArray addObject:marker];
+}
+
+- (void) addPolyline:(NSString *)polyline {
+//    let routeOverviewPolyline = route["overview_polyline"].dictionary
+//                let points = routeOverviewPolyline?["points"]?.stringValue
+//                let path = GMSPath.init(fromEncodedPath: points!)
+//
+//                let polyline = GMSPolyline(path: path)
+//                polyline.strokeColor = .black
+//                polyline.strokeWidth = 10.0
+//                polyline.map = mapViewX
+    GMSPath *path = [GMSPath pathFromEncodedPath:polyline];
+    GMSPolyline *line = [GMSPolyline polylineWithPath:path];
+    line.strokeColor = [UIColor systemBlueColor];
+    line.strokeWidth = 5.0;
+    line.map = self.mapView;
 }
 
 - (void) clearMarkers {

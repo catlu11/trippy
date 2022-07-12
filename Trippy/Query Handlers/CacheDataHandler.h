@@ -16,8 +16,9 @@ NS_ASSUME_NONNULL_BEGIN
 @protocol CacheDataHandlerDelegate
 - (void) addFetchedCollection:(LocationCollection *)collection;
 - (void) addFetchedLocation:(Location *)location;
+- (void) addFetchedItinerary:(Itinerary *)itinerary;
 - (void) postedCollectionSuccess:(LocationCollection *)collection;
-- (void) postedItinerarySuccess;
+- (void) postedItinerarySuccess:(Itinerary *)itinerary;
 - (void) generalRequestFail:(NSError *)error;
 @end
 
@@ -25,6 +26,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, weak) id<CacheDataHandlerDelegate> delegate;
 - (void) fetchSavedCollections;
 - (void) fetchSavedLocations;
+- (void) fetchSavedItineraries;
 - (void) postNewLocation:(Location *)location collection:(LocationCollection *)collection;
 - (void) postNewCollection:(LocationCollection *)collection;
 - (void) postNewItinerary:(Itinerary *)it;

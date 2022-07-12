@@ -43,6 +43,9 @@
         case kLocation:
             [self.handler fetchSavedLocations];
             break;
+        case kItinerary:
+            [self.handler fetchSavedItineraries];
+            break;
     }
 }
 
@@ -56,12 +59,19 @@
 
 - (nonnull UITableViewCell *)tableView:(nonnull UITableView *)tableView cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
     StaticMapCell *cell = [tableView dequeueReusableCellWithIdentifier:@"StaticMapCell" forIndexPath:indexPath];
+    cell.showCheckmark = self.showSelection;
+    if (!self.showSelection) {
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    }
     switch (self.listType) {
         case kCollection:
             cell.collection = self.data[indexPath.row];
             break;
         case kLocation:
             cell.location = self.data[indexPath.row];
+            break;
+        case kItinerary:
+            cell.itinerary = self.data[indexPath.row];
             break;
     }
     [cell updateUIElements:self.listType];
@@ -84,6 +94,13 @@
 - (void) addFetchedLocation:(Location *)location {
     if(self.listType == kLocation) {
         [self.data addObject:location];
+    }
+    [self.listTableView reloadData];
+}
+
+- (void) addFetchedItinerary:(Itinerary *)itinerary {
+    if(self.listType == kItinerary) {
+        [self.data addObject:itinerary];
     }
     [self.listTableView reloadData];
 }

@@ -20,6 +20,7 @@
 
 - (void)viewDidLoad {
     self.listType = kCollection;
+    self.showSelection = NO;
     
     [super viewDidLoad];
     

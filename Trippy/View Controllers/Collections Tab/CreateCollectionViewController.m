@@ -19,6 +19,7 @@
 
 - (void)viewDidLoad {
     self.listType = kLocation;
+    self.showSelection = YES;
     
     [super viewDidLoad];
     

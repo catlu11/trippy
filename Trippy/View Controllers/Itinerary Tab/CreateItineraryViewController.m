@@ -12,7 +12,7 @@
 #import "DirectionsAPIManager.h"
 #import "MapUtils.h"
 
-@interface CreateItineraryViewController () <UIPickerViewDelegate, UIPickerViewDataSource, CacheDataHandlerDelegate>
+@interface CreateItineraryViewController () <UIPickerViewDelegate, UIPickerViewDataSource, CacheDataHandlerDelegate, UISearchBarDelegate>
 @property (weak, nonatomic) IBOutlet UIButton *collectionButton;
 @property (weak, nonatomic) IBOutlet UIPickerView *collectionPickerView;
 @property (weak, nonatomic) IBOutlet UISearchBar *startingSearchBar;
@@ -23,14 +23,22 @@
 @property (strong, nonatomic) NSMutableArray *collectionData;
 @property (strong, nonatomic) LocationCollection *selectedCol;
 @property (strong, nonatomic) Location *selectedLoc;
+@property (strong, nonatomic) Itinerary *createdItinerary;
+
+@property (strong, nonatomic) NSMutableArray *fullLocationData;
 @end
 
 @implementation CreateItineraryViewController
 
 - (void)viewDidLoad {
     self.listType = kLocation;
+    self.showSelection = YES;
     
     [super viewDidLoad];
+    
+    // Set up search bar
+    self.startingSearchBar.delegate = self;
+    self.fullLocationData = self.data;
     
     // Set up Parse handler
     self.colHandler = [[CacheDataHandler alloc] init];
@@ -58,8 +66,16 @@
         [self presentViewController:self.emptyAlert animated:YES completion:nil];
     }
     else {
-        [self.navigationController popToRootViewControllerAnimated:NO]; // return Home tab to Home page
-        [self performSegueWithIdentifier:@"itineraryDetailSegue" sender:nil];
+        NSString *apiUrl = [MapUtils generateDirectionsApiUrl:self.selectedCol origin:self.selectedLoc optimize:TRUE departureTime:nil];
+        [[DirectionsAPIManager shared] getDirectionsWithCompletion:apiUrl completion:^(NSDictionary * _Nonnull response, NSError * _Nonnull) {
+            if (response) {
+                Itinerary *it = [[Itinerary alloc] initWithDictionary:response];
+                it.sourceCollection = self.selectedCol;
+                it.originLocation = self.selectedLoc;
+                it.name = self.nameField.text;
+                [self.colHandler postNewItinerary:it];
+            }
+        }];
     }
 }
 
@@ -77,17 +93,7 @@
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if([[segue identifier] isEqualToString:@"itineraryDetailSegue"]) {
         ItineraryDetailViewController *vc = segue.destinationViewController;
-        // Post itinerary
-        NSString *apiUrl = [MapUtils generateDirectionsApiUrl:self.selectedCol origin:self.selectedLoc optimize:TRUE departureTime:nil];
-        [[DirectionsAPIManager shared] getDirectionsWithCompletion:apiUrl completion:^(NSDictionary * _Nonnull response, NSError * _Nonnull) {
-            if (response) {
-                vc.itinerary = [[Itinerary alloc] initWithDictionary:response];
-                vc.itinerary.sourceCollection = self.selectedCol;
-                vc.itinerary.originLocation = self.selectedLoc;
-                vc.itinerary.name = self.nameField.text;
-                [self.colHandler postNewItinerary:vc.itinerary];
-            }
-        }];
+        vc.itinerary = self.createdItinerary;
     }
 }
 
@@ -122,14 +128,41 @@
     [self.collectionPickerView reloadAllComponents];
 }
 
-- (void) postedItinerarySuccess {
-    // do something
+- (void) postedItinerarySuccess:(Itinerary *)itinerary {
+    self.createdItinerary = itinerary;
+    [self performSegueWithIdentifier:@"itineraryDetailSegue" sender:nil];
+    [self.navigationController popToRootViewControllerAnimated:NO]; // return Home tab to Home page
 }
 
 # pragma mark - UITableViewDataSource
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     self.selectedLoc = self.data[indexPath.row];
+}
+
+# pragma mark - UISearchBarDelegate
+- (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar {
+    self.startingSearchBar.showsCancelButton = YES;
+}
+
+- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
+    self.startingSearchBar.showsCancelButton = NO;
+    self.startingSearchBar.text = @"";
+    [self.listTableView reloadData];
+    [self.startingSearchBar resignFirstResponder];
+}
+
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
+    if (searchText.length != 0) {
+        NSPredicate *predicate = [NSPredicate predicateWithBlock:^BOOL(Location *evaluatedObject, NSDictionary *bindings) {
+            NSString *title = evaluatedObject.title;
+            return [title rangeOfString:searchText options:NSCaseInsensitiveSearch].location != NSNotFound;}];
+        self.data = [self.fullLocationData filteredArrayUsingPredicate:predicate];
+    }
+    else {
+        self.data = self.fullLocationData;
+    }
+    [self.listTableView reloadData];
 }
 
 @end

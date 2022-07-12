@@ -16,7 +16,9 @@ NS_ASSUME_NONNULL_BEGIN
 @interface ParseUtils : NSObject
 + (NSArray *)getCollectionKeys;
 + (NSArray *)getLocationKeys;
++ (NSArray *)getItineraryKeys;
 + (NSString *)getLoggedInUsername;
++ (void) itineraryFromPFObj:(PFObject *)obj completion:(void (^)(Itinerary *itinerary, NSError *))completion;
 + (void)collectionFromPFObj:(PFObject *)obj completion:(void (^)(LocationCollection *collection, NSError *))completion;
 + (Location *)locationFromPFObj:(PFObject *)obj;
 + (PFObject *)newPFObjWithCollection:(LocationCollection *)collection;

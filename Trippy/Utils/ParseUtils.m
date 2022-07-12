@@ -17,8 +17,50 @@
     return @[@"updatedAt", @"createdAt", @"title", @"snippet", @"createdBy", @"placeId", @"coord"];
 }
 
++ (NSArray *)getItineraryKeys {
+    return @[@"directionsJson", @"createdAt", @"name", @"createdBy", @"origin", @"sourceCollection"];
+}
+
 + (NSString *)getLoggedInUsername {
     return [PFUser currentUser].username;
+}
+
++ (void) itineraryFromPFObj:(PFObject *)obj completion:(void (^)(Itinerary *itinerary, NSError *))completion {
+    PFFileObject *jsonFile = obj[@"directionsJson"];
+    NSData *data = [jsonFile getData:nil];
+    NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+    
+    // create itinerary object
+    Itinerary *it = [[Itinerary alloc] initWithDictionary:dict];
+    it.name = obj[@"name"];
+    PFUser *user = obj[@"createdBy"];
+    it.userId = user.username;
+    it.createdAt = obj.createdAt;
+    it.parseObjectId = obj.objectId;
+    
+    // query location pointer
+    PFObject *locObj = obj[@"origin"];
+    PFQuery *locationQuery = [PFQuery queryWithClassName:@"Location"];
+    [locationQuery whereKey:@"objectId" equalTo:locObj.objectId];
+    [locationQuery includeKeys:[self getLocationKeys]];
+    locObj = [locationQuery getFirstObject];
+    // get location
+    it.originLocation = [self locationFromPFObj:locObj];
+    
+    // query collection pointer
+    PFObject *colObj = obj[@"sourceCollection"];
+    PFQuery *colQuery = [PFQuery queryWithClassName:@"Collection"];
+    [colQuery whereKey:@"objectId" equalTo:colObj.objectId];
+    [colQuery includeKeys:[self getLocationKeys]];
+    colObj = [colQuery getFirstObject];
+    
+    // get collection
+    [self collectionFromPFObj:colObj completion:^(LocationCollection * _Nonnull collection, NSError * _Nonnull) {
+        if (collection) {
+            it.sourceCollection = collection;
+            completion(it, nil);
+        }
+    }];
 }
 
 + (void) collectionFromPFObj:(PFObject *)obj completion:(void (^)(LocationCollection *collection, NSError *))completion {
