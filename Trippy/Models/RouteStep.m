@@ -14,9 +14,7 @@
     self = [super init];
     
     if (self) {
-        self.distanceText = dict[@"distance"][@"text"];
         self.distanceVal = dict[@"distance"][@"val"];
-        self.durationText = dict[@"duration"][@"text"];
         self.durationVal = dict[@"duration"][@"val"];
         self.instruction = dict[@"html_instructions"];
         self.startCoord = [MapUtils latLngDictToCoordinate:dict key:@"start_location"];

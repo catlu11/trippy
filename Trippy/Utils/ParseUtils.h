@@ -9,7 +9,7 @@
 @class Location;
 @class LocationCollection;
 @class Itinerary;
-@class PFOBject;
+@class PFObject;
 
 NS_ASSUME_NONNULL_BEGIN
 

@@ -8,6 +8,8 @@
 #import "StaticMapCell.h"
 #import "MapUtils.h"
 #import "Location.h"
+#import "LocationCollection.h"
+#import "Itinerary.h"
 
 @interface StaticMapCell ()
 @property (weak, nonatomic) IBOutlet UIImageView *mapImageView;

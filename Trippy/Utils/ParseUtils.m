@@ -6,6 +6,8 @@
 //
 
 #import "ParseUtils.h"
+#import "Parse/Parse.h"
+#import "Itinerary.h"
 
 @implementation ParseUtils
 

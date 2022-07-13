@@ -7,6 +7,7 @@
 
 #import "ItineraryDetailViewController.h"
 #import "SelectableMap.h"
+#import "Itinerary.h"
 
 @interface ItineraryDetailViewController ()
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;

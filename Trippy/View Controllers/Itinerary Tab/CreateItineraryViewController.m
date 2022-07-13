@@ -9,6 +9,7 @@
 #import "CacheDataHandler.h"
 #import "ItineraryDetailViewController.h"
 #import "Location.h"
+#import "Itinerary.h"
 #import "DirectionsAPIManager.h"
 #import "MapUtils.h"
 
@@ -66,7 +67,7 @@
         [self presentViewController:self.emptyAlert animated:YES completion:nil];
     }
     else {
-        NSString *apiUrl = [MapUtils generateDirectionsApiUrl:self.selectedCol origin:self.selectedLoc optimize:TRUE departureTime:nil];
+        NSString *apiUrl = [MapUtils generateDirectionsApiUrl:self.selectedCol origin:self.selectedLoc optimizeOrder:TRUE departureTime:nil];
         [[DirectionsAPIManager shared] getDirectionsWithCompletion:apiUrl completion:^(NSDictionary * _Nonnull response, NSError * _Nonnull) {
             if (response) {
                 Itinerary *it = [[Itinerary alloc] initWithDictionary:response];
