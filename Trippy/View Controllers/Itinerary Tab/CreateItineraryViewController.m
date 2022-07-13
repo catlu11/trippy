@@ -9,6 +9,7 @@
 #import "CacheDataHandler.h"
 #import "ItineraryDetailViewController.h"
 #import "Location.h"
+#import "LocationCollection.h"
 #import "Itinerary.h"
 #import "DirectionsAPIManager.h"
 #import "MapUtils.h"

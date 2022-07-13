@@ -8,6 +8,8 @@
 #import "ParseUtils.h"
 #import "Parse/Parse.h"
 #import "Itinerary.h"
+#import "LocationCollection.h"
+#import "Location.h"
 
 @implementation ParseUtils
 
@@ -43,18 +45,16 @@
     // query location pointer
     PFObject *locObj = obj[@"origin"];
     PFQuery *locationQuery = [PFQuery queryWithClassName:@"Location"];
-    [locationQuery whereKey:@"objectId" equalTo:locObj.objectId];
     [locationQuery includeKeys:[self getLocationKeys]];
-    locObj = [locationQuery getFirstObject];
+    locObj = [locationQuery getObjectWithId:locObj.objectId];
     // get location
     it.originLocation = [self locationFromPFObj:locObj];
     
     // query collection pointer
     PFObject *colObj = obj[@"sourceCollection"];
     PFQuery *colQuery = [PFQuery queryWithClassName:@"Collection"];
-    [colQuery whereKey:@"objectId" equalTo:colObj.objectId];
-    [colQuery includeKeys:[self getLocationKeys]];
-    colObj = [colQuery getFirstObject];
+    [colQuery includeKeys:[self getCollectionKeys]];
+    colObj = [colQuery getObjectWithId:colObj.objectId];
     
     // get collection
     [self collectionFromPFObj:colObj completion:^(LocationCollection * _Nonnull collection, NSError * _Nonnull) {
@@ -102,51 +102,57 @@
     return [[Location alloc] initWithParams:obj[@"title"] snippet:obj[@"snippet"] latitude:coord.latitude longitude:coord.longitude user:user.username placeId:obj[@"placeId"] parseObjectId:obj.objectId];
 }
 
-+ (PFObject *)newPFObjWithCollection:(LocationCollection *)collection {
-    PFObject *obj = [PFObject objectWithClassName:@"Collection"];
-    obj[@"title"] = collection.title;
-    obj[@"snippet"] = collection.snippet;
-    obj[@"createdBy"] = [PFUser currentUser];
-    PFRelation *relation = [obj relationForKey:@"locations"];
-    for(Location *loc in collection.locations) {
-        PFObject *newObj = [self oldPFObjFromLocation:loc];
-        [relation addObject: newObj];
++ (PFObject *)pfObjFromCollection:(LocationCollection *)collection {
+    if (collection.parseObjectId != nil) {
+        PFQuery *query = [PFQuery queryWithClassName:@"Collection"];
+        [query includeKeys:[ParseUtils getCollectionKeys]];
+        return [query getObjectWithId:collection.parseObjectId];
+    } else {
+        PFObject *obj = [PFObject objectWithClassName:@"Collection"];
+        obj[@"title"] = collection.title;
+        obj[@"snippet"] = collection.snippet;
+        obj[@"createdBy"] = [PFUser currentUser];
+        PFRelation *relation = [obj relationForKey:@"locations"];
+        for(Location *loc in collection.locations) {
+            PFObject *newObj = [self pfObjFromLocation:loc];
+            [relation addObject: newObj];
+        }
+        return obj;
     }
-    return obj;
 }
 
-+ (PFObject *)newPFObjWithLocation:(Location *)loc {
-    PFObject *obj = [PFObject objectWithClassName:@"Location"];
-    obj[@"placeId"] = loc.placeId;
-    obj[@"title"] = loc.title;
-    obj[@"snippet"] = loc.snippet;
-    obj[@"coord"] = [PFGeoPoint geoPointWithLatitude:loc.coord.latitude longitude:loc.coord.longitude];
-    obj[@"createdBy"] = [PFUser currentUser];
-    return obj;
++ (PFObject *)pfObjFromLocation:(Location *)loc {
+    if (loc.parseObjectId != nil) {
+        PFQuery *query = [PFQuery queryWithClassName:@"Location"];
+        [query includeKeys:[ParseUtils getLocationKeys]];
+        return [query getObjectWithId:loc.parseObjectId];
+    } else {
+        PFObject *obj = [PFObject objectWithClassName:@"Location"];
+        obj[@"placeId"] = loc.placeId;
+        obj[@"title"] = loc.title;
+        obj[@"snippet"] = loc.snippet;
+        obj[@"coord"] = [PFGeoPoint geoPointWithLatitude:loc.coord.latitude longitude:loc.coord.longitude];
+        obj[@"createdBy"] = [PFUser currentUser];
+        return obj;
+    }
 }
 
-+ (PFObject *)oldPFObjFromLocation:(Location *)loc {
-    PFQuery *query = [PFQuery queryWithClassName:@"Location"];
-    [query whereKey:@"objectId" equalTo:loc.parseObjectId];
-    return [query getFirstObject];
-}
-
-+ (PFObject *)oldPFObjFromCollection:(LocationCollection *)col {
-    PFQuery *query = [PFQuery queryWithClassName:@"Collection"];
-    [query whereKey:@"objectId" equalTo:col.parseObjectId];
-    return [query getFirstObject];
-}
-
-+ (PFObject *)newPFObjFromItinerary:(Itinerary *)it {
-    PFObject *obj = [PFObject objectWithClassName:@"Itinerary"];
-    obj[@"name"] = it.name;
-    obj[@"createdBy"] = [PFUser currentUser];
-    obj[@"origin"] = [self oldPFObjFromLocation:it.originLocation];
-    obj[@"sourceCollection"] = [self oldPFObjFromCollection:it.sourceCollection];
-    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:it.directionsJson options:0 error:nil];
-    PFFileObject *jsonFile = [PFFileObject fileObjectWithName:@"directions.json" data:jsonData];
-    obj[@"directionsJson"] = jsonFile;
-    return obj;
++ (PFObject *)pfObjFromItinerary:(Itinerary *)it {
+    if (it.parseObjectId != nil) {
+        PFQuery *query = [PFQuery queryWithClassName:@"Itinerary"];
+        [query includeKeys:[ParseUtils getItineraryKeys]];
+        return [query getObjectWithId:it.parseObjectId];
+    } else {
+        PFObject *obj = [PFObject objectWithClassName:@"Itinerary"];
+        obj[@"name"] = it.name;
+        obj[@"createdBy"] = [PFUser currentUser];
+        obj[@"origin"] = [self pfObjFromLocation:it.originLocation];
+        obj[@"sourceCollection"] = [self pfObjFromCollection:it.sourceCollection];
+        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:[it toDictionary] options:0 error:nil];
+        PFFileObject *jsonFile = [PFFileObject fileObjectWithName:@"directions.json" data:jsonData];
+        obj[@"directionsJson"] = jsonFile;
+        return obj;
+    }
 }
 
 @end

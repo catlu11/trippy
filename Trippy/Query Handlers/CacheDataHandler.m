@@ -15,7 +15,7 @@
 @implementation CacheDataHandler
 
 - (void) postNewLocation:(Location *)location collection:(LocationCollection *)collection {
-    PFObject *newLocation = [ParseUtils newPFObjWithLocation:location];
+    PFObject *newLocation = [ParseUtils pfObjFromLocation:location];
     location.parseObjectId = newLocation.objectId;
     __weak CacheDataHandler *weakSelf = self;
     [newLocation saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
@@ -37,7 +37,7 @@
 }
 
 - (void) postNewCollection:(LocationCollection *)collection {
-    PFObject *newCollection = [ParseUtils newPFObjWithCollection:collection];
+    PFObject *newCollection = [ParseUtils pfObjFromCollection:collection];
     __weak CacheDataHandler *weakSelf = self;
     [newCollection saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
         if (succeeded) {
@@ -51,7 +51,7 @@
 }
 
 - (void) postNewItinerary:(Itinerary *)it {
-    PFObject *newItinerary = [ParseUtils newPFObjFromItinerary:it];
+    PFObject *newItinerary = [ParseUtils pfObjFromItinerary:it];
     __weak CacheDataHandler *weakSelf = self;
     [newItinerary saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
         if (succeeded) {

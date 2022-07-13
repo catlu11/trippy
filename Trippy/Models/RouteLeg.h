@@ -6,19 +6,19 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "RouteStep.h"
-
+@class RouteStep;
+@import GoogleMaps;
 NS_ASSUME_NONNULL_BEGIN
 
 @interface RouteLeg : NSObject
-@property (strong, nonatomic) NSNumber *distanceVal; // in meters
-@property (strong, nonatomic) NSNumber *durationVal; // in seconds
-@property (assign, nonatomic) CLLocationCoordinate2D startCoord;
-@property (assign, nonatomic) CLLocationCoordinate2D endCoord;
-@property (strong, nonatomic) NSArray *routeSteps;
-// TODO: via waypoint attribute
+@property (readonly) NSNumber *distanceVal; // in meters
+@property (readonly) NSNumber *durationVal; // in seconds
+@property (readonly) CLLocationCoordinate2D startCoord;
+@property (readonly) CLLocationCoordinate2D endCoord;
+@property (readonly) NSArray *routeSteps;
 
 - (instancetype) initWithDictionary:(NSDictionary *)dict;
+- (NSDictionary *) toDictionary;
 @end
 
 NS_ASSUME_NONNULL_END
