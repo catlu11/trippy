@@ -11,10 +11,8 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface RouteLeg : NSObject
-@property (strong, nonatomic) NSString *distanceText;
-@property (strong, nonatomic) NSNumber *distanceVal;
-@property (strong, nonatomic) NSString *durationText;
-@property (strong, nonatomic) NSNumber *durationVal;
+@property (strong, nonatomic) NSNumber *distanceVal; // in meters
+@property (strong, nonatomic) NSNumber *durationVal; // in seconds
 @property (assign, nonatomic) CLLocationCoordinate2D startCoord;
 @property (assign, nonatomic) CLLocationCoordinate2D endCoord;
 @property (strong, nonatomic) NSArray *routeSteps;

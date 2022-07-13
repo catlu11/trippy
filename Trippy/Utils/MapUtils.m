@@ -8,7 +8,6 @@
 #import "MapUtils.h"
 #import "Location.h"
 #import "LocationCollection.h"
-@import GoogleMaps;
 @import GooglePlaces;
 
 #define STATIC_MAP_URL @"https://maps.googleapis.com/maps/api/staticmap?center=%f,%f&zoom=%d&size=%dx%d&key=%@"
@@ -33,10 +32,10 @@
 
 + (NSString *)generateDirectionsApiUrl:(LocationCollection *)collection
                                           origin:(Location *)origin
-                                        optimize:(BOOL)optimize
+                                        optimizeOrder:(BOOL)optimizeOrder
                                    departureTime:(NSDate *)departureTime {
     // TODO: Enable via waypoints instead of just stopovers
-    NSString *stops = optimize ? @"optimize:true" : @"";
+    NSString *stops = optimizeOrder ? @"optimize:true" : @"";
     for(Location *loc in collection.locations) {
         stops = [stops stringByAppendingString:[NSString stringWithFormat:@"|place_id:%@", loc.placeId]];
     }

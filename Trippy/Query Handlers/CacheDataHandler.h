@@ -6,10 +6,9 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "Parse/Parse.h"
-#import "LocationCollection.h"
-#import "Location.h"
-#import "Itinerary.h"
+@class Location;
+@class LocationCollection;
+@class Itinerary;
 
 NS_ASSUME_NONNULL_BEGIN
 
