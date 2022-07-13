@@ -55,14 +55,6 @@
 }
 
 - (void) addPolyline:(NSString *)polyline {
-//    let routeOverviewPolyline = route["overview_polyline"].dictionary
-//                let points = routeOverviewPolyline?["points"]?.stringValue
-//                let path = GMSPath.init(fromEncodedPath: points!)
-//
-//                let polyline = GMSPolyline(path: path)
-//                polyline.strokeColor = .black
-//                polyline.strokeWidth = 10.0
-//                polyline.map = mapViewX
     GMSPath *path = [GMSPath pathFromEncodedPath:polyline];
     GMSPolyline *line = [GMSPolyline polylineWithPath:path];
     line.strokeColor = [UIColor systemBlueColor];
