@@ -7,20 +7,27 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2DF15D1367714A4316AF2B55 /* libPods-TrippyTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 156439883F4B5DACB7B72C57 /* libPods-TrippyTests.a */; };
-		37BFEDB819F6C25727E9585C /* libPods-Trippy-TrippyUITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 409098130AD350DD29BBFE22 /* libPods-Trippy-TrippyUITests.a */; };
-		9CF6EE9CA200A32BA2A3B48B /* libPods-Trippy.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E8218BA8D89106AC9CEDA871 /* libPods-Trippy.a */; };
+		08C570CEEB81796F78D90125 /* Pods_TrippyTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DACCD3192C823EF35DC05DDD /* Pods_TrippyTests.framework */; };
+		CCE118C7FF9447F06C4EF540 /* Pods_Trippy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCD6D797BDE2A5804AC47015 /* Pods_Trippy.framework */; };
 		F0C75F6D287642C10015BB74 /* Keys.plist in Resources */ = {isa = PBXBuildFile; fileRef = F0C75F6C287642C10015BB74 /* Keys.plist */; };
 		F0C75F72287747A20015BB74 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F0C75F71287747A20015BB74 /* LoginViewController.m */; };
 		F0C75F7528774F940015BB74 /* UserAuthHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = F0C75F7428774F940015BB74 /* UserAuthHandler.m */; };
 		F0C75F7828775A680015BB74 /* SavedCollectionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F0C75F7728775A680015BB74 /* SavedCollectionsViewController.m */; };
 		F0C75F7B28775C7F0015BB74 /* LogoutHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = F0C75F7A28775C7F0015BB74 /* LogoutHandler.m */; };
-		F0C75F80287778640015BB74 /* LocationCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = F0C75F7F287778640015BB74 /* LocationCollection.m */; };
-		F0C75F83287786B60015BB74 /* ListTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F0C75F82287786B60015BB74 /* ListTableViewController.m */; };
+		F0C75F83287786B60015BB74 /* MapItemListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F0C75F82287786B60015BB74 /* MapItemListViewController.m */; };
 		F0C75F86287786D70015BB74 /* StaticMapCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F0C75F85287786D70015BB74 /* StaticMapCell.m */; };
 		F0C75F8C28778FED0015BB74 /* CacheDataHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = F0C75F8B28778FED0015BB74 /* CacheDataHandler.m */; };
 		F0C75F92287799070015BB74 /* ParseUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = F0C75F91287799070015BB74 /* ParseUtils.m */; };
 		F0C75F982878D7750015BB74 /* CreateCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F0C75F972878D7750015BB74 /* CreateCollectionViewController.m */; };
+		F0C75F9E287C9EBF0015BB74 /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F0C75F9D287C9EBF0015BB74 /* HomeViewController.m */; };
+		F0C75FA1287C9F4E0015BB74 /* CreateItineraryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F0C75FA0287C9F4E0015BB74 /* CreateItineraryViewController.m */; };
+		F0C75FA4287CA2430015BB74 /* ItineraryDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F0C75FA3287CA2430015BB74 /* ItineraryDetailViewController.m */; };
+		F0C75FBE287CE4CB0015BB74 /* DirectionsAPIManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F0C75FBD287CE4CB0015BB74 /* DirectionsAPIManager.m */; };
+		F0C75FE4287E3CB20015BB74 /* Itinerary.m in Sources */ = {isa = PBXBuildFile; fileRef = F0C75FDB287E3CB20015BB74 /* Itinerary.m */; };
+		F0C75FE5287E3CB30015BB74 /* LocationCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = F0C75FDD287E3CB20015BB74 /* LocationCollection.m */; };
+		F0C75FE6287E3CB30015BB74 /* RouteStep.m in Sources */ = {isa = PBXBuildFile; fileRef = F0C75FE0287E3CB20015BB74 /* RouteStep.m */; };
+		F0C75FE7287E3CB30015BB74 /* Location.m in Sources */ = {isa = PBXBuildFile; fileRef = F0C75FE1287E3CB20015BB74 /* Location.m */; };
+		F0C75FE8287E3CB30015BB74 /* RouteLeg.m in Sources */ = {isa = PBXBuildFile; fileRef = F0C75FE3287E3CB20015BB74 /* RouteLeg.m */; };
 		F0F335752874A0E700470507 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F0F335742874A0E700470507 /* AppDelegate.m */; };
 		F0F335782874A0E700470507 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F0F335772874A0E700470507 /* SceneDelegate.m */; };
 		F0F3357B2874A0E700470507 /* SearchMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F0F3357A2874A0E700470507 /* SearchMapViewController.m */; };
@@ -32,8 +39,8 @@
 		F0F3359A2874A0EB00470507 /* TrippyUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = F0F335992874A0EB00470507 /* TrippyUITests.m */; };
 		F0F3359C2874A0EB00470507 /* TrippyUITestsLaunchTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F0F3359B2874A0EB00470507 /* TrippyUITestsLaunchTests.m */; };
 		F0F335AE2875F0B400470507 /* SelectableMap.m in Sources */ = {isa = PBXBuildFile; fileRef = F0F335AD2875F0B400470507 /* SelectableMap.m */; };
-		F0F335B32875F18700470507 /* Location.m in Sources */ = {isa = PBXBuildFile; fileRef = F0F335B22875F18700470507 /* Location.m */; };
 		F0F335B72875F2E100470507 /* MapUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = F0F335B62875F2E100470507 /* MapUtils.m */; };
+		FED82F2F74A69C665F7637DE /* Pods_Trippy_TrippyUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBFD6FD215C55391F69C0E9B /* Pods_Trippy_TrippyUITests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,15 +61,15 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		156439883F4B5DACB7B72C57 /* libPods-TrippyTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-TrippyTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		21341CAF207ECB6E4069795F /* Pods-TrippyTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TrippyTests.release.xcconfig"; path = "Target Support Files/Pods-TrippyTests/Pods-TrippyTests.release.xcconfig"; sourceTree = "<group>"; };
 		2A13D49510DDF03DBABB456F /* Pods-Trippy-TrippyUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Trippy-TrippyUITests.debug.xcconfig"; path = "Target Support Files/Pods-Trippy-TrippyUITests/Pods-Trippy-TrippyUITests.debug.xcconfig"; sourceTree = "<group>"; };
-		409098130AD350DD29BBFE22 /* libPods-Trippy-TrippyUITests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Trippy-TrippyUITests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4AAB8C2C2D2733EEBE11455F /* Pods-Trippy-TrippyUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Trippy-TrippyUITests.release.xcconfig"; path = "Target Support Files/Pods-Trippy-TrippyUITests/Pods-Trippy-TrippyUITests.release.xcconfig"; sourceTree = "<group>"; };
 		B8D3E6DA2519CA6D60DBFF53 /* Pods-Trippy.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Trippy.debug.xcconfig"; path = "Target Support Files/Pods-Trippy/Pods-Trippy.debug.xcconfig"; sourceTree = "<group>"; };
 		C453D7B45B0BB1D11B0EE346 /* Pods-Trippy.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Trippy.release.xcconfig"; path = "Target Support Files/Pods-Trippy/Pods-Trippy.release.xcconfig"; sourceTree = "<group>"; };
+		CBFD6FD215C55391F69C0E9B /* Pods_Trippy_TrippyUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Trippy_TrippyUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CCA5DB2AB9E0DEA96B5E2177 /* Pods-TrippyTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TrippyTests.debug.xcconfig"; path = "Target Support Files/Pods-TrippyTests/Pods-TrippyTests.debug.xcconfig"; sourceTree = "<group>"; };
-		E8218BA8D89106AC9CEDA871 /* libPods-Trippy.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Trippy.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		DACCD3192C823EF35DC05DDD /* Pods_TrippyTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TrippyTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		DCD6D797BDE2A5804AC47015 /* Pods_Trippy.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Trippy.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F0C75F6C287642C10015BB74 /* Keys.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Keys.plist; sourceTree = "<group>"; };
 		F0C75F70287747A20015BB74 /* LoginViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		F0C75F71287747A20015BB74 /* LoginViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
@@ -72,10 +79,8 @@
 		F0C75F7728775A680015BB74 /* SavedCollectionsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SavedCollectionsViewController.m; sourceTree = "<group>"; };
 		F0C75F7928775C7F0015BB74 /* LogoutHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LogoutHandler.h; sourceTree = "<group>"; };
 		F0C75F7A28775C7F0015BB74 /* LogoutHandler.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LogoutHandler.m; sourceTree = "<group>"; };
-		F0C75F7E287778640015BB74 /* LocationCollection.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LocationCollection.h; sourceTree = "<group>"; };
-		F0C75F7F287778640015BB74 /* LocationCollection.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LocationCollection.m; sourceTree = "<group>"; };
-		F0C75F81287786B60015BB74 /* ListTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ListTableViewController.h; sourceTree = "<group>"; };
-		F0C75F82287786B60015BB74 /* ListTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ListTableViewController.m; sourceTree = "<group>"; };
+		F0C75F81287786B60015BB74 /* MapItemListViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MapItemListViewController.h; sourceTree = "<group>"; };
+		F0C75F82287786B60015BB74 /* MapItemListViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MapItemListViewController.m; sourceTree = "<group>"; };
 		F0C75F84287786D70015BB74 /* StaticMapCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StaticMapCell.h; sourceTree = "<group>"; };
 		F0C75F85287786D70015BB74 /* StaticMapCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = StaticMapCell.m; sourceTree = "<group>"; };
 		F0C75F8A28778FED0015BB74 /* CacheDataHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CacheDataHandler.h; sourceTree = "<group>"; };
@@ -84,6 +89,24 @@
 		F0C75F91287799070015BB74 /* ParseUtils.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ParseUtils.m; sourceTree = "<group>"; };
 		F0C75F962878D7750015BB74 /* CreateCollectionViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CreateCollectionViewController.h; sourceTree = "<group>"; };
 		F0C75F972878D7750015BB74 /* CreateCollectionViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CreateCollectionViewController.m; sourceTree = "<group>"; };
+		F0C75F9C287C9EBF0015BB74 /* HomeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HomeViewController.h; sourceTree = "<group>"; };
+		F0C75F9D287C9EBF0015BB74 /* HomeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HomeViewController.m; sourceTree = "<group>"; };
+		F0C75F9F287C9F4E0015BB74 /* CreateItineraryViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CreateItineraryViewController.h; sourceTree = "<group>"; };
+		F0C75FA0287C9F4E0015BB74 /* CreateItineraryViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CreateItineraryViewController.m; sourceTree = "<group>"; };
+		F0C75FA2287CA2430015BB74 /* ItineraryDetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ItineraryDetailViewController.h; sourceTree = "<group>"; };
+		F0C75FA3287CA2430015BB74 /* ItineraryDetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ItineraryDetailViewController.m; sourceTree = "<group>"; };
+		F0C75FBC287CE4CB0015BB74 /* DirectionsAPIManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DirectionsAPIManager.h; sourceTree = "<group>"; };
+		F0C75FBD287CE4CB0015BB74 /* DirectionsAPIManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DirectionsAPIManager.m; sourceTree = "<group>"; };
+		F0C75FDA287E3CB20015BB74 /* Location.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Location.h; path = Trippy/Models/Location.h; sourceTree = "<group>"; };
+		F0C75FDB287E3CB20015BB74 /* Itinerary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Itinerary.m; path = Trippy/Models/Itinerary.m; sourceTree = "<group>"; };
+		F0C75FDC287E3CB20015BB74 /* LocationCollection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LocationCollection.h; path = Trippy/Models/LocationCollection.h; sourceTree = "<group>"; };
+		F0C75FDD287E3CB20015BB74 /* LocationCollection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LocationCollection.m; path = Trippy/Models/LocationCollection.m; sourceTree = "<group>"; };
+		F0C75FDE287E3CB20015BB74 /* Itinerary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Itinerary.h; path = Trippy/Models/Itinerary.h; sourceTree = "<group>"; };
+		F0C75FDF287E3CB20015BB74 /* RouteStep.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RouteStep.h; path = Trippy/Models/RouteStep.h; sourceTree = "<group>"; };
+		F0C75FE0287E3CB20015BB74 /* RouteStep.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RouteStep.m; path = Trippy/Models/RouteStep.m; sourceTree = "<group>"; };
+		F0C75FE1287E3CB20015BB74 /* Location.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Location.m; path = Trippy/Models/Location.m; sourceTree = "<group>"; };
+		F0C75FE2287E3CB20015BB74 /* RouteLeg.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RouteLeg.h; path = Trippy/Models/RouteLeg.h; sourceTree = "<group>"; };
+		F0C75FE3287E3CB20015BB74 /* RouteLeg.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RouteLeg.m; path = Trippy/Models/RouteLeg.m; sourceTree = "<group>"; };
 		F0F335702874A0E700470507 /* Trippy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Trippy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F0F335732874A0E700470507 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		F0F335742874A0E700470507 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -103,8 +126,6 @@
 		F0F3359B2874A0EB00470507 /* TrippyUITestsLaunchTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TrippyUITestsLaunchTests.m; sourceTree = "<group>"; };
 		F0F335AC2875F0B400470507 /* SelectableMap.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SelectableMap.h; sourceTree = "<group>"; };
 		F0F335AD2875F0B400470507 /* SelectableMap.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SelectableMap.m; sourceTree = "<group>"; };
-		F0F335B12875F18700470507 /* Location.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Location.h; sourceTree = "<group>"; };
-		F0F335B22875F18700470507 /* Location.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Location.m; sourceTree = "<group>"; };
 		F0F335B52875F2E100470507 /* MapUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MapUtils.h; sourceTree = "<group>"; };
 		F0F335B62875F2E100470507 /* MapUtils.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MapUtils.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -114,7 +135,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9CF6EE9CA200A32BA2A3B48B /* libPods-Trippy.a in Frameworks */,
+				CCE118C7FF9447F06C4EF540 /* Pods_Trippy.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -122,7 +143,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2DF15D1367714A4316AF2B55 /* libPods-TrippyTests.a in Frameworks */,
+				08C570CEEB81796F78D90125 /* Pods_TrippyTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -130,7 +151,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				37BFEDB819F6C25727E9585C /* libPods-Trippy-TrippyUITests.a in Frameworks */,
+				FED82F2F74A69C665F7637DE /* Pods_Trippy_TrippyUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -140,9 +161,9 @@
 		0EB03A504895C37D109920AC /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				E8218BA8D89106AC9CEDA871 /* libPods-Trippy.a */,
-				409098130AD350DD29BBFE22 /* libPods-Trippy-TrippyUITests.a */,
-				156439883F4B5DACB7B72C57 /* libPods-TrippyTests.a */,
+				DCD6D797BDE2A5804AC47015 /* Pods_Trippy.framework */,
+				CBFD6FD215C55391F69C0E9B /* Pods_Trippy_TrippyUITests.framework */,
+				DACCD3192C823EF35DC05DDD /* Pods_TrippyTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -158,6 +179,70 @@
 				21341CAF207ECB6E4069795F /* Pods-TrippyTests.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		F0C75FA5287CC1BA0015BB74 /* Collections Tab */ = {
+			isa = PBXGroup;
+			children = (
+				F0C75F7628775A680015BB74 /* SavedCollectionsViewController.h */,
+				F0C75F7728775A680015BB74 /* SavedCollectionsViewController.m */,
+				F0C75F962878D7750015BB74 /* CreateCollectionViewController.h */,
+				F0C75F972878D7750015BB74 /* CreateCollectionViewController.m */,
+			);
+			path = "Collections Tab";
+			sourceTree = "<group>";
+		};
+		F0C75FA6287CC1D50015BB74 /* Locate Tab */ = {
+			isa = PBXGroup;
+			children = (
+				F0F335792874A0E700470507 /* SearchMapViewController.h */,
+				F0F3357A2874A0E700470507 /* SearchMapViewController.m */,
+			);
+			path = "Locate Tab";
+			sourceTree = "<group>";
+		};
+		F0C75FA7287CC1EC0015BB74 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				F0C75F70287747A20015BB74 /* LoginViewController.h */,
+				F0C75F71287747A20015BB74 /* LoginViewController.m */,
+			);
+			path = Login;
+			sourceTree = "<group>";
+		};
+		F0C75FA8287CC2020015BB74 /* Itinerary Tab */ = {
+			isa = PBXGroup;
+			children = (
+				F0C75F9C287C9EBF0015BB74 /* HomeViewController.h */,
+				F0C75F9D287C9EBF0015BB74 /* HomeViewController.m */,
+				F0C75F9F287C9F4E0015BB74 /* CreateItineraryViewController.h */,
+				F0C75FA0287C9F4E0015BB74 /* CreateItineraryViewController.m */,
+				F0C75FA2287CA2430015BB74 /* ItineraryDetailViewController.h */,
+				F0C75FA3287CA2430015BB74 /* ItineraryDetailViewController.m */,
+			);
+			path = "Itinerary Tab";
+			sourceTree = "<group>";
+		};
+		F0C75FA9287CC2190015BB74 /* Templates */ = {
+			isa = PBXGroup;
+			children = (
+				F0C75F81287786B60015BB74 /* MapItemListViewController.h */,
+				F0C75F82287786B60015BB74 /* MapItemListViewController.m */,
+			);
+			path = Templates;
+			sourceTree = "<group>";
+		};
+		F0C75FBF287DE3190015BB74 /* Query Handlers */ = {
+			isa = PBXGroup;
+			children = (
+				F0C75F7328774F940015BB74 /* UserAuthHandler.h */,
+				F0C75F7428774F940015BB74 /* UserAuthHandler.m */,
+				F0C75F7928775C7F0015BB74 /* LogoutHandler.h */,
+				F0C75F7A28775C7F0015BB74 /* LogoutHandler.m */,
+				F0C75F8A28778FED0015BB74 /* CacheDataHandler.h */,
+				F0C75F8B28778FED0015BB74 /* CacheDataHandler.m */,
+			);
+			path = "Query Handlers";
 			sourceTree = "<group>";
 		};
 		F0F335672874A0E700470507 = {
@@ -185,6 +270,7 @@
 		F0F335722874A0E700470507 /* Trippy */ = {
 			isa = PBXGroup;
 			children = (
+				F0C75FBF287DE3190015BB74 /* Query Handlers */,
 				F0F335B42875F2BD00470507 /* Utils */,
 				F0F335AB2875F08D00470507 /* API */,
 				F0F335A92875F07300470507 /* View Controllers */,
@@ -235,16 +321,11 @@
 		F0F335A92875F07300470507 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				F0C75F7628775A680015BB74 /* SavedCollectionsViewController.h */,
-				F0C75F7728775A680015BB74 /* SavedCollectionsViewController.m */,
-				F0C75F81287786B60015BB74 /* ListTableViewController.h */,
-				F0C75F82287786B60015BB74 /* ListTableViewController.m */,
-				F0F335792874A0E700470507 /* SearchMapViewController.h */,
-				F0F3357A2874A0E700470507 /* SearchMapViewController.m */,
-				F0C75F70287747A20015BB74 /* LoginViewController.h */,
-				F0C75F71287747A20015BB74 /* LoginViewController.m */,
-				F0C75F962878D7750015BB74 /* CreateCollectionViewController.h */,
-				F0C75F972878D7750015BB74 /* CreateCollectionViewController.m */,
+				F0C75FA9287CC2190015BB74 /* Templates */,
+				F0C75FA8287CC2020015BB74 /* Itinerary Tab */,
+				F0C75FA7287CC1EC0015BB74 /* Login */,
+				F0C75FA6287CC1D50015BB74 /* Locate Tab */,
+				F0C75FA5287CC1BA0015BB74 /* Collections Tab */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -252,10 +333,16 @@
 		F0F335AA2875F08500470507 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				F0F335B12875F18700470507 /* Location.h */,
-				F0F335B22875F18700470507 /* Location.m */,
-				F0C75F7E287778640015BB74 /* LocationCollection.h */,
-				F0C75F7F287778640015BB74 /* LocationCollection.m */,
+				F0C75FDE287E3CB20015BB74 /* Itinerary.h */,
+				F0C75FDB287E3CB20015BB74 /* Itinerary.m */,
+				F0C75FDA287E3CB20015BB74 /* Location.h */,
+				F0C75FE1287E3CB20015BB74 /* Location.m */,
+				F0C75FDC287E3CB20015BB74 /* LocationCollection.h */,
+				F0C75FDD287E3CB20015BB74 /* LocationCollection.m */,
+				F0C75FE2287E3CB20015BB74 /* RouteLeg.h */,
+				F0C75FE3287E3CB20015BB74 /* RouteLeg.m */,
+				F0C75FDF287E3CB20015BB74 /* RouteStep.h */,
+				F0C75FE0287E3CB20015BB74 /* RouteStep.m */,
 			);
 			name = Models;
 			path = ..;
@@ -264,12 +351,8 @@
 		F0F335AB2875F08D00470507 /* API */ = {
 			isa = PBXGroup;
 			children = (
-				F0C75F7328774F940015BB74 /* UserAuthHandler.h */,
-				F0C75F7428774F940015BB74 /* UserAuthHandler.m */,
-				F0C75F7928775C7F0015BB74 /* LogoutHandler.h */,
-				F0C75F7A28775C7F0015BB74 /* LogoutHandler.m */,
-				F0C75F8A28778FED0015BB74 /* CacheDataHandler.h */,
-				F0C75F8B28778FED0015BB74 /* CacheDataHandler.m */,
+				F0C75FBC287CE4CB0015BB74 /* DirectionsAPIManager.h */,
+				F0C75FBD287CE4CB0015BB74 /* DirectionsAPIManager.m */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -297,6 +380,7 @@
 				F0F3356D2874A0E700470507 /* Frameworks */,
 				F0F3356E2874A0E700470507 /* Resources */,
 				BB65531D2EA9A338829A7822 /* [CP] Copy Pods Resources */,
+				3EA6F545ABC7A3854617FBC0 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -335,6 +419,7 @@
 				F0F335922874A0EB00470507 /* Frameworks */,
 				F0F335932874A0EB00470507 /* Resources */,
 				ADFF6EB938B042EA126F5A26 /* [CP] Copy Pods Resources */,
+				07F5870F5C80D262FF5F7108 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -417,6 +502,23 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		07F5870F5C80D262FF5F7108 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Trippy-TrippyUITests/Pods-Trippy-TrippyUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Trippy-TrippyUITests/Pods-Trippy-TrippyUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Trippy-TrippyUITests/Pods-Trippy-TrippyUITests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		23F7B8E7C48B2158A2AF1B16 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -437,6 +539,23 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		3EA6F545ABC7A3854617FBC0 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Trippy/Pods-Trippy-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Trippy/Pods-Trippy-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Trippy/Pods-Trippy-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		6AE3A40332FC33E9E1F6D24E /* [CP] Check Pods Manifest.lock */ = {
@@ -529,18 +648,25 @@
 				F0C75F982878D7750015BB74 /* CreateCollectionViewController.m in Sources */,
 				F0C75F8C28778FED0015BB74 /* CacheDataHandler.m in Sources */,
 				F0C75F92287799070015BB74 /* ParseUtils.m in Sources */,
-				F0C75F83287786B60015BB74 /* ListTableViewController.m in Sources */,
+				F0C75F9E287C9EBF0015BB74 /* HomeViewController.m in Sources */,
+				F0C75FA1287C9F4E0015BB74 /* CreateItineraryViewController.m in Sources */,
+				F0C75FA4287CA2430015BB74 /* ItineraryDetailViewController.m in Sources */,
+				F0C75F83287786B60015BB74 /* MapItemListViewController.m in Sources */,
 				F0F335752874A0E700470507 /* AppDelegate.m in Sources */,
 				F0C75F7528774F940015BB74 /* UserAuthHandler.m in Sources */,
+				F0C75FE6287E3CB30015BB74 /* RouteStep.m in Sources */,
 				F0C75F7828775A680015BB74 /* SavedCollectionsViewController.m in Sources */,
 				F0F335AE2875F0B400470507 /* SelectableMap.m in Sources */,
 				F0F335B72875F2E100470507 /* MapUtils.m in Sources */,
 				F0F335862874A0EB00470507 /* main.m in Sources */,
 				F0C75F7B28775C7F0015BB74 /* LogoutHandler.m in Sources */,
 				F0C75F86287786D70015BB74 /* StaticMapCell.m in Sources */,
-				F0F335B32875F18700470507 /* Location.m in Sources */,
+				F0C75FE4287E3CB20015BB74 /* Itinerary.m in Sources */,
+				F0C75FE8287E3CB30015BB74 /* RouteLeg.m in Sources */,
+				F0C75FE7287E3CB30015BB74 /* Location.m in Sources */,
+				F0C75FBE287CE4CB0015BB74 /* DirectionsAPIManager.m in Sources */,
 				F0F335782874A0E700470507 /* SceneDelegate.m in Sources */,
-				F0C75F80287778640015BB74 /* LocationCollection.m in Sources */,
+				F0C75FE5287E3CB30015BB74 /* LocationCollection.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

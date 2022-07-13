@@ -7,10 +7,12 @@
 
 #import "MapUtils.h"
 #import "Location.h"
+#import "LocationCollection.h"
 @import GoogleMaps;
 @import GooglePlaces;
 
 #define STATIC_MAP_URL @"https://maps.googleapis.com/maps/api/staticmap?center=%f,%f&zoom=%d&size=%dx%d&key=%@"
+#define DIRECTIONS_URL @"json?origin=place_id:%@&destination=place_id:%@&departure_time=now&mode=walking&waypoints=%@&key=%@"
 
 @implementation MapUtils
 
@@ -27,6 +29,20 @@
     NSData *data = [NSData dataWithContentsOfURL:mapUrl];
     UIImage *image = [UIImage imageWithData:data];
     return image;
+}
+
++ (NSString *) generateDirectionsApiUrl:(LocationCollection *)collection
+                                          origin:(Location *)origin
+                                        optimize:(BOOL)optimize
+                                   departureTime:(NSDate *)departureTime {
+    // TODO: Enable via waypoints instead of just stopovers
+    NSString *stops = optimize ? @"optimize:true" : @"";
+    for(Location *loc in collection.locations) {
+        stops = [stops stringByAppendingString:[NSString stringWithFormat:@"|place_id:%@", loc.placeId]];
+    }
+    NSString *baseUrl = [NSString stringWithFormat:DIRECTIONS_URL, origin.placeId, origin.placeId, stops, [self getApiKey]];
+    NSString *percentEncodedURLString = [[NSURL URLWithDataRepresentation:[baseUrl dataUsingEncoding:NSUTF8StringEncoding] relativeToURL:nil] relativeString];
+    return percentEncodedURLString;
 }
 
 @end

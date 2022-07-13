@@ -9,18 +9,23 @@
 #import "Parse/Parse.h"
 #import "LocationCollection.h"
 #import "Location.h"
+#import "Itinerary.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface ParseUtils : NSObject
 + (NSArray *)getCollectionKeys;
 + (NSArray *)getLocationKeys;
-+ (NSString *)getLoggedInUserId;
++ (NSArray *)getItineraryKeys;
++ (NSString *)getLoggedInUsername;
++ (void) itineraryFromPFObj:(PFObject *)obj completion:(void (^)(Itinerary *itinerary, NSError *))completion;
 + (void)collectionFromPFObj:(PFObject *)obj completion:(void (^)(LocationCollection *collection, NSError *))completion;
 + (Location *)locationFromPFObj:(PFObject *)obj;
 + (PFObject *)newPFObjWithCollection:(LocationCollection *)collection;
 + (PFObject *)newPFObjWithLocation:(Location *)loc;
 + (PFObject *)oldPFObjFromLocation:(Location *)loc;
++ (PFObject *)oldPFObjFromCollection:(LocationCollection *)col;
++ (PFObject *)newPFObjFromItinerary:(Itinerary *)it;
 @end
 
 NS_ASSUME_NONNULL_END

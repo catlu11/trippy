@@ -27,15 +27,34 @@
         case kCollection:
             [self updateUIElementsCollection];
             break;
-        case kLocation: [self updateUIElementsLocation];
+        case kLocation:
+            [self updateUIElementsLocation];
+            break;
+        case kItinerary:
+            [self updateUIElementsItinerary];
             break;
     }
-//    if (type == kCollection) {
-//        [self updateUIElementsCollection];
-//    }
-//    else if (type == kLocation) {
-//        [self updateUIElementsLocation];
-//    }
+}
+
+- (void) updateUIElementsItinerary {
+    self.titleLabel.text = self.itinerary.name;
+    self.descriptionLabel.text = [NSString stringWithFormat:@"Origin: %@\nSource: %@", self.itinerary.originLocation.title, self.itinerary.sourceCollection.title];
+    [self.descriptionLabel sizeToFit];
+    
+    // Format date
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"dd MMM yyyy"];
+    NSString *stringFromDate = [formatter stringFromDate:self.itinerary.createdAt];
+    self.lastUpdateLabel.text = stringFromDate;
+    
+    // Get static thumbnail
+    if(self.itinerary.sourceCollection.locations.count > 0) {
+        Location *firstLoc = self.itinerary.sourceCollection.locations[0];
+        self.mapImageView.image = [MapUtils getStaticMapImage:firstLoc.coord width:self.mapImageView.frame.size.width height:self.mapImageView.frame.size.height];
+    }
+    else {
+        self.mapImageView.image = [UIImage imageNamed:@"tray"];
+    }
 }
 
 - (void) updateUIElementsCollection {
@@ -65,12 +84,19 @@
     [self.descriptionLabel sizeToFit];
     
     // Get static thumbnail
-    self.mapImageView.image = [MapUtils getStaticMapImage:self.location.coord width:self.mapImageView.frame.size.width height:self.mapImageView.frame.size.height];
+    if (self.mapImageView != nil) {
+        self.mapImageView.image = [MapUtils getStaticMapImage:self.location.coord width:self.mapImageView.frame.size.width height:self.mapImageView.frame.size.height];
+    }
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
-    self.accessoryType = selected ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
+    if (self.showCheckmark) {
+        self.accessoryType = selected ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
+    }
+    else {
+        self.accessoryType = UITableViewCellAccessoryNone;
+    }
 }
 
 @end
