@@ -6,6 +6,7 @@
 //
 
 #import "RouteLeg.h"
+#import "MapUtils.h"
 
 @implementation RouteLeg
 
@@ -17,13 +18,8 @@
         self.distanceVal = dict[@"distance"][@"val"];
         self.durationText = dict[@"duration"][@"text"];
         self.durationVal = dict[@"duration"][@"val"];
-        NSNumber *startLat = dict[@"start_location"][@"lat"];
-        NSNumber *startLng = dict[@"start_location"][@"lng"];
-        NSNumber *endLat = dict[@"end_location"][@"lat"];
-        NSNumber *endLng = dict[@"end_location"][@"lng"];
-        self.startCoord = CLLocationCoordinate2DMake([startLat doubleValue], [startLng doubleValue]);
-        self.endCoord = CLLocationCoordinate2DMake([endLat doubleValue], [endLng doubleValue]);
-        
+        self.startCoord = [MapUtils latLngDictToCoordinate:dict key:@"start_location"];
+        self.endCoord = [MapUtils latLngDictToCoordinate:dict key:@"end_location"];
         NSMutableArray *steps = [[NSMutableArray alloc] init];
         for (NSDictionary *step in dict[@"steps"]) {
             [steps addObject:[[RouteStep alloc] initWithDictionary:step]];

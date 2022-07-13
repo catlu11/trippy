@@ -16,7 +16,7 @@
 
 @implementation MapUtils
 
-+ (NSString *) getApiKey {
++ (NSString *)getApiKey {
     NSString *path = [[NSBundle mainBundle] pathForResource:@"Keys" ofType:@"plist"];
     NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile:path];
     return dict[@"GMapsKey"];
@@ -31,7 +31,7 @@
     return image;
 }
 
-+ (NSString *) generateDirectionsApiUrl:(LocationCollection *)collection
++ (NSString *)generateDirectionsApiUrl:(LocationCollection *)collection
                                           origin:(Location *)origin
                                         optimize:(BOOL)optimize
                                    departureTime:(NSDate *)departureTime {
@@ -44,5 +44,16 @@
     NSString *percentEncodedURLString = [[NSURL URLWithDataRepresentation:[baseUrl dataUsingEncoding:NSUTF8StringEncoding] relativeToURL:nil] relativeString];
     return percentEncodedURLString;
 }
+
++ (CLLocationCoordinate2D)latLngDictToCoordinate:(NSDictionary *)bounds key:(NSString *)key {
+    NSNumber *swLat = bounds[key][@"lat"];
+    NSNumber *swLng = bounds[key][@"lng"];
+    return CLLocationCoordinate2DMake([swLat doubleValue], [swLng doubleValue]);
+}
+
++ (GMSCoordinateBounds *)latLngDictToBounds:(NSDictionary *)bounds firstKey:(NSString *)firstKey secondKey:(NSString *)secondKey {
+    return [[GMSCoordinateBounds alloc] initWithCoordinate:[self latLngDictToCoordinate:bounds key:firstKey] coordinate:[self latLngDictToCoordinate:bounds key:secondKey]];
+}
+
 
 @end

@@ -6,6 +6,7 @@
 //
 
 #import "RouteStep.h"
+#import "MapUtils.h"
 
 @implementation RouteStep
 
@@ -18,12 +19,8 @@
         self.durationText = dict[@"duration"][@"text"];
         self.durationVal = dict[@"duration"][@"val"];
         self.instruction = dict[@"html_instructions"];
-        NSNumber *startLat = dict[@"start_location"][@"lat"];
-        NSNumber *startLng = dict[@"start_location"][@"lng"];
-        NSNumber *endLat = dict[@"end_location"][@"lat"];
-        NSNumber *endLng = dict[@"end_location"][@"lng"];
-        self.startCoord = CLLocationCoordinate2DMake([startLat doubleValue], [startLng doubleValue]);
-        self.endCoord = CLLocationCoordinate2DMake([endLat doubleValue], [endLng doubleValue]);
+        self.startCoord = [MapUtils latLngDictToCoordinate:dict key:@"start_location"];
+        self.endCoord = [MapUtils latLngDictToCoordinate:dict key:@"end_location"];
         self.polyline = dict[@"polyline"];
         self.travelMode = dict[@"travel_mode"];
     }

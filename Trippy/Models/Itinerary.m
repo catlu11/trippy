@@ -6,6 +6,7 @@
 //
 
 #import "Itinerary.h"
+#import "MapUtils.h"
 
 @implementation Itinerary
 
@@ -14,12 +15,7 @@
     
     if (self) {
         self.directionsJson = dict;
-        NSDictionary *bounds = dict[@"routes"][0][@"bounds"]; // Bounds of routes
-        NSNumber *neLat = bounds[@"northeast"][@"lat"];
-        NSNumber *neLng = bounds[@"northeast"][@"lng"];
-        NSNumber *swLat = bounds[@"southwest"][@"lat"];
-        NSNumber *swLng = bounds[@"southwest"][@"lng"];
-        self.bounds = [[GMSCoordinateBounds alloc] initWithCoordinate:CLLocationCoordinate2DMake([neLat doubleValue], [neLng doubleValue]) coordinate:CLLocationCoordinate2DMake([swLat doubleValue], [swLng doubleValue])];
+        self.bounds = [MapUtils latLngDictToBounds:dict[@"routes"][0][@"bounds"] firstKey:@"northeast" secondKey:@"southwest"];
         NSMutableArray *legs = [[NSMutableArray alloc] init];
         for (NSDictionary *leg in dict[@"routes"][0][@"legs"]) {
             [legs addObject:[[RouteLeg alloc] initWithDictionary:leg]];
