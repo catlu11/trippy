@@ -19,6 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, weak) id<UserAuthHandlerDelegate> delegate;
 - (void) logInWithUsername:(NSString *)username password:(NSString *)password;
 - (void) signUpWithUsername:(NSString *)username password:(NSString *)password;
+- (void) logoutCurrentUser;
 @end
 
 NS_ASSUME_NONNULL_END

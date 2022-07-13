@@ -6,43 +6,82 @@
 //
 
 #import "Location.h"
+#import "Parse/Parse.h"
+#import "ParseUtils.h"
 @import GooglePlaces;
+
+@interface Location ()
+@property (strong, nonatomic) PFObject *obj;
+@end
 
 @implementation Location
 
-- (instancetype) initWithParams:(NSString *)title
-                        snippet:(NSString *)snippet
-                       latitude:(double)latitude
-                      longitude:(double)longitude
-                           user:(NSString *)user
-                        placeId:(NSString *)placeId
-                  parseObjectId:(NSString *)parseObjectId {
+/* Custom getters and setters */
+
+- (NSString*)title {
+    return _obj[@"title"];
+}
+
+- (void)setTitle:(NSString*)title {
+    _obj[@"title"] = title;
+}
+
+- (NSString*)placeId {
+    return _obj[@"placeId"];
+}
+
+- (void)setPlaceId:(NSString*)placeId {
+    _obj[@"placeId"] = placeId;
+}
+
+- (NSString*)snippet {
+    return _obj[@"snippet"];
+}
+
+- (void)setSnippet:(NSString*)snippet {
+    _obj[@"snippet"] = snippet;
+}
+
+- (NSString*)parseObjectId {
+    return _obj.objectId;
+}
+
+- (CLLocationCoordinate2D)coord {
+    PFGeoPoint *point = _obj[@"coord"];
+    return CLLocationCoordinate2DMake(point.latitude, point.longitude);
+}
+
+- (void)setCoord:(CLLocationCoordinate2D)coord {
+    PFGeoPoint *point = [PFGeoPoint geoPointWithLatitude:coord.latitude longitude:coord.longitude];
+    _obj[@"coord"] = point;
+}
+
+- (instancetype) initWithPFObj:(PFObject *)obj {
+    self = [super init];
+    if (self) {
+        self.obj = obj;
+    }
+    return self;
+}
+
+- (instancetype) initWithPlace:(GMSPlace *)place {
     self = [super init];
     
     if (self) {
-        self.title = title;
-        self.snippet = snippet;
-        self.coord = CLLocationCoordinate2DMake(latitude, longitude);
-        self.userId = user;
-        self.placeId = placeId;
-        self.parseObjectId = parseObjectId;
+        PFObject *obj = [PFObject objectWithClassName:@"Location"];
+        obj[@"placeId"] = place.placeID;
+        obj[@"title"] = place.name;
+        obj[@"snippet"] = place.description;
+        obj[@"coord"] = [PFGeoPoint geoPointWithLatitude:place.coordinate.latitude longitude:place.coordinate.longitude];
+        obj[@"createdBy"] = [PFUser currentUser];
+        self.obj = obj;
     }
     
     return self;
 }
 
-- (instancetype) initWithPlace:(GMSPlace *)place user:(NSString *)user {
-    self = [super init];
-    
-    if (self) {
-        self.title = place.name;
-        self.snippet = place.description;
-        self.coord = place.coordinate;
-        self.userId = user;
-        self.placeId = place.placeID;
-    }
-    
-    return self;
+- (PFObject *)getPfObjRepresentation {
+    return self.obj;
 }
 
 @end

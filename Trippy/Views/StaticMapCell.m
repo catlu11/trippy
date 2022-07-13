@@ -67,7 +67,7 @@
     // Format date
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     [formatter setDateFormat:@"dd MMM yyyy"];
-    NSString *stringFromDate = [formatter stringFromDate:self.collection.lastUpdated];
+    NSString *stringFromDate = [formatter stringFromDate:self.collection.createdAt];
     self.lastUpdateLabel.text = stringFromDate;
     
     // Get static thumbnail

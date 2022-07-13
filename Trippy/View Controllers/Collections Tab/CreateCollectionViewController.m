@@ -50,10 +50,7 @@
             }
         }
     }
-    LocationCollection *col = [[LocationCollection alloc] init];
-    col.title = self.nameField.text;
-    col.snippet = self.descTextView.text;
-    col.locations = locations;
+    LocationCollection *col = [[LocationCollection alloc] initWithParams:locations title:self.nameField.text snippet:self.descTextView.text];
     [self.postHandler postNewCollection:col];
 }
 

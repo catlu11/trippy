@@ -100,7 +100,7 @@
             NSLog(@"An error occurred fetching place details%@", [error localizedDescription]);
         }
         else {
-            Location *placeLoc = [[Location alloc] initWithPlace:result user:[ParseUtils getLoggedInUsername]];
+            Location *placeLoc = [[Location alloc] initWithPlace:result];
             [self.mapView clearMarkers];
             [self.mapView addMarker:placeLoc];
             [self.mapView setCameraToLoc:placeLoc.coord animate:YES];

@@ -24,9 +24,7 @@
 		F0C75FA4287CA2430015BB74 /* ItineraryDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F0C75FA3287CA2430015BB74 /* ItineraryDetailViewController.m */; };
 		F0C75FBE287CE4CB0015BB74 /* DirectionsAPIManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F0C75FBD287CE4CB0015BB74 /* DirectionsAPIManager.m */; };
 		F0C75FE4287E3CB20015BB74 /* Itinerary.m in Sources */ = {isa = PBXBuildFile; fileRef = F0C75FDB287E3CB20015BB74 /* Itinerary.m */; };
-		F0C75FE5287E3CB30015BB74 /* LocationCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = F0C75FDD287E3CB20015BB74 /* LocationCollection.m */; };
 		F0C75FE6287E3CB30015BB74 /* RouteStep.m in Sources */ = {isa = PBXBuildFile; fileRef = F0C75FE0287E3CB20015BB74 /* RouteStep.m */; };
-		F0C75FE7287E3CB30015BB74 /* Location.m in Sources */ = {isa = PBXBuildFile; fileRef = F0C75FE1287E3CB20015BB74 /* Location.m */; };
 		F0C75FE8287E3CB30015BB74 /* RouteLeg.m in Sources */ = {isa = PBXBuildFile; fileRef = F0C75FE3287E3CB20015BB74 /* RouteLeg.m */; };
 		F0F335752874A0E700470507 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F0F335742874A0E700470507 /* AppDelegate.m */; };
 		F0F335782874A0E700470507 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F0F335772874A0E700470507 /* SceneDelegate.m */; };
@@ -40,6 +38,8 @@
 		F0F3359C2874A0EB00470507 /* TrippyUITestsLaunchTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F0F3359B2874A0EB00470507 /* TrippyUITestsLaunchTests.m */; };
 		F0F335AE2875F0B400470507 /* SelectableMap.m in Sources */ = {isa = PBXBuildFile; fileRef = F0F335AD2875F0B400470507 /* SelectableMap.m */; };
 		F0F335B72875F2E100470507 /* MapUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = F0F335B62875F2E100470507 /* MapUtils.m */; };
+		F0F657F1287F743400C04AB0 /* Location.m in Sources */ = {isa = PBXBuildFile; fileRef = F0F657EE287F743400C04AB0 /* Location.m */; };
+		F0F657F2287F743400C04AB0 /* LocationCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = F0F657EF287F743400C04AB0 /* LocationCollection.m */; };
 		FED82F2F74A69C665F7637DE /* Pods_Trippy_TrippyUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBFD6FD215C55391F69C0E9B /* Pods_Trippy_TrippyUITests.framework */; };
 /* End PBXBuildFile section */
 
@@ -97,16 +97,12 @@
 		F0C75FA3287CA2430015BB74 /* ItineraryDetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ItineraryDetailViewController.m; sourceTree = "<group>"; };
 		F0C75FBC287CE4CB0015BB74 /* DirectionsAPIManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DirectionsAPIManager.h; sourceTree = "<group>"; };
 		F0C75FBD287CE4CB0015BB74 /* DirectionsAPIManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DirectionsAPIManager.m; sourceTree = "<group>"; };
-		F0C75FDA287E3CB20015BB74 /* Location.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Location.h; path = Trippy/Models/Location.h; sourceTree = "<group>"; };
-		F0C75FDB287E3CB20015BB74 /* Itinerary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Itinerary.m; path = Trippy/Models/Itinerary.m; sourceTree = "<group>"; };
-		F0C75FDC287E3CB20015BB74 /* LocationCollection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LocationCollection.h; path = Trippy/Models/LocationCollection.h; sourceTree = "<group>"; };
-		F0C75FDD287E3CB20015BB74 /* LocationCollection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LocationCollection.m; path = Trippy/Models/LocationCollection.m; sourceTree = "<group>"; };
-		F0C75FDE287E3CB20015BB74 /* Itinerary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Itinerary.h; path = Trippy/Models/Itinerary.h; sourceTree = "<group>"; };
-		F0C75FDF287E3CB20015BB74 /* RouteStep.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RouteStep.h; path = Trippy/Models/RouteStep.h; sourceTree = "<group>"; };
-		F0C75FE0287E3CB20015BB74 /* RouteStep.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RouteStep.m; path = Trippy/Models/RouteStep.m; sourceTree = "<group>"; };
-		F0C75FE1287E3CB20015BB74 /* Location.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Location.m; path = Trippy/Models/Location.m; sourceTree = "<group>"; };
-		F0C75FE2287E3CB20015BB74 /* RouteLeg.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RouteLeg.h; path = Trippy/Models/RouteLeg.h; sourceTree = "<group>"; };
-		F0C75FE3287E3CB20015BB74 /* RouteLeg.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RouteLeg.m; path = Trippy/Models/RouteLeg.m; sourceTree = "<group>"; };
+		F0C75FDB287E3CB20015BB74 /* Itinerary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Itinerary.m; sourceTree = "<group>"; };
+		F0C75FDE287E3CB20015BB74 /* Itinerary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Itinerary.h; sourceTree = "<group>"; };
+		F0C75FDF287E3CB20015BB74 /* RouteStep.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RouteStep.h; sourceTree = "<group>"; };
+		F0C75FE0287E3CB20015BB74 /* RouteStep.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RouteStep.m; sourceTree = "<group>"; };
+		F0C75FE2287E3CB20015BB74 /* RouteLeg.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RouteLeg.h; sourceTree = "<group>"; };
+		F0C75FE3287E3CB20015BB74 /* RouteLeg.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RouteLeg.m; sourceTree = "<group>"; };
 		F0F335702874A0E700470507 /* Trippy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Trippy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F0F335732874A0E700470507 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		F0F335742874A0E700470507 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -128,6 +124,10 @@
 		F0F335AD2875F0B400470507 /* SelectableMap.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SelectableMap.m; sourceTree = "<group>"; };
 		F0F335B52875F2E100470507 /* MapUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MapUtils.h; sourceTree = "<group>"; };
 		F0F335B62875F2E100470507 /* MapUtils.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MapUtils.m; sourceTree = "<group>"; };
+		F0F657ED287F743400C04AB0 /* Location.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Location.h; sourceTree = "<group>"; };
+		F0F657EE287F743400C04AB0 /* Location.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Location.m; sourceTree = "<group>"; };
+		F0F657EF287F743400C04AB0 /* LocationCollection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationCollection.m; sourceTree = "<group>"; };
+		F0F657F0287F743400C04AB0 /* LocationCollection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationCollection.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -270,12 +270,12 @@
 		F0F335722874A0E700470507 /* Trippy */ = {
 			isa = PBXGroup;
 			children = (
-				F0C75FBF287DE3190015BB74 /* Query Handlers */,
+				F0F657F5287F747200C04AB0 /* Models */,
 				F0F335B42875F2BD00470507 /* Utils */,
+				F0C75FBF287DE3190015BB74 /* Query Handlers */,
 				F0F335AB2875F08D00470507 /* API */,
 				F0F335A92875F07300470507 /* View Controllers */,
 				F0F335A82875F06900470507 /* Views */,
-				F0F335AA2875F08500470507 /* Models */,
 				F0F335732874A0E700470507 /* AppDelegate.h */,
 				F0F335742874A0E700470507 /* AppDelegate.m */,
 				F0F335762874A0E700470507 /* SceneDelegate.h */,
@@ -330,24 +330,6 @@
 			path = "View Controllers";
 			sourceTree = "<group>";
 		};
-		F0F335AA2875F08500470507 /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				F0C75FDE287E3CB20015BB74 /* Itinerary.h */,
-				F0C75FDB287E3CB20015BB74 /* Itinerary.m */,
-				F0C75FDA287E3CB20015BB74 /* Location.h */,
-				F0C75FE1287E3CB20015BB74 /* Location.m */,
-				F0C75FDC287E3CB20015BB74 /* LocationCollection.h */,
-				F0C75FDD287E3CB20015BB74 /* LocationCollection.m */,
-				F0C75FE2287E3CB20015BB74 /* RouteLeg.h */,
-				F0C75FE3287E3CB20015BB74 /* RouteLeg.m */,
-				F0C75FDF287E3CB20015BB74 /* RouteStep.h */,
-				F0C75FE0287E3CB20015BB74 /* RouteStep.m */,
-			);
-			name = Models;
-			path = ..;
-			sourceTree = "<group>";
-		};
 		F0F335AB2875F08D00470507 /* API */ = {
 			isa = PBXGroup;
 			children = (
@@ -366,6 +348,23 @@
 				F0C75F91287799070015BB74 /* ParseUtils.m */,
 			);
 			path = Utils;
+			sourceTree = "<group>";
+		};
+		F0F657F5287F747200C04AB0 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				F0F657F0287F743400C04AB0 /* LocationCollection.h */,
+				F0F657ED287F743400C04AB0 /* Location.h */,
+				F0F657EE287F743400C04AB0 /* Location.m */,
+				F0F657EF287F743400C04AB0 /* LocationCollection.m */,
+				F0C75FDE287E3CB20015BB74 /* Itinerary.h */,
+				F0C75FDB287E3CB20015BB74 /* Itinerary.m */,
+				F0C75FE2287E3CB20015BB74 /* RouteLeg.h */,
+				F0C75FE3287E3CB20015BB74 /* RouteLeg.m */,
+				F0C75FDF287E3CB20015BB74 /* RouteStep.h */,
+				F0C75FE0287E3CB20015BB74 /* RouteStep.m */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -653,6 +652,7 @@
 				F0C75FA4287CA2430015BB74 /* ItineraryDetailViewController.m in Sources */,
 				F0C75F83287786B60015BB74 /* MapItemListViewController.m in Sources */,
 				F0F335752874A0E700470507 /* AppDelegate.m in Sources */,
+				F0F657F1287F743400C04AB0 /* Location.m in Sources */,
 				F0C75F7528774F940015BB74 /* UserAuthHandler.m in Sources */,
 				F0C75FE6287E3CB30015BB74 /* RouteStep.m in Sources */,
 				F0C75F7828775A680015BB74 /* SavedCollectionsViewController.m in Sources */,
@@ -663,10 +663,9 @@
 				F0C75F86287786D70015BB74 /* StaticMapCell.m in Sources */,
 				F0C75FE4287E3CB20015BB74 /* Itinerary.m in Sources */,
 				F0C75FE8287E3CB30015BB74 /* RouteLeg.m in Sources */,
-				F0C75FE7287E3CB30015BB74 /* Location.m in Sources */,
 				F0C75FBE287CE4CB0015BB74 /* DirectionsAPIManager.m in Sources */,
+				F0F657F2287F743400C04AB0 /* LocationCollection.m in Sources */,
 				F0F335782874A0E700470507 /* SceneDelegate.m in Sources */,
-				F0C75FE5287E3CB30015BB74 /* LocationCollection.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

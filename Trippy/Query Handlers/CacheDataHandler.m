@@ -15,8 +15,7 @@
 @implementation CacheDataHandler
 
 - (void) postNewLocation:(Location *)location collection:(LocationCollection *)collection {
-    PFObject *newLocation = [ParseUtils newPFObjWithLocation:location];
-    location.parseObjectId = newLocation.objectId;
+    PFObject *newLocation = [location getPfObjRepresentation];
     __weak CacheDataHandler *weakSelf = self;
     [newLocation saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
         if(succeeded) {
@@ -37,21 +36,18 @@
 }
 
 - (void) postNewCollection:(LocationCollection *)collection {
-    PFObject *newCollection = [ParseUtils newPFObjWithCollection:collection];
+    PFObject *newCollection = [collection getPfObjRepresentation];
     __weak CacheDataHandler *weakSelf = self;
     [newCollection saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
         if (succeeded) {
             __strong CacheDataHandler *strongSelf = weakSelf;
-            collection.createdAt = newCollection.createdAt;
-            collection.parseObjectId = newCollection.objectId;
-            collection.lastUpdated = collection.createdAt;
             [strongSelf.delegate postedCollectionSuccess:collection];
         }
     }];
 }
 
 - (void) postNewItinerary:(Itinerary *)it {
-    PFObject *newItinerary = [ParseUtils newPFObjFromItinerary:it];
+    PFObject *newItinerary = [ParseUtils pfObjFromItinerary:it];
     __weak CacheDataHandler *weakSelf = self;
     [newItinerary saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
         if (succeeded) {
@@ -103,12 +99,12 @@
             [strongSelf.delegate generalRequestFail:error];
         } else {
             for(PFObject *obj in objects) {
-                [ParseUtils collectionFromPFObj:obj completion:^(LocationCollection * _Nonnull collection, NSError * _Nonnull) {
+                [LocationCollection initFromPFObj:obj completion:^(LocationCollection * _Nonnull col, NSError * _Nonnull error) {
                     __strong CacheDataHandler *strongSelf = weakSelf;
-                    if(error) {
+                    if (error) {
                         [strongSelf.delegate generalRequestFail:error];
                     } else {
-                        [strongSelf.delegate addFetchedCollection:collection];
+                        [strongSelf.delegate addFetchedCollection:col];
                     }
                 }];
             }
@@ -129,7 +125,7 @@
             [strongSelf.delegate generalRequestFail:error];
         } else {
             for(PFObject *obj in objects) {
-                [strongSelf.delegate addFetchedLocation:[ParseUtils locationFromPFObj:obj]];
+                [strongSelf.delegate addFetchedLocation:[[Location alloc] initWithPFObj:obj]];
             }
         }
     }];
