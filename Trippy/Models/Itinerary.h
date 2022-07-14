@@ -22,6 +22,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) LocationCollection *sourceCollection;
 @property (strong, nonatomic) Location *originLocation;
 
+// Changeable non-JSON
+@property (strong, nonatomic) NSDate *departureTime;
+
 // JSON fields
 @property (readonly) NSArray *routeLegs;
 @property (readonly) GMSCoordinateBounds *bounds;
@@ -29,8 +32,10 @@ NS_ASSUME_NONNULL_BEGIN
 @property (readonly) NSArray *waypointOrder;
 
 - (instancetype)initWithDictionary:(NSDictionary *)dict;
-- (void) reinitialize:(NSDictionary *)dict;
+- (void)reinitialize:(NSDictionary *)dict;
 - (NSDictionary *)toDictionary;
+- (NSDate *)computeArrival:(int)waypointIndex;
+- (NSDate *)computeDeparture:(int)waypointIndex;
 @end
 
 NS_ASSUME_NONNULL_END

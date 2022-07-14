@@ -20,6 +20,7 @@
 
 - (void)viewDidLoad {
     self.listType = kLocation;
+    self.overrideData = NO;
     self.showSelection = YES;
     
     [super viewDidLoad];

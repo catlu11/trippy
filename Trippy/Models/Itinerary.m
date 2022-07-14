@@ -64,4 +64,12 @@
     }
 }
 
+- (NSDate *)computeArrival:(int)waypointIndex {
+    return nil;
+}
+
+- (NSDate *)computeDeparture:(int)waypointIndex {
+    return nil;
+}
+
 @end

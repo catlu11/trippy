@@ -31,8 +31,10 @@
     // Fetch handler
     self.handler = [[CacheDataHandler alloc] init];
     self.handler.delegate = self;
-        
-    [self refreshData];
+    
+    if (self.overrideData == NO) {
+        [self refreshData];
+    }
 }
 
 - (void) refreshData {

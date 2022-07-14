@@ -10,6 +10,7 @@
 #import "Itinerary.h"
 #import "LocationCollection.h"
 #import "Location.h"
+#import "EditingItineraryViewController.h"
 
 @interface ItineraryDetailViewController ()
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
@@ -35,8 +36,20 @@
     self.detailsLabel.text = [NSString stringWithFormat:@"Origin: %@\nSource: %@", self.itinerary.originLocation.title, self.itinerary.sourceCollection.title];
 }
 
+- (IBAction)tapEdit:(id)sender {
+    [self performSegueWithIdentifier:@"editItinerarySegue" sender:nil];
+}
+
 - (IBAction)tapBack:(id)sender {
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+# pragma mark - Navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if([[segue identifier] isEqualToString:@"editItinerarySegue"]) {
+        EditingItineraryViewController *vc = segue.destinationViewController;
+        vc.itinerary = self.itinerary;
+    }
 }
 
 @end
