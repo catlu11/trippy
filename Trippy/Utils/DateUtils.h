@@ -13,6 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (NSString *)formatDateAsISO8601:(NSDate *)date;
 + (NSDate *)isoStringToDate:(NSString *)isoString;
 + (int)aheadSecondsFrom1970:(NSDate *)date;
++ (NSArray *)secondsToHourMin:(int)seconds;
 @end
 
 NS_ASSUME_NONNULL_END

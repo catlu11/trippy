@@ -22,20 +22,20 @@
     return [DateUtils isoStringToDate:dateString];
 }
 
-- (void) setPreferredETA:(NSDate *)preferredETA {
-    _infoJson[@"preferredETA"] = [DateUtils formatDateAsISO8601:preferredETA];
+- (void) setPreferredEta:(NSDate *)preferredEta {
+    _infoJson[@"preferredEta"] = [DateUtils formatDateAsISO8601:preferredEta];
 }
 
 - (NSDate *)preferredTOD {
-    NSString *dateString = self.infoJson[@"preferredTOD"];
+    NSString *dateString = self.infoJson[@"preferredTod"];
     if ([dateString isEqual:[NSNull null]]) {
         return nil;
     }
     return [DateUtils isoStringToDate:dateString];
 }
 
-- (void) setPreferredTOD:(NSDate *)preferredTOD {
-    _infoJson[@"preferredTOD"] = [DateUtils formatDateAsISO8601:preferredTOD];
+- (void) setPreferredTod:(NSDate *)preferredTOD {
+    _infoJson[@"preferredTod"] = [DateUtils formatDateAsISO8601:preferredTOD];
 }
 
 - (NSNumber *)stayDuration {
@@ -61,15 +61,37 @@
     self.infoJson = [dict mutableCopy];
 }
 
-+ (NSDictionary *)prefDictFromAttributes:(NSDate * _Nullable)preferredETA
+- (instancetype)initWithAttributes:(NSDate * _Nullable)preferredETA
                             preferredTOD:(NSDate * _Nullable)preferredTOD
-                            stayDuration:(NSTimeInterval * _Nullable)stayDuration {
-    NSDictionary *newDict = [[NSDictionary alloc] initWithObjects:[NSArray arrayWithObjects:preferredETA, preferredTOD, stayDuration, nil] forKeys:[NSArray arrayWithObjects:@"preferredEta", @"preferredTOD", @"stayDuration", nil]];
-    return newDict;
+                            stayDuration:(NSNumber *)stayDuration {
+    self = [super init];
+    
+    if (self) {
+        NSString *eta = [preferredETA isEqual:[NSNull null]] ? [NSNull null] : [DateUtils formatDateAsISO8601:preferredETA];
+        NSString *tod = [preferredTOD isEqual:[NSNull null]] ? [NSNull null] : [DateUtils formatDateAsISO8601:preferredTOD];
+        NSDictionary *newDict = [[NSDictionary alloc] initWithObjects:[NSArray arrayWithObjects:eta, tod, stayDuration, nil] forKeys:[NSArray arrayWithObjects:@"preferredEta", @"preferredTod", @"stayDuration", nil]];
+        self.infoJson = [newDict mutableCopy];
+    }
+    
+    return self;
 }
 
 - (NSDictionary *)toDictionary {
     return self.infoJson;
+}
+
+- (BOOL) isValid {
+    NSDate *eta = self.preferredETA;
+    NSDate *tod = self.preferredTOD;
+    if (tod != nil && eta != nil) {
+        if ([self.preferredETA compare:self.preferredTOD] == NSOrderedDescending) {
+            return NO;
+        }
+    }
+    if ([self.stayDuration intValue] < 0) {
+        return NO;
+    }
+    return YES;
 }
 
 @end

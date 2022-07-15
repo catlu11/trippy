@@ -39,14 +39,6 @@
     return self.routeJson[@"waypoint_order"];
 }
 
-- (NSArray *)prefsByWaypoint { // ordered by waypoint order
-    NSMutableArray *prefObjs = [[NSMutableArray alloc] init];
-    for (NSDictionary *pref in self.prefJson[@"preferences"]) {
-        [prefObjs addObject:[[ItineraryPreferences alloc] initWithDictionary:pref]];
-    }
-    return prefObjs;
-}
-
 - (instancetype)initWithDictionary:(NSDictionary *)routesJson
                           prefJson:(NSDictionary *)prefJson
                          departure:(NSDate *)departure
@@ -69,7 +61,8 @@
         else {
             NSMutableArray *prefs = [[NSMutableArray alloc] init];
             for (Location *l in sourceCollection.locations) {
-                [prefs addObject:[ItineraryPreferences prefDictFromAttributes:[NSNull null] preferredTOD:[NSNull null] stayDuration:@0]];
+                ItineraryPreferences *newPref =  [[ItineraryPreferences alloc] initWithAttributes:[NSNull null] preferredTOD:[NSNull null] stayDuration:@0];
+                [prefs addObject:[newPref toDictionary]];
             }
             self.prefJson = @{@"preferences": prefs};
         }
@@ -120,6 +113,21 @@
         [ordered setObject:[self.sourceCollection.locations objectAtIndex:i] atIndexedSubscript:i];
     }
     return ordered;
+}
+
+
+- (ItineraryPreferences *)getPreference:(Location *)loc {
+    NSArray *prefsArray = self.prefJson[@"preferences"];
+    NSDictionary *json = [prefsArray objectAtIndex:[self.sourceCollection.locations indexOfObject:loc]];
+    return [[ItineraryPreferences alloc] initWithDictionary:json];
+}
+
+- (void)updatePreference:(Location *)location pref:(ItineraryPreferences *)pref {
+    NSMutableArray *prefsArray = [self.prefJson[@"preferences"] mutableCopy];
+    [prefsArray setObject:[pref toDictionary] atIndexedSubscript:[self.sourceCollection.locations indexOfObject:location]];
+    NSMutableDictionary *copy = [self.prefJson mutableCopy];
+    copy[@"preferences"] = prefsArray;
+    self.prefJson = copy;
 }
 
 - (NSDate *)computeArrival:(int)waypointIndex {

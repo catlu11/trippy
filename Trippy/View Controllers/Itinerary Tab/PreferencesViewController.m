@@ -7,10 +7,11 @@
 
 #import "PreferencesViewController.h"
 #import "MapUtils.h"
+#import "DateUtils.h"
 #import "ItineraryPreferences.h"
 #import "Location.h"
 
-@interface PreferencesViewController ()
+@interface PreferencesViewController () <UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *snippetLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *staticMapImage;
@@ -39,18 +40,26 @@
     // Set initial preferences
     if (self.preferences.preferredETA) {
         [self.prefEtaSwitch setOn:YES];
-        self.etaPicker.enabled = YES;
+        self.etaPicker.hidden = NO;
+        self.etaPicker.date = self.preferences.preferredETA;
     }
     if (self.preferences.preferredTOD) {
         [self.prefTodSwitch setOn:YES];
-        self.todPicker.enabled = YES;
+        self.todPicker.hidden = NO;
+        self.todPicker.date = self.preferences.preferredTOD;
     }
     if ([self.preferences.stayDuration intValue] > 0) {
         [self.estStaySwitch setOn:YES];
         self.stayHrField.enabled = YES;
         self.stayMinField.enabled = YES;
+        NSArray *hourMin = [DateUtils secondsToHourMin:[self.preferences.stayDuration intValue]];
+        self.stayHrField.text = [hourMin[0] stringValue];
+        self.stayMinField.text = [hourMin[1] stringValue];
     }
     [self.warningsLabel setHidden:YES];
+    
+    self.stayHrField.delegate = self;
+    self.stayMinField.delegate = self;
 }
 
 - (IBAction)toggleEta:(id)sender {
@@ -70,10 +79,43 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
+- (IBAction)tapView:(id)sender {
+    [self.stayHrField resignFirstResponder];
+    [self.stayMinField resignFirstResponder];
+}
+
 - (IBAction)tapUpdate:(id)sender {
-    // TODO: Check if selected preferences are valid
-    // TODO: Update warnings if invalid
-    // TODO: Update preference, dismiss view, and fire delegate if valid
+    NSDate *eta = self.prefEtaSwitch.isOn ? self.etaPicker.date : [NSNull null];
+    NSDate *tod = self.prefTodSwitch.isOn ? self.todPicker.date : [NSNull null];
+    NSNumber *stayTime = self.estStaySwitch ? [self stayTimeToSeconds] : @0;
+    if ([eta isEqualToDate:self.preferences.preferredETA] && [eta isEqualToDate:self.preferences.preferredTOD] && [stayTime isEqualToValue:self.preferences.stayDuration]) {
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }
+    else {
+        ItineraryPreferences *newPref = [[ItineraryPreferences alloc] initWithAttributes:eta preferredTOD:tod stayDuration:stayTime];
+        if ([newPref isValid]) {
+            [self.delegate didUpdatePreference:newPref location:self.location];
+            [self dismissViewControllerAnimated:YES completion:nil];
+        }
+        else {
+            NSLog(@"Invalid preferences");
+            // TODO: Update warning label if invalid
+        }
+    }
+}
+
+- (NSNumber *) stayTimeToSeconds {
+    NSString *hrString = self.stayHrField.text;
+    NSString *minString = self.stayMinField.text;
+    return [[NSNumber alloc] initWithInt:[hrString intValue] * 3600 + [minString intValue] * 60];
+}
+
+# pragma mark - UITextFieldDelegate
+
+-(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    NSCharacterSet *numSet = [NSCharacterSet decimalDigitCharacterSet];
+    NSCharacterSet *charSet = [NSCharacterSet characterSetWithCharactersInString:string];
+    return [numSet isSupersetOfSet:charSet];
 }
 
 @end

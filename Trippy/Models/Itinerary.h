@@ -9,6 +9,8 @@
 @class Location;
 @class LocationCollection;
 @class RouteLeg;
+@class ItineraryPreferences;
+
 @import GoogleMaps;
 
 NS_ASSUME_NONNULL_BEGIN
@@ -33,7 +35,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (readonly) GMSCoordinateBounds *bounds;
 @property (readonly) NSString *overviewPolyline;
 @property (readonly) NSArray *waypointOrder;
-@property (readonly) NSArray *prefsByWaypoint;
 
 - (instancetype)initWithDictionary:(NSDictionary *)routesJson
                           prefJson:(NSDictionary *)prefJson
@@ -44,6 +45,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)reinitialize:(NSDictionary *)routesJson
             prefJson:(NSDictionary *)prefJson
            departure:(NSDate *)departure;
+- (void)updatePreference:(Location *)location pref:(ItineraryPreferences *)pref;
+- (ItineraryPreferences *)getPreference:(Location *)loc;
 - (NSDictionary *)toRouteDictionary;
 - (NSDictionary *)toPrefsDictionary;
 - (NSArray *)getOrderedLocations;

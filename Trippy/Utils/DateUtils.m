@@ -27,4 +27,11 @@
     double seconds = [date timeIntervalSince1970];
     return round(seconds) + 120; // 2 minute buffer
 }
+
++ (NSArray *)secondsToHourMin:(int)seconds {
+    int hours = seconds / 3600;
+    int minutes = (seconds - (hours * 3600)) / 60;
+    return @[[NSNumber numberWithInt:hours], [NSNumber numberWithInt:minutes]];
+}
+
 @end

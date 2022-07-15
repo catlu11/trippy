@@ -12,7 +12,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @protocol PreferencesDelegate
-- (void) didUpdatePreference;
+- (void) didUpdatePreference:(ItineraryPreferences *)newPref location:(Location *)location;
 @end
 
 @interface PreferencesViewController : UIViewController

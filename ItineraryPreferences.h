@@ -15,11 +15,12 @@ NS_ASSUME_NONNULL_BEGIN
 @property (assign, nonatomic) NSNumber *stayDuration; // in seconds
 
 - (instancetype)initWithDictionary:(NSDictionary *)dict;
+- (instancetype)initWithAttributes:(NSDate * _Nullable)preferredEta
+                            preferredTOD:(NSDate * _Nullable)preferredTod
+                            stayDuration:(NSNumber *)stayDuration;
 - (void)reinitialize:(NSDictionary *)dict;
-+ (NSDictionary *)prefDictFromAttributes:(NSDate * _Nullable)preferredETA
-                            preferredTOD:(NSDate * _Nullable)preferredTOD
-                            stayDuration:(NSTimeInterval * _Nullable)stayDuration;
 - (NSDictionary *)toDictionary;
+- (BOOL) isValid;
 @end
 
 NS_ASSUME_NONNULL_END

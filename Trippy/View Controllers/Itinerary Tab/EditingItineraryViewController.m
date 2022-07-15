@@ -10,10 +10,11 @@
 #import "SelectableMap.h"
 #import "EditPlaceCell.h"
 #import "Itinerary.h"
+#import "ItineraryPreferences.h"
 #import "LocationCollection.h"
 #import "Location.h"
 
-@interface EditingItineraryViewController () <UITableViewDelegate, UITableViewDataSource, EditPlaceCellDelegate>
+@interface EditingItineraryViewController () <UITableViewDelegate, UITableViewDataSource, EditPlaceCellDelegate, PreferencesDelegate>
 @property (weak, nonatomic) IBOutlet UIView *editView;
 @property (weak, nonatomic) IBOutlet UITableView *placesTableView;
 @property (weak, nonatomic) IBOutlet SelectableMap *mapView;
@@ -22,7 +23,6 @@
 @property (strong, nonatomic) NSArray *data;
 
 @property (strong, nonatomic) Location *selectedLoc;
-@property (assign, nonatomic) int selectedIx;
 @property (strong, nonatomic) Itinerary *mutableItinerary;
 @end
 
@@ -74,13 +74,18 @@
     }
 }
 
+- (void) itineraryHasChanged {
+    self.editView.backgroundColor = [UIColor systemPinkColor];
+}
+
 # pragma mark - Navigation
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if([[segue identifier] isEqualToString:@"prefsSegue"]) {
         PreferencesViewController *vc = [segue destinationViewController];
         vc.location = self.selectedLoc;
-        vc.preferences = [[self.mutableItinerary prefsByWaypoint] objectAtIndex:self.selectedIx];
+        vc.preferences = [self.mutableItinerary getPreference:self.selectedLoc];
+        vc.delegate = self;
     }
 }
 
@@ -128,9 +133,21 @@
 # pragma mark - EditPlaceCellDelegate
 
 - (void) didTapArrow:(int)waypointIndex {
-    self.selectedLoc = self.mutableItinerary.sourceCollection.locations[waypointIndex];
-    self.selectedIx = waypointIndex;
+    self.selectedLoc = self.data[waypointIndex];
     [self performSegueWithIdentifier:@"prefsSegue" sender:nil];
+}
+
+# pragma mark - PreferencesDelegate
+
+- (void) didUpdatePreference:(ItineraryPreferences *)newPref location:(Location *)location {
+    [self.mutableItinerary updatePreference:location pref:newPref];
+    [self itineraryHasChanged];
+}
+
+- (IBAction)didChangeDate:(id)sender {
+    if (![self.departureDatePicker.date isEqualToDate:self.baseItinerary.departureTime]) {
+        [self itineraryHasChanged];
+    }
 }
 
 @end
