@@ -7,8 +7,8 @@
 
 #import <Foundation/Foundation.h>
 @import GoogleMaps;
-#import "Location.h"
-#import "LocationCollection.h"
+@class Location;
+@class LocationCollection;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -17,9 +17,11 @@ NS_ASSUME_NONNULL_BEGIN
 @interface MapUtils : NSObject
 + (NSString *)getApiKey;
 + (UIImage *)getStaticMapImage:(CLLocationCoordinate2D)location width:(int)width height:(int)height;
++ (GMSCoordinateBounds *)latLngDictToBounds:(NSDictionary *)bounds firstKey:(NSString *)firstKey secondKey:(NSString *)secondKey;
++ (CLLocationCoordinate2D)latLngDictToCoordinate:(NSDictionary *)bounds key:(NSString *)key;
 + (NSString *)generateDirectionsApiUrl:(LocationCollection *)collection
                              origin:(Location *)origin
-                           optimize:(BOOL)optimize
+                         optimizeOrder:(BOOL)optimizeOrder
                       departureTime:(NSDate *)departureTime;
 @end
 

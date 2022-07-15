@@ -8,7 +8,6 @@
 #import "SelectableMap.h"
 #import "Location.h"
 #import "MapUtils.h"
-@import GoogleMaps;
 @import GooglePlaces;
 
 @interface SelectableMap ()

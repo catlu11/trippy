@@ -40,6 +40,7 @@
 		F0F3359C2874A0EB00470507 /* TrippyUITestsLaunchTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F0F3359B2874A0EB00470507 /* TrippyUITestsLaunchTests.m */; };
 		F0F335AE2875F0B400470507 /* SelectableMap.m in Sources */ = {isa = PBXBuildFile; fileRef = F0F335AD2875F0B400470507 /* SelectableMap.m */; };
 		F0F335B72875F2E100470507 /* MapUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = F0F335B62875F2E100470507 /* MapUtils.m */; };
+		F0F657F8287F78B000C04AB0 /* ItineraryItemPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = F0F657F7287F78B000C04AB0 /* ItineraryItemPreferences.m */; };
 		FED82F2F74A69C665F7637DE /* Pods_Trippy_TrippyUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBFD6FD215C55391F69C0E9B /* Pods_Trippy_TrippyUITests.framework */; };
 /* End PBXBuildFile section */
 
@@ -128,6 +129,8 @@
 		F0F335AD2875F0B400470507 /* SelectableMap.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SelectableMap.m; sourceTree = "<group>"; };
 		F0F335B52875F2E100470507 /* MapUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MapUtils.h; sourceTree = "<group>"; };
 		F0F335B62875F2E100470507 /* MapUtils.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MapUtils.m; sourceTree = "<group>"; };
+		F0F657F6287F78B000C04AB0 /* ItineraryItemPreferences.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ItineraryItemPreferences.h; sourceTree = "<group>"; };
+		F0F657F7287F78B000C04AB0 /* ItineraryItemPreferences.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ItineraryItemPreferences.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -333,16 +336,18 @@
 		F0F335AA2875F08500470507 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				F0F657F6287F78B000C04AB0 /* ItineraryItemPreferences.h */,
+				F0F657F7287F78B000C04AB0 /* ItineraryItemPreferences.m */,
 				F0C75FDE287E3CB20015BB74 /* Itinerary.h */,
 				F0C75FDB287E3CB20015BB74 /* Itinerary.m */,
-				F0C75FDA287E3CB20015BB74 /* Location.h */,
-				F0C75FE1287E3CB20015BB74 /* Location.m */,
-				F0C75FDC287E3CB20015BB74 /* LocationCollection.h */,
-				F0C75FDD287E3CB20015BB74 /* LocationCollection.m */,
 				F0C75FE2287E3CB20015BB74 /* RouteLeg.h */,
 				F0C75FE3287E3CB20015BB74 /* RouteLeg.m */,
 				F0C75FDF287E3CB20015BB74 /* RouteStep.h */,
 				F0C75FE0287E3CB20015BB74 /* RouteStep.m */,
+				F0C75FDA287E3CB20015BB74 /* Location.h */,
+				F0C75FE1287E3CB20015BB74 /* Location.m */,
+				F0C75FDC287E3CB20015BB74 /* LocationCollection.h */,
+				F0C75FDD287E3CB20015BB74 /* LocationCollection.m */,
 			);
 			name = Models;
 			path = ..;
@@ -643,6 +648,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F0F657F8287F78B000C04AB0 /* ItineraryItemPreferences.m in Sources */,
 				F0C75F72287747A20015BB74 /* LoginViewController.m in Sources */,
 				F0F3357B2874A0E700470507 /* SearchMapViewController.m in Sources */,
 				F0C75F982878D7750015BB74 /* CreateCollectionViewController.m in Sources */,

@@ -6,32 +6,51 @@
 //
 
 #import "RouteLeg.h"
+#import "RouteStep.h"
+#import "MapUtils.h"
+
+@interface RouteLeg ()
+@property (strong, nonatomic) NSDictionary *json;
+@end
 
 @implementation RouteLeg
 
-- (instancetype) initWithDictionary:(NSDictionary *)dict{
+- (NSNumber *)distanceVal {
+    return self.json[@"distance"][@"val"];
+}
+
+- (NSNumber *)durationVal {
+    return self.json[@"duration"][@"val"];
+}
+
+- (CLLocationCoordinate2D)startCoord {
+    return [MapUtils latLngDictToCoordinate:self.json key:@"start_location"];
+}
+
+- (CLLocationCoordinate2D)endCoord {
+    return [MapUtils latLngDictToCoordinate:self.json key:@"end_location"];
+}
+
+- (NSArray *)routeSteps {
+    NSMutableArray *steps = [[NSMutableArray alloc] init];
+    for (NSDictionary *step in self.json[@"steps"]) {
+        [steps addObject:[[RouteLeg alloc] initWithDictionary:step]];
+    }
+    return steps;
+}
+
+- (instancetype)initWithDictionary:(NSDictionary *)dict {
     self = [super init];
     
     if (self) {
-        self.distanceText = dict[@"distance"][@"text"];
-        self.distanceVal = dict[@"distance"][@"val"];
-        self.durationText = dict[@"duration"][@"text"];
-        self.durationVal = dict[@"duration"][@"val"];
-        NSNumber *startLat = dict[@"start_location"][@"lat"];
-        NSNumber *startLng = dict[@"start_location"][@"lng"];
-        NSNumber *endLat = dict[@"end_location"][@"lat"];
-        NSNumber *endLng = dict[@"end_location"][@"lng"];
-        self.startCoord = CLLocationCoordinate2DMake([startLat doubleValue], [startLng doubleValue]);
-        self.endCoord = CLLocationCoordinate2DMake([endLat doubleValue], [endLng doubleValue]);
-        
-        NSMutableArray *steps = [[NSMutableArray alloc] init];
-        for (NSDictionary *step in dict[@"steps"]) {
-            [steps addObject:[[RouteStep alloc] initWithDictionary:step]];
-        }
-        self.routeSteps = steps;
+        self.json = dict;
     }
     
     return self;
+}
+
+- (NSDictionary *)toDictionary {
+    return self.json;
 }
 
 @end

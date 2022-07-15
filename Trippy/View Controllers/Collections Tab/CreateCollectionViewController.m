@@ -8,6 +8,7 @@
 #import "CreateCollectionViewController.h"
 #import "CacheDataHandler.h"
 #import "SavedCollectionsViewController.h"
+#import "LocationCollection.h"
 
 @interface CreateCollectionViewController () <CacheDataHandlerDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *nameField;

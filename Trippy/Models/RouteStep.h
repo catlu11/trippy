@@ -11,17 +11,16 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface RouteStep : NSObject
-@property (strong, nonatomic) NSString *distanceText;
-@property (strong, nonatomic) NSNumber *distanceVal;
-@property (strong, nonatomic) NSString *durationText;
-@property (strong, nonatomic) NSNumber *durationVal;
-@property (strong, nonatomic) NSString *instruction;
-@property (assign, nonatomic) CLLocationCoordinate2D startCoord;
-@property (assign, nonatomic) CLLocationCoordinate2D endCoord;
-@property (strong, nonatomic) NSString *polyline;
-@property (strong, nonatomic) NSString *travelMode;
+@property (readonly) NSNumber *distanceVal; // in meters
+@property (readonly) NSNumber *durationVal; // in seconds
+@property (readonly) NSString *instruction;
+@property (readonly) CLLocationCoordinate2D startCoord;
+@property (readonly) CLLocationCoordinate2D endCoord;
+@property (readonly) NSString *polyline;
+@property (readonly) NSString *travelMode;
 
 - (instancetype) initWithDictionary:(NSDictionary *)dict;
+- (NSDictionary *) toDictionary;
 @end
 
 NS_ASSUME_NONNULL_END

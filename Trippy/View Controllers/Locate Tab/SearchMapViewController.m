@@ -8,6 +8,7 @@
 #import "SearchMapViewController.h"
 #import "SelectableMap.h"
 #import "Location.h"
+#import "LocationCollection.h"
 #import "ParseUtils.h"
 #import "CacheDataHandler.h"
 @import GooglePlaces;

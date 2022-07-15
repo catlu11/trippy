@@ -6,7 +6,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "Location.h"
+@class Location;
 @import GoogleMaps;
 
 NS_ASSUME_NONNULL_BEGIN

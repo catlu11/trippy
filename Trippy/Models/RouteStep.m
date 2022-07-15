@@ -6,28 +6,54 @@
 //
 
 #import "RouteStep.h"
+#import "MapUtils.h"
+
+@interface RouteStep ()
+@property (strong, nonatomic) NSDictionary *json;
+@end
 
 @implementation RouteStep
 
-- (instancetype) initWithDictionary:(NSDictionary *)dict{
+- (NSNumber *)distanceVal {
+    return self.json[@"distance"][@"val"];
+}
+
+- (NSNumber *)durationVal {
+    return self.json[@"duration"][@"val"];
+}
+
+- (CLLocationCoordinate2D)startCoord {
+    return [MapUtils latLngDictToCoordinate:self.json key:@"start_location"];
+}
+
+- (CLLocationCoordinate2D)endCoord {
+    return [MapUtils latLngDictToCoordinate:self.json key:@"end_location"];
+}
+
+- (NSString *)instruction {
+    return self.json[@"html_instructions"];
+}
+
+- (NSString *)polyline {
+    return self.json[@"polyline"];
+}
+
+- (NSString *)travelMode {
+    return self.json[@"travel_mode"];
+}
+
+- (instancetype)initWithDictionary:(NSDictionary *)dict{
     self = [super init];
     
     if (self) {
-        self.distanceText = dict[@"distance"][@"text"];
-        self.distanceVal = dict[@"distance"][@"val"];
-        self.durationText = dict[@"duration"][@"text"];
-        self.durationVal = dict[@"duration"][@"val"];
-        self.instruction = dict[@"html_instructions"];
-        NSNumber *startLat = dict[@"start_location"][@"lat"];
-        NSNumber *startLng = dict[@"start_location"][@"lng"];
-        NSNumber *endLat = dict[@"end_location"][@"lat"];
-        NSNumber *endLng = dict[@"end_location"][@"lng"];
-        self.startCoord = CLLocationCoordinate2DMake([startLat doubleValue], [startLng doubleValue]);
-        self.endCoord = CLLocationCoordinate2DMake([endLat doubleValue], [endLng doubleValue]);
-        self.polyline = dict[@"polyline"];
-        self.travelMode = dict[@"travel_mode"];
+        self.json = dict;
     }
     
     return self;
 }
+
+- (NSDictionary *)toDictionary {
+    return self.json;
+}
+
 @end

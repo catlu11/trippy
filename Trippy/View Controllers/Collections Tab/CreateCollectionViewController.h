@@ -7,6 +7,7 @@
 
 #import <UIKit/UIKit.h>
 #import "MapItemListViewController.h"
+@class LocationCollection;
 
 NS_ASSUME_NONNULL_BEGIN
 

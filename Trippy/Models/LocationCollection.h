@@ -6,8 +6,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "Location.h"
-#import "Parse/Parse.h"
+@class Location;
 
 NS_ASSUME_NONNULL_BEGIN
 

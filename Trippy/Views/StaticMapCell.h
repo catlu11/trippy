@@ -6,9 +6,9 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "LocationCollection.h"
-#import "Location.h"
-#import "Itinerary.h"
+@class Itinerary;
+@class Location;
+@class LocationCollection;
 
 NS_ASSUME_NONNULL_BEGIN
 

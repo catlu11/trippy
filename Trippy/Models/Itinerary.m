@@ -6,30 +6,62 @@
 //
 
 #import "Itinerary.h"
+#import "MapUtils.h"
+#import "RouteLeg.h"
+
+@interface Itinerary ()
+@property (strong, nonatomic) NSDictionary *fullJson;
+@property (strong, nonatomic) NSDictionary *routeJson;
+@end
 
 @implementation Itinerary
 
-- (instancetype) initWithDictionary:(NSDictionary *)dict {
+- (NSArray *)routeLegs {
+    NSMutableArray *legs = [[NSMutableArray alloc] init];
+    for (NSDictionary *leg in self.routeJson[@"legs"]) {
+        [legs addObject:[[RouteLeg alloc] initWithDictionary:leg]];
+    }
+    return legs;
+}
+
+- (GMSCoordinateBounds *)bounds {
+    return [MapUtils latLngDictToBounds:self.routeJson[@"bounds"] firstKey:@"northeast" secondKey:@"southwest"];
+}
+
+- (NSString *)overviewPolyline {
+    return self.routeJson[@"overview_polyline"][@"points"];
+}
+
+- (NSString *)waypointOrder {
+    return self.routeJson[@"waypoint_order"];
+}
+
+- (instancetype)initWithDictionary:(NSDictionary *)dict {
     self = [super init];
     
     if (self) {
-        self.directionsJson = dict;
-        NSDictionary *bounds = dict[@"routes"][0][@"bounds"]; // Bounds of routes
-        NSNumber *neLat = bounds[@"northeast"][@"lat"];
-        NSNumber *neLng = bounds[@"northeast"][@"lng"];
-        NSNumber *swLat = bounds[@"southwest"][@"lat"];
-        NSNumber *swLng = bounds[@"southwest"][@"lng"];
-        self.bounds = [[GMSCoordinateBounds alloc] initWithCoordinate:CLLocationCoordinate2DMake([neLat doubleValue], [neLng doubleValue]) coordinate:CLLocationCoordinate2DMake([swLat doubleValue], [swLng doubleValue])];
-        NSMutableArray *legs = [[NSMutableArray alloc] init];
-        for (NSDictionary *leg in dict[@"routes"][0][@"legs"]) {
-            [legs addObject:[[RouteLeg alloc] initWithDictionary:leg]];
-        }
-        self.routeLegs = legs;
-        self.overviewPolyline = dict[@"routes"][0][@"overview_polyline"][@"points"];
-        self.waypointOrder = dict[@"routes"][0][@"waypoint_order"];
+        self.fullJson = dict;
+        self.routeJson = dict[@"routes"][0];
     }
     
     return self;
+}
+
+- (NSDictionary *)toDictionary {
+    return self.fullJson;
+}
+
+- (void)reinitialize:(NSDictionary *)dict {
+    self.fullJson = dict;
+    self.routeJson = dict[@"routes"][0];
+}
+
+- (void)replaceLegs:(NSArray *)indicesToReplace newLegs:(NSArray *)newLegs {
+    NSMutableArray *legs = self.routeJson[@"legs"];
+    for (NSNumber *ix in indicesToReplace) {
+        RouteLeg *newLeg = [newLegs objectAtIndex:[ix intValue]];
+        [legs setObject:[newLeg toDictionary] atIndexedSubscript:[ix intValue]];
+    }
 }
 
 @end
