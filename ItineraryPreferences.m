@@ -15,7 +15,10 @@
 @implementation ItineraryPreferences
 
 - (NSDate *)preferredETA {
-    NSString *dateString = self.infoJson[@"preferredETA"];
+    NSString *dateString = self.infoJson[@"preferredEta"];
+    if ([dateString isEqual:[NSNull null]]) {
+        return nil;
+    }
     return [DateUtils isoStringToDate:dateString];
 }
 
@@ -25,6 +28,9 @@
 
 - (NSDate *)preferredTOD {
     NSString *dateString = self.infoJson[@"preferredTOD"];
+    if ([dateString isEqual:[NSNull null]]) {
+        return nil;
+    }
     return [DateUtils isoStringToDate:dateString];
 }
 

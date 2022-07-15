@@ -39,7 +39,7 @@
     return self.routeJson[@"waypoint_order"];
 }
 
-- (NSArray *)prefsByWaypoint {
+- (NSArray *)prefsByWaypoint { // ordered by waypoint order
     NSMutableArray *prefObjs = [[NSMutableArray alloc] init];
     for (NSDictionary *pref in self.prefJson[@"preferences"]) {
         [prefObjs addObject:[[ItineraryPreferences alloc] initWithDictionary:pref]];

@@ -42,7 +42,6 @@
 }
 
 + (void) itineraryFromPFObj:(PFObject *)obj completion:(void (^)(Itinerary *itinerary, NSError *))completion {
-    
     PFFileObject *routesJsonFile = obj[@"directionsJson"];
     NSDictionary *routesDict = [self dictFromPfFile:routesJsonFile];
 

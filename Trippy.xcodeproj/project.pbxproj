@@ -44,6 +44,7 @@
 		F0F657FB28807E9000C04AB0 /* EditingItineraryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F0F657FA28807E9000C04AB0 /* EditingItineraryViewController.m */; };
 		F0F657FE288082E900C04AB0 /* EditPlaceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F0F657FD288082E900C04AB0 /* EditPlaceCell.m */; };
 		F0F658012880DB2600C04AB0 /* DateUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = F0F658002880DB2600C04AB0 /* DateUtils.m */; };
+		F0F658042881D08A00C04AB0 /* PreferencesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F0F658032881D08A00C04AB0 /* PreferencesViewController.m */; };
 		FED82F2F74A69C665F7637DE /* Pods_Trippy_TrippyUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBFD6FD215C55391F69C0E9B /* Pods_Trippy_TrippyUITests.framework */; };
 /* End PBXBuildFile section */
 
@@ -140,6 +141,8 @@
 		F0F657FD288082E900C04AB0 /* EditPlaceCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EditPlaceCell.m; sourceTree = "<group>"; };
 		F0F657FF2880DB2600C04AB0 /* DateUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DateUtils.h; sourceTree = "<group>"; };
 		F0F658002880DB2600C04AB0 /* DateUtils.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DateUtils.m; sourceTree = "<group>"; };
+		F0F658022881D08A00C04AB0 /* PreferencesViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PreferencesViewController.h; sourceTree = "<group>"; };
+		F0F658032881D08A00C04AB0 /* PreferencesViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PreferencesViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -233,6 +236,8 @@
 				F0C75FA3287CA2430015BB74 /* ItineraryDetailViewController.m */,
 				F0F657F928807E9000C04AB0 /* EditingItineraryViewController.h */,
 				F0F657FA28807E9000C04AB0 /* EditingItineraryViewController.m */,
+				F0F658022881D08A00C04AB0 /* PreferencesViewController.h */,
+				F0F658032881D08A00C04AB0 /* PreferencesViewController.m */,
 			);
 			path = "Itinerary Tab";
 			sourceTree = "<group>";
@@ -670,6 +675,7 @@
 				F0C75F982878D7750015BB74 /* CreateCollectionViewController.m in Sources */,
 				F0C75F8C28778FED0015BB74 /* CacheDataHandler.m in Sources */,
 				F0C75F92287799070015BB74 /* ParseUtils.m in Sources */,
+				F0F658042881D08A00C04AB0 /* PreferencesViewController.m in Sources */,
 				F0C75F9E287C9EBF0015BB74 /* HomeViewController.m in Sources */,
 				F0C75FA1287C9F4E0015BB74 /* CreateItineraryViewController.m in Sources */,
 				F0C75FA4287CA2430015BB74 /* ItineraryDetailViewController.m in Sources */,

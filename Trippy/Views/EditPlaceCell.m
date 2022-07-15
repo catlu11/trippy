@@ -22,12 +22,19 @@
     self.placeName.text = locName;
     self.estArrivalLabel.text = arrivalString;
     self.estDepartLabel.text = departureString;
-}
-
-- (void) addArrowTapWithSelector:(id)sender didTapArrow:(nullable SEL)didTapArrow {
-    UITapGestureRecognizer *tapArrow = [[UITapGestureRecognizer alloc] initWithTarget:sender action:didTapArrow];
+    
+    UITapGestureRecognizer *tapArrow = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didTapArrow)];
     [self.arrowLabel addGestureRecognizer:tapArrow];
     [self.arrowLabel setUserInteractionEnabled:YES];
+}
+
+- (void) didTapArrow {
+    [self.delegate didTapArrow:self.waypointIndex];
+}
+
+- (void) disableArrow {
+    [self.arrowLabel setHidden:YES];
+    [self.arrowLabel setUserInteractionEnabled:NO];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

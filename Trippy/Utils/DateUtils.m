@@ -23,4 +23,8 @@
     return [dateFormatter dateFromString:isoString];
 }
 
++ (int)aheadSecondsFrom1970:(NSDate *)date {
+    double seconds = [date timeIntervalSince1970];
+    return round(seconds) + 120; // 2 minute buffer
+}
 @end

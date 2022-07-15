@@ -6,12 +6,13 @@
 //
 
 #import "MapUtils.h"
+#import "DateUtils.h"
 #import "Location.h"
 #import "LocationCollection.h"
 @import GooglePlaces;
 
 #define STATIC_MAP_URL @"https://maps.googleapis.com/maps/api/staticmap?center=%f,%f&zoom=%d&size=%dx%d&key=%@"
-#define DIRECTIONS_URL @"json?origin=place_id:%@&destination=place_id:%@&departure_time=now&mode=walking&waypoints=%@&key=%@"
+#define DIRECTIONS_URL @"json?origin=place_id:%@&destination=place_id:%@&departure_time=%d&mode=walking&waypoints=%@&key=%@"
 
 @implementation MapUtils
 
@@ -39,7 +40,7 @@
     for(Location *loc in collection.locations) {
         stops = [stops stringByAppendingString:[NSString stringWithFormat:@"|place_id:%@", loc.placeId]];
     }
-    NSString *baseUrl = [NSString stringWithFormat:DIRECTIONS_URL, origin.placeId, origin.placeId, stops, [self getApiKey]];
+    NSString *baseUrl = [NSString stringWithFormat:DIRECTIONS_URL, origin.placeId, origin.placeId, [DateUtils aheadSecondsFrom1970:departureTime], stops, [self getApiKey]];
     NSString *percentEncodedURLString = [[NSURL URLWithDataRepresentation:[baseUrl dataUsingEncoding:NSUTF8StringEncoding] relativeToURL:nil] relativeString];
     return percentEncodedURLString;
 }
