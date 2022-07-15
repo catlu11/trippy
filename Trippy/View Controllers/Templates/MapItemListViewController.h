@@ -14,8 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UITableView *listTableView;
 @property (strong, nonatomic) NSMutableArray *data;
 @property (assign, nonatomic) ListType listType;
-@property (assign, nonatomic) BOOL *showSelection;
-@property (assign, nonatomic) BOOL *overrideData; // true -> data will be manually passed in
+@property (assign, nonatomic) BOOL showSelection;
 @end
 
 NS_ASSUME_NONNULL_END

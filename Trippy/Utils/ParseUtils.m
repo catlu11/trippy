@@ -22,25 +22,32 @@
 }
 
 + (NSArray *)getItineraryKeys {
-    return @[@"directionsJson", @"createdAt", @"name", @"createdBy", @"origin", @"sourceCollection"];
+    return @[@"directionsJson", @"createdAt", @"name", @"createdBy", @"origin", @"sourceCollection", @"departure"];
 }
 
 + (NSString *)getLoggedInUsername {
     return [PFUser currentUser].username;
 }
 
++ (PFFileObject *)pfFileFromDict:(NSDictionary *)dict name:(NSString *)name {
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dict options:0 error:nil];
+    NSString *filename = [NSString stringWithFormat:@"%@.json", name];
+    PFFileObject *jsonFile = [PFFileObject fileObjectWithName:filename data:jsonData];
+    return jsonFile;
+}
+
++ (NSDictionary *)dictFromPfFile:(PFFileObject *)file {
+    NSData *data = [file getData:nil];
+    return [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+}
+
 + (void) itineraryFromPFObj:(PFObject *)obj completion:(void (^)(Itinerary *itinerary, NSError *))completion {
-    PFFileObject *jsonFile = obj[@"directionsJson"];
-    NSData *data = [jsonFile getData:nil];
-    NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
     
-    // create itinerary object
-    Itinerary *it = [[Itinerary alloc] initWithDictionary:dict];
-    it.name = obj[@"name"];
-    PFUser *user = obj[@"createdBy"];
-    it.userId = user.username;
-    it.createdAt = obj.createdAt;
-    it.parseObjectId = obj.objectId;
+    PFFileObject *routesJsonFile = obj[@"directionsJson"];
+    NSDictionary *routesDict = [self dictFromPfFile:routesJsonFile];
+
+    PFFileObject *prefsJsonFile = obj[@"preferencesJson"];
+    NSDictionary *prefsDict = [self dictFromPfFile:prefsJsonFile];
     
     // query location pointer
     PFObject *locObj = obj[@"origin"];
@@ -48,7 +55,7 @@
     [locationQuery includeKeys:[self getLocationKeys]];
     locObj = [locationQuery getObjectWithId:locObj.objectId];
     // get location
-    it.originLocation = [self locationFromPFObj:locObj];
+    Location *originLocation = [self locationFromPFObj:locObj];
     
     // query collection pointer
     PFObject *colObj = obj[@"sourceCollection"];
@@ -59,7 +66,15 @@
     // get collection
     [self collectionFromPFObj:colObj completion:^(LocationCollection * _Nonnull collection, NSError * _Nonnull) {
         if (collection) {
-            it.sourceCollection = collection;
+            // create itinerary object
+            Itinerary *it = [[Itinerary alloc] initWithDictionary:routesDict
+                                                         prefJson:prefsDict
+                                                        departure:obj[@"departure"]
+                                                 sourceCollection:collection originLocation:originLocation name:obj[@"name"]];
+            PFUser *user = obj[@"createdBy"];
+            it.userId = user.username;
+            it.createdAt = obj.createdAt;
+            it.parseObjectId = obj.objectId;
             completion(it, nil);
         }
     }];
@@ -148,9 +163,9 @@
         obj[@"createdBy"] = [PFUser currentUser];
         obj[@"origin"] = [self pfObjFromLocation:it.originLocation];
         obj[@"sourceCollection"] = [self pfObjFromCollection:it.sourceCollection];
-        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:[it toDictionary] options:0 error:nil];
-        PFFileObject *jsonFile = [PFFileObject fileObjectWithName:@"directions.json" data:jsonData];
-        obj[@"directionsJson"] = jsonFile;
+        obj[@"directionsJson"] = [self pfFileFromDict:[it toRouteDictionary] name:@"directions"];
+        obj[@"preferencesJson"] = [self pfFileFromDict:[it toPrefsDictionary] name:@"preferences"];
+        obj[@"departure"] = it.departureTime;
         return obj;
     }
 }

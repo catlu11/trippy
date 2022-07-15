@@ -32,9 +32,7 @@
     self.handler = [[CacheDataHandler alloc] init];
     self.handler.delegate = self;
     
-    if (self.overrideData == NO) {
-        [self refreshData];
-    }
+    [self refreshData];
 }
 
 - (void) refreshData {

@@ -20,7 +20,6 @@
 
 - (void)viewDidLoad {
     self.listType = kItinerary;
-    self.overrideData = NO;
     self.showSelection = NO;
     
     [super viewDidLoad];

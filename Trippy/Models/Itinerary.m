@@ -6,12 +6,15 @@
 //
 
 #import "Itinerary.h"
+#import "LocationCollection.h"
 #import "MapUtils.h"
 #import "RouteLeg.h"
+#import "ItineraryPreferences.h"
 
 @interface Itinerary ()
 @property (strong, nonatomic) NSDictionary *fullJson;
 @property (strong, nonatomic) NSDictionary *routeJson;
+@property (strong, nonatomic) NSDictionary *prefJson;
 @end
 
 @implementation Itinerary
@@ -36,24 +39,70 @@
     return self.routeJson[@"waypoint_order"];
 }
 
-- (instancetype)initWithDictionary:(NSDictionary *)dict {
+- (NSArray *)prefsByWaypoint {
+    NSMutableArray *prefObjs = [[NSMutableArray alloc] init];
+    for (NSDictionary *pref in self.prefJson[@"preferences"]) {
+        [prefObjs addObject:[[ItineraryPreferences alloc] initWithDictionary:pref]];
+    }
+    return prefObjs;
+}
+
+- (instancetype)initWithDictionary:(NSDictionary *)routesJson
+                          prefJson:(NSDictionary *)prefJson
+                         departure:(NSDate *)departure
+                  sourceCollection:(LocationCollection *)sourceCollection
+                    originLocation:(Location *)originLocation name:(NSString *)name {
     self = [super init];
     
     if (self) {
-        self.fullJson = dict;
-        self.routeJson = dict[@"routes"][0];
+        // creating a copy of dictionary data
+        NSData *routeJsonData = [NSJSONSerialization dataWithJSONObject:routesJson options:0 error:nil];
+        NSDictionary *routeDictCopy = [NSJSONSerialization JSONObjectWithData:routeJsonData options:kNilOptions error:nil];
+        self.fullJson = routeDictCopy;
+        self.routeJson = routeDictCopy[@"routes"][0];
+        
+        if (prefJson) {
+            NSData *prefJsonData = [NSJSONSerialization dataWithJSONObject:prefJson options:0 error:nil];
+            NSDictionary *prefDictCopy = [NSJSONSerialization JSONObjectWithData:prefJsonData options:kNilOptions error:nil];
+            self.prefJson = prefDictCopy;
+        }
+        else {
+            NSMutableArray *prefs = [[NSMutableArray alloc] init];
+            for (Location *l in sourceCollection.locations) {
+                [prefs addObject:[ItineraryPreferences prefDictFromAttributes:[NSNull null] preferredTOD:[NSNull null] stayDuration:@0]];
+            }
+            self.prefJson = @{@"preferences": prefs};
+        }
+        self.departureTime = departure;
+        self.sourceCollection = sourceCollection;
+        self.originLocation = originLocation;
+        self.name = name;
     }
     
     return self;
 }
 
-- (NSDictionary *)toDictionary {
+- (NSDictionary *)toRouteDictionary {
     return self.fullJson;
 }
 
-- (void)reinitialize:(NSDictionary *)dict {
-    self.fullJson = dict;
-    self.routeJson = dict[@"routes"][0];
+- (NSDictionary *)toPrefsDictionary {
+    return self.prefJson;
+}
+
+- (void)reinitialize:(NSDictionary *)routesJson
+            prefJson:(NSDictionary *)prefJson
+           departure:(NSDate *)departure {
+    // creating a copy of dictionary data
+    NSData *routeJsonData = [NSJSONSerialization dataWithJSONObject:routesJson options:0 error:nil];
+    NSDictionary *routeDictCopy = [NSJSONSerialization JSONObjectWithData:routeJsonData options:kNilOptions error:nil];
+    NSData *prefJsonData = [NSJSONSerialization dataWithJSONObject:prefJson options:0 error:nil];
+    NSDictionary *prefDictCopy = [NSJSONSerialization JSONObjectWithData:prefJsonData options:kNilOptions error:nil];
+    
+    self.fullJson = routeDictCopy;
+    self.routeJson = routeDictCopy[@"routes"][0];
+    self.prefJson = prefDictCopy;
+    self.departureTime = departure;
 }
 
 - (void)replaceLegs:(NSArray *)indicesToReplace newLegs:(NSArray *)newLegs {
@@ -64,11 +113,22 @@
     }
 }
 
+- (NSArray *)getOrderedLocations {
+    NSMutableArray *ordered = [NSMutableArray arrayWithArray:self.sourceCollection.locations];
+    for (NSNumber *ix in self.waypointOrder) {
+        int i = [ix intValue];
+        [ordered setObject:[self.sourceCollection.locations objectAtIndex:i] atIndexedSubscript:i];
+    }
+    return ordered;
+}
+
 - (NSDate *)computeArrival:(int)waypointIndex {
+    // TODO: Implement
     return nil;
 }
 
 - (NSDate *)computeDeparture:(int)waypointIndex {
+    // TODO: Implement
     return nil;
 }
 

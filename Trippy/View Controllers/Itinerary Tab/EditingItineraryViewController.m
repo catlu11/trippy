@@ -18,12 +18,18 @@
 @property (weak, nonatomic) IBOutlet SelectableMap *mapView;
 @property (strong, nonatomic) IBOutlet UITapGestureRecognizer *tapGestureRecognizer;
 @property (strong, nonatomic) Location *selectedLoc;
+@property (strong, nonatomic) Itinerary *itinerary;
 @end
 
 @implementation EditingItineraryViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    // Set up copy of itinerary as data source
+    self.itinerary = [[Itinerary alloc] initWithDictionary:[self.baseItinerary toRouteDictionary]
+                                                  prefJson:[self.baseItinerary toPrefsDictionary]
+                                                 departure:self.baseItinerary.departureTime sourceCollection:self.baseItinerary.sourceCollection originLocation:self.baseItinerary.originLocation name:self.baseItinerary.name];
     
     // Set up map
     [self.mapView initWithBounds:self.itinerary.bounds];
@@ -71,6 +77,7 @@
 # pragma mark - UITableViewDataSource
 
 - (nonnull UITableViewCell *)tableView:(nonnull UITableView *)tableView cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
+    NSArray *data = [self.itinerary getOrderedLocations];
     EditPlaceCell *cell = [tableView dequeueReusableCellWithIdentifier:@"EditPlaceCell" forIndexPath:indexPath];
     Location *loc = nil;
     NSDate *estArrival = nil;
@@ -79,12 +86,12 @@
         loc = self.itinerary.originLocation;
         estDeparture = self.itinerary.departureTime;
         [cell.arrowLabel setHidden:YES];
-    } else if (indexPath.row == self.itinerary.sourceCollection.locations.count+1) {
+    } else if (indexPath.row == data.count+1) {
         loc = self.itinerary.originLocation;
         estArrival = [self.itinerary computeDeparture:(indexPath.row-2)];
         [cell.arrowLabel setHidden:YES];
     } else {
-        loc = self.itinerary.sourceCollection.locations[indexPath.row-1];
+        loc = data[indexPath.row-1];
         estArrival = [self.itinerary computeArrival:(indexPath.row-1)];
         estDeparture = [self.itinerary computeDeparture:(indexPath.row-1)];
         [cell.arrowLabel setHidden:NO];

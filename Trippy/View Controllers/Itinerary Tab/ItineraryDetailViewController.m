@@ -48,7 +48,7 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if([[segue identifier] isEqualToString:@"editItinerarySegue"]) {
         EditingItineraryViewController *vc = segue.destinationViewController;
-        vc.itinerary = self.itinerary;
+        vc.baseItinerary = self.itinerary;
     }
 }
 

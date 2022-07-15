@@ -34,7 +34,6 @@
 
 - (void)viewDidLoad {
     self.listType = kLocation;
-    self.overrideData = NO;
     self.showSelection = YES;
     
     [super viewDidLoad];
@@ -72,10 +71,8 @@
         NSString *apiUrl = [MapUtils generateDirectionsApiUrl:self.selectedCol origin:self.selectedLoc optimizeOrder:TRUE departureTime:nil];
         [[DirectionsAPIManager shared] getDirectionsWithCompletion:apiUrl completion:^(NSDictionary * _Nonnull response, NSError * _Nonnull) {
             if (response) {
-                Itinerary *it = [[Itinerary alloc] initWithDictionary:response];
-                it.sourceCollection = self.selectedCol;
-                it.originLocation = self.selectedLoc;
-                it.name = self.nameField.text;
+                Itinerary *it = [[Itinerary alloc] initWithDictionary:response
+                                                             prefJson:nil departure:[NSDate now] sourceCollection:self.selectedCol originLocation:self.selectedLoc name:self.nameField.text];
                 [self.colHandler postNewItinerary:it];
             }
         }];

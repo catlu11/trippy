@@ -11,7 +11,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface EditingItineraryViewController : UIViewController
-@property (strong, nonatomic) Itinerary *itinerary;
+@property (strong, nonatomic) Itinerary *baseItinerary;
 @end
 
 NS_ASSUME_NONNULL_END

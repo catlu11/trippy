@@ -14,15 +14,18 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface Itinerary : NSObject
+
 // Constant attributes
 @property (strong, nonatomic) NSString *name;
-@property (strong, nonatomic) NSString *parseObjectId;
-@property (strong, nonatomic) NSDate *createdAt;
-@property (strong, nonatomic) NSString *userId;
 @property (strong, nonatomic) LocationCollection *sourceCollection;
 @property (strong, nonatomic) Location *originLocation;
 
-// Changeable non-JSON
+// Parse fields
+@property (strong, nonatomic) NSString *parseObjectId;
+@property (strong, nonatomic) NSDate *createdAt;
+@property (strong, nonatomic) NSString *userId;
+
+// Reassignable non-JSON
 @property (strong, nonatomic) NSDate *departureTime;
 
 // JSON fields
@@ -30,10 +33,20 @@ NS_ASSUME_NONNULL_BEGIN
 @property (readonly) GMSCoordinateBounds *bounds;
 @property (readonly) NSString *overviewPolyline;
 @property (readonly) NSArray *waypointOrder;
+@property (readonly) NSArray *prefsByWaypoint;
 
-- (instancetype)initWithDictionary:(NSDictionary *)dict;
-- (void)reinitialize:(NSDictionary *)dict;
-- (NSDictionary *)toDictionary;
+- (instancetype)initWithDictionary:(NSDictionary *)routesJson
+                          prefJson:(NSDictionary *)prefJson
+                         departure:(NSDate *)departure
+                  sourceCollection:(LocationCollection *)sourceCollection
+                    originLocation:(Location *)originLocation
+                              name:(NSString *)name;
+- (void)reinitialize:(NSDictionary *)routesJson
+            prefJson:(NSDictionary *)prefJson
+           departure:(NSDate *)departure;
+- (NSDictionary *)toRouteDictionary;
+- (NSDictionary *)toPrefsDictionary;
+- (NSArray *)getOrderedLocations;
 - (NSDate *)computeArrival:(int)waypointIndex;
 - (NSDate *)computeDeparture:(int)waypointIndex;
 @end
