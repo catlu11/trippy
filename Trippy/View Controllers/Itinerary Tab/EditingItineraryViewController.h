@@ -5,8 +5,8 @@
 //  Created by Catherine Lu on 7/14/22.
 //
 
-#import <Foundation/Foundation.h>
-#import "MapItemListViewController.h"
+#import <UIKit/UIKit.h>
+@class Itinerary;
 
 NS_ASSUME_NONNULL_BEGIN
 

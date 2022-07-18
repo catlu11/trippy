@@ -14,12 +14,15 @@
 #import "LocationCollection.h"
 #import "Location.h"
 
+#define PLACES_ROW_HEIGHT 70;
+#define VIEW_SHADOW_OPACITY 0.45;
+#define VIEW_SHADOW_RADIUS 7;
+
 @interface EditingItineraryViewController () <UITableViewDelegate, UITableViewDataSource, EditPlaceCellDelegate, PreferencesDelegate>
 @property (weak, nonatomic) IBOutlet UIView *editView;
 @property (weak, nonatomic) IBOutlet UITableView *placesTableView;
 @property (weak, nonatomic) IBOutlet SelectableMap *mapView;
 @property (weak, nonatomic) IBOutlet UIDatePicker *departureDatePicker;
-@property (strong, nonatomic) IBOutlet UITapGestureRecognizer *tapGestureRecognizer;
 @property (strong, nonatomic) NSArray *data;
 
 @property (strong, nonatomic) Location *selectedLoc;
@@ -33,8 +36,11 @@
     
     // Set up copy of itinerary as data source
     self.mutableItinerary = [[Itinerary alloc] initWithDictionary:[self.baseItinerary toRouteDictionary]
-                                                  prefJson:[self.baseItinerary toPrefsDictionary]
-                                                 departure:self.baseItinerary.departureTime sourceCollection:self.baseItinerary.sourceCollection originLocation:self.baseItinerary.originLocation name:self.baseItinerary.name];
+                                                         prefJson:[self.baseItinerary toPrefsDictionary]
+                                                        departure:self.baseItinerary.departureTime
+                                                 sourceCollection:self.baseItinerary.sourceCollection
+                                                   originLocation:self.baseItinerary.originLocation
+                                                             name:self.baseItinerary.name];
     
     // Set up map
     [self.mapView initWithBounds:self.mutableItinerary.bounds];
@@ -47,14 +53,16 @@
     // Set up table view
     self.placesTableView.dataSource = self;
     self.placesTableView.delegate = self;
-    self.placesTableView.rowHeight = 70;
+    self.placesTableView.rowHeight = PLACES_ROW_HEIGHT;
     self.data = [self.mutableItinerary getOrderedLocations];
     [self.placesTableView reloadData];
     
-    // Add edit view shadow
+    // Add edit view shadow settings
     self.editView.layer.shadowColor = [[UIColor blackColor] CGColor];
-    self.editView.layer.shadowOpacity = 0.45;
-    self.editView.layer.shadowRadius = 7;
+    self.editView.layer.shadowOpacity = VIEW_SHADOW_OPACITY;
+    self.editView.layer.shadowRadius = VIEW_SHADOW_RADIUS;
+    
+    self.departureDatePicker.date = self.baseItinerary.departureTime;
 }
 
 - (IBAction)tapReroute:(id)sender {
@@ -75,6 +83,7 @@
 }
 
 - (void) itineraryHasChanged {
+    // TODO: Create more informative change indicator
     self.editView.backgroundColor = [UIColor systemPinkColor];
 }
 
@@ -93,23 +102,25 @@
 
 - (nonnull UITableViewCell *)tableView:(nonnull UITableView *)tableView cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
     EditPlaceCell *cell = [tableView dequeueReusableCellWithIdentifier:@"EditPlaceCell" forIndexPath:indexPath];
+    
     Location *loc = nil;
     NSDate *estArrival = nil;
     NSDate *estDeparture = nil;
-    if (indexPath.row == 0) {
+    if (indexPath.row == 0) { // if origin location
         loc = self.mutableItinerary.originLocation;
         estDeparture = self.mutableItinerary.departureTime;
         [cell disableArrow];
-    } else if (indexPath.row == self.data.count + 1) {
+    } else if (indexPath.row == self.data.count + 1) { // if ending destination (back to origin)
         loc = self.mutableItinerary.originLocation;
-        estArrival = [self.mutableItinerary computeDeparture:(indexPath.row-2)];
+        estArrival = [self.mutableItinerary computeArrival:(indexPath.row - 1)];
         [cell disableArrow];
-    } else {
-        loc = self.data[indexPath.row-1];
-        estArrival = [self.mutableItinerary computeArrival:(indexPath.row-1)];
-        estDeparture = [self.mutableItinerary computeDeparture:(indexPath.row-1)];
-        cell.waypointIndex = indexPath.row-1;
+    } else { // if waypoint
+        loc = self.data[indexPath.row - 1];
+        estArrival = [self.mutableItinerary computeArrival:(indexPath.row - 1)];
+        estDeparture = [self.mutableItinerary computeDeparture:(indexPath.row - 1)];
+        cell.waypointIndex = indexPath.row - 1;
     }
+    
     [cell updateUIElements:loc.title arrival:estArrival departure:estDeparture];
     cell.delegate = self;
     return cell;

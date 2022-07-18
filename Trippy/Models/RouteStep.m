@@ -15,11 +15,11 @@
 @implementation RouteStep
 
 - (NSNumber *)distanceVal {
-    return self.json[@"distance"][@"val"];
+    return self.json[@"distance"][@"value"];
 }
 
 - (NSNumber *)durationVal {
-    return self.json[@"duration"][@"val"];
+    return self.json[@"duration"][@"value"];
 }
 
 - (CLLocationCoordinate2D)startCoord {

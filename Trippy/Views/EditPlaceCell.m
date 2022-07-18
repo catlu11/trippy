@@ -15,7 +15,8 @@
 
 - (void) updateUIElements:(NSString *)locName arrival:(NSDate * _Nullable)arrival departure:(NSDate * _Nullable)departure {
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    [formatter setDateFormat:@"'T'HH:mm"];
+    [formatter setLocale:[[NSLocale alloc] initWithLocaleIdentifier:@"en_US"]];
+    [formatter setDateFormat:@"HH:mm a"];
     NSString *arrivalString = arrival ? [formatter stringFromDate:arrival] : @"-";
     NSString *departureString = departure ? [formatter stringFromDate:departure] : @"-";
     

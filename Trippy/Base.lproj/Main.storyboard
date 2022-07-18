@@ -613,7 +613,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="cUA-ri-gAG"/>
                     <connections>
-                        <outlet property="departureDatePicker" destination="c6e-rY-opB" id="pjE-fj-g4q"/>
+                        <outlet property="departureDatePicker" destination="c6e-rY-opB" id="Fo0-if-UMC"/>
                         <outlet property="editView" destination="iHi-eJ-QCe" id="GtC-bK-nrG"/>
                         <outlet property="mapView" destination="DNb-6x-TX2" id="Bro-vv-OMP"/>
                         <outlet property="placesTableView" destination="2Rb-DP-VF6" id="X7U-J9-A7f"/>
@@ -650,13 +650,6 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Preferred ToD:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wEe-af-JSz">
-                                <rect key="frame" x="26" y="427" width="111" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Estimated stay:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="y5C-gM-LJE">
                                 <rect key="frame" x="26" y="503" width="117" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -671,13 +664,6 @@
                                     <action selector="toggleEta:" destination="1gV-N4-aJD" eventType="valueChanged" id="08Q-pE-zTA"/>
                                 </connections>
                             </switch>
-                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="cuI-6M-sW9">
-                                <rect key="frame" x="170" y="421" width="49" height="31"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <connections>
-                                    <action selector="toggleTod:" destination="1gV-N4-aJD" eventType="valueChanged" id="gKp-0N-O4j"/>
-                                </connections>
-                            </switch>
                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="pnb-TO-aFA">
                                 <rect key="frame" x="170" y="498" width="49" height="31"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -685,13 +671,6 @@
                                     <action selector="toggleStay:" destination="1gV-N4-aJD" eventType="valueChanged" id="Ghj-Kb-NsW"/>
                                 </connections>
                             </switch>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Warnings" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pBV-G1-aRh">
-                                <rect key="frame" x="26" y="630" width="337" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" systemColor="systemPinkColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aTs-Td-aOw">
                                 <rect key="frame" x="25" y="789" width="101" height="31"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -711,11 +690,11 @@
                                 </connections>
                             </button>
                             <datePicker hidden="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="time" minuteInterval="1" style="compact" translatesAutoresizingMaskIntoConstraints="NO" id="Mz8-rL-5vO">
-                                <rect key="frame" x="258" y="384" width="80" height="38"/>
+                                <rect key="frame" x="26" y="418" width="80" height="38"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                             </datePicker>
                             <datePicker hidden="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="time" minuteInterval="1" style="compact" translatesAutoresizingMaskIntoConstraints="NO" id="Jho-tK-PIi">
-                                <rect key="frame" x="258" y="421" width="80" height="38"/>
+                                <rect key="frame" x="163" y="418" width="80" height="38"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                             </datePicker>
                             <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="0" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="tMr-1j-1mC">
@@ -765,6 +744,13 @@
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </view>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="to" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="w6f-xM-i6L">
+                                <rect key="frame" x="130" y="424" width="16" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="obr-aU-prK"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -776,16 +762,15 @@
                     <navigationItem key="navigationItem" id="ke4-FV-q4h"/>
                     <connections>
                         <outlet property="estStaySwitch" destination="pnb-TO-aFA" id="Pgf-Xs-6K9"/>
-                        <outlet property="etaPicker" destination="Mz8-rL-5vO" id="ZRj-at-kmw"/>
+                        <outlet property="etaEndPicker" destination="Jho-tK-PIi" id="fYO-60-iYR"/>
+                        <outlet property="etaStartPicker" destination="Mz8-rL-5vO" id="ZRj-at-kmw"/>
                         <outlet property="nameLabel" destination="mfy-4l-Bks" id="CDe-V2-AoG"/>
                         <outlet property="prefEtaSwitch" destination="F95-by-BSF" id="Ep0-De-T2v"/>
-                        <outlet property="prefTodSwitch" destination="cuI-6M-sW9" id="eNi-Dz-e8w"/>
                         <outlet property="snippetLabel" destination="Js9-Lv-6Uf" id="a8B-CL-g1R"/>
                         <outlet property="staticMapImage" destination="kxr-ZW-KzP" id="FkQ-l1-Eka"/>
                         <outlet property="stayHrField" destination="tMr-1j-1mC" id="20l-aT-YTv"/>
                         <outlet property="stayMinField" destination="2yY-3c-x9e" id="AbO-EW-Qtw"/>
-                        <outlet property="todPicker" destination="Jho-tK-PIi" id="fYO-60-iYR"/>
-                        <outlet property="warningsLabel" destination="pBV-G1-aRh" id="eij-le-uLf"/>
+                        <outlet property="toRangeLabel" destination="w6f-xM-i6L" id="sp4-bg-seZ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Rtj-rb-50i" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -1248,9 +1233,6 @@
         </systemColor>
         <systemColor name="systemOrangeColor">
             <color red="1" green="0.58431372549019611" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
-        <systemColor name="systemPinkColor">
-            <color red="1" green="0.17647058823529413" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

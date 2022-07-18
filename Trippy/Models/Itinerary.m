@@ -61,7 +61,7 @@
         else {
             NSMutableArray *prefs = [[NSMutableArray alloc] init];
             for (Location *l in sourceCollection.locations) {
-                ItineraryPreferences *newPref =  [[ItineraryPreferences alloc] initWithAttributes:[NSNull null] preferredTOD:[NSNull null] stayDuration:@0];
+                ItineraryPreferences *newPref =  [[ItineraryPreferences alloc] initWithAttributes:[NSNull null] preferredEtaEnd:[NSNull null] stayDuration:@0];
                 [prefs addObject:[newPref toDictionary]];
             }
             self.prefJson = @{@"preferences": prefs};
@@ -115,7 +115,6 @@
     return ordered;
 }
 
-
 - (ItineraryPreferences *)getPreference:(Location *)loc {
     NSArray *prefsArray = self.prefJson[@"preferences"];
     NSDictionary *json = [prefsArray objectAtIndex:[self.sourceCollection.locations indexOfObject:loc]];
@@ -131,13 +130,17 @@
 }
 
 - (NSDate *)computeArrival:(int)waypointIndex {
-    // TODO: Implement
-    return nil;
+    NSDate *lastArrival = (waypointIndex > 0) ? [self computeArrival:waypointIndex-1] : self.departureTime;
+    RouteLeg *leg = [self.routeLegs objectAtIndex:waypointIndex];
+    int travelTime = [leg.durationVal intValue];
+    return [lastArrival dateByAddingTimeInterval:travelTime];
 }
 
 - (NSDate *)computeDeparture:(int)waypointIndex {
-    // TODO: Implement
-    return nil;
+    NSDate *arrivalTime = [self computeArrival:waypointIndex];
+    Location *loc = [self.sourceCollection.locations objectAtIndex:waypointIndex];
+    ItineraryPreferences *pref = [self getPreference:loc];
+    return [arrivalTime dateByAddingTimeInterval:[pref.stayDuration intValue]];
 }
 
 @end

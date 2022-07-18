@@ -13,7 +13,7 @@
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     NSLocale *enUSPOSIXLocale = [NSLocale localeWithLocaleIdentifier:@"en_US_POSIX"];
     [dateFormatter setLocale:enUSPOSIXLocale];
-    [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ssZZZZZ"];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ssZZZZZ"];
     [dateFormatter setCalendar:[NSCalendar calendarWithIdentifier:NSCalendarIdentifierGregorian]];
     return [dateFormatter stringFromDate:date];
 }
@@ -23,9 +23,9 @@
     return [dateFormatter dateFromString:isoString];
 }
 
-+ (int)aheadSecondsFrom1970:(NSDate *)date {
++ (int)aheadSecondsFrom1970:(NSDate *)date aheadBy:(int)aheadBy {
     double seconds = [date timeIntervalSince1970];
-    return round(seconds) + 120; // 2 minute buffer
+    return round(seconds) + aheadBy; //
 }
 
 + (NSArray *)secondsToHourMin:(int)seconds {

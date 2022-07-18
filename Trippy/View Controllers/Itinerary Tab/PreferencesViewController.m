@@ -16,13 +16,12 @@
 @property (weak, nonatomic) IBOutlet UILabel *snippetLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *staticMapImage;
 @property (weak, nonatomic) IBOutlet UISwitch *prefEtaSwitch;
-@property (weak, nonatomic) IBOutlet UISwitch *prefTodSwitch;
 @property (weak, nonatomic) IBOutlet UISwitch *estStaySwitch;
-@property (weak, nonatomic) IBOutlet UIDatePicker *etaPicker;
-@property (weak, nonatomic) IBOutlet UIDatePicker *todPicker;
+@property (weak, nonatomic) IBOutlet UIDatePicker *etaStartPicker;
+@property (weak, nonatomic) IBOutlet UIDatePicker *etaEndPicker;
 @property (weak, nonatomic) IBOutlet UITextField *stayHrField;
 @property (weak, nonatomic) IBOutlet UITextField *stayMinField;
-@property (weak, nonatomic) IBOutlet UILabel *warningsLabel;
+@property (weak, nonatomic) IBOutlet UILabel *toRangeLabel;
 
 @property (assign, nonatomic) BOOL *didChange;
 @end
@@ -38,15 +37,13 @@
     self.staticMapImage.image = [MapUtils getStaticMapImage:self.location.coord width:self.staticMapImage.frame.size.width height:self.staticMapImage.frame.size.height];
     
     // Set initial preferences
-    if (self.preferences.preferredETA) {
+    if (self.preferences.preferredEtaStart) {
         [self.prefEtaSwitch setOn:YES];
-        self.etaPicker.hidden = NO;
-        self.etaPicker.date = self.preferences.preferredETA;
-    }
-    if (self.preferences.preferredTOD) {
-        [self.prefTodSwitch setOn:YES];
-        self.todPicker.hidden = NO;
-        self.todPicker.date = self.preferences.preferredTOD;
+        self.etaStartPicker.hidden = NO;
+        self.etaStartPicker.date = self.preferences.preferredEtaStart;
+        self.etaEndPicker.hidden = NO;
+        self.etaEndPicker.date = self.preferences.preferredEtaEnd;
+        [self.toRangeLabel setHidden:NO];
     }
     if ([self.preferences.stayDuration intValue] > 0) {
         [self.estStaySwitch setOn:YES];
@@ -56,18 +53,16 @@
         self.stayHrField.text = [hourMin[0] stringValue];
         self.stayMinField.text = [hourMin[1] stringValue];
     }
-    [self.warningsLabel setHidden:YES];
     
+    // Set text field delegates
     self.stayHrField.delegate = self;
     self.stayMinField.delegate = self;
 }
 
 - (IBAction)toggleEta:(id)sender {
-    self.etaPicker.hidden = !self.prefEtaSwitch.isOn;
-}
-
-- (IBAction)toggleTod:(id)sender {
-    self.todPicker.hidden = !self.prefTodSwitch.isOn;
+    self.etaStartPicker.hidden = !self.prefEtaSwitch.isOn;
+    self.etaEndPicker.hidden = !self.prefEtaSwitch.isOn;
+    self.toRangeLabel.hidden = !self.prefEtaSwitch.isOn;
 }
 
 - (IBAction)toggleStay:(id)sender {
@@ -85,21 +80,21 @@
 }
 
 - (IBAction)tapUpdate:(id)sender {
-    NSDate *eta = self.prefEtaSwitch.isOn ? self.etaPicker.date : [NSNull null];
-    NSDate *tod = self.prefTodSwitch.isOn ? self.todPicker.date : [NSNull null];
+    NSDate *etaStart = self.prefEtaSwitch.isOn ? self.etaStartPicker.date : [NSNull null];
+    NSDate *etaEnd = self.prefEtaSwitch.isOn ? self.etaEndPicker.date : [NSNull null];
     NSNumber *stayTime = self.estStaySwitch ? [self stayTimeToSeconds] : @0;
-    if ([eta isEqualToDate:self.preferences.preferredETA] && [eta isEqualToDate:self.preferences.preferredTOD] && [stayTime isEqualToValue:self.preferences.stayDuration]) {
+    
+    if ([etaStart isEqualToDate:self.preferences.preferredEtaStart] && [etaEnd isEqualToDate:self.preferences.preferredEtaEnd] && [stayTime isEqualToValue:self.preferences.stayDuration]) { // if no changes made
         [self dismissViewControllerAnimated:YES completion:nil];
-    }
-    else {
-        ItineraryPreferences *newPref = [[ItineraryPreferences alloc] initWithAttributes:eta preferredTOD:tod stayDuration:stayTime];
+    } else {
+        ItineraryPreferences *newPref = [[ItineraryPreferences alloc] initWithAttributes:etaStart preferredEtaEnd:etaEnd stayDuration:stayTime];
         if ([newPref isValid]) {
             [self.delegate didUpdatePreference:newPref location:self.location];
             [self dismissViewControllerAnimated:YES completion:nil];
         }
         else {
             NSLog(@"Invalid preferences");
-            // TODO: Update warning label if invalid
+            // TODO: Update a warning label if invalid
         }
     }
 }
