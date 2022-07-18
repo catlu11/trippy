@@ -40,7 +40,11 @@
 		F0F3359C2874A0EB00470507 /* TrippyUITestsLaunchTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F0F3359B2874A0EB00470507 /* TrippyUITestsLaunchTests.m */; };
 		F0F335AE2875F0B400470507 /* SelectableMap.m in Sources */ = {isa = PBXBuildFile; fileRef = F0F335AD2875F0B400470507 /* SelectableMap.m */; };
 		F0F335B72875F2E100470507 /* MapUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = F0F335B62875F2E100470507 /* MapUtils.m */; };
-		F0F657F8287F78B000C04AB0 /* ItineraryItemPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = F0F657F7287F78B000C04AB0 /* ItineraryItemPreferences.m */; };
+		F0F657F8287F78B000C04AB0 /* ItineraryPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = F0F657F7287F78B000C04AB0 /* ItineraryPreferences.m */; };
+		F0F657FB28807E9000C04AB0 /* EditingItineraryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F0F657FA28807E9000C04AB0 /* EditingItineraryViewController.m */; };
+		F0F657FE288082E900C04AB0 /* EditPlaceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F0F657FD288082E900C04AB0 /* EditPlaceCell.m */; };
+		F0F658012880DB2600C04AB0 /* DateUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = F0F658002880DB2600C04AB0 /* DateUtils.m */; };
+		F0F658042881D08A00C04AB0 /* PreferencesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F0F658032881D08A00C04AB0 /* PreferencesViewController.m */; };
 		FED82F2F74A69C665F7637DE /* Pods_Trippy_TrippyUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBFD6FD215C55391F69C0E9B /* Pods_Trippy_TrippyUITests.framework */; };
 /* End PBXBuildFile section */
 
@@ -129,8 +133,16 @@
 		F0F335AD2875F0B400470507 /* SelectableMap.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SelectableMap.m; sourceTree = "<group>"; };
 		F0F335B52875F2E100470507 /* MapUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MapUtils.h; sourceTree = "<group>"; };
 		F0F335B62875F2E100470507 /* MapUtils.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MapUtils.m; sourceTree = "<group>"; };
-		F0F657F6287F78B000C04AB0 /* ItineraryItemPreferences.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ItineraryItemPreferences.h; sourceTree = "<group>"; };
-		F0F657F7287F78B000C04AB0 /* ItineraryItemPreferences.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ItineraryItemPreferences.m; sourceTree = "<group>"; };
+		F0F657F6287F78B000C04AB0 /* ItineraryPreferences.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ItineraryPreferences.h; sourceTree = "<group>"; };
+		F0F657F7287F78B000C04AB0 /* ItineraryPreferences.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ItineraryPreferences.m; sourceTree = "<group>"; };
+		F0F657F928807E9000C04AB0 /* EditingItineraryViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EditingItineraryViewController.h; sourceTree = "<group>"; };
+		F0F657FA28807E9000C04AB0 /* EditingItineraryViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EditingItineraryViewController.m; sourceTree = "<group>"; };
+		F0F657FC288082E900C04AB0 /* EditPlaceCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EditPlaceCell.h; sourceTree = "<group>"; };
+		F0F657FD288082E900C04AB0 /* EditPlaceCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EditPlaceCell.m; sourceTree = "<group>"; };
+		F0F657FF2880DB2600C04AB0 /* DateUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DateUtils.h; sourceTree = "<group>"; };
+		F0F658002880DB2600C04AB0 /* DateUtils.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DateUtils.m; sourceTree = "<group>"; };
+		F0F658022881D08A00C04AB0 /* PreferencesViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PreferencesViewController.h; sourceTree = "<group>"; };
+		F0F658032881D08A00C04AB0 /* PreferencesViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PreferencesViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -222,6 +234,10 @@
 				F0C75FA0287C9F4E0015BB74 /* CreateItineraryViewController.m */,
 				F0C75FA2287CA2430015BB74 /* ItineraryDetailViewController.h */,
 				F0C75FA3287CA2430015BB74 /* ItineraryDetailViewController.m */,
+				F0F657F928807E9000C04AB0 /* EditingItineraryViewController.h */,
+				F0F657FA28807E9000C04AB0 /* EditingItineraryViewController.m */,
+				F0F658022881D08A00C04AB0 /* PreferencesViewController.h */,
+				F0F658032881D08A00C04AB0 /* PreferencesViewController.m */,
 			);
 			path = "Itinerary Tab";
 			sourceTree = "<group>";
@@ -317,6 +333,8 @@
 				F0F335AD2875F0B400470507 /* SelectableMap.m */,
 				F0C75F84287786D70015BB74 /* StaticMapCell.h */,
 				F0C75F85287786D70015BB74 /* StaticMapCell.m */,
+				F0F657FC288082E900C04AB0 /* EditPlaceCell.h */,
+				F0F657FD288082E900C04AB0 /* EditPlaceCell.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -336,8 +354,8 @@
 		F0F335AA2875F08500470507 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				F0F657F6287F78B000C04AB0 /* ItineraryItemPreferences.h */,
-				F0F657F7287F78B000C04AB0 /* ItineraryItemPreferences.m */,
+				F0F657F6287F78B000C04AB0 /* ItineraryPreferences.h */,
+				F0F657F7287F78B000C04AB0 /* ItineraryPreferences.m */,
 				F0C75FDE287E3CB20015BB74 /* Itinerary.h */,
 				F0C75FDB287E3CB20015BB74 /* Itinerary.m */,
 				F0C75FE2287E3CB20015BB74 /* RouteLeg.h */,
@@ -369,6 +387,8 @@
 				F0F335B62875F2E100470507 /* MapUtils.m */,
 				F0C75F90287799070015BB74 /* ParseUtils.h */,
 				F0C75F91287799070015BB74 /* ParseUtils.m */,
+				F0F657FF2880DB2600C04AB0 /* DateUtils.h */,
+				F0F658002880DB2600C04AB0 /* DateUtils.m */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -648,12 +668,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F0F657F8287F78B000C04AB0 /* ItineraryItemPreferences.m in Sources */,
+				F0F657F8287F78B000C04AB0 /* ItineraryPreferences.m in Sources */,
 				F0C75F72287747A20015BB74 /* LoginViewController.m in Sources */,
+				F0F657FE288082E900C04AB0 /* EditPlaceCell.m in Sources */,
 				F0F3357B2874A0E700470507 /* SearchMapViewController.m in Sources */,
 				F0C75F982878D7750015BB74 /* CreateCollectionViewController.m in Sources */,
 				F0C75F8C28778FED0015BB74 /* CacheDataHandler.m in Sources */,
 				F0C75F92287799070015BB74 /* ParseUtils.m in Sources */,
+				F0F658042881D08A00C04AB0 /* PreferencesViewController.m in Sources */,
 				F0C75F9E287C9EBF0015BB74 /* HomeViewController.m in Sources */,
 				F0C75FA1287C9F4E0015BB74 /* CreateItineraryViewController.m in Sources */,
 				F0C75FA4287CA2430015BB74 /* ItineraryDetailViewController.m in Sources */,
@@ -666,11 +688,13 @@
 				F0F335B72875F2E100470507 /* MapUtils.m in Sources */,
 				F0F335862874A0EB00470507 /* main.m in Sources */,
 				F0C75F7B28775C7F0015BB74 /* LogoutHandler.m in Sources */,
+				F0F657FB28807E9000C04AB0 /* EditingItineraryViewController.m in Sources */,
 				F0C75F86287786D70015BB74 /* StaticMapCell.m in Sources */,
 				F0C75FE4287E3CB20015BB74 /* Itinerary.m in Sources */,
 				F0C75FE8287E3CB30015BB74 /* RouteLeg.m in Sources */,
 				F0C75FE7287E3CB30015BB74 /* Location.m in Sources */,
 				F0C75FBE287CE4CB0015BB74 /* DirectionsAPIManager.m in Sources */,
+				F0F658012880DB2600C04AB0 /* DateUtils.m in Sources */,
 				F0F335782874A0E700470507 /* SceneDelegate.m in Sources */,
 				F0C75FE5287E3CB30015BB74 /* LocationCollection.m in Sources */,
 			);

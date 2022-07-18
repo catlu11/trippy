@@ -31,7 +31,7 @@
     // Fetch handler
     self.handler = [[CacheDataHandler alloc] init];
     self.handler.delegate = self;
-        
+    
     [self refreshData];
 }
 

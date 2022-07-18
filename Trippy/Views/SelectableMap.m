@@ -26,7 +26,7 @@
     
     map.frame = self.bounds;
     self.mapView = map;
-    [self addSubview:map];
+    [self insertSubview:map atIndex:0];
 }
 
 - (void) initWithBounds:(GMSCoordinateBounds *)bounds {
@@ -69,7 +69,7 @@
 }
 
 - (void) setCameraToLoc:(CLLocationCoordinate2D)location animate:(BOOL)animate {
-    GMSCameraPosition *pos = [GMSCameraPosition cameraWithLatitude:location.latitude longitude:location.longitude zoom:DEFAULT_ZOOM];
+    GMSCameraPosition *pos = [GMSCameraPosition cameraWithLatitude:location.latitude longitude:location.longitude zoom:self.mapView.camera.zoom];
     if(animate) {
         [self.mapView animateToCameraPosition:pos];
     }

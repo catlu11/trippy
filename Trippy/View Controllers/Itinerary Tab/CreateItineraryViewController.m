@@ -68,13 +68,18 @@
         [self presentViewController:self.emptyAlert animated:YES completion:nil];
     }
     else {
-        NSString *apiUrl = [MapUtils generateDirectionsApiUrl:self.selectedCol origin:self.selectedLoc optimizeOrder:TRUE departureTime:nil];
+        NSString *apiUrl = [MapUtils generateDirectionsApiUrl:self.selectedCol
+                                                       origin:self.selectedLoc
+                                                optimizeOrder:TRUE
+                                                departureTime:[NSDate now]];
         [[DirectionsAPIManager shared] getDirectionsWithCompletion:apiUrl completion:^(NSDictionary * _Nonnull response, NSError * _Nonnull) {
             if (response) {
-                Itinerary *it = [[Itinerary alloc] initWithDictionary:response];
-                it.sourceCollection = self.selectedCol;
-                it.originLocation = self.selectedLoc;
-                it.name = self.nameField.text;
+                Itinerary *it = [[Itinerary alloc] initWithDictionary:response
+                                                             prefJson:nil
+                                                            departure:[NSDate now]
+                                                     sourceCollection:self.selectedCol
+                                                       originLocation:self.selectedLoc
+                                                                 name:self.nameField.text];
                 [self.colHandler postNewItinerary:it];
             }
         }];

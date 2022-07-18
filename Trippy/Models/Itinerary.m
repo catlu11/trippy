@@ -6,12 +6,15 @@
 //
 
 #import "Itinerary.h"
+#import "LocationCollection.h"
 #import "MapUtils.h"
 #import "RouteLeg.h"
+#import "ItineraryPreferences.h"
 
 @interface Itinerary ()
 @property (strong, nonatomic) NSDictionary *fullJson;
 @property (strong, nonatomic) NSDictionary *routeJson;
+@property (strong, nonatomic) NSDictionary *prefJson;
 @end
 
 @implementation Itinerary
@@ -36,24 +39,63 @@
     return self.routeJson[@"waypoint_order"];
 }
 
-- (instancetype)initWithDictionary:(NSDictionary *)dict {
+- (instancetype)initWithDictionary:(NSDictionary *)routesJson
+                          prefJson:(NSDictionary *)prefJson
+                         departure:(NSDate *)departure
+                  sourceCollection:(LocationCollection *)sourceCollection
+                    originLocation:(Location *)originLocation name:(NSString *)name {
     self = [super init];
     
     if (self) {
-        self.fullJson = dict;
-        self.routeJson = dict[@"routes"][0];
+        // creating a copy of dictionary data
+        NSData *routeJsonData = [NSJSONSerialization dataWithJSONObject:routesJson options:0 error:nil];
+        NSDictionary *routeDictCopy = [NSJSONSerialization JSONObjectWithData:routeJsonData options:kNilOptions error:nil];
+        self.fullJson = routeDictCopy;
+        self.routeJson = routeDictCopy[@"routes"][0];
+        
+        if (prefJson) {
+            NSData *prefJsonData = [NSJSONSerialization dataWithJSONObject:prefJson options:0 error:nil];
+            NSDictionary *prefDictCopy = [NSJSONSerialization JSONObjectWithData:prefJsonData options:kNilOptions error:nil];
+            self.prefJson = prefDictCopy;
+        }
+        else {
+            NSMutableArray *prefs = [[NSMutableArray alloc] init];
+            for (Location *l in sourceCollection.locations) {
+                ItineraryPreferences *newPref =  [[ItineraryPreferences alloc] initWithAttributes:[NSNull null] preferredEtaEnd:[NSNull null] stayDuration:@0];
+                [prefs addObject:[newPref toDictionary]];
+            }
+            self.prefJson = @{@"preferences": prefs};
+        }
+        self.departureTime = departure;
+        self.sourceCollection = sourceCollection;
+        self.originLocation = originLocation;
+        self.name = name;
     }
     
     return self;
 }
 
-- (NSDictionary *)toDictionary {
+- (NSDictionary *)toRouteDictionary {
     return self.fullJson;
 }
 
-- (void)reinitialize:(NSDictionary *)dict {
-    self.fullJson = dict;
-    self.routeJson = dict[@"routes"][0];
+- (NSDictionary *)toPrefsDictionary {
+    return self.prefJson;
+}
+
+- (void)reinitialize:(NSDictionary *)routesJson
+            prefJson:(NSDictionary *)prefJson
+           departure:(NSDate *)departure {
+    // creating a copy of dictionary data
+    NSData *routeJsonData = [NSJSONSerialization dataWithJSONObject:routesJson options:0 error:nil];
+    NSDictionary *routeDictCopy = [NSJSONSerialization JSONObjectWithData:routeJsonData options:kNilOptions error:nil];
+    NSData *prefJsonData = [NSJSONSerialization dataWithJSONObject:prefJson options:0 error:nil];
+    NSDictionary *prefDictCopy = [NSJSONSerialization JSONObjectWithData:prefJsonData options:kNilOptions error:nil];
+    
+    self.fullJson = routeDictCopy;
+    self.routeJson = routeDictCopy[@"routes"][0];
+    self.prefJson = prefDictCopy;
+    self.departureTime = departure;
 }
 
 - (void)replaceLegs:(NSArray *)indicesToReplace newLegs:(NSArray *)newLegs {
@@ -62,6 +104,43 @@
         RouteLeg *newLeg = [newLegs objectAtIndex:[ix intValue]];
         [legs setObject:[newLeg toDictionary] atIndexedSubscript:[ix intValue]];
     }
+}
+
+- (NSArray *)getOrderedLocations {
+    NSMutableArray *ordered = [NSMutableArray arrayWithArray:self.sourceCollection.locations];
+    for (NSNumber *ix in self.waypointOrder) {
+        int i = [ix intValue];
+        [ordered setObject:[self.sourceCollection.locations objectAtIndex:i] atIndexedSubscript:i];
+    }
+    return ordered;
+}
+
+- (ItineraryPreferences *)getPreference:(Location *)loc {
+    NSArray *prefsArray = self.prefJson[@"preferences"];
+    NSDictionary *json = [prefsArray objectAtIndex:[self.sourceCollection.locations indexOfObject:loc]];
+    return [[ItineraryPreferences alloc] initWithDictionary:json];
+}
+
+- (void)updatePreference:(Location *)location pref:(ItineraryPreferences *)pref {
+    NSMutableArray *prefsArray = [self.prefJson[@"preferences"] mutableCopy];
+    [prefsArray setObject:[pref toDictionary] atIndexedSubscript:[self.sourceCollection.locations indexOfObject:location]];
+    NSMutableDictionary *copy = [self.prefJson mutableCopy];
+    copy[@"preferences"] = prefsArray;
+    self.prefJson = copy;
+}
+
+- (NSDate *)computeArrival:(int)waypointIndex {
+    NSDate *lastArrival = (waypointIndex > 0) ? [self computeArrival:waypointIndex-1] : self.departureTime;
+    RouteLeg *leg = [self.routeLegs objectAtIndex:waypointIndex];
+    int travelTime = [leg.durationVal intValue];
+    return [lastArrival dateByAddingTimeInterval:travelTime];
+}
+
+- (NSDate *)computeDeparture:(int)waypointIndex {
+    NSDate *arrivalTime = [self computeArrival:waypointIndex];
+    Location *loc = [self.sourceCollection.locations objectAtIndex:waypointIndex];
+    ItineraryPreferences *pref = [self getPreference:loc];
+    return [arrivalTime dateByAddingTimeInterval:[pref.stayDuration intValue]];
 }
 
 @end
