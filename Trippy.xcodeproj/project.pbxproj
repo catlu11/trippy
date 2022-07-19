@@ -21,7 +21,7 @@
 		F0C75F9E287C9EBF0015BB74 /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F0C75F9D287C9EBF0015BB74 /* HomeViewController.m */; };
 		F0C75FA1287C9F4E0015BB74 /* CreateItineraryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F0C75FA0287C9F4E0015BB74 /* CreateItineraryViewController.m */; };
 		F0C75FA4287CA2430015BB74 /* ItineraryDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F0C75FA3287CA2430015BB74 /* ItineraryDetailViewController.m */; };
-		F0C75FBE287CE4CB0015BB74 /* DirectionsAPIManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F0C75FBD287CE4CB0015BB74 /* DirectionsAPIManager.m */; };
+		F0C75FBE287CE4CB0015BB74 /* MapsAPIManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F0C75FBD287CE4CB0015BB74 /* MapsAPIManager.m */; };
 		F0C75FE4287E3CB20015BB74 /* Itinerary.m in Sources */ = {isa = PBXBuildFile; fileRef = F0C75FDB287E3CB20015BB74 /* Itinerary.m */; };
 		F0C75FE5287E3CB30015BB74 /* LocationCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = F0C75FDD287E3CB20015BB74 /* LocationCollection.m */; };
 		F0C75FE6287E3CB30015BB74 /* RouteStep.m in Sources */ = {isa = PBXBuildFile; fileRef = F0C75FE0287E3CB20015BB74 /* RouteStep.m */; };
@@ -44,6 +44,7 @@
 		F0F657FE288082E900C04AB0 /* EditPlaceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F0F657FD288082E900C04AB0 /* EditPlaceCell.m */; };
 		F0F658012880DB2600C04AB0 /* DateUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = F0F658002880DB2600C04AB0 /* DateUtils.m */; };
 		F0F658042881D08A00C04AB0 /* PreferencesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F0F658032881D08A00C04AB0 /* PreferencesViewController.m */; };
+		F0F658092887158000C04AB0 /* TSPUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = F0F658082887158000C04AB0 /* TSPUtils.m */; };
 		FED82F2F74A69C665F7637DE /* Pods_Trippy_TrippyUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBFD6FD215C55391F69C0E9B /* Pods_Trippy_TrippyUITests.framework */; };
 /* End PBXBuildFile section */
 
@@ -99,8 +100,8 @@
 		F0C75FA0287C9F4E0015BB74 /* CreateItineraryViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CreateItineraryViewController.m; sourceTree = "<group>"; };
 		F0C75FA2287CA2430015BB74 /* ItineraryDetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ItineraryDetailViewController.h; sourceTree = "<group>"; };
 		F0C75FA3287CA2430015BB74 /* ItineraryDetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ItineraryDetailViewController.m; sourceTree = "<group>"; };
-		F0C75FBC287CE4CB0015BB74 /* DirectionsAPIManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DirectionsAPIManager.h; sourceTree = "<group>"; };
-		F0C75FBD287CE4CB0015BB74 /* DirectionsAPIManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DirectionsAPIManager.m; sourceTree = "<group>"; };
+		F0C75FBC287CE4CB0015BB74 /* MapsAPIManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MapsAPIManager.h; sourceTree = "<group>"; };
+		F0C75FBD287CE4CB0015BB74 /* MapsAPIManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MapsAPIManager.m; sourceTree = "<group>"; };
 		F0C75FDA287E3CB20015BB74 /* Location.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Location.h; path = Trippy/Models/Location.h; sourceTree = "<group>"; };
 		F0C75FDB287E3CB20015BB74 /* Itinerary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Itinerary.m; path = Trippy/Models/Itinerary.m; sourceTree = "<group>"; };
 		F0C75FDC287E3CB20015BB74 /* LocationCollection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LocationCollection.h; path = Trippy/Models/LocationCollection.h; sourceTree = "<group>"; };
@@ -143,6 +144,8 @@
 		F0F658022881D08A00C04AB0 /* PreferencesViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PreferencesViewController.h; sourceTree = "<group>"; };
 		F0F658032881D08A00C04AB0 /* PreferencesViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PreferencesViewController.m; sourceTree = "<group>"; };
 		F0F6580528860EED00C04AB0 /* or-tools_MacOsX-12.2.1_v9.3.10497 */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "or-tools_MacOsX-12.2.1_v9.3.10497"; sourceTree = "<group>"; };
+		F0F658072887158000C04AB0 /* TSPUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TSPUtils.h; sourceTree = "<group>"; };
+		F0F658082887158000C04AB0 /* TSPUtils.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TSPUtils.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -367,8 +370,8 @@
 		F0F335AB2875F08D00470507 /* API */ = {
 			isa = PBXGroup;
 			children = (
-				F0C75FBC287CE4CB0015BB74 /* DirectionsAPIManager.h */,
-				F0C75FBD287CE4CB0015BB74 /* DirectionsAPIManager.m */,
+				F0C75FBC287CE4CB0015BB74 /* MapsAPIManager.h */,
+				F0C75FBD287CE4CB0015BB74 /* MapsAPIManager.m */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -382,6 +385,8 @@
 				F0C75F91287799070015BB74 /* ParseUtils.m */,
 				F0F657FF2880DB2600C04AB0 /* DateUtils.h */,
 				F0F658002880DB2600C04AB0 /* DateUtils.m */,
+				F0F658072887158000C04AB0 /* TSPUtils.h */,
+				F0F658082887158000C04AB0 /* TSPUtils.m */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -683,9 +688,10 @@
 				F0F657FB28807E9000C04AB0 /* EditingItineraryViewController.m in Sources */,
 				F0C75F86287786D70015BB74 /* StaticMapCell.m in Sources */,
 				F0C75FE4287E3CB20015BB74 /* Itinerary.m in Sources */,
+				F0F658092887158000C04AB0 /* TSPUtils.m in Sources */,
 				F0C75FE8287E3CB30015BB74 /* RouteLeg.m in Sources */,
 				F0C75FE7287E3CB30015BB74 /* Location.m in Sources */,
-				F0C75FBE287CE4CB0015BB74 /* DirectionsAPIManager.m in Sources */,
+				F0C75FBE287CE4CB0015BB74 /* MapsAPIManager.m in Sources */,
 				F0F658012880DB2600C04AB0 /* DateUtils.m in Sources */,
 				F0F335782874A0E700470507 /* SceneDelegate.m in Sources */,
 				F0C75FE5287E3CB30015BB74 /* LocationCollection.m in Sources */,

@@ -23,6 +23,9 @@ NS_ASSUME_NONNULL_BEGIN
                              origin:(Location *)origin
                          optimizeOrder:(BOOL)optimizeOrder
                       departureTime:(NSDate *)departureTime;
++ (NSString *)generateMatrixApiUrl:(LocationCollection *)collection
+                            origin:(Location *)origin
+                     departureTime:(NSDate *)departureTime;
 @end
 
 NS_ASSUME_NONNULL_END

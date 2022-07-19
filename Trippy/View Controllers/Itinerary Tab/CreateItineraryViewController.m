@@ -11,7 +11,7 @@
 #import "Location.h"
 #import "LocationCollection.h"
 #import "Itinerary.h"
-#import "DirectionsAPIManager.h"
+#import "MapsAPIManager.h"
 #import "MapUtils.h"
 
 @interface CreateItineraryViewController () <UIPickerViewDelegate, UIPickerViewDataSource, CacheDataHandlerDelegate, UISearchBarDelegate>
@@ -72,7 +72,7 @@
                                                        origin:self.selectedLoc
                                                 optimizeOrder:TRUE
                                                 departureTime:[NSDate now]];
-        [[DirectionsAPIManager shared] getDirectionsWithCompletion:apiUrl completion:^(NSDictionary * _Nonnull response, NSError * _Nonnull) {
+        [[MapsAPIManager shared] getDirectionsWithCompletion:apiUrl completion:^(NSDictionary * _Nonnull response, NSError * _Nonnull) {
             if (response) {
                 Itinerary *it = [[Itinerary alloc] initWithDictionary:response
                                                              prefJson:nil

@@ -12,7 +12,8 @@
 @import GooglePlaces;
 
 #define STATIC_MAP_URL @"https://maps.googleapis.com/maps/api/staticmap?center=%f,%f&zoom=%d&size=%dx%d&key=%@"
-#define DIRECTIONS_URL @"json?origin=place_id:%@&destination=place_id:%@&departure_time=%d&mode=walking&waypoints=%@&key=%@"
+#define DIRECTIONS_URL @"directions/json?origin=place_id:%@&destination=place_id:%@&departure_time=%d&mode=walking&waypoints=%@&key=%@"
+#define MATRIX_URL @"directions/json?origin=place_id:%@&destination=place_id:%@&departure_time=%d&mode=walking&waypoints=%@&key=%@"
 #define API_BUFFER_IN_SECONDS 10
 
 @implementation MapUtils
@@ -36,12 +37,23 @@
                                           origin:(Location *)origin
                                         optimizeOrder:(BOOL)optimizeOrder
                                    departureTime:(NSDate *)departureTime {
-    // TODO: Enable via waypoints instead of just stopovers
     NSString *stops = optimizeOrder ? @"optimize:true" : @"";
     for(Location *loc in collection.locations) {
         stops = [stops stringByAppendingString:[NSString stringWithFormat:@"|place_id:%@", loc.placeId]];
     }
     NSString *baseUrl = [NSString stringWithFormat:DIRECTIONS_URL, origin.placeId, origin.placeId, [DateUtils aheadSecondsFrom1970:departureTime aheadBy:API_BUFFER_IN_SECONDS], stops, [self getApiKey]];
+    NSString *percentEncodedURLString = [[NSURL URLWithDataRepresentation:[baseUrl dataUsingEncoding:NSUTF8StringEncoding] relativeToURL:nil] relativeString];
+    return percentEncodedURLString;
+}
+
++ (NSString *)generateMatrixApiUrl:(LocationCollection *)collection
+                                          origin:(Location *)origin
+                                   departureTime:(NSDate *)departureTime {
+    NSString *stops = @"";
+    for(Location *loc in collection.locations) {
+        stops = [stops stringByAppendingString:[NSString stringWithFormat:@"|place_id:%@", loc.placeId]];
+    }
+    NSString *baseUrl = [NSString stringWithFormat:MATRIX_URL, origin.placeId, origin.placeId, [DateUtils aheadSecondsFrom1970:departureTime aheadBy:API_BUFFER_IN_SECONDS], stops, [self getApiKey]];
     NSString *percentEncodedURLString = [[NSURL URLWithDataRepresentation:[baseUrl dataUsingEncoding:NSUTF8StringEncoding] relativeToURL:nil] relativeString];
     return percentEncodedURLString;
 }

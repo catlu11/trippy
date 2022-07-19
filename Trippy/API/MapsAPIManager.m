@@ -5,16 +5,16 @@
 //  Created by Catherine Lu on 7/11/22.
 //
 
-#import "DirectionsAPIManager.h"
+#import "MapsAPIManager.h"
 #import "MapUtils.h"
 #import "Location.h"
 
-static NSString * const baseURLString = @"https://maps.googleapis.com/maps/api/directions/";
+static NSString * const baseURLString = @"https://maps.googleapis.com/maps/api/";
 
-@implementation DirectionsAPIManager
+@implementation MapsAPIManager
 
-+ (DirectionsAPIManager *)shared {
-    static DirectionsAPIManager *_sharedManager = nil;
++ (MapsAPIManager *)shared {
+    static MapsAPIManager *_sharedManager = nil;
     
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
@@ -43,4 +43,14 @@ static NSString * const baseURLString = @"https://maps.googleapis.com/maps/api/d
         completion(nil, error);
     }];
 }
+
+- (void)getRouteMatrixWithCompletion:(NSString *)url completion:(void (^)(NSDictionary *response, NSError *))completion {
+    [self POST:url parameters:nil headers:nil progress:nil
+       success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        completion(responseObject, nil);
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        completion(nil, error);
+    }];
+}
+
 @end
