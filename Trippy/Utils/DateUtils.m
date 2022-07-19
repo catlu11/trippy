@@ -9,7 +9,7 @@
 
 @implementation DateUtils
 
-+ (NSString *)formatDateAsISO8601:(NSDate *)date {
++ (NSString *)formatDateAsIso8601:(NSDate *)date {
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     NSLocale *enUSPOSIXLocale = [NSLocale localeWithLocaleIdentifier:@"en_US_POSIX"];
     [dateFormatter setLocale:enUSPOSIXLocale];
@@ -18,7 +18,7 @@
     return [dateFormatter stringFromDate:date];
 }
 
-+ (NSDate *)isoStringToDate:(NSString *)isoString {
++ (NSDate *)iso8601StringToDate:(NSString *)isoString {
     NSISO8601DateFormatter *dateFormatter = [[NSISO8601DateFormatter alloc] init];
     return [dateFormatter dateFromString:isoString];
 }
@@ -28,10 +28,15 @@
     return round(seconds) + aheadBy; //
 }
 
-+ (NSArray *)secondsToHourMin:(int)seconds {
++ (struct TimeInHrMin)secondsToHourMin:(int)seconds {
     int hours = seconds / 3600;
     int minutes = (seconds - (hours * 3600)) / 60;
-    return @[[NSNumber numberWithInt:hours], [NSNumber numberWithInt:minutes]];
+    TimeInHrMin time = {.hours = hours, .minutes = minutes};
+    return time;
+}
+
++ (NSNumber *) hourMinToSeconds:(TimeInHrMin)time {
+    return [[NSNumber alloc] initWithInt:time.hours * 3600 + time.minutes * 60];
 }
 
 @end

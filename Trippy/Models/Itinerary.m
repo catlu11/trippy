@@ -9,7 +9,7 @@
 #import "LocationCollection.h"
 #import "MapUtils.h"
 #import "RouteLeg.h"
-#import "ItineraryPreferences.h"
+#import "WaypointPreferences.h"
 
 @interface Itinerary ()
 @property (strong, nonatomic) NSDictionary *fullJson;
@@ -47,21 +47,16 @@
     self = [super init];
     
     if (self) {
-        // creating a copy of dictionary data
-        NSData *routeJsonData = [NSJSONSerialization dataWithJSONObject:routesJson options:0 error:nil];
-        NSDictionary *routeDictCopy = [NSJSONSerialization JSONObjectWithData:routeJsonData options:kNilOptions error:nil];
-        self.fullJson = routeDictCopy;
-        self.routeJson = routeDictCopy[@"routes"][0];
+        self.fullJson = [NSDictionary dictionaryWithDictionary:routesJson];
+        self.routeJson = self.fullJson[@"routes"][0];
         
         if (prefJson) {
-            NSData *prefJsonData = [NSJSONSerialization dataWithJSONObject:prefJson options:0 error:nil];
-            NSDictionary *prefDictCopy = [NSJSONSerialization JSONObjectWithData:prefJsonData options:kNilOptions error:nil];
-            self.prefJson = prefDictCopy;
+            self.prefJson = [NSDictionary dictionaryWithDictionary:prefJson];
         }
         else {
             NSMutableArray *prefs = [[NSMutableArray alloc] init];
             for (Location *l in sourceCollection.locations) {
-                ItineraryPreferences *newPref =  [[ItineraryPreferences alloc] initWithAttributes:[NSNull null] preferredEtaEnd:[NSNull null] stayDuration:@0];
+                WaypointPreferences *newPref =  [[WaypointPreferences alloc] initWithAttributes:[NSNull null] preferredEtaEnd:[NSNull null] stayDuration:@0];
                 [prefs addObject:[newPref toDictionary]];
             }
             self.prefJson = @{@"preferences": prefs};
@@ -86,15 +81,9 @@
 - (void)reinitialize:(NSDictionary *)routesJson
             prefJson:(NSDictionary *)prefJson
            departure:(NSDate *)departure {
-    // creating a copy of dictionary data
-    NSData *routeJsonData = [NSJSONSerialization dataWithJSONObject:routesJson options:0 error:nil];
-    NSDictionary *routeDictCopy = [NSJSONSerialization JSONObjectWithData:routeJsonData options:kNilOptions error:nil];
-    NSData *prefJsonData = [NSJSONSerialization dataWithJSONObject:prefJson options:0 error:nil];
-    NSDictionary *prefDictCopy = [NSJSONSerialization JSONObjectWithData:prefJsonData options:kNilOptions error:nil];
-    
-    self.fullJson = routeDictCopy;
-    self.routeJson = routeDictCopy[@"routes"][0];
-    self.prefJson = prefDictCopy;
+    self.fullJson = [NSDictionary dictionaryWithDictionary:routesJson];
+    self.routeJson = self.fullJson[@"routes"][0];
+    self.prefJson = [NSDictionary dictionaryWithDictionary:prefJson];
     self.departureTime = departure;
 }
 
@@ -115,13 +104,13 @@
     return ordered;
 }
 
-- (ItineraryPreferences *)getPreference:(Location *)loc {
+- (WaypointPreferences *)getPreference:(Location *)loc {
     NSArray *prefsArray = self.prefJson[@"preferences"];
     NSDictionary *json = [prefsArray objectAtIndex:[self.sourceCollection.locations indexOfObject:loc]];
-    return [[ItineraryPreferences alloc] initWithDictionary:json];
+    return [[WaypointPreferences alloc] initWithDictionary:json];
 }
 
-- (void)updatePreference:(Location *)location pref:(ItineraryPreferences *)pref {
+- (void)updatePreference:(Location *)location pref:(WaypointPreferences *)pref {
     NSMutableArray *prefsArray = [self.prefJson[@"preferences"] mutableCopy];
     [prefsArray setObject:[pref toDictionary] atIndexedSubscript:[self.sourceCollection.locations indexOfObject:location]];
     NSMutableDictionary *copy = [self.prefJson mutableCopy];
@@ -139,8 +128,8 @@
 - (NSDate *)computeDeparture:(int)waypointIndex {
     NSDate *arrivalTime = [self computeArrival:waypointIndex];
     Location *loc = [self.sourceCollection.locations objectAtIndex:waypointIndex];
-    ItineraryPreferences *pref = [self getPreference:loc];
-    return [arrivalTime dateByAddingTimeInterval:[pref.stayDuration intValue]];
+    WaypointPreferences *pref = [self getPreference:loc];
+    return [arrivalTime dateByAddingTimeInterval:[pref.stayDurationInSeconds intValue]];
 }
 
 @end

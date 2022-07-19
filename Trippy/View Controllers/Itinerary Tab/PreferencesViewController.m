@@ -8,7 +8,7 @@
 #import "PreferencesViewController.h"
 #import "MapUtils.h"
 #import "DateUtils.h"
-#import "ItineraryPreferences.h"
+#import "WaypointPreferences.h"
 #import "Location.h"
 
 @interface PreferencesViewController () <UITextFieldDelegate>
@@ -45,13 +45,13 @@
         self.etaEndPicker.date = self.preferences.preferredEtaEnd;
         [self.toRangeLabel setHidden:NO];
     }
-    if ([self.preferences.stayDuration intValue] > 0) {
+    if ([self.preferences.stayDurationInSeconds intValue] > 0) {
         [self.estStaySwitch setOn:YES];
         self.stayHrField.enabled = YES;
         self.stayMinField.enabled = YES;
-        NSArray *hourMin = [DateUtils secondsToHourMin:[self.preferences.stayDuration intValue]];
-        self.stayHrField.text = [hourMin[0] stringValue];
-        self.stayMinField.text = [hourMin[1] stringValue];
+        TimeInHrMin hourMin = [DateUtils secondsToHourMin:[self.preferences.stayDurationInSeconds intValue]];
+        self.stayHrField.text = [NSString stringWithFormat:@"%i", hourMin.hours];
+        self.stayMinField.text = [NSString stringWithFormat:@"%i", hourMin.minutes];
     }
     
     // Set text field delegates
@@ -82,12 +82,13 @@
 - (IBAction)tapUpdate:(id)sender {
     NSDate *etaStart = self.prefEtaSwitch.isOn ? self.etaStartPicker.date : [NSNull null];
     NSDate *etaEnd = self.prefEtaSwitch.isOn ? self.etaEndPicker.date : [NSNull null];
-    NSNumber *stayTime = self.estStaySwitch ? [self stayTimeToSeconds] : @0;
+    TimeInHrMin fieldTime = {.hours = [self.stayHrField.text intValue], .minutes=[self.stayMinField.text intValue]};
+    NSNumber *stayTime = self.estStaySwitch ? [DateUtils hourMinToSeconds:fieldTime] : @0;
     
-    if ([etaStart isEqualToDate:self.preferences.preferredEtaStart] && [etaEnd isEqualToDate:self.preferences.preferredEtaEnd] && [stayTime isEqualToValue:self.preferences.stayDuration]) { // if no changes made
+    if ([etaStart isEqualToDate:self.preferences.preferredEtaStart] && [etaEnd isEqualToDate:self.preferences.preferredEtaEnd] && [stayTime isEqualToValue:self.preferences.stayDurationInSeconds]) { // if no changes made
         [self dismissViewControllerAnimated:YES completion:nil];
     } else {
-        ItineraryPreferences *newPref = [[ItineraryPreferences alloc] initWithAttributes:etaStart preferredEtaEnd:etaEnd stayDuration:stayTime];
+        WaypointPreferences *newPref = [[WaypointPreferences alloc] initWithAttributes:etaStart preferredEtaEnd:etaEnd stayDuration:stayTime];
         if ([newPref isValid]) {
             [self.delegate didUpdatePreference:newPref location:self.location];
             [self dismissViewControllerAnimated:YES completion:nil];
@@ -97,12 +98,6 @@
             // TODO: Update a warning label if invalid
         }
     }
-}
-
-- (NSNumber *) stayTimeToSeconds {
-    NSString *hrString = self.stayHrField.text;
-    NSString *minString = self.stayMinField.text;
-    return [[NSNumber alloc] initWithInt:[hrString intValue] * 3600 + [minString intValue] * 60];
 }
 
 # pragma mark - UITextFieldDelegate
