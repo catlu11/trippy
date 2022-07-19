@@ -6,7 +6,8 @@
 //
 
 #import "EditingItineraryViewController.h"
-#import "PreferencesViewController.h"
+#import "WaypointPreferencesViewController.h"
+#import "ItinerarySettingsViewController.h"
 #import "SelectableMap.h"
 #import "EditPlaceCell.h"
 #import "Itinerary.h"
@@ -18,15 +19,15 @@
 #define VIEW_SHADOW_OPACITY 0.45;
 #define VIEW_SHADOW_RADIUS 7;
 
-@interface EditingItineraryViewController () <UITableViewDelegate, UITableViewDataSource, EditPlaceCellDelegate, PreferencesDelegate>
+@interface EditingItineraryViewController () <UITableViewDelegate, UITableViewDataSource, EditPlaceCellDelegate, WaypointPreferencesDelegate, ItinerarySettingsDelegate>
 @property (weak, nonatomic) IBOutlet UIView *editView;
 @property (weak, nonatomic) IBOutlet UITableView *placesTableView;
 @property (weak, nonatomic) IBOutlet SelectableMap *mapView;
-@property (weak, nonatomic) IBOutlet UIDatePicker *departureDatePicker;
 @property (strong, nonatomic) NSArray *data;
 
 @property (strong, nonatomic) Location *selectedLoc;
 @property (strong, nonatomic) Itinerary *mutableItinerary;
+
 @end
 
 @implementation EditingItineraryViewController
@@ -38,6 +39,7 @@
     self.mutableItinerary = [[Itinerary alloc] initWithDictionary:[self.baseItinerary toRouteDictionary]
                                                          prefJson:[self.baseItinerary toPrefsDictionary]
                                                         departure:self.baseItinerary.departureTime
+                                                mileageConstraint:self.baseItinerary.mileageConstraint
                                                  sourceCollection:self.baseItinerary.sourceCollection
                                                    originLocation:self.baseItinerary.originLocation
                                                              name:self.baseItinerary.name];
@@ -61,11 +63,13 @@
     self.editView.layer.shadowColor = [[UIColor blackColor] CGColor];
     self.editView.layer.shadowOpacity = VIEW_SHADOW_OPACITY;
     self.editView.layer.shadowRadius = VIEW_SHADOW_RADIUS;
-    
-    self.departureDatePicker.date = self.baseItinerary.departureTime;
 }
 
 - (IBAction)tapReroute:(id)sender {
+}
+
+- (IBAction)tapEditPrefs:(id)sender {
+    [self performSegueWithIdentifier:@"itPrefsSegue" sender:nil];
 }
 
 - (IBAction)tapEdit:(id)sender {
@@ -78,7 +82,7 @@
 
 - (void) didTapArrow {
     if (self.selectedLoc) {
-        [self performSegueWithIdentifier:@"prefsSegue" sender:nil];
+        [self performSegueWithIdentifier:@"waypointPrefsSegue" sender:nil];
     }
 }
 
@@ -90,10 +94,16 @@
 # pragma mark - Navigation
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if([[segue identifier] isEqualToString:@"prefsSegue"]) {
-        PreferencesViewController *vc = [segue destinationViewController];
+    if([[segue identifier] isEqualToString:@"waypointPrefsSegue"]) {
+        WaypointPreferencesViewController *vc = [segue destinationViewController];
         vc.location = self.selectedLoc;
         vc.preferences = [self.mutableItinerary getPreference:self.selectedLoc];
+        vc.delegate = self;
+    } else if ([[segue identifier] isEqualToString:@"itPrefsSegue"]) {
+        ItinerarySettingsViewController *vc = [segue destinationViewController];
+        vc.departure = self.mutableItinerary.departureTime;
+        vc.mileageConstraint = self.mutableItinerary.mileageConstraint;
+        vc.currentMileage = [self.mutableItinerary getTotalDistance];
         vc.delegate = self;
     }
 }
@@ -148,17 +158,19 @@
     [self performSegueWithIdentifier:@"prefsSegue" sender:nil];
 }
 
-# pragma mark - PreferencesDelegate
+# pragma mark - WaypointPreferencesDelegate
 
 - (void) didUpdatePreference:(WaypointPreferences *)newPref location:(Location *)location {
     [self.mutableItinerary updatePreference:location pref:newPref];
     [self itineraryHasChanged];
 }
 
-- (IBAction)didChangeDate:(id)sender {
-    if (![self.departureDatePicker.date isEqualToDate:self.baseItinerary.departureTime]) {
-        [self itineraryHasChanged];
-    }
+# pragma mark - ItinerarySettingsDelegate
+
+- (void) didUpdatePreference:(NSDate *)newDeparture newMileage:(NSNumber *)newMileage {
+    self.mutableItinerary.departureTime = newDeparture;
+    self.mutableItinerary.mileageConstraint = newMileage;
+    [self itineraryHasChanged];
 }
 
 @end

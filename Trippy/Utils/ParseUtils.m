@@ -22,7 +22,7 @@
 }
 
 + (NSArray *)getItineraryKeys {
-    return @[@"directionsJson", @"createdAt", @"name", @"createdBy", @"origin", @"sourceCollection", @"departure"];
+    return @[@"directionsJson", @"createdAt", @"name", @"createdBy", @"origin", @"sourceCollection", @"departure", @"mileageConstraint"];
 }
 
 + (NSString *)getLoggedInUsername {
@@ -69,6 +69,7 @@
             Itinerary *it = [[Itinerary alloc] initWithDictionary:routesDict
                                                          prefJson:prefsDict
                                                         departure:obj[@"departure"]
+                                                mileageConstraint:obj[@"mileageConstraint"]
                                                  sourceCollection:collection originLocation:originLocation name:obj[@"name"]];
             PFUser *user = obj[@"createdBy"];
             it.userId = user.username;
@@ -165,6 +166,7 @@
         obj[@"directionsJson"] = [self pfFileFromDict:[it toRouteDictionary] name:@"directions"];
         obj[@"preferencesJson"] = [self pfFileFromDict:[it toPrefsDictionary] name:@"preferences"];
         obj[@"departure"] = it.departureTime;
+        obj[@"mileageConstraint"] = it.mileageConstraint;
         return obj;
     }
 }

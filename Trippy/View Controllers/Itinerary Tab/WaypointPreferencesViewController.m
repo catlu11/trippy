@@ -5,13 +5,13 @@
 //  Created by Catherine Lu on 7/15/22.
 //
 
-#import "PreferencesViewController.h"
+#import "WaypointPreferencesViewController.h"
 #import "MapUtils.h"
 #import "DateUtils.h"
 #import "WaypointPreferences.h"
 #import "Location.h"
 
-@interface PreferencesViewController () <UITextFieldDelegate>
+@interface WaypointPreferencesViewController () <UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *snippetLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *staticMapImage;
@@ -26,7 +26,7 @@
 @property (assign, nonatomic) BOOL *didChange;
 @end
 
-@implementation PreferencesViewController
+@implementation WaypointPreferencesViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];

@@ -77,6 +77,7 @@
                 Itinerary *it = [[Itinerary alloc] initWithDictionary:response
                                                              prefJson:nil
                                                             departure:[NSDate now]
+                                                    mileageConstraint:nil
                                                      sourceCollection:self.selectedCol
                                                        originLocation:self.selectedLoc
                                                                  name:self.nameField.text];

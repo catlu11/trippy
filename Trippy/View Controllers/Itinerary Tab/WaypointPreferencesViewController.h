@@ -11,12 +11,12 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@protocol PreferencesDelegate
+@protocol WaypointPreferencesDelegate
 - (void) didUpdatePreference:(WaypointPreferences *)newPref location:(Location *)location;
 @end
 
-@interface PreferencesViewController : UIViewController
-@property (weak, nonatomic) id<PreferencesDelegate> delegate;
+@interface WaypointPreferencesViewController : UIViewController
+@property (weak, nonatomic) id<WaypointPreferencesDelegate> delegate;
 @property (strong, nonatomic) WaypointPreferences *preferences;
 @property (strong, nonatomic) Location *location;
 @end
