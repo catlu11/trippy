@@ -9,10 +9,10 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface ItineraryPreferences : NSObject
+@interface WaypointPreferences : NSObject
 @property (strong, nonatomic) NSDate *preferredEtaStart;
 @property (strong, nonatomic) NSDate *preferredEtaEnd;
-@property (assign, nonatomic) NSNumber *stayDuration; // in seconds
+@property (assign, nonatomic) NSNumber *stayDurationInSeconds;
 
 - (instancetype)initWithDictionary:(NSDictionary *)dict;
 - (instancetype)initWithAttributes:(NSDate * _Nullable)preferredEtaStart

@@ -9,7 +9,7 @@
 @class Location;
 @class LocationCollection;
 @class RouteLeg;
-@class ItineraryPreferences;
+@class WaypointPreferences;
 
 @import GoogleMaps;
 
@@ -45,8 +45,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)reinitialize:(NSDictionary *)routesJson
             prefJson:(NSDictionary *)prefJson
            departure:(NSDate *)departure;
-- (void)updatePreference:(Location *)location pref:(ItineraryPreferences *)pref;
-- (ItineraryPreferences *)getPreference:(Location *)loc;
+- (void)updatePreference:(Location *)location pref:(WaypointPreferences *)pref;
+- (WaypointPreferences *)getPreference:(Location *)loc;
 - (NSDictionary *)toRouteDictionary;
 - (NSDictionary *)toPrefsDictionary;
 - (NSArray *)getOrderedLocations;

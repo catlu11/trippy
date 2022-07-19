@@ -5,25 +5,25 @@
 //  Created by Catherine Lu on 7/13/22.
 //
 
-#import "ItineraryPreferences.h"
+#import "WaypointPreferences.h"
 #import "DateUtils.h"
 
-@interface ItineraryPreferences ()
+@interface WaypointPreferences ()
 @property (strong, nonatomic) NSMutableDictionary *infoJson;
 @end
 
-@implementation ItineraryPreferences
+@implementation WaypointPreferences
 
 - (NSDate *)preferredEtaStart {
     NSString *dateString = self.infoJson[@"preferredEtaStart"];
     if ([dateString isEqual:[NSNull null]]) {
         return nil;
     }
-    return [DateUtils isoStringToDate:dateString];
+    return [DateUtils iso8601StringToDate:dateString];
 }
 
 - (void) setPreferredEtaStart:(NSDate *)preferredEtaStart {
-    _infoJson[@"preferredEtaStart"] = [DateUtils formatDateAsISO8601:preferredEtaStart];
+    _infoJson[@"preferredEtaStart"] = [DateUtils formatDateAsIso8601:preferredEtaStart];
 }
 
 - (NSDate *)preferredEtaEnd {
@@ -31,19 +31,19 @@
     if ([dateString isEqual:[NSNull null]]) {
         return nil;
     }
-    return [DateUtils isoStringToDate:dateString];
+    return [DateUtils iso8601StringToDate:dateString];
 }
 
 - (void) setPreferredEtaEnd:(NSDate *)preferredEtaEnd {
-    _infoJson[@"preferredEtaEnd"] = [DateUtils formatDateAsISO8601:preferredEtaEnd];
+    _infoJson[@"preferredEtaEnd"] = [DateUtils formatDateAsIso8601:preferredEtaEnd];
 }
 
-- (NSNumber *)stayDuration {
+- (NSNumber *)stayDurationInSeconds {
     NSNumber *val = _infoJson[@"stayDuration"];
     return val;
 }
 
-- (void) setStayDuration:(NSNumber *)stayDuration {
+- (void) setStayDurationInSeconds:(NSNumber *)stayDuration {
     _infoJson[@"stayDuration"] = stayDuration;
 }
 
@@ -67,8 +67,8 @@
     self = [super init];
     
     if (self) {
-        NSString *etaStart = [preferredEtaStart isEqual:[NSNull null]] ? [NSNull null] : [DateUtils formatDateAsISO8601:preferredEtaStart];
-        NSString *etaEnd = [preferredEtaEnd isEqual:[NSNull null]] ? [NSNull null] : [DateUtils formatDateAsISO8601:preferredEtaEnd];
+        NSString *etaStart = [preferredEtaStart isEqual:[NSNull null]] ? [NSNull null] : [DateUtils formatDateAsIso8601:preferredEtaStart];
+        NSString *etaEnd = [preferredEtaEnd isEqual:[NSNull null]] ? [NSNull null] : [DateUtils formatDateAsIso8601:preferredEtaEnd];
         NSDictionary *newDict = [[NSDictionary alloc] initWithObjects:[NSArray arrayWithObjects:etaStart, etaEnd, stayDuration, nil] forKeys:[NSArray arrayWithObjects:@"preferredEtaStart", @"preferredEtaEnd", @"stayDuration", nil]];
         self.infoJson = [newDict mutableCopy];
     }
@@ -88,7 +88,7 @@
             return NO;
         }
     }
-    if ([self.stayDuration intValue] < 0) {
+    if ([self.stayDurationInSeconds intValue] < 0) {
         return NO;
     }
     return YES;

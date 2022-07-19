@@ -10,7 +10,7 @@
 #import "SelectableMap.h"
 #import "EditPlaceCell.h"
 #import "Itinerary.h"
-#import "ItineraryPreferences.h"
+#import "WaypointPreferences.h"
 #import "LocationCollection.h"
 #import "Location.h"
 
@@ -150,7 +150,7 @@
 
 # pragma mark - PreferencesDelegate
 
-- (void) didUpdatePreference:(ItineraryPreferences *)newPref location:(Location *)location {
+- (void) didUpdatePreference:(WaypointPreferences *)newPref location:(Location *)location {
     [self.mutableItinerary updatePreference:location pref:newPref];
     [self itineraryHasChanged];
 }
