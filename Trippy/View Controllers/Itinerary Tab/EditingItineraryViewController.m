@@ -14,6 +14,9 @@
 #import "WaypointPreferences.h"
 #import "LocationCollection.h"
 #import "Location.h"
+#import "TSPUtils.h"
+#import "MapUtils.h"
+#import "MapsAPIManager.h"
 
 #define PLACES_ROW_HEIGHT 70;
 #define VIEW_SHADOW_OPACITY 0.45;
@@ -66,6 +69,12 @@
 }
 
 - (IBAction)tapReroute:(id)sender {
+    NSString *url = [MapUtils generateMatrixApiUrl:self.mutableItinerary.sourceCollection
+                                            origin:self.mutableItinerary.originLocation
+                                     departureTime:self.mutableItinerary.departureTime];
+    [[MapsAPIManager shared] getRouteMatrixWithCompletion:url completion:^(NSDictionary * _Nonnull response, NSError * _Nonnull) {
+        NSArray *routes = [TSPUtils calculateRoutes:self.mutableItinerary matrix:response];
+    }];
 }
 
 - (IBAction)tapEditPrefs:(id)sender {
@@ -155,7 +164,7 @@
 
 - (void) didTapArrow:(int)waypointIndex {
     self.selectedLoc = self.data[waypointIndex];
-    [self performSegueWithIdentifier:@"prefsSegue" sender:nil];
+    [self performSegueWithIdentifier:@"waypointPrefsSegue" sender:nil];
 }
 
 # pragma mark - WaypointPreferencesDelegate

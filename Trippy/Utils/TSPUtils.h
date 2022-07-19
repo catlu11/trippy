@@ -6,11 +6,13 @@
 //
 
 #import <Foundation/Foundation.h>
+@class Itinerary;
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface TSPUtils : NSObject
-
++ (NSArray *)calculateRoutes:(Itinerary *)itinerary matrix:(NSDictionary *)matrix;
++ (NSArray *)tspDistance:(NSDictionary *)matrix;
 @end
 
 NS_ASSUME_NONNULL_END
