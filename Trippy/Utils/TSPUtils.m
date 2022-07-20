@@ -39,7 +39,7 @@
 + (int)totalDistance:(NSArray *)order matrix:(NSDictionary *)matrix {
     int sum = 0;
     int firstIndex = [[order firstObject] intValue];
-    NSNumber *initialWeight = matrix[@"rows"][0][@"elements"][firstIndex][@"distance"][@"value"];
+    NSNumber *initialWeight = matrix[@"rows"][0][@"elements"][firstIndex+1][@"distance"][@"value"];
     sum += [initialWeight intValue];
     for (int i=1; i < order.count; i+=1) {
         int current = [order[i] intValue];
@@ -49,7 +49,7 @@
         sum += [weight intValue];
     }
     int lastIndex = [[order lastObject] intValue];
-    NSNumber *finalWeight = matrix[@"rows"][lastIndex][@"elements"][0][@"distance"][@"value"];
+    NSNumber *finalWeight = matrix[@"rows"][lastIndex+1][@"elements"][0][@"distance"][@"value"];
     return sum + [finalWeight intValue];
 }
 

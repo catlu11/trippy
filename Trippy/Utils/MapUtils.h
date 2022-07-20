@@ -30,6 +30,7 @@ NS_ASSUME_NONNULL_BEGIN
                             origin:(Location *)origin
                      departureTime:(NSDate *)departureTime;
 + (NSNumber *)metersToMiles:(int)meters;
++ (NSNumber *)milesToMeters:(int)miles;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -12,6 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @protocol ChooseRouteDelegate
 - (void)selectedRoute:(RouteOption *)route;
+- (void)cancel;
 @end
 
 @interface ChooseRouteViewController : UIViewController

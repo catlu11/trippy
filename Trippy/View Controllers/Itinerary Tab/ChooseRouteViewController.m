@@ -22,9 +22,11 @@
     
     self.routesTableView.delegate = self;
     self.routesTableView.dataSource = self;
+    self.routesTableView.rowHeight = 75;
 }
 
 - (IBAction)tapCancel:(id)sender {
+    [self.delegate cancel];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 

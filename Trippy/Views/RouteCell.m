@@ -8,6 +8,7 @@
 #import "RouteCell.h"
 #import "RouteOption.h"
 #import "MapUtils.h"
+#import "DateUtils.h"
 
 @interface RouteCell ()
 @property (weak, nonatomic) IBOutlet UILabel *typeLabel;
@@ -26,7 +27,7 @@
 - (void)updateUIElements {
     switch (self.route.type) {
         case kDefaultOptimized:
-            self.typeLabel.text = @"Default (time-optimal)";
+            self.typeLabel.text = @"Default (Google)";
             break;
         case kDistance:
             self.typeLabel.text = @"Distance-optimal";
@@ -35,8 +36,9 @@
             self.typeLabel.text = @"Cost-optimal";
             break;
     }
-    self.totalDistLabel.text = [NSString stringWithFormat:@"Total distance: %f", [[MapUtils metersToMiles:self.route.distance] doubleValue]];
-    self.totalDurationLabel.text = [NSString stringWithFormat:@"Total duration: %f", self.route.time / 60.0];
+    self.totalDistLabel.text = [NSString stringWithFormat:@"Total distance: %.2f miles", [[MapUtils metersToMiles:self.route.distance] doubleValue]];
+    TimeInHrMin time = [DateUtils secondsToHourMin:self.route.time];
+    self.totalDurationLabel.text = [NSString stringWithFormat:@"Total duration: %dhr%dmin", time.hours, time.minutes];
     // TODO: Implement when omission and cost are available
     self.omittedLabel.text = @"Omitted waypoints: 0";
     self.estCostLabel.text = @"Estimated cost: -";

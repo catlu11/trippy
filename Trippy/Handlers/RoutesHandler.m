@@ -78,6 +78,8 @@
                     [routes addObject:response];
                     completion(routes, nil);
                 }];
+            } else {
+                completion(routes, nil);
             }
         }];
     }

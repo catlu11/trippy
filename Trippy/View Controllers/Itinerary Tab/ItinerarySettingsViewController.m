@@ -6,6 +6,7 @@
 //
 
 #import "ItinerarySettingsViewController.h"
+#import "MapUtils.h"
 
 @interface ItinerarySettingsViewController () <UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *mileageTextField;
@@ -21,7 +22,8 @@
     [self.departureDatePicker setDate:self.departure];
     self.mileageTextField.delegate = self;
     if (self.mileageConstraint) {
-        self.mileageTextField.text = [self.mileageConstraint stringValue];
+        double miles = [[MapUtils metersToMiles:[self.mileageConstraint intValue]] doubleValue];
+        self.mileageTextField.text = [NSString stringWithFormat:@"%.2f", miles];
     }
     self.currentMileageLabel.text = [self.currentMileage stringValue];
 }
@@ -36,7 +38,7 @@
         [alert addAction:action];
         [self presentViewController:alert animated:YES completion:nil];
     } else {
-        int newMileage = [self.mileageTextField.text intValue];
+        int newMileage = [[MapUtils milesToMeters:[self.mileageTextField.text intValue]] intValue];
         if (![self.departureDatePicker.date isEqualToDate:self.departure] || [self.mileageConstraint intValue] != newMileage) {
             [self.delegate didUpdatePreference:self.departureDatePicker.date newMileage:[[NSNumber alloc] initWithInt:newMileage]];
         }

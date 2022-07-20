@@ -13,8 +13,8 @@
 @import GooglePlaces;
 
 #define STATIC_MAP_URL @"https://maps.googleapis.com/maps/api/staticmap?center=%f,%f&zoom=%d&size=%dx%d&key=%@"
-#define DIRECTIONS_URL @"directions/json?origin=place_id:%@&destination=place_id:%@&departure_time=%d&mode=walking&waypoints=%@&key=%@"
-#define MATRIX_URL @"distancematrix/json?origins=%@&destinations=%@&departure_time=%d&mode=walking&key=%@"
+#define DIRECTIONS_URL @"directions/json?origin=place_id:%@&destination=place_id:%@&departure_time=%d&mode=driving&waypoints=%@&key=%@"
+#define MATRIX_URL @"distancematrix/json?origins=%@&destinations=%@&departure_time=%d&mode=driving&key=%@"
 #define API_BUFFER_IN_SECONDS 10
 
 @implementation MapUtils
@@ -85,6 +85,11 @@
 + (NSNumber *)metersToMiles:(int)meters {
     float inMiles = meters / 1609.0;
     return [[NSNumber alloc] initWithFloat:inMiles];
+}
+
++ (NSNumber *)milesToMeters:(int)miles {
+    float inMeters = miles * 1609.0;
+    return [[NSNumber alloc] initWithFloat:inMeters];
 }
 
 @end

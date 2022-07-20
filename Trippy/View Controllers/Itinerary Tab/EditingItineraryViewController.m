@@ -239,4 +239,8 @@
     [self.loadingIndicator stopAnimating];
 }
 
+- (void) cancel {
+    [self.loadingIndicator stopAnimating];
+}
+
 @end
