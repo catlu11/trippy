@@ -19,10 +19,13 @@ NS_ASSUME_NONNULL_BEGIN
 + (UIImage *)getStaticMapImage:(CLLocationCoordinate2D)location width:(int)width height:(int)height;
 + (GMSCoordinateBounds *)latLngDictToBounds:(NSDictionary *)bounds firstKey:(NSString *)firstKey secondKey:(NSString *)secondKey;
 + (CLLocationCoordinate2D)latLngDictToCoordinate:(NSDictionary *)bounds key:(NSString *)key;
-+ (NSString *)generateDirectionsApiUrl:(LocationCollection *)collection
++ (NSString *)generateOptimizedDirectionsApiUrl:(LocationCollection *)collection
                              origin:(Location *)origin
-                         optimizeOrder:(BOOL)optimizeOrder
                       departureTime:(NSDate *)departureTime;
++ (NSString *)generateOrderedDirectionsApiUrl:(LocationCollection *)collection
+                                waypointOrder:(NSArray *)waypointOrder
+                                       origin:(Location *)origin
+                                departureTime:(NSDate *)departureTime;
 + (NSString *)generateMatrixApiUrl:(LocationCollection *)collection
                             origin:(Location *)origin
                      departureTime:(NSDate *)departureTime;

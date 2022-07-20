@@ -68,9 +68,8 @@
         [self presentViewController:self.emptyAlert animated:YES completion:nil];
     }
     else {
-        NSString *apiUrl = [MapUtils generateDirectionsApiUrl:self.selectedCol
+        NSString *apiUrl = [MapUtils generateOptimizedDirectionsApiUrl:self.selectedCol
                                                        origin:self.selectedLoc
-                                                optimizeOrder:TRUE
                                                 departureTime:[NSDate now]];
         [[MapsAPIManager shared] getDirectionsWithCompletion:apiUrl completion:^(NSDictionary * _Nonnull response, NSError * _Nonnull) {
             if (response) {

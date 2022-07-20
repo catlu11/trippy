@@ -17,19 +17,23 @@
 #import "TSPUtils.h"
 #import "MapUtils.h"
 #import "MapsAPIManager.h"
+#import "CacheDataHandler.h"
 
 #define PLACES_ROW_HEIGHT 70;
 #define VIEW_SHADOW_OPACITY 0.45;
 #define VIEW_SHADOW_RADIUS 7;
 
-@interface EditingItineraryViewController () <UITableViewDelegate, UITableViewDataSource, EditPlaceCellDelegate, WaypointPreferencesDelegate, ItinerarySettingsDelegate>
+@interface EditingItineraryViewController () <UITableViewDelegate, UITableViewDataSource, EditPlaceCellDelegate, WaypointPreferencesDelegate, ItinerarySettingsDelegate, CacheDataHandlerDelegate>
 @property (weak, nonatomic) IBOutlet UIView *editView;
 @property (weak, nonatomic) IBOutlet UITableView *placesTableView;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *loadingIndicator;
+@property (weak, nonatomic) IBOutlet UIButton *saveButton;
 @property (weak, nonatomic) IBOutlet SelectableMap *mapView;
 @property (strong, nonatomic) NSArray *data;
 
 @property (strong, nonatomic) Location *selectedLoc;
 @property (strong, nonatomic) Itinerary *mutableItinerary;
+@property (strong, nonatomic) CacheDataHandler *cacheHandler;
 
 @end
 
@@ -47,6 +51,10 @@
                                                    originLocation:self.baseItinerary.originLocation
                                                              name:self.baseItinerary.name];
     
+    [self updateUI];
+}
+
+- (void) updateUI {
     // Set up map
     [self.mapView initWithBounds:self.mutableItinerary.bounds];
     [self.mapView addMarker:self.mutableItinerary.originLocation];
@@ -66,15 +74,52 @@
     self.editView.layer.shadowColor = [[UIColor blackColor] CGColor];
     self.editView.layer.shadowOpacity = VIEW_SHADOW_OPACITY;
     self.editView.layer.shadowRadius = VIEW_SHADOW_RADIUS;
+    
+    self.editView.backgroundColor = [UIColor whiteColor];
+    
+    [self.loadingIndicator setHidesWhenStopped:YES];
+    self.cacheHandler = [[CacheDataHandler alloc] init];
+    self.cacheHandler.delegate = self;
 }
 
 - (IBAction)tapReroute:(id)sender {
-    NSString *url = [MapUtils generateMatrixApiUrl:self.mutableItinerary.sourceCollection
+    [self.loadingIndicator startAnimating];
+    NSString *matrixUrl = [MapUtils generateMatrixApiUrl:self.mutableItinerary.sourceCollection
                                             origin:self.mutableItinerary.originLocation
                                      departureTime:self.mutableItinerary.departureTime];
-    [[MapsAPIManager shared] getRouteMatrixWithCompletion:url completion:^(NSDictionary * _Nonnull response, NSError * _Nonnull) {
-        NSArray *routes = [TSPUtils calculateRoutes:self.mutableItinerary matrix:response];
-    }];
+    if ([self.mutableItinerary.mileageConstraint intValue] > 0) {
+        [[MapsAPIManager shared] getRouteMatrixWithCompletion:matrixUrl completion:^(NSDictionary * _Nonnull response, NSError * _Nonnull) {
+            NSArray *routes = [TSPUtils calculateRoutes:self.mutableItinerary matrix:response];
+            for (NSArray *order in routes) {
+                NSString *directionsUrl = [MapUtils generateOrderedDirectionsApiUrl:self.mutableItinerary.sourceCollection
+                                                                      waypointOrder:order
+                                                                             origin:self.mutableItinerary.originLocation
+                                                                      departureTime:self.mutableItinerary.departureTime];
+                [[MapsAPIManager shared] getDirectionsWithCompletion:directionsUrl completion:^(NSDictionary * _Nonnull response, NSError * _Nonnull) {
+                    if (response) {
+                        [self.mutableItinerary reinitialize:response prefJson:[self.mutableItinerary toPrefsDictionary] departure:self.mutableItinerary.departureTime mileageConstraint:self.mutableItinerary.mileageConstraint];
+                        self.mutableItinerary.waypointOrder = order;
+                        self.saveButton.hidden = NO;
+                        [self updateUI];
+                        [self.loadingIndicator stopAnimating];
+                    }
+                }];
+            }
+        }];
+    }
+    else {
+        NSString *directionsUrl = [MapUtils generateOptimizedDirectionsApiUrl:self.mutableItinerary.sourceCollection
+                                                                     origin:self.mutableItinerary.originLocation
+                                                              departureTime:self.mutableItinerary.departureTime];
+        [[MapsAPIManager shared] getDirectionsWithCompletion:directionsUrl completion:^(NSDictionary * _Nonnull response, NSError * _Nonnull) {
+            if (response) {
+                [self.mutableItinerary reinitialize:response prefJson:[self.mutableItinerary toPrefsDictionary] departure:self.mutableItinerary.departureTime mileageConstraint:self.mutableItinerary.mileageConstraint];
+                self.saveButton.hidden = NO;
+                [self updateUI];
+                [self.loadingIndicator stopAnimating];
+            }
+        }];
+    }
 }
 
 - (IBAction)tapEditPrefs:(id)sender {
@@ -87,6 +132,11 @@
 
 - (IBAction)tapBack:(id)sender {
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (IBAction)tapSave:(id)sender {
+    [self.baseItinerary reinitialize:[self.mutableItinerary toRouteDictionary] prefJson:[self.mutableItinerary toPrefsDictionary] departure:self.mutableItinerary.departureTime mileageConstraint:self.mutableItinerary.mileageConstraint];
+    [self.cacheHandler updateItinerary:self.baseItinerary];
 }
 
 - (void) didTapArrow {
@@ -180,6 +230,14 @@
     self.mutableItinerary.departureTime = newDeparture;
     self.mutableItinerary.mileageConstraint = newMileage;
     [self itineraryHasChanged];
+}
+
+# pragma mark - CacheDataHandlerDelegate
+
+- (void) updatedItinerarySuccess:(Itinerary *)itinerary {
+    [self dismissViewControllerAnimated:YES completion:^{
+        [self.delegate didSaveItinerary];
+    }];
 }
 
 @end

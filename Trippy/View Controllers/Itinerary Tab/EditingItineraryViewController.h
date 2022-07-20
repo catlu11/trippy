@@ -9,8 +9,12 @@
 @class Itinerary;
 
 NS_ASSUME_NONNULL_BEGIN
+@protocol EditingItineraryDelegate
+- (void) didSaveItinerary;
+@end
 
 @interface EditingItineraryViewController : UIViewController
+@property (weak, nonatomic) id<EditingItineraryDelegate> delegate;
 @property (strong, nonatomic) Itinerary *baseItinerary;
 @end
 

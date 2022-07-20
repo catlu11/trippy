@@ -28,13 +28,24 @@
     return results;
 }
 
++ (NSArray *)reorder:(NSArray *)elements order:(NSArray *)order {
+    NSMutableArray *newList = [[NSMutableArray alloc] init];
+    for (NSNumber *ix in order) {
+        [newList addObject:[elements objectAtIndex:[ix intValue]]];
+    }
+    return newList;
+}
+
 + (int)totalDistance:(NSArray *)order matrix:(NSDictionary *)matrix {
     int sum = 0;
-    for (int i=0; i < order.count; i+=1) {
+    int firstIndex = [[order firstObject] intValue];
+    NSNumber *initialWeight = matrix[@"rows"][0][@"elements"][firstIndex][@"distance"][@"value"];
+    sum += [initialWeight intValue];
+    for (int i=1; i < order.count; i+=1) {
         int current = [order[i] intValue];
-        int previous = current - 1;
-        NSArray *edges = matrix[@"rows"][previous][@"elements"];
-        NSNumber *weight = edges[current][@"distance"][@"value"];
+        int previous = [order[i-1] intValue];
+        NSArray *edges = matrix[@"rows"][previous+1][@"elements"];
+        NSNumber *weight = edges[current+1][@"distance"][@"value"];
         sum += [weight intValue];
     }
     int lastIndex = [[order lastObject] intValue];
@@ -48,7 +59,7 @@
     int n = locations.count - 1;
     
     NSMutableArray *waypoints = [[NSMutableArray alloc] init];
-    for (int i = 1; i <= n; i+=1) {
+    for (int i = 0; i < n; i+=1) {
         [waypoints addObject:[[NSNumber alloc] initWithInt:i]];
     }
     NSArray *potentialOrders = [self permutations:waypoints];

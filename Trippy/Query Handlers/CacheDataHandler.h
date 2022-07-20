@@ -18,6 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void) addFetchedItinerary:(Itinerary *)itinerary;
 - (void) postedCollectionSuccess:(LocationCollection *)collection;
 - (void) postedItinerarySuccess:(Itinerary *)itinerary;
+- (void) updatedItinerarySuccess:(Itinerary *)itinerary;
 - (void) generalRequestFail:(NSError *)error;
 @end
 
@@ -29,6 +30,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void) postNewLocation:(Location *)location collection:(LocationCollection *)collection;
 - (void) postNewCollection:(LocationCollection *)collection;
 - (void) postNewItinerary:(Itinerary *)it;
+- (void) updateItinerary:(Itinerary *)it;
 @end
 
 NS_ASSUME_NONNULL_END

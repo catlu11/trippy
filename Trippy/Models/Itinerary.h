@@ -35,7 +35,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (readonly) NSArray *routeLegs;
 @property (readonly) GMSCoordinateBounds *bounds;
 @property (readonly) NSString *overviewPolyline;
-@property (readonly) NSArray *waypointOrder;
+@property (strong, nonatomic) NSArray *waypointOrder;
 
 - (instancetype)initWithDictionary:(NSDictionary *)routesJson
                           prefJson:(NSDictionary *)prefJson

@@ -39,6 +39,15 @@
     return self.routeJson[@"waypoint_order"];
 }
 
+- (void)setWaypointOrder:(NSArray *)waypointOrder {
+    NSMutableDictionary *fullCopy = [_fullJson mutableCopy];
+    NSMutableDictionary *routeCopy = [_routeJson mutableCopy];
+    routeCopy[@"waypoint_order"] = waypointOrder;
+    fullCopy[@"routes"] = @[routeCopy];
+    _fullJson = fullCopy;
+    _routeJson = routeCopy;
+}
+
 - (NSNumber *)mileageConstraint {
     if (_mileageConstraint == nil) {
         return @0;
@@ -107,10 +116,10 @@
 }
 
 - (NSArray *)getOrderedLocations {
-    NSMutableArray *ordered = [NSMutableArray arrayWithArray:self.sourceCollection.locations];
+    NSMutableArray *ordered = [[NSMutableArray alloc] init];
     for (NSNumber *ix in self.waypointOrder) {
         int i = [ix intValue];
-        [ordered setObject:[self.sourceCollection.locations objectAtIndex:i] atIndexedSubscript:i];
+        [ordered addObject:[self.sourceCollection.locations objectAtIndex:i]];
     }
     return ordered;
 }

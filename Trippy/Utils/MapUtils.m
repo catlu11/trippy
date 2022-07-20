@@ -7,6 +7,7 @@
 
 #import "MapUtils.h"
 #import "DateUtils.h"
+#import "TSPUtils.h"
 #import "Location.h"
 #import "LocationCollection.h"
 @import GooglePlaces;
@@ -33,11 +34,10 @@
     return image;
 }
 
-+ (NSString *)generateDirectionsApiUrl:(LocationCollection *)collection
++ (NSString *)generateOptimizedDirectionsApiUrl:(LocationCollection *)collection
                                           origin:(Location *)origin
-                                        optimizeOrder:(BOOL)optimizeOrder
                                    departureTime:(NSDate *)departureTime {
-    NSString *stops = optimizeOrder ? @"optimize:true" : @"";
+    NSString *stops = @"optimize:true";
     for(Location *loc in collection.locations) {
         stops = [stops stringByAppendingString:[NSString stringWithFormat:@"|place_id:%@", loc.placeId]];
     }
@@ -45,6 +45,20 @@
     NSString *percentEncodedURLString = [[NSURL URLWithDataRepresentation:[baseUrl dataUsingEncoding:NSUTF8StringEncoding] relativeToURL:nil] relativeString];
     return percentEncodedURLString;
 }
+
++ (NSString *)generateOrderedDirectionsApiUrl:(LocationCollection *)collection
+                                waypointOrder:(NSArray *)waypointOrder
+                                       origin:(Location *)origin
+                                departureTime:(NSDate *)departureTime {
+    NSString *stops = @"optimize:false";
+    for(Location *loc in [TSPUtils reorder:collection.locations order:waypointOrder]) {
+        stops = [stops stringByAppendingString:[NSString stringWithFormat:@"|place_id:%@", loc.placeId]];
+    }
+    NSString *baseUrl = [NSString stringWithFormat:DIRECTIONS_URL, origin.placeId, origin.placeId, [DateUtils aheadSecondsFrom1970:departureTime aheadBy:API_BUFFER_IN_SECONDS], stops, [self getApiKey]];
+    NSString *percentEncodedURLString = [[NSURL URLWithDataRepresentation:[baseUrl dataUsingEncoding:NSUTF8StringEncoding] relativeToURL:nil] relativeString];
+    return percentEncodedURLString;
+}
+
 
 + (NSString *)generateMatrixApiUrl:(LocationCollection *)collection
                                           origin:(Location *)origin

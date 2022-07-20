@@ -12,7 +12,7 @@
 #import "Location.h"
 #import "EditingItineraryViewController.h"
 
-@interface ItineraryDetailViewController ()
+@interface ItineraryDetailViewController () <EditingItineraryDelegate>
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *detailsLabel;
 @property (weak, nonatomic) IBOutlet SelectableMap *mapView;
@@ -22,7 +22,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    [self updateUI];
+}
+
+- (void) updateUI {
     // Set up map
     [self.mapView initWithBounds:self.itinerary.bounds];
     [self.mapView addMarker:self.itinerary.originLocation];
@@ -49,7 +52,13 @@
     if([[segue identifier] isEqualToString:@"editItinerarySegue"]) {
         EditingItineraryViewController *vc = segue.destinationViewController;
         vc.baseItinerary = self.itinerary;
+        vc.delegate = self;
     }
+}
+
+# pragma mark - EditingItineraryDelegate
+- (void) didSaveItinerary {
+    [self updateUI];
 }
 
 @end

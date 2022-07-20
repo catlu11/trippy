@@ -64,6 +64,21 @@
     }];
 }
 
+- (void) updateItinerary:(Itinerary *)it {
+    PFObject *obj = [ParseUtils pfObjFromItinerary:it];
+    obj[@"directionsJson"] = [ParseUtils pfFileFromDict:[it toRouteDictionary] name:@"directions"];
+    obj[@"preferencesJson"] = [ParseUtils pfFileFromDict:[it toPrefsDictionary] name:@"preferences"];
+    obj[@"departure"] = it.departureTime;
+    obj[@"mileageConstraint"] = it.mileageConstraint;
+    __weak CacheDataHandler *weakSelf = self;
+    [obj saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
+        if (succeeded) {
+            __strong CacheDataHandler *strongSelf = weakSelf;
+            [strongSelf.delegate updatedItinerarySuccess:it];
+        }
+    }];
+}
+
 - (void) fetchSavedItineraries {
     PFQuery *query = [PFQuery queryWithClassName:@"Itinerary"];
     [query whereKey:@"createdBy" equalTo:[PFUser currentUser]];
