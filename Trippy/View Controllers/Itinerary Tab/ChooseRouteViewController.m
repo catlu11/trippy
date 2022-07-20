@@ -18,8 +18,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    NSLog(@"%@", self.routeOptions);
-    
     self.routesTableView.delegate = self;
     self.routesTableView.dataSource = self;
     self.routesTableView.rowHeight = 75;

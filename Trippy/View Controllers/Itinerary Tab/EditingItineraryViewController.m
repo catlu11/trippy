@@ -231,7 +231,7 @@
 # pragma mark - ChooseRouteDelegate
 
 - (void) selectedRoute:(RouteOption *)route {
-    NSNumber *mileage = route.distance <= [self.mutableItinerary.mileageConstraint intValue] ? self.mutableItinerary.mileageConstraint : [[NSNumber alloc] initWithInt:route.distance];
+    NSNumber *mileage = (route.distance <= [self.mutableItinerary.mileageConstraint intValue]) ? self.mutableItinerary.mileageConstraint : @(route.distance);
     [self.mutableItinerary reinitialize:route.routeJson prefJson:[self.mutableItinerary toPrefsDictionary] departure:self.mutableItinerary.departureTime mileageConstraint:mileage];
     self.mutableItinerary.waypointOrder = route.waypoints;
     self.saveButton.hidden = NO;

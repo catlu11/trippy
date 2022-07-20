@@ -22,7 +22,7 @@
     [self.departureDatePicker setDate:self.departure];
     self.mileageTextField.delegate = self;
     if (self.mileageConstraint) {
-        double miles = [[MapUtils metersToMiles:[self.mileageConstraint intValue]] doubleValue];
+        double miles = [MapUtils metersToMiles:[self.mileageConstraint intValue]];
         self.mileageTextField.text = [NSString stringWithFormat:@"%.2f", miles];
     }
     self.currentMileageLabel.text = [self.currentMileage stringValue];
@@ -38,9 +38,9 @@
         [alert addAction:action];
         [self presentViewController:alert animated:YES completion:nil];
     } else {
-        int newMileage = [[MapUtils milesToMeters:[self.mileageTextField.text intValue]] intValue];
+        int newMileage = [MapUtils milesToMeters:[self.mileageTextField.text doubleValue]];
         if (![self.departureDatePicker.date isEqualToDate:self.departure] || [self.mileageConstraint intValue] != newMileage) {
-            [self.delegate didUpdatePreference:self.departureDatePicker.date newMileage:[[NSNumber alloc] initWithInt:newMileage]];
+            [self.delegate didUpdatePreference:self.departureDatePicker.date newMileage:@(newMileage)];
         }
         [self dismissViewControllerAnimated:YES completion:nil];
     }

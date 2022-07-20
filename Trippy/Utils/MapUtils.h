@@ -29,8 +29,8 @@ NS_ASSUME_NONNULL_BEGIN
 + (NSString *)generateMatrixApiUrl:(LocationCollection *)collection
                             origin:(Location *)origin
                      departureTime:(NSDate *)departureTime;
-+ (NSNumber *)metersToMiles:(int)meters;
-+ (NSNumber *)milesToMeters:(int)miles;
++ (double)metersToMiles:(int)meters;
++ (int)milesToMeters:(double)miles;
 @end
 
 NS_ASSUME_NONNULL_END

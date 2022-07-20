@@ -36,7 +36,7 @@
             self.typeLabel.text = @"Cost-optimal";
             break;
     }
-    self.totalDistLabel.text = [NSString stringWithFormat:@"Total distance: %.2f miles", [[MapUtils metersToMiles:self.route.distance] doubleValue]];
+    self.totalDistLabel.text = [NSString stringWithFormat:@"Total distance: %.2f miles", [MapUtils metersToMiles:self.route.distance]];
     TimeInHrMin time = [DateUtils secondsToHourMin:self.route.time];
     self.totalDurationLabel.text = [NSString stringWithFormat:@"Total duration: %dhr%dmin", time.hours, time.minutes];
     // TODO: Implement when omission and cost are available

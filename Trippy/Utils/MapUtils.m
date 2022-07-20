@@ -82,14 +82,14 @@
     return [[GMSCoordinateBounds alloc] initWithCoordinate:[self latLngDictToCoordinate:bounds key:firstKey] coordinate:[self latLngDictToCoordinate:bounds key:secondKey]];
 }
 
-+ (NSNumber *)metersToMiles:(int)meters {
-    float inMiles = meters / 1609.0;
-    return [[NSNumber alloc] initWithFloat:inMiles];
++ (double)metersToMiles:(int)meters {
+    double inMiles = meters / 1609.0;
+    return inMiles;
 }
 
-+ (NSNumber *)milesToMeters:(int)miles {
-    float inMeters = miles * 1609.0;
-    return [[NSNumber alloc] initWithFloat:inMeters];
++ (int)milesToMeters:(double)miles {
+    double inMeters = miles * 1609.0;
+    return inMeters;
 }
 
 @end

@@ -157,7 +157,7 @@
     for (RouteLeg *leg in self.routeLegs) {
         sum += [leg.distanceVal intValue];
     }
-    return [MapUtils metersToMiles:sum];
+    return @([MapUtils metersToMiles:sum]);
 }
 
 @end
