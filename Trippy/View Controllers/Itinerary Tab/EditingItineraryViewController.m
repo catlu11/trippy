@@ -97,11 +97,7 @@
         [routeHandler calculateRoutes:self.mutableItinerary completion:^(NSArray * _Nonnull routes, NSError * _Nonnull) {
             if (routes.count == 1) {
                 RouteOption *route = routes[0];
-                [self.mutableItinerary reinitialize:response prefJson:[self.mutableItinerary toPrefsDictionary] departure:self.mutableItinerary.departureTime mileageConstraint:self.mutableItinerary.mileageConstraint];
-                self.mutableItinerary.waypointOrder = route.waypoints;
-                self.saveButton.hidden = NO;
-                [self updateUI];
-                [self.loadingIndicator stopAnimating];
+                [self selectedRoute:route];
             } else {
                 self.routeOptions = routes;
                 [self performSegueWithIdentifier:@"chooseRouteSegue" sender:nil];
@@ -235,9 +231,12 @@
 # pragma mark - ChooseRouteDelegate
 
 - (void) selectedRoute:(RouteOption *)route {
-    [self dismissViewControllerAnimated:YES completion:^{
-        [self.delegate didSaveItinerary];
-    }];
+    NSNumber *mileage = route.distance <= [self.mutableItinerary.mileageConstraint intValue] ? self.mutableItinerary.mileageConstraint : [[NSNumber alloc] initWithInt:route.distance];
+    [self.mutableItinerary reinitialize:route.routeJson prefJson:[self.mutableItinerary toPrefsDictionary] departure:self.mutableItinerary.departureTime mileageConstraint:mileage];
+    self.mutableItinerary.waypointOrder = route.waypoints;
+    self.saveButton.hidden = NO;
+    [self updateUI];
+    [self.loadingIndicator stopAnimating];
 }
 
 @end

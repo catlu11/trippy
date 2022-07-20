@@ -30,14 +30,19 @@
     NSString *directionsUrl = [MapUtils generateOptimizedDirectionsApiUrl:itinerary.sourceCollection
                                                                  origin:itinerary.originLocation
                                                           departureTime:itinerary.departureTime];
-    [[MapsAPIManager shared] getDirectionsWithCompletion:directionsUrl completion:^(NSDictionary * _Nonnull response, NSError * _Nonnull) {
-        RouteOption *option = [[RouteOption alloc] init];
-        option.type = kDefaultOptimized;
-        option.routeJson = response;
-        option.waypoints = response[@"routes"][0][@"waypointOrder"];
-        option.distance = [TSPUtils totalDistance:response[@"routes"][0][@"waypointOrder"] matrix:self.matrix];
-        option.time = [TSPUtils totalDuration:response[@"routes"][0][@"waypointOrder"] matrix:self.matrix];
-        completion(option, nil);
+    [[MapsAPIManager shared] getDirectionsWithCompletion:directionsUrl completion:^(NSDictionary * _Nonnull response, NSError * _Nonnull error) {
+        if (response) {
+            RouteOption *option = [[RouteOption alloc] init];
+            option.type = kDefaultOptimized;
+            option.routeJson = response;
+            option.waypoints = response[@"routes"][0][@"waypoint_order"];
+            option.distance = [TSPUtils totalDistance:response[@"routes"][0][@"waypoint_order"] matrix:self.matrix];
+            option.time = [TSPUtils totalDuration:response[@"routes"][0][@"waypoint_order"] matrix:self.matrix];
+            completion(option, nil);
+        }
+        else {
+            NSLog(@"Error: %@", error.description);
+        }
     }];
 }
 

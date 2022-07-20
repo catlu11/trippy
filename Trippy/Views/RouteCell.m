@@ -6,6 +6,8 @@
 //
 
 #import "RouteCell.h"
+#import "RouteOption.h"
+#import "MapUtils.h"
 
 @interface RouteCell ()
 @property (weak, nonatomic) IBOutlet UILabel *typeLabel;
@@ -19,13 +21,30 @@
 
 - (void)awakeFromNib {
     [super awakeFromNib];
-    // Initialization code
+}
+
+- (void)updateUIElements {
+    switch (self.route.type) {
+        case kDefaultOptimized:
+            self.typeLabel.text = @"Default (time-optimal)";
+            break;
+        case kDistance:
+            self.typeLabel.text = @"Distance-optimal";
+            break;
+        case kCost:
+            self.typeLabel.text = @"Cost-optimal";
+            break;
+    }
+    self.totalDistLabel.text = [NSString stringWithFormat:@"Total distance: %f", [[MapUtils metersToMiles:self.route.distance] doubleValue]];
+    self.totalDurationLabel.text = [NSString stringWithFormat:@"Total duration: %f", self.route.time / 60.0];
+    // TODO: Implement when omission and cost are available
+    self.omittedLabel.text = @"Omitted waypoints: 0";
+    self.estCostLabel.text = @"Estimated cost: -";
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
-
-    // Configure the view for the selected state
+    self.accessoryType = selected ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
 }
 
 @end
