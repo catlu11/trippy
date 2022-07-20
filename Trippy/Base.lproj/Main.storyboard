@@ -638,7 +638,7 @@
                                 </prototypes>
                             </tableView>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eiw-kM-YUS">
-                                <rect key="frame" x="16" y="490" width="69" height="31"/>
+                                <rect key="frame" x="16" y="490" width="95" height="31"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="Cancel"/>
@@ -666,7 +666,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZJQ-uo-yCS" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-5126" y="1538"/>
+            <point key="canvasLocation" x="-5126.1538461538457" y="1537.6777251184833"/>
         </scene>
         <!--Editing Itinerary View Controller-->
         <scene sceneID="ND4-uC-w9R">

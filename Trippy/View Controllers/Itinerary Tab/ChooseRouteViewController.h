@@ -6,11 +6,17 @@
 //
 
 #import <UIKit/UIKit.h>
+@class RouteOption;
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface ChooseRouteViewController : UIViewController
+@protocol ChooseRouteDelegate
+- (void)selectedRoute:(RouteOption *)route;
+@end
 
+@interface ChooseRouteViewController : UIViewController
+@property (weak, nonatomic) id<ChooseRouteDelegate> delegate;
+@property (strong, nonatomic) NSArray *routeOptions;
 @end
 
 NS_ASSUME_NONNULL_END

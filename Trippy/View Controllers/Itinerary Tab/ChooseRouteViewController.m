@@ -16,6 +16,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    NSLog(@"%@", self.routeOptions);
 }
 
 - (IBAction)tapCancel:(id)sender {

@@ -53,6 +53,23 @@
     return sum + [finalWeight intValue];
 }
 
++ (int)totalDuration:(NSArray *)order matrix:(NSDictionary *)matrix {
+    int sum = 0;
+    int firstIndex = [[order firstObject] intValue];
+    NSNumber *initialWeight = matrix[@"rows"][0][@"elements"][firstIndex][@"duration"][@"value"];
+    sum += [initialWeight intValue];
+    for (int i=1; i < order.count; i+=1) {
+        int current = [order[i] intValue];
+        int previous = [order[i-1] intValue];
+        NSArray *edges = matrix[@"rows"][previous+1][@"elements"];
+        NSNumber *weight = edges[current+1][@"duration"][@"value"];
+        sum += [weight intValue];
+    }
+    int lastIndex = [[order lastObject] intValue];
+    NSNumber *finalWeight = matrix[@"rows"][lastIndex][@"elements"][0][@"duration"][@"value"];
+    return sum + [finalWeight intValue];
+}
+
 // brute force solution
 + (NSArray *)tspDistance:(NSDictionary *)matrix {
     NSArray *locations = matrix[@"origin_addresses"];
@@ -73,14 +90,6 @@
         }
     }
     return bestOrder;
-}
-
-+ (NSArray *)calculateRoutes:(Itinerary *)itinerary matrix:(NSDictionary *)matrix {
-    NSMutableArray *routes = [[NSMutableArray alloc] init];
-    if (itinerary.mileageConstraint > 0) {
-        [routes addObject:[self tspDistance:matrix]];
-    }
-    return routes;
 }
 
 @end

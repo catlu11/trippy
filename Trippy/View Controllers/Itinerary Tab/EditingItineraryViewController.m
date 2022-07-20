@@ -8,22 +8,25 @@
 #import "EditingItineraryViewController.h"
 #import "WaypointPreferencesViewController.h"
 #import "ItinerarySettingsViewController.h"
+#import "ChooseRouteViewController.h"
 #import "SelectableMap.h"
 #import "EditPlaceCell.h"
 #import "Itinerary.h"
 #import "WaypointPreferences.h"
 #import "LocationCollection.h"
 #import "Location.h"
+#import "RouteOption.h"
 #import "TSPUtils.h"
 #import "MapUtils.h"
 #import "MapsAPIManager.h"
+#import "RoutesHandler.h"
 #import "CacheDataHandler.h"
 
 #define PLACES_ROW_HEIGHT 70;
 #define VIEW_SHADOW_OPACITY 0.45;
 #define VIEW_SHADOW_RADIUS 7;
 
-@interface EditingItineraryViewController () <UITableViewDelegate, UITableViewDataSource, EditPlaceCellDelegate, WaypointPreferencesDelegate, ItinerarySettingsDelegate, CacheDataHandlerDelegate>
+@interface EditingItineraryViewController () <UITableViewDelegate, UITableViewDataSource, EditPlaceCellDelegate, WaypointPreferencesDelegate, ItinerarySettingsDelegate, ChooseRouteDelegate, CacheDataHandlerDelegate>
 @property (weak, nonatomic) IBOutlet UIView *editView;
 @property (weak, nonatomic) IBOutlet UITableView *placesTableView;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *loadingIndicator;
@@ -33,6 +36,8 @@
 
 @property (strong, nonatomic) Location *selectedLoc;
 @property (strong, nonatomic) Itinerary *mutableItinerary;
+@property (strong, nonatomic) NSArray *routeOptions;
+
 @property (strong, nonatomic) CacheDataHandler *cacheHandler;
 
 @end
@@ -87,39 +92,22 @@
     NSString *matrixUrl = [MapUtils generateMatrixApiUrl:self.mutableItinerary.sourceCollection
                                             origin:self.mutableItinerary.originLocation
                                      departureTime:self.mutableItinerary.departureTime];
-    if ([self.mutableItinerary.mileageConstraint intValue] > 0) {
-        [[MapsAPIManager shared] getRouteMatrixWithCompletion:matrixUrl completion:^(NSDictionary * _Nonnull response, NSError * _Nonnull) {
-            NSArray *routes = [TSPUtils calculateRoutes:self.mutableItinerary matrix:response];
-            for (NSArray *order in routes) {
-                NSString *directionsUrl = [MapUtils generateOrderedDirectionsApiUrl:self.mutableItinerary.sourceCollection
-                                                                      waypointOrder:order
-                                                                             origin:self.mutableItinerary.originLocation
-                                                                      departureTime:self.mutableItinerary.departureTime];
-                [[MapsAPIManager shared] getDirectionsWithCompletion:directionsUrl completion:^(NSDictionary * _Nonnull response, NSError * _Nonnull) {
-                    if (response) {
-                        [self.mutableItinerary reinitialize:response prefJson:[self.mutableItinerary toPrefsDictionary] departure:self.mutableItinerary.departureTime mileageConstraint:self.mutableItinerary.mileageConstraint];
-                        self.mutableItinerary.waypointOrder = order;
-                        self.saveButton.hidden = NO;
-                        [self updateUI];
-                        [self.loadingIndicator stopAnimating];
-                    }
-                }];
-            }
-        }];
-    }
-    else {
-        NSString *directionsUrl = [MapUtils generateOptimizedDirectionsApiUrl:self.mutableItinerary.sourceCollection
-                                                                     origin:self.mutableItinerary.originLocation
-                                                              departureTime:self.mutableItinerary.departureTime];
-        [[MapsAPIManager shared] getDirectionsWithCompletion:directionsUrl completion:^(NSDictionary * _Nonnull response, NSError * _Nonnull) {
-            if (response) {
+    [[MapsAPIManager shared] getRouteMatrixWithCompletion:matrixUrl completion:^(NSDictionary * _Nonnull response, NSError * _Nonnull) {
+        RoutesHandler *routeHandler = [[RoutesHandler alloc] initWithMatrix:response];
+        [routeHandler calculateRoutes:self.mutableItinerary completion:^(NSArray * _Nonnull routes, NSError * _Nonnull) {
+            if (routes.count == 1) {
+                RouteOption *route = routes[0];
                 [self.mutableItinerary reinitialize:response prefJson:[self.mutableItinerary toPrefsDictionary] departure:self.mutableItinerary.departureTime mileageConstraint:self.mutableItinerary.mileageConstraint];
+                self.mutableItinerary.waypointOrder = route.waypoints;
                 self.saveButton.hidden = NO;
                 [self updateUI];
                 [self.loadingIndicator stopAnimating];
+            } else {
+                self.routeOptions = routes;
+                [self performSegueWithIdentifier:@"chooseRouteSegue" sender:nil];
             }
         }];
-    }
+    }];
 }
 
 - (IBAction)tapEditPrefs:(id)sender {
@@ -163,6 +151,10 @@
         vc.departure = self.mutableItinerary.departureTime;
         vc.mileageConstraint = self.mutableItinerary.mileageConstraint;
         vc.currentMileage = [self.mutableItinerary getTotalDistance];
+        vc.delegate = self;
+    } else if ([[segue identifier] isEqualToString:@"chooseRouteSegue"]) {
+        ChooseRouteViewController *vc = [segue destinationViewController];
+        vc.routeOptions = self.routeOptions;
         vc.delegate = self;
     }
 }
@@ -235,6 +227,14 @@
 # pragma mark - CacheDataHandlerDelegate
 
 - (void) updatedItinerarySuccess:(Itinerary *)itinerary {
+    [self dismissViewControllerAnimated:YES completion:^{
+        [self.delegate didSaveItinerary];
+    }];
+}
+
+# pragma mark - ChooseRouteDelegate
+
+- (void) selectedRoute:(RouteOption *)route {
     [self dismissViewControllerAnimated:YES completion:^{
         [self.delegate didSaveItinerary];
     }];
