@@ -35,8 +35,8 @@
     return time;
 }
 
-+ (NSNumber *) hourMinToSeconds:(TimeInHrMin)time {
-    return [[NSNumber alloc] initWithInt:time.hours * 3600 + time.minutes * 60];
++ (int) hourMinToSeconds:(TimeInHrMin)time {
+    return (time.hours * 3600) + (time.minutes * 60);
 }
 
 @end

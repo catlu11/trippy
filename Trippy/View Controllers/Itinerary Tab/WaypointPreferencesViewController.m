@@ -83,7 +83,7 @@
     NSDate *etaStart = self.prefEtaSwitch.isOn ? self.etaStartPicker.date : [NSNull null];
     NSDate *etaEnd = self.prefEtaSwitch.isOn ? self.etaEndPicker.date : [NSNull null];
     TimeInHrMin fieldTime = {.hours = [self.stayHrField.text intValue], .minutes=[self.stayMinField.text intValue]};
-    NSNumber *stayTime = self.estStaySwitch ? [DateUtils hourMinToSeconds:fieldTime] : @0;
+    NSNumber *stayTime = self.estStaySwitch ? @([DateUtils hourMinToSeconds:fieldTime]) : @0;
     
     if ([etaStart isEqualToDate:self.preferences.preferredEtaStart] && [etaEnd isEqualToDate:self.preferences.preferredEtaEnd] && [stayTime isEqualToValue:self.preferences.stayDurationInSeconds]) { // if no changes made
         [self dismissViewControllerAnimated:YES completion:nil];
