@@ -27,11 +27,21 @@
 }
 
 - (IBAction)tapDone:(id)sender {
-    int newMileage = [self.mileageTextField.text intValue];
-    if (![self.departureDatePicker.date isEqualToDate:self.departure] || [self.mileageConstraint intValue] != newMileage) {
-        [self.delegate didUpdatePreference:self.departureDatePicker.date newMileage:[[NSNumber alloc] initWithInt:newMileage]];
+    if ([self.departureDatePicker.date compare:[NSDate now]] == NSOrderedAscending) {
+        UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Departure Date Error"
+                                   message:@"Departure date must be in the future, please select a new date."
+                                   preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction* action = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
+                                       handler:^(UIAlertAction * action) {}];
+        [alert addAction:action];
+        [self presentViewController:alert animated:YES completion:nil];
+    } else {
+        int newMileage = [self.mileageTextField.text intValue];
+        if (![self.departureDatePicker.date isEqualToDate:self.departure] || [self.mileageConstraint intValue] != newMileage) {
+            [self.delegate didUpdatePreference:self.departureDatePicker.date newMileage:[[NSNumber alloc] initWithInt:newMileage]];
+        }
+        [self dismissViewControllerAnimated:YES completion:nil];
     }
-    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (IBAction)tapView:(id)sender {
