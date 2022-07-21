@@ -10,10 +10,11 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface DirectionsAPIManager : AFHTTPSessionManager
-+ (DirectionsAPIManager *)shared;
+@interface MapsAPIManager : AFHTTPSessionManager
++ (MapsAPIManager *)shared;
 - (instancetype)initWithBaseURL:(NSURL *)url;
 - (void)getDirectionsWithCompletion:(NSString *)url completion:(void (^)(NSDictionary *response, NSError *))completion;
+- (void)getRouteMatrixWithCompletion:(NSString *)url completion:(void (^)(NSDictionary *response, NSError *))completion;
 @end
 
 NS_ASSUME_NONNULL_END

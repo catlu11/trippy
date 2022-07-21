@@ -10,6 +10,7 @@
 @class LocationCollection;
 @class Itinerary;
 @class PFObject;
+@class PFFileObject;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -21,6 +22,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (void) itineraryFromPFObj:(PFObject *)obj completion:(void (^)(Itinerary *itinerary, NSError *))completion;
 + (void)collectionFromPFObj:(PFObject *)obj completion:(void (^)(LocationCollection *collection, NSError *))completion;
 + (Location *)locationFromPFObj:(PFObject *)obj;
++ (PFFileObject *)pfFileFromDict:(NSDictionary *)dict name:(NSString *)name;
 + (PFObject *)pfObjFromCollection:(LocationCollection *)collection;
 + (PFObject *)pfObjFromLocation:(Location *)loc;
 + (PFObject *)pfObjFromItinerary:(Itinerary *)it;

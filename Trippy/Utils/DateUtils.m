@@ -28,15 +28,15 @@
     return round(seconds) + aheadBy; //
 }
 
-+ (struct TimeInHrMin)secondsToHourMin:(int)seconds {
++ (TimeInHrMin)secondsToHourMin:(int)seconds {
     int hours = seconds / 3600;
     int minutes = (seconds - (hours * 3600)) / 60;
     TimeInHrMin time = {.hours = hours, .minutes = minutes};
     return time;
 }
 
-+ (NSNumber *) hourMinToSeconds:(TimeInHrMin)time {
-    return [[NSNumber alloc] initWithInt:time.hours * 3600 + time.minutes * 60];
++ (int) hourMinToSeconds:(TimeInHrMin)time {
+    return (time.hours * 3600) + (time.minutes * 60);
 }
 
 @end

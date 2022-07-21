@@ -7,12 +7,14 @@
 
 #import "MapUtils.h"
 #import "DateUtils.h"
+#import "TSPUtils.h"
 #import "Location.h"
 #import "LocationCollection.h"
 @import GooglePlaces;
 
 #define STATIC_MAP_URL @"https://maps.googleapis.com/maps/api/staticmap?center=%f,%f&zoom=%d&size=%dx%d&key=%@"
-#define DIRECTIONS_URL @"json?origin=place_id:%@&destination=place_id:%@&departure_time=%d&mode=walking&waypoints=%@&key=%@"
+#define DIRECTIONS_URL @"directions/json?origin=place_id:%@&destination=place_id:%@&departure_time=%d&mode=driving&waypoints=%@&key=%@"
+#define MATRIX_URL @"distancematrix/json?origins=%@&destinations=%@&departure_time=%d&mode=driving&key=%@"
 #define API_BUFFER_IN_SECONDS 10
 
 @implementation MapUtils
@@ -32,16 +34,40 @@
     return image;
 }
 
-+ (NSString *)generateDirectionsApiUrl:(LocationCollection *)collection
++ (NSString *)generateOptimizedDirectionsApiUrl:(LocationCollection *)collection
                                           origin:(Location *)origin
-                                        optimizeOrder:(BOOL)optimizeOrder
                                    departureTime:(NSDate *)departureTime {
-    // TODO: Enable via waypoints instead of just stopovers
-    NSString *stops = optimizeOrder ? @"optimize:true" : @"";
+    NSString *stops = @"optimize:true";
     for(Location *loc in collection.locations) {
         stops = [stops stringByAppendingString:[NSString stringWithFormat:@"|place_id:%@", loc.placeId]];
     }
     NSString *baseUrl = [NSString stringWithFormat:DIRECTIONS_URL, origin.placeId, origin.placeId, [DateUtils aheadSecondsFrom1970:departureTime aheadBy:API_BUFFER_IN_SECONDS], stops, [self getApiKey]];
+    NSString *percentEncodedURLString = [[NSURL URLWithDataRepresentation:[baseUrl dataUsingEncoding:NSUTF8StringEncoding] relativeToURL:nil] relativeString];
+    return percentEncodedURLString;
+}
+
++ (NSString *)generateOrderedDirectionsApiUrl:(LocationCollection *)collection
+                                waypointOrder:(NSArray *)waypointOrder
+                                       origin:(Location *)origin
+                                departureTime:(NSDate *)departureTime {
+    NSString *stops = @"optimize:false";
+    for(Location *loc in [TSPUtils reorder:collection.locations order:waypointOrder]) {
+        stops = [stops stringByAppendingString:[NSString stringWithFormat:@"|place_id:%@", loc.placeId]];
+    }
+    NSString *baseUrl = [NSString stringWithFormat:DIRECTIONS_URL, origin.placeId, origin.placeId, [DateUtils aheadSecondsFrom1970:departureTime aheadBy:API_BUFFER_IN_SECONDS], stops, [self getApiKey]];
+    NSString *percentEncodedURLString = [[NSURL URLWithDataRepresentation:[baseUrl dataUsingEncoding:NSUTF8StringEncoding] relativeToURL:nil] relativeString];
+    return percentEncodedURLString;
+}
+
+
++ (NSString *)generateMatrixApiUrl:(LocationCollection *)collection
+                                          origin:(Location *)origin
+                                   departureTime:(NSDate *)departureTime {
+    NSString *stops = [NSString stringWithFormat:@"place_id:%@|", origin.placeId];
+    for(Location *loc in collection.locations) {
+        stops = [stops stringByAppendingString:[NSString stringWithFormat:@"|place_id:%@", loc.placeId]];
+    }
+    NSString *baseUrl = [NSString stringWithFormat:MATRIX_URL, stops, stops, [DateUtils aheadSecondsFrom1970:departureTime aheadBy:API_BUFFER_IN_SECONDS], [self getApiKey]];
     NSString *percentEncodedURLString = [[NSURL URLWithDataRepresentation:[baseUrl dataUsingEncoding:NSUTF8StringEncoding] relativeToURL:nil] relativeString];
     return percentEncodedURLString;
 }
@@ -56,5 +82,14 @@
     return [[GMSCoordinateBounds alloc] initWithCoordinate:[self latLngDictToCoordinate:bounds key:firstKey] coordinate:[self latLngDictToCoordinate:bounds key:secondKey]];
 }
 
++ (double)metersToMiles:(int)meters {
+    double inMiles = meters / 1609.0;
+    return inMiles;
+}
+
++ (int)milesToMeters:(double)miles {
+    double inMeters = miles * 1609.0;
+    return inMeters;
+}
 
 @end

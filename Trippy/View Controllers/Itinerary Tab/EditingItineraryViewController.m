@@ -6,27 +6,40 @@
 //
 
 #import "EditingItineraryViewController.h"
-#import "PreferencesViewController.h"
+#import "WaypointPreferencesViewController.h"
+#import "ItinerarySettingsViewController.h"
+#import "ChooseRouteViewController.h"
 #import "SelectableMap.h"
 #import "EditPlaceCell.h"
 #import "Itinerary.h"
 #import "WaypointPreferences.h"
 #import "LocationCollection.h"
 #import "Location.h"
+#import "RouteOption.h"
+#import "TSPUtils.h"
+#import "MapUtils.h"
+#import "MapsAPIManager.h"
+#import "RoutesHandler.h"
+#import "CacheDataHandler.h"
 
 #define PLACES_ROW_HEIGHT 70;
 #define VIEW_SHADOW_OPACITY 0.45;
 #define VIEW_SHADOW_RADIUS 7;
 
-@interface EditingItineraryViewController () <UITableViewDelegate, UITableViewDataSource, EditPlaceCellDelegate, PreferencesDelegate>
+@interface EditingItineraryViewController () <UITableViewDelegate, UITableViewDataSource, EditPlaceCellDelegate, WaypointPreferencesDelegate, ItinerarySettingsDelegate, ChooseRouteDelegate, CacheDataHandlerDelegate>
 @property (weak, nonatomic) IBOutlet UIView *editView;
 @property (weak, nonatomic) IBOutlet UITableView *placesTableView;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *loadingIndicator;
+@property (weak, nonatomic) IBOutlet UIButton *saveButton;
 @property (weak, nonatomic) IBOutlet SelectableMap *mapView;
-@property (weak, nonatomic) IBOutlet UIDatePicker *departureDatePicker;
 @property (strong, nonatomic) NSArray *data;
 
 @property (strong, nonatomic) Location *selectedLoc;
 @property (strong, nonatomic) Itinerary *mutableItinerary;
+@property (strong, nonatomic) NSArray *routeOptions;
+
+@property (strong, nonatomic) CacheDataHandler *cacheHandler;
+
 @end
 
 @implementation EditingItineraryViewController
@@ -38,10 +51,15 @@
     self.mutableItinerary = [[Itinerary alloc] initWithDictionary:[self.baseItinerary toRouteDictionary]
                                                          prefJson:[self.baseItinerary toPrefsDictionary]
                                                         departure:self.baseItinerary.departureTime
+                                                mileageConstraint:self.baseItinerary.mileageConstraint
                                                  sourceCollection:self.baseItinerary.sourceCollection
                                                    originLocation:self.baseItinerary.originLocation
                                                              name:self.baseItinerary.name];
     
+    [self updateUI];
+}
+
+- (void) updateUI {
     // Set up map
     [self.mapView initWithBounds:self.mutableItinerary.bounds];
     [self.mapView addMarker:self.mutableItinerary.originLocation];
@@ -62,10 +80,34 @@
     self.editView.layer.shadowOpacity = VIEW_SHADOW_OPACITY;
     self.editView.layer.shadowRadius = VIEW_SHADOW_RADIUS;
     
-    self.departureDatePicker.date = self.baseItinerary.departureTime;
+    self.editView.backgroundColor = [UIColor whiteColor];
+    
+    [self.loadingIndicator setHidesWhenStopped:YES];
+    self.cacheHandler = [[CacheDataHandler alloc] init];
+    self.cacheHandler.delegate = self;
 }
 
 - (IBAction)tapReroute:(id)sender {
+    [self.loadingIndicator startAnimating];
+    NSString *matrixUrl = [MapUtils generateMatrixApiUrl:self.mutableItinerary.sourceCollection
+                                            origin:self.mutableItinerary.originLocation
+                                     departureTime:self.mutableItinerary.departureTime];
+    [[MapsAPIManager shared] getRouteMatrixWithCompletion:matrixUrl completion:^(NSDictionary * _Nonnull response, NSError * _Nonnull) {
+        RoutesHandler *routeHandler = [[RoutesHandler alloc] initWithMatrix:response];
+        [routeHandler calculateRoutes:self.mutableItinerary completion:^(NSArray * _Nonnull routes, NSError * _Nonnull) {
+            if (routes.count == 1) {
+                RouteOption *route = routes[0];
+                [self selectedRoute:route];
+            } else {
+                self.routeOptions = routes;
+                [self performSegueWithIdentifier:@"chooseRouteSegue" sender:nil];
+            }
+        }];
+    }];
+}
+
+- (IBAction)tapEditPrefs:(id)sender {
+    [self performSegueWithIdentifier:@"itPrefsSegue" sender:nil];
 }
 
 - (IBAction)tapEdit:(id)sender {
@@ -76,9 +118,14 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
+- (IBAction)tapSave:(id)sender {
+    [self.baseItinerary reinitialize:[self.mutableItinerary toRouteDictionary] prefJson:[self.mutableItinerary toPrefsDictionary] departure:self.mutableItinerary.departureTime mileageConstraint:self.mutableItinerary.mileageConstraint];
+    [self.cacheHandler updateItinerary:self.baseItinerary];
+}
+
 - (void) didTapArrow {
     if (self.selectedLoc) {
-        [self performSegueWithIdentifier:@"prefsSegue" sender:nil];
+        [self performSegueWithIdentifier:@"waypointPrefsSegue" sender:nil];
     }
 }
 
@@ -90,10 +137,20 @@
 # pragma mark - Navigation
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if([[segue identifier] isEqualToString:@"prefsSegue"]) {
-        PreferencesViewController *vc = [segue destinationViewController];
+    if([[segue identifier] isEqualToString:@"waypointPrefsSegue"]) {
+        WaypointPreferencesViewController *vc = [segue destinationViewController];
         vc.location = self.selectedLoc;
         vc.preferences = [self.mutableItinerary getPreference:self.selectedLoc];
+        vc.delegate = self;
+    } else if ([[segue identifier] isEqualToString:@"itPrefsSegue"]) {
+        ItinerarySettingsViewController *vc = [segue destinationViewController];
+        vc.departure = self.mutableItinerary.departureTime;
+        vc.mileageConstraint = self.mutableItinerary.mileageConstraint;
+        vc.currentMileage = [self.mutableItinerary getTotalDistance];
+        vc.delegate = self;
+    } else if ([[segue identifier] isEqualToString:@"chooseRouteSegue"]) {
+        ChooseRouteViewController *vc = [segue destinationViewController];
+        vc.routeOptions = self.routeOptions;
         vc.delegate = self;
     }
 }
@@ -145,20 +202,45 @@
 
 - (void) didTapArrow:(int)waypointIndex {
     self.selectedLoc = self.data[waypointIndex];
-    [self performSegueWithIdentifier:@"prefsSegue" sender:nil];
+    [self performSegueWithIdentifier:@"waypointPrefsSegue" sender:nil];
 }
 
-# pragma mark - PreferencesDelegate
+# pragma mark - WaypointPreferencesDelegate
 
 - (void) didUpdatePreference:(WaypointPreferences *)newPref location:(Location *)location {
     [self.mutableItinerary updatePreference:location pref:newPref];
     [self itineraryHasChanged];
 }
 
-- (IBAction)didChangeDate:(id)sender {
-    if (![self.departureDatePicker.date isEqualToDate:self.baseItinerary.departureTime]) {
-        [self itineraryHasChanged];
-    }
+# pragma mark - ItinerarySettingsDelegate
+
+- (void) didUpdatePreference:(NSDate *)newDeparture newMileage:(NSNumber *)newMileage {
+    self.mutableItinerary.departureTime = newDeparture;
+    self.mutableItinerary.mileageConstraint = newMileage;
+    [self itineraryHasChanged];
+}
+
+# pragma mark - CacheDataHandlerDelegate
+
+- (void) updatedItinerarySuccess:(Itinerary *)itinerary {
+    [self dismissViewControllerAnimated:YES completion:^{
+        [self.delegate didSaveItinerary];
+    }];
+}
+
+# pragma mark - ChooseRouteDelegate
+
+- (void) selectedRoute:(RouteOption *)route {
+    NSNumber *mileage = (route.distance <= [self.mutableItinerary.mileageConstraint intValue]) ? self.mutableItinerary.mileageConstraint : @(route.distance);
+    [self.mutableItinerary reinitialize:route.routeJson prefJson:[self.mutableItinerary toPrefsDictionary] departure:self.mutableItinerary.departureTime mileageConstraint:mileage];
+    self.mutableItinerary.waypointOrder = route.waypoints;
+    self.saveButton.hidden = NO;
+    [self updateUI];
+    [self.loadingIndicator stopAnimating];
+}
+
+- (void) cancel {
+    [self.loadingIndicator stopAnimating];
 }
 
 @end

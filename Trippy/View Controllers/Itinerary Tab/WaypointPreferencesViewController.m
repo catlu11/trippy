@@ -5,13 +5,13 @@
 //  Created by Catherine Lu on 7/15/22.
 //
 
-#import "PreferencesViewController.h"
+#import "WaypointPreferencesViewController.h"
 #import "MapUtils.h"
 #import "DateUtils.h"
 #import "WaypointPreferences.h"
 #import "Location.h"
 
-@interface PreferencesViewController () <UITextFieldDelegate>
+@interface WaypointPreferencesViewController () <UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *snippetLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *staticMapImage;
@@ -26,7 +26,7 @@
 @property (assign, nonatomic) BOOL *didChange;
 @end
 
-@implementation PreferencesViewController
+@implementation WaypointPreferencesViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -83,7 +83,7 @@
     NSDate *etaStart = self.prefEtaSwitch.isOn ? self.etaStartPicker.date : [NSNull null];
     NSDate *etaEnd = self.prefEtaSwitch.isOn ? self.etaEndPicker.date : [NSNull null];
     TimeInHrMin fieldTime = {.hours = [self.stayHrField.text intValue], .minutes=[self.stayMinField.text intValue]};
-    NSNumber *stayTime = self.estStaySwitch ? [DateUtils hourMinToSeconds:fieldTime] : @0;
+    NSNumber *stayTime = self.estStaySwitch ? @([DateUtils hourMinToSeconds:fieldTime]) : @0;
     
     if ([etaStart isEqualToDate:self.preferences.preferredEtaStart] && [etaEnd isEqualToDate:self.preferences.preferredEtaEnd] && [stayTime isEqualToValue:self.preferences.stayDurationInSeconds]) { // if no changes made
         [self dismissViewControllerAnimated:YES completion:nil];

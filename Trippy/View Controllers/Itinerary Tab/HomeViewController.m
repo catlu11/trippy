@@ -9,8 +9,10 @@
 #import "ParseUtils.h"
 #import "LogoutHandler.h"
 #import "ItineraryDetailViewController.h"
+#import "LoginViewController.h"
+#import "SceneDelegate.h"
 
-@interface HomeViewController ()
+@interface HomeViewController () <LogoutHandlerDelegate>
 @property (weak, nonatomic) IBOutlet UILabel *welcomeLabel;
 @property (strong, nonatomic) LogoutHandler *logoutHandler;
 @property (strong, nonatomic) Itinerary *selectedIt;
@@ -49,6 +51,20 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     self.selectedIt = self.data[indexPath.row];
     [self performSegueWithIdentifier:@"itineraryDetailSegueFromHome" sender:nil];
+}
+
+# pragma mark - LogoutHandlerDelegate
+
+- (void) logoutSuccess {
+    SceneDelegate *appDelegate = (SceneDelegate *)self.view.window.windowScene.delegate;
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    LoginViewController *loginViewController = [storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
+    appDelegate.window.rootViewController = loginViewController;
+    NSLog(@"Successfully logged out user");
+}
+
+- (void) logoutFail:(NSError *)error {
+    NSLog(@"Failed to log out user: %@", error.description);
 }
 
 @end

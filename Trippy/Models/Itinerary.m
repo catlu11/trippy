@@ -39,9 +39,26 @@
     return self.routeJson[@"waypoint_order"];
 }
 
+- (void)setWaypointOrder:(NSArray *)waypointOrder {
+    NSMutableDictionary *fullCopy = [_fullJson mutableCopy];
+    NSMutableDictionary *routeCopy = [_routeJson mutableCopy];
+    routeCopy[@"waypoint_order"] = waypointOrder;
+    fullCopy[@"routes"] = @[routeCopy];
+    _fullJson = fullCopy;
+    _routeJson = routeCopy;
+}
+
+- (NSNumber *)mileageConstraint {
+    if (_mileageConstraint == nil) {
+        return @0;
+    }
+    return _mileageConstraint;
+}
+
 - (instancetype)initWithDictionary:(NSDictionary *)routesJson
                           prefJson:(NSDictionary *)prefJson
                          departure:(NSDate *)departure
+                 mileageConstraint:(NSNumber *)mileageConstraint
                   sourceCollection:(LocationCollection *)sourceCollection
                     originLocation:(Location *)originLocation name:(NSString *)name {
     self = [super init];
@@ -65,6 +82,7 @@
         self.sourceCollection = sourceCollection;
         self.originLocation = originLocation;
         self.name = name;
+        self.mileageConstraint = mileageConstraint;
     }
     
     return self;
@@ -80,11 +98,13 @@
 
 - (void)reinitialize:(NSDictionary *)routesJson
             prefJson:(NSDictionary *)prefJson
-           departure:(NSDate *)departure {
+           departure:(NSDate *)departure
+   mileageConstraint:(NSNumber *)mileageConstraint {
     self.fullJson = [NSDictionary dictionaryWithDictionary:routesJson];
     self.routeJson = self.fullJson[@"routes"][0];
     self.prefJson = [NSDictionary dictionaryWithDictionary:prefJson];
     self.departureTime = departure;
+    self.mileageConstraint = mileageConstraint;
 }
 
 - (void)replaceLegs:(NSArray *)indicesToReplace newLegs:(NSArray *)newLegs {
@@ -96,10 +116,10 @@
 }
 
 - (NSArray *)getOrderedLocations {
-    NSMutableArray *ordered = [NSMutableArray arrayWithArray:self.sourceCollection.locations];
+    NSMutableArray *ordered = [[NSMutableArray alloc] init];
     for (NSNumber *ix in self.waypointOrder) {
         int i = [ix intValue];
-        [ordered setObject:[self.sourceCollection.locations objectAtIndex:i] atIndexedSubscript:i];
+        [ordered addObject:[self.sourceCollection.locations objectAtIndex:i]];
     }
     return ordered;
 }
@@ -130,6 +150,14 @@
     Location *loc = [self.sourceCollection.locations objectAtIndex:waypointIndex];
     WaypointPreferences *pref = [self getPreference:loc];
     return [arrivalTime dateByAddingTimeInterval:[pref.stayDurationInSeconds intValue]];
+}
+
+- (NSNumber *)getTotalDistance {
+    int sum = 0;
+    for (RouteLeg *leg in self.routeLegs) {
+        sum += [leg.distanceVal intValue];
+    }
+    return @([MapUtils metersToMiles:sum]);
 }
 
 @end
