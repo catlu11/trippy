@@ -51,7 +51,7 @@
             option.waypoints = newOrder;
             option.distance = [TSPUtils totalDistance:newOrder matrix:self.matrix];
             option.time = [TSPUtils totalDuration:newOrder matrix:self.matrix];
-            option.cost = [PriceUtils computeTotalCost:itinerary.sourceCollection.locations omitWaypoints:omitWaypoints];
+            option.cost = [PriceUtils computeTotalCost:itinerary locations:itinerary.sourceCollection.locations omitWaypoints:omitWaypoints];
             completion(option, nil);
         }
         else {
@@ -74,7 +74,7 @@
         option.numOmitted = 0;
         option.distance = [TSPUtils totalDistance:order matrix:self.matrix];
         option.time = [TSPUtils totalDuration:order matrix:self.matrix];
-        option.cost = [[itinerary getTotalCost:NO] doubleValue];
+        option.cost = [[itinerary getTotalCost:YES] doubleValue];
         completion(option, nil);
     }];
 }

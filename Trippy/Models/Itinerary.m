@@ -83,7 +83,7 @@
         else {
             NSMutableArray *prefs = [[NSMutableArray alloc] init];
             for (Location *l in sourceCollection.locations) {
-                WaypointPreferences *newPref =  [[WaypointPreferences alloc] initWithAttributes:[NSNull null] preferredEtaEnd:[NSNull null] stayDuration:@0];
+                WaypointPreferences *newPref =  [[WaypointPreferences alloc] initWithAttributes:[NSNull null] preferredEtaEnd:[NSNull null] stayDuration:@0 budget:[NSNull null]];
                 [prefs addObject:[newPref toDictionary]];
             }
             self.prefJson = @{@"preferences": prefs};
@@ -185,7 +185,7 @@
 
 - (NSNumber *)getTotalCost:(BOOL)includeAll {
     NSArray *locs = includeAll ? self.sourceCollection.locations : [self getOrderedLocations];
-    return @([PriceUtils computeTotalCost:locs omitWaypoints:@[]]);
+    return @([PriceUtils computeTotalCost:self locations:locs omitWaypoints:@[]]);
 }
 
 @end
