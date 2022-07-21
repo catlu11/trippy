@@ -70,6 +70,7 @@
     else {
         NSString *apiUrl = [MapUtils generateOptimizedDirectionsApiUrl:self.selectedCol
                                                        origin:self.selectedLoc
+                                                         omitWaypoints:@[]
                                                 departureTime:[NSDate now]];
         [[MapsAPIManager shared] getDirectionsWithCompletion:apiUrl completion:^(NSDictionary * _Nonnull response, NSError * _Nonnull) {
             if (response) {

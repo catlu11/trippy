@@ -37,7 +37,7 @@
     return self.routeJson[@"overview_polyline"][@"points"];
 }
 
-- (NSString *)waypointOrder {
+- (NSArray *)waypointOrder {
     return self.routeJson[@"waypoint_order"];
 }
 
@@ -58,10 +58,10 @@
 }
 
 - (NSNumber *)budgetConstraint {
-    if (_mileageConstraint == nil) {
+    if (_budgetConstraint == nil) {
         return @0;
     }
-    return _mileageConstraint;
+    return _budgetConstraint;
 }
 
 - (instancetype)initWithDictionary:(NSDictionary *)routesJson
@@ -137,6 +137,16 @@
     return ordered;
 }
 
+- (NSArray *)getOmittedLocations {
+    NSMutableArray *omitted = [[NSMutableArray alloc] init];
+    for (int i = 0; i < self.sourceCollection.locations.count; i++) {
+        if (![self.waypointOrder containsObject:@(i)]) {
+            [omitted addObject:[self.sourceCollection.locations objectAtIndex:i]];
+        }
+    }
+    return omitted;
+}
+
 - (WaypointPreferences *)getPreference:(Location *)loc {
     NSArray *prefsArray = self.prefJson[@"preferences"];
     NSDictionary *json = [prefsArray objectAtIndex:[self.sourceCollection.locations indexOfObject:loc]];
@@ -173,13 +183,9 @@
     return @([MapUtils metersToMiles:sum]);
 }
 
-- (NSNumber *)getTotalCost {
-    double costSum = 0;
-    for (NSNumber *ix in self.waypointOrder) {
-        Location *loc = self.sourceCollection.locations[[ix intValue]];
-        costSum += [PriceUtils computeExpectedCost:loc.types priceLevel:loc.priceLevel];
-    }
-    return @(costSum);
+- (NSNumber *)getTotalCost:(BOOL)includeAll {
+    NSArray *locs = includeAll ? self.sourceCollection.locations : [self getOrderedLocations];
+    return @([PriceUtils computeTotalCost:locs omitWaypoints:@[]]);
 }
 
 @end

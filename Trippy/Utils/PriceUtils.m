@@ -6,6 +6,7 @@
 //
 
 #import "PriceUtils.h"
+#import "Location.h"
 
 const static NSArray *multipliers = @[@0.7, @1, @1.5, @3];
 const static NSDictionary *basePrices = @{@"food": @15,
@@ -53,6 +54,18 @@ const static NSDictionary *basePrices = @{@"food": @15,
     int adjusted = [priceLevel intValue] > 0 ? [priceLevel intValue] - 1: 1;
     NSNumber *multiplier = multipliers[adjusted];
     return (cumSum / count) * [multiplier doubleValue];
+}
+
++ (double)computeTotalCost:(NSArray *)locations omitWaypoints:(NSArray *)omitWaypoints {
+    double sum = 0;
+    for (int i = 0; i < locations.count; i++) {
+        if ([omitWaypoints containsObject:@(i)]) {
+            continue;
+        }
+        Location *loc = locations[i];
+        sum += [self computeExpectedCost:loc.types priceLevel:loc.priceLevel];
+    }
+    return sum;
 }
 
 @end

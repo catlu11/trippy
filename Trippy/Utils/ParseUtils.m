@@ -22,7 +22,7 @@
 }
 
 + (NSArray *)getItineraryKeys {
-    return @[@"directionsJson", @"createdAt", @"name", @"createdBy", @"origin", @"sourceCollection", @"departure", @"mileageConstraint"];
+    return @[@"directionsJson", @"createdAt", @"name", @"createdBy", @"origin", @"sourceCollection", @"departure", @"mileageConstraint", @"budgetConstraint"];
 }
 
 + (NSString *)getLoggedInUsername {

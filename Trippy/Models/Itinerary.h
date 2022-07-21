@@ -56,10 +56,11 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSDictionary *)toRouteDictionary;
 - (NSDictionary *)toPrefsDictionary;
 - (NSArray *)getOrderedLocations;
+- (NSArray *)getOmittedLocations;
 - (NSDate *)computeArrival:(int)waypointIndex;
 - (NSDate *)computeDeparture:(int)waypointIndex;
 - (NSNumber *)getTotalDistance;
-- (NSNumber *)getTotalCost;
+- (NSNumber *)getTotalCost:(BOOL)includeAll;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -21,6 +21,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (CLLocationCoordinate2D)latLngDictToCoordinate:(NSDictionary *)bounds key:(NSString *)key;
 + (NSString *)generateOptimizedDirectionsApiUrl:(LocationCollection *)collection
                              origin:(Location *)origin
+                      omitWaypoints:(NSArray *)omitWaypoints
                       departureTime:(NSDate *)departureTime;
 + (NSString *)generateOrderedDirectionsApiUrl:(LocationCollection *)collection
                                 waypointOrder:(NSArray *)waypointOrder

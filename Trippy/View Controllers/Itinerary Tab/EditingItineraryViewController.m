@@ -32,7 +32,8 @@
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *loadingIndicator;
 @property (weak, nonatomic) IBOutlet UIButton *saveButton;
 @property (weak, nonatomic) IBOutlet SelectableMap *mapView;
-@property (strong, nonatomic) NSArray *data;
+@property (strong, nonatomic) NSArray *orderedData;
+@property (strong, nonatomic) NSArray *omittedData;
 
 @property (strong, nonatomic) Location *selectedLoc;
 @property (strong, nonatomic) Itinerary *mutableItinerary;
@@ -63,7 +64,7 @@
     // Set up map
     [self.mapView initWithBounds:self.mutableItinerary.bounds];
     [self.mapView addMarker:self.mutableItinerary.originLocation];
-    for (Location *point in self.mutableItinerary.sourceCollection.locations) {
+    for (Location *point in [self.mutableItinerary getOrderedLocations]) {
         [self.mapView addMarker:point];
     }
     [self.mapView addPolyline:self.mutableItinerary.overviewPolyline];
@@ -72,7 +73,8 @@
     self.placesTableView.dataSource = self;
     self.placesTableView.delegate = self;
     self.placesTableView.rowHeight = PLACES_ROW_HEIGHT;
-    self.data = [self.mutableItinerary getOrderedLocations];
+    self.orderedData = [self.mutableItinerary getOrderedLocations];
+    self.omittedData = [self.mutableItinerary getOmittedLocations];
     [self.placesTableView reloadData];
     
     // Add edit view shadow settings
@@ -146,8 +148,9 @@
         ItinerarySettingsViewController *vc = [segue destinationViewController];
         vc.departure = self.mutableItinerary.departureTime;
         vc.mileageConstraint = self.mutableItinerary.mileageConstraint;
+        vc.budgetConstraint = self.mutableItinerary.budgetConstraint;
         vc.currentMileage = [self.mutableItinerary getTotalDistance];
-        vc.currentBudget = [self.mutableItinerary getTotalCost];
+        vc.currentBudget = [self.mutableItinerary getTotalCost:NO];
         vc.delegate = self;
     } else if ([[segue identifier] isEqualToString:@"chooseRouteSegue"]) {
         ChooseRouteViewController *vc = [segue destinationViewController];
@@ -160,23 +163,28 @@
 
 - (nonnull UITableViewCell *)tableView:(nonnull UITableView *)tableView cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
     EditPlaceCell *cell = [tableView dequeueReusableCellWithIdentifier:@"EditPlaceCell" forIndexPath:indexPath];
-    
     Location *loc = nil;
     NSDate *estArrival = nil;
     NSDate *estDeparture = nil;
+
+    // If itinerary location
     if (indexPath.row == 0) { // if origin location
         loc = self.mutableItinerary.originLocation;
         estDeparture = self.mutableItinerary.departureTime;
         [cell disableArrow];
-    } else if (indexPath.row == self.data.count + 1) { // if ending destination (back to origin)
+    } else if (indexPath.row == self.orderedData.count + 1) { // if ending destination (back to origin)
         loc = self.mutableItinerary.originLocation;
         estArrival = [self.mutableItinerary computeArrival:(indexPath.row - 1)];
         [cell disableArrow];
-    } else { // if waypoint
-        loc = self.data[indexPath.row - 1];
+    } else if (indexPath.row < self.orderedData.count + 1) { // if waypoint
+        loc = self.orderedData[indexPath.row - 1];
         estArrival = [self.mutableItinerary computeArrival:(indexPath.row - 1)];
         estDeparture = [self.mutableItinerary computeDeparture:(indexPath.row - 1)];
         cell.waypointIndex = indexPath.row - 1;
+    } else {
+        loc = self.omittedData[indexPath.row - self.orderedData.count - 2];
+        [cell disableArrow];
+        cell.backgroundColor = [UIColor systemGrayColor];
     }
     
     [cell updateUIElements:loc.title arrival:estArrival departure:estDeparture];
@@ -185,16 +193,16 @@
 }
 
 - (NSInteger)tableView:(nonnull UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.mutableItinerary.sourceCollection.locations.count + 2;
+    return self.orderedData.count + self.omittedData.count + 2;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     Location *loc = nil;
-    if (indexPath.row == 0 || indexPath.row == self.data.count + 1) {
+    if (indexPath.row == 0 || indexPath.row == self.orderedData.count + 1) {
         loc = self.mutableItinerary.originLocation;
     }
     else {
-        loc = self.data[indexPath.row - 1];
+        loc = self.orderedData[indexPath.row - 1];
     }
     [self.mapView setCameraToLoc:loc.coord animate:YES];
 }
@@ -202,7 +210,7 @@
 # pragma mark - EditPlaceCellDelegate
 
 - (void) didTapArrow:(int)waypointIndex {
-    self.selectedLoc = self.data[waypointIndex];
+    self.selectedLoc = self.orderedData[waypointIndex];
     [self performSegueWithIdentifier:@"waypointPrefsSegue" sender:nil];
 }
 

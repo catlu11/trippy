@@ -77,6 +77,7 @@
     obj[@"preferencesJson"] = [ParseUtils pfFileFromDict:[it toPrefsDictionary] name:@"preferences"];
     obj[@"departure"] = it.departureTime;
     obj[@"mileageConstraint"] = it.mileageConstraint;
+    obj[@"budgetConstraint"] = it.budgetConstraint;
     __weak CacheDataHandler *weakSelf = self;
     [obj saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
         if (succeeded) {

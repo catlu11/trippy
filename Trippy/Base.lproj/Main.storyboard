@@ -389,7 +389,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="-5126.1538461538457" y="787.67772511848341"/>
+            <point key="canvasLocation" x="-5088" y="788"/>
         </scene>
         <!--Itinerary Detail View Controller-->
         <scene sceneID="IaZ-A9-A7b">
@@ -433,6 +433,17 @@
                                                 </state>
                                                 <connections>
                                                     <action selector="tapEdit:" destination="h0c-gf-E4D" eventType="touchUpInside" id="NCx-2C-htp"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="82Q-wG-77t">
+                                                <rect key="frame" x="304" y="16.999999999999886" width="43" height="35"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                <state key="normal">
+                                                    <imageReference key="image" image="printer" catalog="system" symbolScale="large"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="tapEdit:" destination="h0c-gf-E4D" eventType="touchUpInside" id="GuR-PF-Fwx"/>
                                                 </connections>
                                             </button>
                                         </subviews>
@@ -1045,7 +1056,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gfE-St-UNi" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-3735" y="33"/>
+            <point key="canvasLocation" x="-3668" y="45"/>
         </scene>
         <!--Collections-->
         <scene sceneID="6m5-vM-u1a">
@@ -1165,7 +1176,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wV3-6H-lOe" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-3095" y="32"/>
+            <point key="canvasLocation" x="-3025" y="45"/>
         </scene>
         <!--Create New Collection-->
         <scene sceneID="qg8-wb-wzw">
@@ -1323,7 +1334,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="-3095" y="746"/>
+            <point key="canvasLocation" x="-2782" y="788"/>
         </scene>
         <!--Locate-->
         <scene sceneID="2pe-tF-03J">
@@ -1511,7 +1522,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="7bG-EX-YEr"/>
+        <segue reference="XC6-s5-8OB"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="arrowshape.turn.up.left.fill" catalog="system" width="128" height="106"/>
@@ -1519,6 +1530,7 @@
         <image name="paperplane.fill" catalog="system" width="128" height="118"/>
         <image name="pencil.circle" catalog="system" width="128" height="121"/>
         <image name="plus" catalog="system" width="128" height="113"/>
+        <image name="printer" catalog="system" width="128" height="111"/>
         <image name="tray" catalog="system" width="128" height="88"/>
         <image name="trippy_logo_textless" width="420" height="418"/>
         <systemColor name="labelColor">
