@@ -51,7 +51,7 @@
     self.mutableItinerary = [[Itinerary alloc] initWithDictionary:[self.baseItinerary toRouteDictionary]
                                                          prefJson:[self.baseItinerary toPrefsDictionary]
                                                         departure:self.baseItinerary.departureTime
-                                                mileageConstraint:self.baseItinerary.mileageConstraint
+                                                mileageConstraint:self.baseItinerary.mileageConstraint budgetConstraint:self.baseItinerary.budgetConstraint
                                                  sourceCollection:self.baseItinerary.sourceCollection
                                                    originLocation:self.baseItinerary.originLocation
                                                              name:self.baseItinerary.name];
@@ -119,7 +119,7 @@
 }
 
 - (IBAction)tapSave:(id)sender {
-    [self.baseItinerary reinitialize:[self.mutableItinerary toRouteDictionary] prefJson:[self.mutableItinerary toPrefsDictionary] departure:self.mutableItinerary.departureTime mileageConstraint:self.mutableItinerary.mileageConstraint];
+    [self.baseItinerary reinitialize:[self.mutableItinerary toRouteDictionary] prefJson:[self.mutableItinerary toPrefsDictionary] departure:self.mutableItinerary.departureTime mileageConstraint:self.mutableItinerary.mileageConstraint budgetConstraint:self.mutableItinerary.budgetConstraint];
     [self.cacheHandler updateItinerary:self.baseItinerary];
 }
 
@@ -147,6 +147,7 @@
         vc.departure = self.mutableItinerary.departureTime;
         vc.mileageConstraint = self.mutableItinerary.mileageConstraint;
         vc.currentMileage = [self.mutableItinerary getTotalDistance];
+        vc.currentBudget = [self.mutableItinerary getTotalCost];
         vc.delegate = self;
     } else if ([[segue identifier] isEqualToString:@"chooseRouteSegue"]) {
         ChooseRouteViewController *vc = [segue destinationViewController];
@@ -214,9 +215,10 @@
 
 # pragma mark - ItinerarySettingsDelegate
 
-- (void) didUpdatePreference:(NSDate *)newDeparture newMileage:(NSNumber *)newMileage {
+- (void) didUpdatePreference:(NSDate *)newDeparture newMileage:(NSNumber *)newMileage newBudget:(NSNumber *)newBudget {
     self.mutableItinerary.departureTime = newDeparture;
     self.mutableItinerary.mileageConstraint = newMileage;
+    self.mutableItinerary.budgetConstraint = newBudget;
     [self itineraryHasChanged];
 }
 
@@ -232,7 +234,8 @@
 
 - (void) selectedRoute:(RouteOption *)route {
     NSNumber *mileage = (route.distance <= [self.mutableItinerary.mileageConstraint intValue]) ? self.mutableItinerary.mileageConstraint : @(route.distance);
-    [self.mutableItinerary reinitialize:route.routeJson prefJson:[self.mutableItinerary toPrefsDictionary] departure:self.mutableItinerary.departureTime mileageConstraint:mileage];
+    NSNumber *cost = (route.cost <= [self.mutableItinerary.budgetConstraint intValue]) ? self.mutableItinerary.budgetConstraint : @(route.cost);
+    [self.mutableItinerary reinitialize:route.routeJson prefJson:[self.mutableItinerary toPrefsDictionary] departure:self.mutableItinerary.departureTime mileageConstraint:mileage budgetConstraint:cost];
     self.mutableItinerary.waypointOrder = route.waypoints;
     self.saveButton.hidden = NO;
     [self updateUI];

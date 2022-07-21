@@ -29,7 +29,14 @@
                 } else {
                     PFRelation *relation = [object relationForKey:@"locations"];
                     [relation addObject:newLocation];
-                    [object saveInBackground];
+                    [object saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
+                        __strong CacheDataHandler *strongSelf = weakSelf;
+                        if (succeeded) {
+                            [strongSelf.delegate postedLocationSuccess:location];
+                        } else {
+                            [strongSelf.delegate generalRequestFail:error];
+                        }
+                    }];
                 }
             }];
         }

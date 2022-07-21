@@ -55,10 +55,18 @@
     return _mileageConstraint;
 }
 
+- (NSNumber *)budgetConstraint {
+    if (_mileageConstraint == nil) {
+        return @0;
+    }
+    return _mileageConstraint;
+}
+
 - (instancetype)initWithDictionary:(NSDictionary *)routesJson
                           prefJson:(NSDictionary *)prefJson
                          departure:(NSDate *)departure
                  mileageConstraint:(NSNumber *)mileageConstraint
+                  budgetConstraint:(NSNumber *)budgetConstraint
                   sourceCollection:(LocationCollection *)sourceCollection
                     originLocation:(Location *)originLocation name:(NSString *)name {
     self = [super init];
@@ -83,6 +91,7 @@
         self.originLocation = originLocation;
         self.name = name;
         self.mileageConstraint = mileageConstraint;
+        self.budgetConstraint = budgetConstraint;
     }
     
     return self;
@@ -99,12 +108,14 @@
 - (void)reinitialize:(NSDictionary *)routesJson
             prefJson:(NSDictionary *)prefJson
            departure:(NSDate *)departure
-   mileageConstraint:(NSNumber *)mileageConstraint {
+   mileageConstraint:(NSNumber *)mileageConstraint
+    budgetConstraint:(NSNumber *)budgetConstraint {
     self.fullJson = [NSDictionary dictionaryWithDictionary:routesJson];
     self.routeJson = self.fullJson[@"routes"][0];
     self.prefJson = [NSDictionary dictionaryWithDictionary:prefJson];
     self.departureTime = departure;
     self.mileageConstraint = mileageConstraint;
+    self.budgetConstraint = budgetConstraint;
 }
 
 - (void)replaceLegs:(NSArray *)indicesToReplace newLegs:(NSArray *)newLegs {
@@ -158,6 +169,11 @@
         sum += [leg.distanceVal intValue];
     }
     return @([MapUtils metersToMiles:sum]);
+}
+
+- (NSNumber *)getTotalCost {
+    // TODO: Implement
+    return nil;
 }
 
 @end

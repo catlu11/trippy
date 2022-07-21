@@ -16,6 +16,8 @@
                       longitude:(double)longitude
                            user:(NSString *)user
                         placeId:(NSString *)placeId
+                          types:(NSArray *)types
+                     priceLevel:(NSNumber *)priceLevel
                   parseObjectId:(NSString *)parseObjectId {
     self = [super init];
     
@@ -25,6 +27,8 @@
         self.coord = CLLocationCoordinate2DMake(latitude, longitude);
         self.userId = user;
         self.placeId = placeId;
+        self.types = types;
+        self.priceLevel = priceLevel;
         self.parseObjectId = parseObjectId;
     }
     
@@ -39,6 +43,8 @@
         self.snippet = place.description;
         self.coord = place.coordinate;
         self.userId = user;
+        self.types = place.types;
+        self.priceLevel = @(place.priceLevel);
         self.placeId = place.placeID;
     }
     

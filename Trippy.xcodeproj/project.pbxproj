@@ -11,6 +11,7 @@
 		F06174A228888108005AF616 /* RoutesHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = F06174A128888108005AF616 /* RoutesHandler.m */; };
 		F06174A52888812C005AF616 /* RouteCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F06174A42888812C005AF616 /* RouteCell.m */; };
 		F06174AB28888649005AF616 /* RouteOption.m in Sources */ = {isa = PBXBuildFile; fileRef = F06174AA28888649005AF616 /* RouteOption.m */; };
+		F06174AE2889B914005AF616 /* LocationOptionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F06174AD2889B914005AF616 /* LocationOptionsViewController.m */; };
 		F0C75F6D287642C10015BB74 /* Keys.plist in Resources */ = {isa = PBXBuildFile; fileRef = F0C75F6C287642C10015BB74 /* Keys.plist */; };
 		F0C75F72287747A20015BB74 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F0C75F71287747A20015BB74 /* LoginViewController.m */; };
 		F0C75F7828775A680015BB74 /* SavedCollectionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F0C75F7728775A680015BB74 /* SavedCollectionsViewController.m */; };
@@ -86,6 +87,8 @@
 		F06174A42888812C005AF616 /* RouteCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RouteCell.m; sourceTree = "<group>"; };
 		F06174A928888649005AF616 /* RouteOption.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RouteOption.h; sourceTree = "<group>"; };
 		F06174AA28888649005AF616 /* RouteOption.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RouteOption.m; sourceTree = "<group>"; };
+		F06174AC2889B914005AF616 /* LocationOptionsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LocationOptionsViewController.h; sourceTree = "<group>"; };
+		F06174AD2889B914005AF616 /* LocationOptionsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LocationOptionsViewController.m; sourceTree = "<group>"; };
 		F0C75F6C287642C10015BB74 /* Keys.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Keys.plist; sourceTree = "<group>"; };
 		F0C75F70287747A20015BB74 /* LoginViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		F0C75F71287747A20015BB74 /* LoginViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
@@ -223,6 +226,8 @@
 			children = (
 				F0F335792874A0E700470507 /* SearchMapViewController.h */,
 				F0F3357A2874A0E700470507 /* SearchMapViewController.m */,
+				F06174AC2889B914005AF616 /* LocationOptionsViewController.h */,
+				F06174AD2889B914005AF616 /* LocationOptionsViewController.m */,
 			);
 			path = "Locate Tab";
 			sourceTree = "<group>";
@@ -708,6 +713,7 @@
 				F06174AB28888649005AF616 /* RouteOption.m in Sources */,
 				F0C75F7828775A680015BB74 /* SavedCollectionsViewController.m in Sources */,
 				F0F6581928887FEE00C04AB0 /* LogoutHandler.m in Sources */,
+				F06174AE2889B914005AF616 /* LocationOptionsViewController.m in Sources */,
 				F0F335AE2875F0B400470507 /* SelectableMap.m in Sources */,
 				F0F335B72875F2E100470507 /* MapUtils.m in Sources */,
 				F0F335862874A0EB00470507 /* main.m in Sources */,

@@ -6,6 +6,7 @@
 //
 
 #import "SearchMapViewController.h"
+#import "LocationOptionsViewController.h"
 #import "SelectableMap.h"
 #import "Location.h"
 #import "LocationCollection.h"
@@ -14,7 +15,7 @@
 @import GooglePlaces;
 @import GoogleMaps;
 
-@interface SearchMapViewController () <UISearchBarDelegate, GMSAutocompleteTableDataSourceDelegate, UIPickerViewDelegate, UIPickerViewDataSource, CacheDataHandlerDelegate>
+@interface SearchMapViewController () <UISearchBarDelegate, GMSAutocompleteTableDataSourceDelegate, UIPickerViewDelegate, UIPickerViewDataSource, CacheDataHandlerDelegate, UIPopoverPresentationControllerDelegate, LocationOptionsDelegate>
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 @property (weak, nonatomic) IBOutlet SelectableMap *mapView;
 @property (weak, nonatomic) IBOutlet UITableView *itemsTableView;
@@ -24,6 +25,7 @@
 @property (strong, nonatomic) CacheDataHandler *handler;
 @property (strong, nonatomic) Location *selectedLoc;
 @property (strong, nonatomic) LocationCollection *selectedCol;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *optionsControl;
 @property (strong, nonatomic) NSMutableArray *data;
 @end
 
@@ -65,7 +67,15 @@
 
 - (IBAction)tapAdd:(id)sender {
     if(self.selectedLoc && self.selectedCol) {
-        [self.handler postNewLocation:self.selectedLoc collection:self.selectedCol];
+        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+        LocationOptionsViewController *vc = [storyboard instantiateViewControllerWithIdentifier:@"LocationOptionsViewController"];
+        [vc setModalPresentationStyle:UIModalPresentationPopover];
+        vc.popoverPresentationController.barButtonItem = self.optionsControl;
+        vc.popoverPresentationController.sourceView = sender;
+        vc.popoverPresentationController.delegate = self;
+        vc.loc = self.selectedLoc;
+        vc.delegate = self;
+        [self presentViewController:vc animated:YES completion:nil];
     }
 }
 
@@ -161,6 +171,36 @@
 - (void) addFetchedCollection:(LocationCollection *)collection {
     [self.data addObject:collection];
     [self.collectionPickerView reloadAllComponents];
+}
+
+- (void) postedLocationSuccess:(Location *)location {
+    UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Success"
+                               message:@"Successfully posted location."
+                               preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction* action = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
+                                   handler:^(UIAlertAction * action) {}];
+    [alert addAction:action];
+    [self presentViewController:alert animated:YES completion:^{
+        self.selectedLoc = nil;
+        self.selectedCol = nil;
+        [self.collectionPickerView reloadAllComponents];
+        [self.mapView clearMarkers];
+        self.searchBar.text = @"";
+    }];
+}
+
+# pragma mark - UIPopoverPresentationControllerDelegate
+
+- (UIModalPresentationStyle)adaptivePresentationStyleForPresentationController:(UIPresentationController *)controller traitCollection:(UITraitCollection *)traitCollection {
+    return UIModalPresentationNone;
+}
+
+# pragma mark - LocationOptionsDelegate
+
+- (void)didSelectOptions:(NSString *)name desc:(NSString *)desc {
+    self.selectedLoc.title = name;
+    self.selectedLoc.snippet = desc;
+    [self.handler postNewLocation:self.selectedLoc collection:self.selectedCol];
 }
 
 @end

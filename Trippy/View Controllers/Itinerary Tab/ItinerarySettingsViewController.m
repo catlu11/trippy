@@ -11,6 +11,8 @@
 @interface ItinerarySettingsViewController () <UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *mileageTextField;
 @property (weak, nonatomic) IBOutlet UILabel *currentMileageLabel;
+@property (weak, nonatomic) IBOutlet UITextField *budgetTextField;
+@property (weak, nonatomic) IBOutlet UILabel *currentBudgetLabel;
 @property (weak, nonatomic) IBOutlet UIDatePicker *departureDatePicker;
 @end
 

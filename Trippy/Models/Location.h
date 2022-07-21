@@ -16,6 +16,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) NSString *snippet;
 @property (strong, nonatomic) NSString *userId;
 @property (strong, nonatomic) NSString *placeId;
+@property (strong, nonatomic) NSArray *types;
+@property (strong, nonatomic) NSNumber *priceLevel;
 @property (strong, nonatomic) NSString *parseObjectId; // nonnull when derived from Parse object
 
 - (instancetype) initWithParams:(NSString *)title
@@ -24,6 +26,8 @@ NS_ASSUME_NONNULL_BEGIN
                       longitude:(double)longitude
                            user:(NSString *)user
                         placeId:(NSString *)placeId
+                          types:(NSArray *)types
+                     priceLevel:(NSNumber *)priceLevel
                   parseObjectId:(NSString *)parseObjectId;
 - (instancetype) initWithPlace:(GMSPlace *)place user:(NSString *)user;
 @end
