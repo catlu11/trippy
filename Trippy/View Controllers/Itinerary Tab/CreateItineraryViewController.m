@@ -77,6 +77,7 @@
                                                              prefJson:nil
                                                             departure:[NSDate now]
                                                     mileageConstraint:nil
+                                                     budgetConstraint:nil
                                                      sourceCollection:self.selectedCol
                                                        originLocation:self.selectedLoc
                                                                  name:self.nameField.text];

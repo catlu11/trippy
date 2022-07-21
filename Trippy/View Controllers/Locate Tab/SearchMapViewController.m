@@ -31,6 +31,10 @@
 
 @implementation SearchMapViewController
 
+- (void)viewWillAppear:(BOOL)animated {
+    [self viewDidLoad];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -104,7 +108,7 @@
 - (BOOL)tableDataSource:(GMSAutocompleteTableDataSource *)tableDataSource didSelectPrediction:(GMSAutocompletePrediction *)prediction {
     [self searchBarCancelButtonClicked:self.searchBar];
     
-    GMSPlaceField fields = (GMSPlaceFieldName | GMSPlaceFieldPlaceID | GMSPlaceFieldCoordinate);
+    GMSPlaceField fields = (GMSPlaceFieldName | GMSPlaceFieldPlaceID | GMSPlaceFieldCoordinate | GMSPlaceFieldTypes | GMSPlaceFieldPriceLevel);
     [[GMSPlacesClient sharedClient] fetchPlaceFromPlaceID:prediction.placeID placeFields:fields sessionToken:nil callback:^(GMSPlace * _Nullable result, NSError * _Nullable error) {
         if(error) {
             NSLog(@"An error occurred fetching place details%@", [error localizedDescription]);
