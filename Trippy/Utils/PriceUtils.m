@@ -41,7 +41,7 @@ const static NSDictionary *basePrices = @{@"food": @15,
 
 @implementation PriceUtils
 
-- (double)computeExpectedCost:(NSArray *)types priceLevel:(NSNumber *)priceLevel {
++ (double)computeExpectedCost:(NSArray *)types priceLevel:(NSNumber *)priceLevel {
     double cumSum = 0;
     int count = 0;
     for (NSString *type in types) {

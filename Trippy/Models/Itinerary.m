@@ -7,9 +7,11 @@
 
 #import "Itinerary.h"
 #import "LocationCollection.h"
+#import "Location.h"
 #import "MapUtils.h"
 #import "RouteLeg.h"
 #import "WaypointPreferences.h"
+#import "PriceUtils.h"
 
 @interface Itinerary ()
 @property (strong, nonatomic) NSDictionary *fullJson;
@@ -172,8 +174,12 @@
 }
 
 - (NSNumber *)getTotalCost {
-    // TODO: Implement
-    return nil;
+    double costSum = 0;
+    for (NSNumber *ix in self.waypointOrder) {
+        Location *loc = self.sourceCollection.locations[[ix intValue]];
+        costSum += [PriceUtils computeExpectedCost:loc.types priceLevel:loc.priceLevel];
+    }
+    return @(costSum);
 }
 
 @end

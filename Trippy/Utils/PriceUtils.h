@@ -10,7 +10,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface PriceUtils : NSObject
-- (double)computeExpectedCost:(NSArray *)types priceLevel:(NSNumber *)priceLevel;
++ (double)computeExpectedCost:(NSArray *)types priceLevel:(NSNumber *)priceLevel;
 @end
 
 NS_ASSUME_NONNULL_END
