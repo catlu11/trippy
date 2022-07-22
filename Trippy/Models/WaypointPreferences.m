@@ -22,7 +22,7 @@
     return [DateUtils iso8601StringToDate:dateString];
 }
 
-- (void) setPreferredEtaStart:(NSDate *)preferredEtaStart {
+- (void)setPreferredEtaStart:(NSDate *)preferredEtaStart {
     _infoJson[@"preferredEtaStart"] = [DateUtils formatDateAsIso8601:preferredEtaStart];
 }
 
@@ -34,7 +34,7 @@
     return [DateUtils iso8601StringToDate:dateString];
 }
 
-- (void) setPreferredEtaEnd:(NSDate *)preferredEtaEnd {
+- (void)setPreferredEtaEnd:(NSDate *)preferredEtaEnd {
     _infoJson[@"preferredEtaEnd"] = [DateUtils formatDateAsIso8601:preferredEtaEnd];
 }
 
@@ -43,7 +43,7 @@
     return val;
 }
 
-- (void) setStayDurationInSeconds:(NSNumber *)stayDuration {
+- (void)setStayDurationInSeconds:(NSNumber *)stayDuration {
     _infoJson[@"stayDuration"] = stayDuration;
 }
 
@@ -55,7 +55,7 @@
     return val;
 }
 
-- (void) setBudget:(NSNumber *)budget {
+- (void)setBudget:(NSNumber *)budget {
     _infoJson[@"budget"] = budget;
 }
 
@@ -93,7 +93,7 @@
     return self.infoJson;
 }
 
-- (BOOL) isValid {
+- (BOOL)isValid {
     NSDate *etaStart = self.preferredEtaStart;
     NSDate *etaEnd = self.preferredEtaEnd;
     if (etaEnd != nil && etaStart != nil) {

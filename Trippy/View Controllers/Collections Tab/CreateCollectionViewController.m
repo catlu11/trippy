@@ -57,7 +57,7 @@
     [self.postHandler postNewCollection:col];
 }
 
-- (void) postedCollectionSuccess:(LocationCollection *)col {
+- (void)postedCollectionSuccess:(LocationCollection *)col {
     [self.delegate createdNew:col];
     [self dismissViewControllerAnimated:YES completion:nil];
 }

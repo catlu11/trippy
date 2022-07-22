@@ -8,6 +8,8 @@
 #import "ChooseRouteViewController.h"
 #import "RouteCell.h"
 
+#define ROW_HEIGHT 75
+
 @interface ChooseRouteViewController () <UITableViewDelegate, UITableViewDataSource>
 @property (weak, nonatomic) IBOutlet UITableView *routesTableView;
 @property (weak, nonatomic) IBOutlet UIButton *selectButton;
@@ -20,7 +22,7 @@
     [super viewDidLoad];
     self.routesTableView.delegate = self;
     self.routesTableView.dataSource = self;
-    self.routesTableView.rowHeight = 75;
+    self.routesTableView.rowHeight = ROW_HEIGHT;
 }
 
 - (IBAction)tapCancel:(id)sender {

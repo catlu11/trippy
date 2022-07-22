@@ -40,7 +40,7 @@
                                    departureTime:(NSDate *)departureTime {
     NSString *stops = @"optimize:true";
     int count = 0;
-    for(Location *loc in collection.locations) {
+    for (Location *loc in collection.locations) {
         if ([omitWaypoints containsObject:@(count)]) {
             count += 1;
             continue;
@@ -58,7 +58,7 @@
                                        origin:(Location *)origin
                                 departureTime:(NSDate *)departureTime {
     NSString *stops = @"optimize:false";
-    for(Location *loc in [TSPUtils reorder:collection.locations order:waypointOrder]) {
+    for (Location *loc in [TSPUtils reorder:collection.locations order:waypointOrder]) {
         stops = [stops stringByAppendingString:[NSString stringWithFormat:@"|place_id:%@", loc.placeId]];
     }
     NSString *baseUrl = [NSString stringWithFormat:DIRECTIONS_URL, origin.placeId, origin.placeId, [DateUtils aheadSecondsFrom1970:departureTime aheadBy:API_BUFFER_IN_SECONDS], stops, [self getApiKey]];
@@ -71,7 +71,7 @@
                                           origin:(Location *)origin
                                    departureTime:(NSDate *)departureTime {
     NSString *stops = [NSString stringWithFormat:@"place_id:%@|", origin.placeId];
-    for(Location *loc in collection.locations) {
+    for (Location *loc in collection.locations) {
         stops = [stops stringByAppendingString:[NSString stringWithFormat:@"|place_id:%@", loc.placeId]];
     }
     NSString *baseUrl = [NSString stringWithFormat:MATRIX_URL, stops, stops, [DateUtils aheadSecondsFrom1970:departureTime aheadBy:API_BUFFER_IN_SECONDS], [self getApiKey]];

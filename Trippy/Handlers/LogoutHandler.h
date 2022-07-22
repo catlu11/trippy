@@ -10,13 +10,13 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @protocol LogoutHandlerDelegate
-- (void) logoutSuccess;
-- (void) logoutFail:(NSError *)error; 
+- (void)logoutSuccess;
+- (void)logoutFail:(NSError *)error;
 @end
 
 @interface LogoutHandler : NSObject
 @property (nonatomic, weak) id<LogoutHandlerDelegate> delegate;
-- (void) logoutCurrentUser;
+- (void)logoutCurrentUser;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -48,6 +48,7 @@
 }
 
 # pragma mark - Navigation
+
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if([[segue identifier] isEqualToString:@"editItinerarySegue"]) {
         EditingItineraryViewController *vc = segue.destinationViewController;
@@ -57,6 +58,7 @@
 }
 
 # pragma mark - EditingItineraryDelegate
+
 - (void) didSaveItinerary {
     [self updateUI];
 }

@@ -51,6 +51,7 @@ NS_ASSUME_NONNULL_BEGIN
            departure:(NSDate *)departure
    mileageConstraint:(NSNumber *)mileageConstraint
     budgetConstraint:(NSNumber *)budgetConstraint;
+
 - (void)updatePreference:(Location *)location pref:(WaypointPreferences *)pref;
 - (WaypointPreferences *)getPreference:(Location *)loc;
 - (NSDictionary *)toRouteDictionary;

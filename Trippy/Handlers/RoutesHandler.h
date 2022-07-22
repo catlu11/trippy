@@ -11,7 +11,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface RoutesHandler : NSObject
-- (instancetype) initWithMatrix:(NSDictionary *)matrix;
+- (instancetype)initWithMatrix:(NSDictionary *)matrix;
 - (void)calculateRoutes:(Itinerary *)itinerary completion:(void (^)(NSArray *routes, NSError *))completion;
 @end
 

@@ -57,6 +57,8 @@
                                                    originLocation:self.baseItinerary.originLocation
                                                              name:self.baseItinerary.name];
     
+    self.cacheHandler = [[CacheDataHandler alloc] init];
+    self.cacheHandler.delegate = self;
     [self updateUI];
 }
 
@@ -85,8 +87,6 @@
     self.editView.backgroundColor = [UIColor whiteColor];
     
     [self.loadingIndicator setHidesWhenStopped:YES];
-    self.cacheHandler = [[CacheDataHandler alloc] init];
-    self.cacheHandler.delegate = self;
 }
 
 - (IBAction)tapReroute:(id)sender {
@@ -94,17 +94,25 @@
     NSString *matrixUrl = [MapUtils generateMatrixApiUrl:self.mutableItinerary.sourceCollection
                                             origin:self.mutableItinerary.originLocation
                                      departureTime:self.mutableItinerary.departureTime];
-    [[MapsAPIManager shared] getRouteMatrixWithCompletion:matrixUrl completion:^(NSDictionary * _Nonnull response, NSError * _Nonnull) {
-        RoutesHandler *routeHandler = [[RoutesHandler alloc] initWithMatrix:response];
-        [routeHandler calculateRoutes:self.mutableItinerary completion:^(NSArray * _Nonnull routes, NSError * _Nonnull) {
-            if (routes.count == 1) {
-                RouteOption *route = routes[0];
-                [self selectedRoute:route];
-            } else {
-                self.routeOptions = routes;
-                [self performSegueWithIdentifier:@"chooseRouteSegue" sender:nil];
-            }
-        }];
+    [[MapsAPIManager shared] getRouteMatrixWithCompletion:matrixUrl completion:^(NSDictionary *response, NSError *error) {
+        if (response) {
+            RoutesHandler *routeHandler = [[RoutesHandler alloc] initWithMatrix:response];
+            [routeHandler calculateRoutes:self.mutableItinerary completion:^(NSArray *routes, NSError *error) {
+                if (routes) {
+                    if (routes.count == 1) {
+                        RouteOption *route = routes[0];
+                        [self selectedRoute:route];
+                    } else {
+                        self.routeOptions = routes;
+                        [self performSegueWithIdentifier:@"chooseRouteSegue" sender:nil];
+                    }
+                } else {
+                    NSLog(@"Error: %@", error.description);
+                }
+            }];
+        } else {
+            NSLog(@"Error: %@", error.description);
+        }
     }];
 }
 
@@ -125,13 +133,7 @@
     [self.cacheHandler updateItinerary:self.baseItinerary];
 }
 
-- (void) didTapArrow {
-    if (self.selectedLoc) {
-        [self performSegueWithIdentifier:@"waypointPrefsSegue" sender:nil];
-    }
-}
-
-- (void) itineraryHasChanged {
+- (void)itineraryHasChanged {
     // TODO: Create more informative change indicator
     self.editView.backgroundColor = [UIColor systemPinkColor];
 }
@@ -212,21 +214,21 @@
 
 # pragma mark - EditPlaceCellDelegate
 
-- (void) didTapArrow:(int)waypointIndex {
+- (void)didTapArrow:(int)waypointIndex {
     self.selectedLoc = self.orderedData[waypointIndex];
     [self performSegueWithIdentifier:@"waypointPrefsSegue" sender:nil];
 }
 
 # pragma mark - WaypointPreferencesDelegate
 
-- (void) didUpdatePreference:(WaypointPreferences *)newPref location:(Location *)location {
+- (void)didUpdatePreference:(WaypointPreferences *)newPref location:(Location *)location {
     [self.mutableItinerary updatePreference:location pref:newPref];
     [self itineraryHasChanged];
 }
 
 # pragma mark - ItinerarySettingsDelegate
 
-- (void) didUpdatePreference:(NSDate *)newDeparture newMileage:(NSNumber *)newMileage newBudget:(NSNumber *)newBudget {
+- (void)didUpdatePreference:(NSDate *)newDeparture newMileage:(NSNumber *)newMileage newBudget:(NSNumber *)newBudget {
     self.mutableItinerary.departureTime = newDeparture;
     self.mutableItinerary.mileageConstraint = newMileage;
     self.mutableItinerary.budgetConstraint = newBudget;
@@ -235,7 +237,7 @@
 
 # pragma mark - CacheDataHandlerDelegate
 
-- (void) updatedItinerarySuccess:(Itinerary *)itinerary {
+- (void)updatedItinerarySuccess:(Itinerary *)itinerary {
     [self dismissViewControllerAnimated:YES completion:^{
         [self.delegate didSaveItinerary];
     }];
@@ -243,7 +245,7 @@
 
 # pragma mark - ChooseRouteDelegate
 
-- (void) selectedRoute:(RouteOption *)route {
+- (void)selectedRoute:(RouteOption *)route {
     NSNumber *mileage = (route.distance <= [self.mutableItinerary.mileageConstraint intValue]) ? self.mutableItinerary.mileageConstraint : @(route.distance);
     NSNumber *cost = (route.cost <= [self.mutableItinerary.budgetConstraint intValue]) ? self.mutableItinerary.budgetConstraint : @(route.cost);
     [self.mutableItinerary reinitialize:route.routeJson prefJson:[self.mutableItinerary toPrefsDictionary] departure:self.mutableItinerary.departureTime mileageConstraint:mileage budgetConstraint:cost];
@@ -257,4 +259,10 @@
     [self.loadingIndicator stopAnimating];
 }
 
+# pragma mark - RouteCellDelegate
+- (void)didTapArrow {
+    if (self.selectedLoc) {
+        [self performSegueWithIdentifier:@"waypointPrefsSegue" sender:nil];
+    }
+}
 @end

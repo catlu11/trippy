@@ -10,24 +10,6 @@
 
 @implementation TSPUtils
 
-+ (NSArray *)permutations:(NSArray *)elements {
-    if (elements.count <= 1) {
-        return @[elements];
-    }
-    NSArray *subarray = [elements subarrayWithRange:NSMakeRange(1, elements.count-1)];
-    NSMutableArray *results = [[NSMutableArray alloc] init];
-    for (NSArray *res in [self permutations:subarray]) {
-        for (int i = 0; i < elements.count; i+=1) {
-            NSArray *firstHalf = [res subarrayWithRange:NSMakeRange(0, i)];
-            NSArray *current = [elements subarrayWithRange:NSMakeRange(0, 1)];
-            NSArray *secondHalf = [res subarrayWithRange:NSMakeRange(i, res.count-i)];
-            NSArray *res = [[firstHalf arrayByAddingObjectsFromArray:current] arrayByAddingObjectsFromArray:secondHalf];
-            [results addObjectsFromArray:@[res]];
-        }
-    }
-    return results;
-}
-
 + (NSArray *)reorder:(NSArray *)elements order:(NSArray *)order {
     NSMutableArray *newList = [[NSMutableArray alloc] init];
     for (NSNumber *ix in order) {
@@ -41,7 +23,7 @@
     int firstIndex = [[order firstObject] intValue];
     NSNumber *initialWeight = matrix[@"rows"][0][@"elements"][firstIndex+1][@"distance"][@"value"];
     sum += [initialWeight intValue];
-    for (int i=1; i < order.count; i+=1) {
+    for (int i=1; i < order.count; i++) {
         int current = [order[i] intValue];
         int previous = [order[i-1] intValue];
         NSArray *edges = matrix[@"rows"][previous+1][@"elements"];
@@ -58,7 +40,7 @@
     int firstIndex = [[order firstObject] intValue];
     NSNumber *initialWeight = matrix[@"rows"][0][@"elements"][firstIndex][@"duration"][@"value"];
     sum += [initialWeight intValue];
-    for (int i=1; i < order.count; i+=1) {
+    for (int i=1; i < order.count; i++) {
         int current = [order[i] intValue];
         int previous = [order[i-1] intValue];
         NSArray *edges = matrix[@"rows"][previous+1][@"elements"];
@@ -76,7 +58,7 @@
     int n = locations.count - 1;
     
     NSMutableArray *waypoints = [[NSMutableArray alloc] init];
-    for (int i = 0; i < n; i+=1) {
+    for (int i = 0; i < n; i++) {
         [waypoints addObject:[[NSNumber alloc] initWithInt:i]];
     }
     NSArray *potentialOrders = [self permutations:waypoints];
@@ -90,6 +72,26 @@
         }
     }
     return bestOrder;
+}
+
+# pragma mark - Private
+
++ (NSArray *)permutations:(NSArray *)elements {
+    if (elements.count <= 1) {
+        return @[elements];
+    }
+    NSArray *subarray = [elements subarrayWithRange:NSMakeRange(1, elements.count-1)];
+    NSMutableArray *results = [[NSMutableArray alloc] init];
+    for (NSArray *res in [self permutations:subarray]) {
+        for (int i = 0; i < elements.count; i++) {
+            NSArray *firstHalf = [res subarrayWithRange:NSMakeRange(0, i)];
+            NSArray *current = [elements subarrayWithRange:NSMakeRange(0, 1)];
+            NSArray *secondHalf = [res subarrayWithRange:NSMakeRange(i, res.count-i)];
+            NSArray *res = [[firstHalf arrayByAddingObjectsFromArray:current] arrayByAddingObjectsFromArray:secondHalf];
+            [results addObjectsFromArray:@[res]];
+        }
+    }
+    return results;
 }
 
 @end

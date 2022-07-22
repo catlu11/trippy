@@ -34,7 +34,7 @@
                                                                  origin:itinerary.originLocation
                                                             omitWaypoints:omitWaypoints
                                                           departureTime:itinerary.departureTime];
-    [[MapsAPIManager shared] getDirectionsWithCompletion:directionsUrl completion:^(NSDictionary * _Nonnull response, NSError * _Nonnull error) {
+    [[MapsAPIManager shared] getDirectionsWithCompletion:directionsUrl completion:^(NSDictionary *response, NSError *error) {
         if (response) {
             RouteOption *option = [[RouteOption alloc] init];
             option.type = kDefaultOptimized;
@@ -66,21 +66,27 @@
                                                           waypointOrder:order
                                                                  origin:itinerary.originLocation
                                                           departureTime:itinerary.departureTime];
-    [[MapsAPIManager shared] getDirectionsWithCompletion:directionsUrl completion:^(NSDictionary * _Nonnull response, NSError * _Nonnull) {
-        RouteOption *option = [[RouteOption alloc] init];
-        option.type = kDistance;
-        option.routeJson = response;
-        option.waypoints = order;
-        option.numOmitted = 0;
-        option.distance = [TSPUtils totalDistance:order matrix:self.matrix];
-        option.time = [TSPUtils totalDuration:order matrix:self.matrix];
-        option.cost = [[itinerary getTotalCost:YES] doubleValue];
-        completion(option, nil);
+    [[MapsAPIManager shared] getDirectionsWithCompletion:directionsUrl completion:^(NSDictionary *response, NSError *error) {
+        if (response) {
+            RouteOption *option = [[RouteOption alloc] init];
+            option.type = kDistance;
+            option.routeJson = response;
+            option.waypoints = order;
+            option.numOmitted = 0;
+            option.distance = [TSPUtils totalDistance:order matrix:self.matrix];
+            option.time = [TSPUtils totalDuration:order matrix:self.matrix];
+            option.cost = [[itinerary getTotalCost:YES] doubleValue];
+            completion(option, nil);
+        } else {
+            NSLog(@"Error: %@", error.description);
+        }
     }];
 }
 
+// greedy algorithm to minimize number of omitted waypoints
 - (void)calculateCostOptimalRoute:(Itinerary *)itinerary completion:(void (^)(RouteOption *response, NSError *))completion {
     NSArray *locations = itinerary.sourceCollection.locations;
+    // sort locations by cost, descending
     NSArray *sortedByCost = [locations sortedArrayUsingComparator:^NSComparisonResult(id  _Nonnull obj1, id  _Nonnull obj2) {
         Location *loc1 = obj1;
         Location *loc2 = obj2;
@@ -94,6 +100,7 @@
         }
         return (NSComparisonResult)NSOrderedSame;
     }];
+    // calculate omitted indices
     double remainingCost = [[itinerary getTotalCost:YES] doubleValue];
     double budget = [itinerary.budgetConstraint intValue];
     NSMutableArray *omittedIndices = [[NSMutableArray alloc] init];
@@ -104,6 +111,7 @@
         remainingCost -= [PriceUtils computeExpectedCost:loc.types priceLevel:loc.priceLevel];
         count += 1;
     }
+    // recompute route
     [self calculateDefaultRoute:itinerary omitWaypoints:omittedIndices completion:^(RouteOption *response, NSError *error) {
         if (response) {
             response.type = kCost;

@@ -36,14 +36,14 @@
 
 # pragma mark - Navigation
 
-- (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     CreateCollectionViewController *vc = [segue destinationViewController];
     vc.delegate = self;
 }
 
 # pragma mark - LogoutHandlerDelegate
 
-- (void) logoutSuccess {
+- (void)logoutSuccess {
     SceneDelegate *appDelegate = (SceneDelegate *)self.view.window.windowScene.delegate;
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     LoginViewController *loginViewController = [storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
@@ -51,18 +51,15 @@
     NSLog(@"Successfully logged out user");
 }
 
-- (void) logoutFail:(NSError *)error {
+- (void)logoutFail:(NSError *)error {
     NSLog(@"Failed to log out user: %@", error.description);
 }
 
 # pragma mark - CreateCollectionDelegate
 
-- (void) createdNew:(LocationCollection *)col {
+- (void)createdNew:(LocationCollection *)col {
     [self.data insertObject:col atIndex:0];
     [self.listTableView reloadData];
-//    UINavigationController *locateNav = [self.tabBarController.viewControllers lastObject];
-//    SearchMapViewController *vc = [locateNav.viewControllers firstObject];
-//    [vc viewDidLoad];
 }
 
 @end
