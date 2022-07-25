@@ -41,12 +41,11 @@
     NSString *stops = @"optimize:true";
     int count = 0;
     for (Location *loc in collection.locations) {
-        if ([omitWaypoints containsObject:@(count)]) {
-            count += 1;
+        count += 1;
+        if ([omitWaypoints containsObject:@(count-1)]) {
             continue;
         }
         stops = [stops stringByAppendingString:[NSString stringWithFormat:@"|place_id:%@", loc.placeId]];
-        count += 1;
     }
     NSString *baseUrl = [NSString stringWithFormat:DIRECTIONS_URL, origin.placeId, origin.placeId, [DateUtils aheadSecondsFrom1970:departureTime aheadBy:API_BUFFER_IN_SECONDS], stops, [self getApiKey]];
     NSString *percentEncodedURLString = [[NSURL URLWithDataRepresentation:[baseUrl dataUsingEncoding:NSUTF8StringEncoding] relativeToURL:nil] relativeString];

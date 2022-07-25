@@ -51,17 +51,11 @@
 }
 
 - (NSNumber *)mileageConstraint {
-    if (_mileageConstraint == nil) {
-        return @0;
-    }
-    return _mileageConstraint;
+    return _mileageConstraint ?: @0;
 }
 
 - (NSNumber *)budgetConstraint {
-    if (_budgetConstraint == nil) {
-        return @0;
-    }
-    return _budgetConstraint;
+    return _budgetConstraint ?: @0;
 }
 
 - (instancetype)initWithDictionary:(NSDictionary *)routesJson
@@ -83,7 +77,7 @@
         else {
             NSMutableArray *prefs = [[NSMutableArray alloc] init];
             for (Location *l in sourceCollection.locations) {
-                WaypointPreferences *newPref =  [[WaypointPreferences alloc] initWithAttributes:[NSNull null] preferredEtaEnd:[NSNull null] stayDuration:@0 budget:[NSNull null]];
+                WaypointPreferences *newPref = [[WaypointPreferences alloc] initWithAttributes:[NSNull null] preferredEtaEnd:[NSNull null] stayDuration:@0 budget:[NSNull null]];
                 [prefs addObject:[newPref toDictionary]];
             }
             self.prefJson = @{@"preferences": prefs};
