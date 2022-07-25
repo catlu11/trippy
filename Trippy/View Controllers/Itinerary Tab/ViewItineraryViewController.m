@@ -20,6 +20,7 @@
     
     self.itemsTableView.dataSource = self;
     self.itemsTableView.rowHeight = UITableViewAutomaticDimension;
+    [self.itemsTableView reloadData];
 }
 
 - (IBAction)tapBack:(id)sender {

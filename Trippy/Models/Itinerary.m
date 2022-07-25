@@ -10,6 +10,7 @@
 #import "Location.h"
 #import "MapUtils.h"
 #import "RouteLeg.h"
+#import "RouteStep.h"
 #import "WaypointPreferences.h"
 #import "PriceUtils.h"
 
@@ -139,6 +140,16 @@
         }
     }
     return omitted;
+}
+
+- (NSArray *)getInstructions {
+    NSMutableArray *instructions = [[NSMutableArray alloc] init];
+    for (RouteLeg *leg in self.routeLegs) {
+        for (RouteStep *step in leg.routeSteps) {
+            [instructions addObject:step.instruction];
+        }
+    }
+    return instructions;
 }
 
 - (WaypointPreferences *)getPreference:(Location *)loc {

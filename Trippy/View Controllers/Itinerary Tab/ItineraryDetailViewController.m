@@ -11,6 +11,7 @@
 #import "LocationCollection.h"
 #import "Location.h"
 #import "EditingItineraryViewController.h"
+#import "ViewItineraryViewController.h"
 
 @interface ItineraryDetailViewController () <EditingItineraryDelegate>
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
@@ -54,6 +55,9 @@
         EditingItineraryViewController *vc = segue.destinationViewController;
         vc.baseItinerary = self.itinerary;
         vc.delegate = self;
+    } else if ([[segue identifier] isEqualToString:@"viewItinerarySegue"]) {
+        ViewItineraryViewController *vc = segue.destinationViewController;
+        vc.itinerary = self.itinerary;
     }
 }
 

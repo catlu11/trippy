@@ -444,7 +444,7 @@
                                                 </state>
                                                 <connections>
                                                     <action selector="tapEdit:" destination="h0c-gf-E4D" eventType="touchUpInside" id="GuR-PF-Fwx"/>
-                                                    <segue destination="OT3-xB-puv" kind="presentation" modalPresentationStyle="fullScreen" id="YoH-7d-IQJ"/>
+                                                    <segue destination="OT3-xB-puv" kind="presentation" identifier="viewItinerarySegue" modalPresentationStyle="fullScreen" id="YoH-7d-IQJ"/>
                                                 </connections>
                                             </button>
                                         </subviews>
