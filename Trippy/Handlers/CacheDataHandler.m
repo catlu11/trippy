@@ -11,6 +11,7 @@
 #import "Location.h"
 #import "LocationCollection.h"
 #import "Itinerary.h"
+#import "CoreDataHandler.h"
 
 @implementation CacheDataHandler
 
@@ -88,6 +89,8 @@
 }
 
 - (void) fetchSavedItineraries {
+    [[CoreDataHandler shared] saveLocation];
+    
     PFQuery *query = [PFQuery queryWithClassName:@"Itinerary"];
     [query whereKey:@"createdBy" equalTo:[PFUser currentUser]];
     [query includeKeys:[ParseUtils getItineraryKeys]];
