@@ -7,6 +7,7 @@
 
 #import "ViewItineraryViewController.h"
 #import "ItineraryItemCell.h"
+#import "Itinerary.h"
 
 @interface ViewItineraryViewController () <UITableViewDataSource>
 @property (weak, nonatomic) IBOutlet UITableView *itemsTableView;
@@ -17,6 +18,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+     
+    self.data = [self.itinerary getInstructions];
     
     self.itemsTableView.dataSource = self;
     self.itemsTableView.rowHeight = UITableViewAutomaticDimension;
@@ -30,7 +33,8 @@
 # pragma mark - UITableViewDataSource
 
 - (nonnull UITableViewCell *)tableView:(nonnull UITableView *)tableView cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
-    ItineraryItemCell *cell = [tableView dequeueReusableCellWithIdentifier:@"StaticMapCell" forIndexPath:indexPath];
+    ItineraryItemCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ItineraryItemCell" forIndexPath:indexPath];
+    cell.instructionLabel.text = self.data[indexPath.row];
     return cell;
 }
 

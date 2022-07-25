@@ -918,6 +918,9 @@
                                                 <constraint firstAttribute="bottom" secondItem="D0v-Qo-pnd" secondAttribute="bottom" constant="11.666666030883789" id="NTz-u6-Qm2"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="instructionLabel" destination="D0v-Qo-pnd" id="2c4-GJ-paI"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>

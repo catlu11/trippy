@@ -19,6 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (UIImage *)getStaticMapImage:(CLLocationCoordinate2D)location width:(int)width height:(int)height;
 + (GMSCoordinateBounds *)latLngDictToBounds:(NSDictionary *)bounds firstKey:(NSString *)firstKey secondKey:(NSString *)secondKey;
 + (CLLocationCoordinate2D)latLngDictToCoordinate:(NSDictionary *)bounds key:(NSString *)key;
++ (NSString *)cleanHTMLString:(NSString *)str;
 + (NSString *)generateOptimizedDirectionsApiUrl:(LocationCollection *)collection
                              origin:(Location *)origin
                       omitWaypoints:(NSArray *)omitWaypoints

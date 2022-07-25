@@ -56,7 +56,8 @@
         vc.baseItinerary = self.itinerary;
         vc.delegate = self;
     } else if ([[segue identifier] isEqualToString:@"viewItinerarySegue"]) {
-        ViewItineraryViewController *vc = segue.destinationViewController;
+        UINavigationController *navVc = segue.destinationViewController;
+        ViewItineraryViewController *vc = [[navVc viewControllers] firstObject];
         vc.itinerary = self.itinerary;
     }
 }

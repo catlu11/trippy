@@ -88,6 +88,15 @@
     return [[GMSCoordinateBounds alloc] initWithCoordinate:[self latLngDictToCoordinate:bounds key:firstKey] coordinate:[self latLngDictToCoordinate:bounds key:secondKey]];
 }
 
++ (NSString *)cleanHTMLString:(NSString *)str {
+    NSRange range = [str rangeOfString:@"<[^>]+>" options:NSRegularExpressionSearch];
+    while (range.location != NSNotFound) {
+        str = [str stringByReplacingCharactersInRange:range withString:@""];
+        range = [str rangeOfString:@"<[^>]+>" options:NSRegularExpressionSearch];
+    }
+    return str;
+}
+
 + (double)metersToMiles:(int)meters {
     double inMiles = meters / 1609.0;
     return inMiles;

@@ -10,7 +10,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface ItineraryItemCell : UITableViewCell
-
+@property (weak, nonatomic) IBOutlet UILabel *instructionLabel;
 @end
 
 NS_ASSUME_NONNULL_END
