@@ -15,7 +15,6 @@
 		F07D030C288EFCE30049F355 /* RouteOption.m in Sources */ = {isa = PBXBuildFile; fileRef = F07D030B288EFCE30049F355 /* RouteOption.m */; };
 		F07D030F288F07260049F355 /* ItineraryItemCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F07D030E288F07260049F355 /* ItineraryItemCell.m */; };
 		F07D0312288F07540049F355 /* ViewItineraryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F07D0311288F07540049F355 /* ViewItineraryViewController.m */; };
-		F07D0315288F3F830049F355 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F07D0313288F3F830049F355 /* Model.xcdatamodeld */; };
 		F0C75F6D287642C10015BB74 /* Keys.plist in Resources */ = {isa = PBXBuildFile; fileRef = F0C75F6C287642C10015BB74 /* Keys.plist */; };
 		F0C75F72287747A20015BB74 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F0C75F71287747A20015BB74 /* LoginViewController.m */; };
 		F0C75F7828775A680015BB74 /* SavedCollectionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F0C75F7728775A680015BB74 /* SavedCollectionsViewController.m */; };
@@ -99,7 +98,6 @@
 		F07D030E288F07260049F355 /* ItineraryItemCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ItineraryItemCell.m; sourceTree = "<group>"; };
 		F07D0310288F07540049F355 /* ViewItineraryViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewItineraryViewController.h; sourceTree = "<group>"; };
 		F07D0311288F07540049F355 /* ViewItineraryViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewItineraryViewController.m; sourceTree = "<group>"; };
-		F07D0314288F3F830049F355 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		F0C75F6C287642C10015BB74 /* Keys.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Keys.plist; sourceTree = "<group>"; };
 		F0C75F70287747A20015BB74 /* LoginViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		F0C75F71287747A20015BB74 /* LoginViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
@@ -325,7 +323,6 @@
 				F0F335842874A0EB00470507 /* Info.plist */,
 				F0C75F6C287642C10015BB74 /* Keys.plist */,
 				F0F335852874A0EB00470507 /* main.m */,
-				F07D0313288F3F830049F355 /* Model.xcdatamodeld */,
 			);
 			path = Trippy;
 			sourceTree = "<group>";
@@ -740,7 +737,6 @@
 				F0C75F86287786D70015BB74 /* StaticMapCell.m in Sources */,
 				F0C75FE4287E3CB20015BB74 /* Itinerary.m in Sources */,
 				F0F658092887158000C04AB0 /* TSPUtils.m in Sources */,
-				F07D0315288F3F830049F355 /* Model.xcdatamodeld in Sources */,
 				F06174A52888812C005AF616 /* RouteCell.m in Sources */,
 				F0F6581A28887FEE00C04AB0 /* CacheDataHandler.m in Sources */,
 				F07D0312288F07540049F355 /* ViewItineraryViewController.m in Sources */,
@@ -1091,19 +1087,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCVersionGroup section */
-		F07D0313288F3F830049F355 /* Model.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				F07D0314288F3F830049F355 /* Model.xcdatamodel */,
-			);
-			currentVersion = F07D0314288F3F830049F355 /* Model.xcdatamodel */;
-			path = Model.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
-/* End XCVersionGroup section */
 	};
 	rootObject = F0F335682874A0E700470507 /* Project object */;
 }
