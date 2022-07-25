@@ -23,6 +23,7 @@
     
     self.itemsTableView.dataSource = self;
     self.itemsTableView.rowHeight = UITableViewAutomaticDimension;
+    self.itemsTableView.separatorColor = [UIColor clearColor];
     [self.itemsTableView reloadData];
 }
 
@@ -35,6 +36,7 @@
 - (nonnull UITableViewCell *)tableView:(nonnull UITableView *)tableView cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
     ItineraryItemCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ItineraryItemCell" forIndexPath:indexPath];
     cell.instructionLabel.text = self.data[indexPath.row];
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
 }
 
