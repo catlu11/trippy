@@ -29,7 +29,7 @@
     // Set up map
     [self.mapView initWithBounds:self.itinerary.bounds];
     [self.mapView addMarker:self.itinerary.originLocation];
-    for (Location *point in self.itinerary.sourceCollection.locations) {
+    for (Location *point in [self.itinerary getOrderedLocations]) {
         [self.mapView addMarker:point];
     }
     [self.mapView addPolyline:self.itinerary.overviewPolyline];
@@ -48,6 +48,7 @@
 }
 
 # pragma mark - Navigation
+
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if([[segue identifier] isEqualToString:@"editItinerarySegue"]) {
         EditingItineraryViewController *vc = segue.destinationViewController;
@@ -57,6 +58,7 @@
 }
 
 # pragma mark - EditingItineraryDelegate
+
 - (void) didSaveItinerary {
     [self updateUI];
 }

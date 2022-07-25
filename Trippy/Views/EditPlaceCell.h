@@ -11,7 +11,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @protocol EditPlaceCellDelegate
-- (void) didTapArrow:(int)waypointIndex;
+- (void)didTapArrow:(int)waypointIndex;
 @end
 
 @interface EditPlaceCell : UITableViewCell
@@ -22,9 +22,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UILabel *arrowLabel;
 @property (assign, nonatomic) int waypointIndex;
 
-- (void) updateUIElements:(NSString *)locName arrival:(NSDate * _Nullable)arrival departure:(NSDate * _Nullable)departure;
-- (void) addArrowTapWithSelector:(id)sender didTapArrow:(nullable SEL)didTapArrow;
-- (void) disableArrow;
+- (void)updateUIElements:(NSString *)locName arrival:(NSDate * _Nullable)arrival departure:(NSDate * _Nullable)departure;
+- (void)addArrowTapWithSelector:(id)sender didTapArrow:(nullable SEL)didTapArrow;
+- (void)disableArrow;
 @end
 
 NS_ASSUME_NONNULL_END

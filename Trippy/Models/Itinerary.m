@@ -7,9 +7,11 @@
 
 #import "Itinerary.h"
 #import "LocationCollection.h"
+#import "Location.h"
 #import "MapUtils.h"
 #import "RouteLeg.h"
 #import "WaypointPreferences.h"
+#import "PriceUtils.h"
 
 @interface Itinerary ()
 @property (strong, nonatomic) NSDictionary *fullJson;
@@ -35,7 +37,7 @@
     return self.routeJson[@"overview_polyline"][@"points"];
 }
 
-- (NSString *)waypointOrder {
+- (NSArray *)waypointOrder {
     return self.routeJson[@"waypoint_order"];
 }
 
@@ -55,10 +57,18 @@
     return _mileageConstraint;
 }
 
+- (NSNumber *)budgetConstraint {
+    if (_budgetConstraint == nil) {
+        return @0;
+    }
+    return _budgetConstraint;
+}
+
 - (instancetype)initWithDictionary:(NSDictionary *)routesJson
                           prefJson:(NSDictionary *)prefJson
                          departure:(NSDate *)departure
                  mileageConstraint:(NSNumber *)mileageConstraint
+                  budgetConstraint:(NSNumber *)budgetConstraint
                   sourceCollection:(LocationCollection *)sourceCollection
                     originLocation:(Location *)originLocation name:(NSString *)name {
     self = [super init];
@@ -73,7 +83,7 @@
         else {
             NSMutableArray *prefs = [[NSMutableArray alloc] init];
             for (Location *l in sourceCollection.locations) {
-                WaypointPreferences *newPref =  [[WaypointPreferences alloc] initWithAttributes:[NSNull null] preferredEtaEnd:[NSNull null] stayDuration:@0];
+                WaypointPreferences *newPref =  [[WaypointPreferences alloc] initWithAttributes:[NSNull null] preferredEtaEnd:[NSNull null] stayDuration:@0 budget:[NSNull null]];
                 [prefs addObject:[newPref toDictionary]];
             }
             self.prefJson = @{@"preferences": prefs};
@@ -83,6 +93,7 @@
         self.originLocation = originLocation;
         self.name = name;
         self.mileageConstraint = mileageConstraint;
+        self.budgetConstraint = budgetConstraint;
     }
     
     return self;
@@ -99,12 +110,14 @@
 - (void)reinitialize:(NSDictionary *)routesJson
             prefJson:(NSDictionary *)prefJson
            departure:(NSDate *)departure
-   mileageConstraint:(NSNumber *)mileageConstraint {
+   mileageConstraint:(NSNumber *)mileageConstraint
+    budgetConstraint:(NSNumber *)budgetConstraint {
     self.fullJson = [NSDictionary dictionaryWithDictionary:routesJson];
     self.routeJson = self.fullJson[@"routes"][0];
     self.prefJson = [NSDictionary dictionaryWithDictionary:prefJson];
     self.departureTime = departure;
     self.mileageConstraint = mileageConstraint;
+    self.budgetConstraint = budgetConstraint;
 }
 
 - (void)replaceLegs:(NSArray *)indicesToReplace newLegs:(NSArray *)newLegs {
@@ -122,6 +135,16 @@
         [ordered addObject:[self.sourceCollection.locations objectAtIndex:i]];
     }
     return ordered;
+}
+
+- (NSArray *)getOmittedLocations {
+    NSMutableArray *omitted = [[NSMutableArray alloc] init];
+    for (int i = 0; i < self.sourceCollection.locations.count; i++) {
+        if (![self.waypointOrder containsObject:@(i)]) {
+            [omitted addObject:[self.sourceCollection.locations objectAtIndex:i]];
+        }
+    }
+    return omitted;
 }
 
 - (WaypointPreferences *)getPreference:(Location *)loc {
@@ -158,6 +181,11 @@
         sum += [leg.distanceVal intValue];
     }
     return @([MapUtils metersToMiles:sum]);
+}
+
+- (NSNumber *)getTotalCost:(BOOL)includeAll {
+    NSArray *locs = includeAll ? self.sourceCollection.locations : [self getOrderedLocations];
+    return @([PriceUtils computeTotalCost:self locations:locs omitWaypoints:@[]]);
 }
 
 @end

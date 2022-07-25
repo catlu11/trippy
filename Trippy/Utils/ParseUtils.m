@@ -18,11 +18,11 @@
 }
 
 + (NSArray *)getLocationKeys {
-    return @[@"updatedAt", @"createdAt", @"title", @"snippet", @"createdBy", @"placeId", @"coord"];
+    return @[@"updatedAt", @"createdAt", @"title", @"snippet", @"createdBy", @"placeId", @"types", @"priceLevel", @"coord"];
 }
 
 + (NSArray *)getItineraryKeys {
-    return @[@"directionsJson", @"createdAt", @"name", @"createdBy", @"origin", @"sourceCollection", @"departure", @"mileageConstraint"];
+    return @[@"directionsJson", @"createdAt", @"name", @"createdBy", @"origin", @"sourceCollection", @"departure", @"mileageConstraint", @"budgetConstraint"];
 }
 
 + (NSString *)getLoggedInUsername {
@@ -70,6 +70,7 @@
                                                          prefJson:prefsDict
                                                         departure:obj[@"departure"]
                                                 mileageConstraint:obj[@"mileageConstraint"]
+                                                 budgetConstraint:obj[@"budgetConstraint"]
                                                  sourceCollection:collection originLocation:originLocation name:obj[@"name"]];
             PFUser *user = obj[@"createdBy"];
             it.userId = user.username;
@@ -114,7 +115,7 @@
 + (Location *)locationFromPFObj:(PFObject *)obj {
     PFGeoPoint *coord = obj[@"coord"];
     PFUser *user = obj[@"createdBy"];
-    return [[Location alloc] initWithParams:obj[@"title"] snippet:obj[@"snippet"] latitude:coord.latitude longitude:coord.longitude user:user.username placeId:obj[@"placeId"] parseObjectId:obj.objectId];
+    return [[Location alloc] initWithParams:obj[@"title"] snippet:obj[@"snippet"] latitude:coord.latitude longitude:coord.longitude user:user.username placeId:obj[@"placeId"] types:obj[@"types"] priceLevel:obj[@"priceLevel"] parseObjectId:obj.objectId];
 }
 
 + (PFObject *)pfObjFromCollection:(LocationCollection *)collection {
@@ -148,6 +149,8 @@
         obj[@"snippet"] = loc.snippet;
         obj[@"coord"] = [PFGeoPoint geoPointWithLatitude:loc.coord.latitude longitude:loc.coord.longitude];
         obj[@"createdBy"] = [PFUser currentUser];
+        obj[@"types"] = loc.types;
+        obj[@"priceLevel"] = loc.priceLevel;
         return obj;
     }
 }
@@ -167,6 +170,7 @@
         obj[@"preferencesJson"] = [self pfFileFromDict:[it toPrefsDictionary] name:@"preferences"];
         obj[@"departure"] = it.departureTime;
         obj[@"mileageConstraint"] = it.mileageConstraint;
+        obj[@"budgetConstraint"] = it.budgetConstraint;
         return obj;
     }
 }

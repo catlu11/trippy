@@ -12,7 +12,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @protocol WaypointPreferencesDelegate
-- (void) didUpdatePreference:(WaypointPreferences *)newPref location:(Location *)location;
+- (void)didUpdatePreference:(WaypointPreferences *)newPref location:(Location *)location;
 @end
 
 @interface WaypointPreferencesViewController : UIViewController

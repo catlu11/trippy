@@ -29,7 +29,14 @@
                 } else {
                     PFRelation *relation = [object relationForKey:@"locations"];
                     [relation addObject:newLocation];
-                    [object saveInBackground];
+                    [object saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
+                        __strong CacheDataHandler *strongSelf = weakSelf;
+                        if (succeeded) {
+                            [strongSelf.delegate postedLocationSuccess:location];
+                        } else {
+                            [strongSelf.delegate generalRequestFail:error];
+                        }
+                    }];
                 }
             }];
         }
@@ -70,6 +77,7 @@
     obj[@"preferencesJson"] = [ParseUtils pfFileFromDict:[it toPrefsDictionary] name:@"preferences"];
     obj[@"departure"] = it.departureTime;
     obj[@"mileageConstraint"] = it.mileageConstraint;
+    obj[@"budgetConstraint"] = it.budgetConstraint;
     __weak CacheDataHandler *weakSelf = self;
     [obj saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
         if (succeeded) {

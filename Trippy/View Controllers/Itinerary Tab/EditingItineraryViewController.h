@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 @protocol EditingItineraryDelegate
-- (void) didSaveItinerary;
+- (void)didSaveItinerary;
 @end
 
 @interface EditingItineraryViewController : UIViewController

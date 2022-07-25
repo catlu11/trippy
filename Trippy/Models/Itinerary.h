@@ -30,6 +30,7 @@ NS_ASSUME_NONNULL_BEGIN
 // Reassignable non-JSON
 @property (strong, nonatomic) NSDate *departureTime;
 @property (strong, nonatomic) NSNumber *mileageConstraint;
+@property (strong, nonatomic) NSNumber *budgetConstraint;
 
 // JSON fields
 @property (readonly) NSArray *routeLegs;
@@ -41,21 +42,26 @@ NS_ASSUME_NONNULL_BEGIN
                           prefJson:(NSDictionary *)prefJson
                          departure:(NSDate *)departure
                  mileageConstraint:(NSNumber *)mileageConstraint
+                  budgetConstraint:(NSNumber *)budgetConstraint
                   sourceCollection:(LocationCollection *)sourceCollection
                     originLocation:(Location *)originLocation
                               name:(NSString *)name;
 - (void)reinitialize:(NSDictionary *)routesJson
             prefJson:(NSDictionary *)prefJson
            departure:(NSDate *)departure
-   mileageConstraint:(NSNumber *)mileageConstraint;
+   mileageConstraint:(NSNumber *)mileageConstraint
+    budgetConstraint:(NSNumber *)budgetConstraint;
+
 - (void)updatePreference:(Location *)location pref:(WaypointPreferences *)pref;
 - (WaypointPreferences *)getPreference:(Location *)loc;
 - (NSDictionary *)toRouteDictionary;
 - (NSDictionary *)toPrefsDictionary;
 - (NSArray *)getOrderedLocations;
+- (NSArray *)getOmittedLocations;
 - (NSDate *)computeArrival:(int)waypointIndex;
 - (NSDate *)computeDeparture:(int)waypointIndex;
 - (NSNumber *)getTotalDistance;
+- (NSNumber *)getTotalCost:(BOOL)includeAll;
 @end
 
 NS_ASSUME_NONNULL_END

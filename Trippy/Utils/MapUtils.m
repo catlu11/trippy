@@ -35,11 +35,18 @@
 }
 
 + (NSString *)generateOptimizedDirectionsApiUrl:(LocationCollection *)collection
-                                          origin:(Location *)origin
+                                         origin:(Location *)origin
+                                  omitWaypoints:(NSArray *)omitWaypoints
                                    departureTime:(NSDate *)departureTime {
     NSString *stops = @"optimize:true";
-    for(Location *loc in collection.locations) {
+    int count = 0;
+    for (Location *loc in collection.locations) {
+        if ([omitWaypoints containsObject:@(count)]) {
+            count += 1;
+            continue;
+        }
         stops = [stops stringByAppendingString:[NSString stringWithFormat:@"|place_id:%@", loc.placeId]];
+        count += 1;
     }
     NSString *baseUrl = [NSString stringWithFormat:DIRECTIONS_URL, origin.placeId, origin.placeId, [DateUtils aheadSecondsFrom1970:departureTime aheadBy:API_BUFFER_IN_SECONDS], stops, [self getApiKey]];
     NSString *percentEncodedURLString = [[NSURL URLWithDataRepresentation:[baseUrl dataUsingEncoding:NSUTF8StringEncoding] relativeToURL:nil] relativeString];
@@ -51,7 +58,7 @@
                                        origin:(Location *)origin
                                 departureTime:(NSDate *)departureTime {
     NSString *stops = @"optimize:false";
-    for(Location *loc in [TSPUtils reorder:collection.locations order:waypointOrder]) {
+    for (Location *loc in [TSPUtils reorder:collection.locations order:waypointOrder]) {
         stops = [stops stringByAppendingString:[NSString stringWithFormat:@"|place_id:%@", loc.placeId]];
     }
     NSString *baseUrl = [NSString stringWithFormat:DIRECTIONS_URL, origin.placeId, origin.placeId, [DateUtils aheadSecondsFrom1970:departureTime aheadBy:API_BUFFER_IN_SECONDS], stops, [self getApiKey]];
@@ -64,7 +71,7 @@
                                           origin:(Location *)origin
                                    departureTime:(NSDate *)departureTime {
     NSString *stops = [NSString stringWithFormat:@"place_id:%@|", origin.placeId];
-    for(Location *loc in collection.locations) {
+    for (Location *loc in collection.locations) {
         stops = [stops stringByAppendingString:[NSString stringWithFormat:@"|place_id:%@", loc.placeId]];
     }
     NSString *baseUrl = [NSString stringWithFormat:MATRIX_URL, stops, stops, [DateUtils aheadSecondsFrom1970:departureTime aheadBy:API_BUFFER_IN_SECONDS], [self getApiKey]];

@@ -22,7 +22,7 @@
     return [DateUtils iso8601StringToDate:dateString];
 }
 
-- (void) setPreferredEtaStart:(NSDate *)preferredEtaStart {
+- (void)setPreferredEtaStart:(NSDate *)preferredEtaStart {
     _infoJson[@"preferredEtaStart"] = [DateUtils formatDateAsIso8601:preferredEtaStart];
 }
 
@@ -34,7 +34,7 @@
     return [DateUtils iso8601StringToDate:dateString];
 }
 
-- (void) setPreferredEtaEnd:(NSDate *)preferredEtaEnd {
+- (void)setPreferredEtaEnd:(NSDate *)preferredEtaEnd {
     _infoJson[@"preferredEtaEnd"] = [DateUtils formatDateAsIso8601:preferredEtaEnd];
 }
 
@@ -43,8 +43,20 @@
     return val;
 }
 
-- (void) setStayDurationInSeconds:(NSNumber *)stayDuration {
+- (void)setStayDurationInSeconds:(NSNumber *)stayDuration {
     _infoJson[@"stayDuration"] = stayDuration;
+}
+
+- (NSNumber *)budget {
+    NSNumber *val = _infoJson[@"budget"];
+    if ([val isEqual:[NSNull null]]) {
+        return nil;
+    }
+    return val;
+}
+
+- (void)setBudget:(NSNumber *)budget {
+    _infoJson[@"budget"] = budget;
 }
 
 - (instancetype)initWithDictionary:(NSDictionary *)dict {
@@ -63,13 +75,14 @@
 
 - (instancetype)initWithAttributes:(NSDate * _Nullable)preferredEtaStart
                             preferredEtaEnd:(NSDate * _Nullable)preferredEtaEnd
-                            stayDuration:(NSNumber *)stayDuration {
+                      stayDuration:(NSNumber *)stayDuration
+                            budget:(NSNumber *)budget {
     self = [super init];
     
     if (self) {
         NSString *etaStart = [preferredEtaStart isEqual:[NSNull null]] ? [NSNull null] : [DateUtils formatDateAsIso8601:preferredEtaStart];
         NSString *etaEnd = [preferredEtaEnd isEqual:[NSNull null]] ? [NSNull null] : [DateUtils formatDateAsIso8601:preferredEtaEnd];
-        NSDictionary *newDict = [[NSDictionary alloc] initWithObjects:[NSArray arrayWithObjects:etaStart, etaEnd, stayDuration, nil] forKeys:[NSArray arrayWithObjects:@"preferredEtaStart", @"preferredEtaEnd", @"stayDuration", nil]];
+        NSDictionary *newDict = [[NSDictionary alloc] initWithObjects:[NSArray arrayWithObjects:etaStart, etaEnd, stayDuration, budget, nil] forKeys:[NSArray arrayWithObjects:@"preferredEtaStart", @"preferredEtaEnd", @"stayDuration", @"budget", nil]];
         self.infoJson = [newDict mutableCopy];
     }
     
@@ -80,7 +93,7 @@
     return self.infoJson;
 }
 
-- (BOOL) isValid {
+- (BOOL)isValid {
     NSDate *etaStart = self.preferredEtaStart;
     NSDate *etaEnd = self.preferredEtaEnd;
     if (etaEnd != nil && etaStart != nil) {

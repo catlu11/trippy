@@ -17,10 +17,12 @@
 @property (weak, nonatomic) IBOutlet UIImageView *staticMapImage;
 @property (weak, nonatomic) IBOutlet UISwitch *prefEtaSwitch;
 @property (weak, nonatomic) IBOutlet UISwitch *estStaySwitch;
+@property (weak, nonatomic) IBOutlet UISwitch *budgetSwitch;
 @property (weak, nonatomic) IBOutlet UIDatePicker *etaStartPicker;
 @property (weak, nonatomic) IBOutlet UIDatePicker *etaEndPicker;
 @property (weak, nonatomic) IBOutlet UITextField *stayHrField;
 @property (weak, nonatomic) IBOutlet UITextField *stayMinField;
+@property (weak, nonatomic) IBOutlet UITextField *budgetField;
 @property (weak, nonatomic) IBOutlet UILabel *toRangeLabel;
 
 @property (assign, nonatomic) BOOL *didChange;
@@ -53,10 +55,16 @@
         self.stayHrField.text = [NSString stringWithFormat:@"%i", hourMin.hours];
         self.stayMinField.text = [NSString stringWithFormat:@"%i", hourMin.minutes];
     }
+    if (self.preferences.budget) {
+        [self.budgetSwitch setOn:YES];
+        self.budgetField.hidden = NO;
+        self.budgetField.text = [self.preferences.budget stringValue];
+    }
     
     // Set text field delegates
     self.stayHrField.delegate = self;
     self.stayMinField.delegate = self;
+    self.budgetField.delegate = self;
 }
 
 - (IBAction)toggleEta:(id)sender {
@@ -68,6 +76,10 @@
 - (IBAction)toggleStay:(id)sender {
     self.stayHrField.enabled = self.estStaySwitch.isOn;
     self.stayMinField.enabled = self.estStaySwitch.isOn;
+}
+
+- (IBAction)toggleBudget:(id)sender {
+    self.budgetField.enabled = self.budgetSwitch.isOn;
 }
 
 - (IBAction)tapCancel:(id)sender {
@@ -84,19 +96,16 @@
     NSDate *etaEnd = self.prefEtaSwitch.isOn ? self.etaEndPicker.date : [NSNull null];
     TimeInHrMin fieldTime = {.hours = [self.stayHrField.text intValue], .minutes=[self.stayMinField.text intValue]};
     NSNumber *stayTime = self.estStaySwitch ? @([DateUtils hourMinToSeconds:fieldTime]) : @0;
+    NSNumber *budget = self.budgetSwitch.isOn ? @([self.budgetField.text intValue]): [NSNull null];
     
-    if ([etaStart isEqualToDate:self.preferences.preferredEtaStart] && [etaEnd isEqualToDate:self.preferences.preferredEtaEnd] && [stayTime isEqualToValue:self.preferences.stayDurationInSeconds]) { // if no changes made
+    WaypointPreferences *newPref = [[WaypointPreferences alloc] initWithAttributes:etaStart preferredEtaEnd:etaEnd stayDuration:stayTime budget:budget];
+    if ([newPref isValid]) {
+        [self.delegate didUpdatePreference:newPref location:self.location];
         [self dismissViewControllerAnimated:YES completion:nil];
-    } else {
-        WaypointPreferences *newPref = [[WaypointPreferences alloc] initWithAttributes:etaStart preferredEtaEnd:etaEnd stayDuration:stayTime];
-        if ([newPref isValid]) {
-            [self.delegate didUpdatePreference:newPref location:self.location];
-            [self dismissViewControllerAnimated:YES completion:nil];
-        }
-        else {
-            NSLog(@"Invalid preferences");
-            // TODO: Update a warning label if invalid
-        }
+    }
+    else {
+        NSLog(@"Invalid preferences");
+        // TODO: Update a warning label if invalid
     }
 }
 

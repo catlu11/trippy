@@ -39,9 +39,8 @@
     self.totalDistLabel.text = [NSString stringWithFormat:@"Total distance: %.2f miles", [MapUtils metersToMiles:self.route.distance]];
     TimeInHrMin time = [DateUtils secondsToHourMin:self.route.time];
     self.totalDurationLabel.text = [NSString stringWithFormat:@"Total duration: %dhr%dmin", time.hours, time.minutes];
-    // TODO: Implement when omission and cost are available
-    self.omittedLabel.text = @"Omitted waypoints: 0";
-    self.estCostLabel.text = @"Estimated cost: -";
+    self.omittedLabel.text = [NSString stringWithFormat:@"Omitted waypoints: %d", self.route.numOmitted];
+    self.estCostLabel.text = [NSString stringWithFormat:@"Estimated cost: %.2f", self.route.cost];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
