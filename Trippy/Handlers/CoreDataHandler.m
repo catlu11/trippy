@@ -125,8 +125,7 @@
     [obj setValue:jsonString forKey:@"routeJson"];
     [obj setValue:[CoreDataUtils managedObjectFromLocation:it.originLocation] forKey:@"originLocation"];
     [obj setValue:[CoreDataUtils managedObjectFromCollection:it.sourceCollection] forKey:@"sourceCollection"];
-//    [[obj mutableSetValueForKey:@"originLocation"] addObject:[CoreDataUtils managedObjectFromLocation:it.originLocation]];
-//    [[obj mutableSetValueForKey:@"sourceCollection"] addObject:[CoreDataUtils managedObjectFromCollection:it.sourceCollection]];
+    [obj setValue:[NSNumber numberWithBool:it.isFavorited] forKey:@"isFavorited"];
     return obj;
 }
 

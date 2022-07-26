@@ -50,12 +50,13 @@
     
     // Set up copy of itinerary as data source
     self.mutableItinerary = [[Itinerary alloc] initWithDictionary:[self.baseItinerary toRouteDictionary]
-                                                         prefJson:[self.baseItinerary toPrefsDictionary]
-                                                        departure:self.baseItinerary.departureTime
-                                                mileageConstraint:self.baseItinerary.mileageConstraint budgetConstraint:self.baseItinerary.budgetConstraint
-                                                 sourceCollection:self.baseItinerary.sourceCollection
-                                                   originLocation:self.baseItinerary.originLocation
-                                                             name:self.baseItinerary.name];
+                                                          prefJson:[self.baseItinerary toPrefsDictionary]
+                                                         departure:self.baseItinerary.departureTime
+                                                 mileageConstraint:self.baseItinerary.mileageConstraint budgetConstraint:self.baseItinerary.budgetConstraint
+                                                  sourceCollection:self.baseItinerary.sourceCollection
+                                                    originLocation:self.baseItinerary.originLocation
+                                                              name:self.baseItinerary.name
+                                                       isFavorited:self.baseItinerary.isFavorited];
     
     self.cacheHandler = [[CacheDataHandler alloc] init];
     self.cacheHandler.delegate = self;

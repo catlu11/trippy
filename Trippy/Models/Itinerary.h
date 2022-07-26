@@ -31,6 +31,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) NSDate *departureTime;
 @property (strong, nonatomic) NSNumber *mileageConstraint;
 @property (strong, nonatomic) NSNumber *budgetConstraint;
+@property (assign, nonatomic) BOOL isFavorited;
 
 // JSON fields
 @property (readonly) NSArray *routeLegs;
@@ -45,7 +46,8 @@ NS_ASSUME_NONNULL_BEGIN
                   budgetConstraint:(NSNumber *)budgetConstraint
                   sourceCollection:(LocationCollection *)sourceCollection
                     originLocation:(Location *)originLocation
-                              name:(NSString *)name;
+                              name:(NSString *)name
+                       isFavorited:(BOOL)isFavorited;
 - (void)reinitialize:(NSDictionary *)routesJson
             prefJson:(NSDictionary *)prefJson
            departure:(NSDate *)departure

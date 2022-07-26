@@ -65,12 +65,15 @@
                  mileageConstraint:(NSNumber *)mileageConstraint
                   budgetConstraint:(NSNumber *)budgetConstraint
                   sourceCollection:(LocationCollection *)sourceCollection
-                    originLocation:(Location *)originLocation name:(NSString *)name {
+                    originLocation:(Location *)originLocation
+                              name:(NSString *)name
+                       isFavorited:(BOOL)isFavorited {
     self = [super init];
     
     if (self) {
         self.fullJson = [NSDictionary dictionaryWithDictionary:routesJson];
         self.routeJson = self.fullJson[@"routes"][0];
+        self.isFavorited = isFavorited;
         
         if (prefJson) {
             self.prefJson = [NSDictionary dictionaryWithDictionary:prefJson];

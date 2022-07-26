@@ -194,19 +194,24 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Description:" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="E0b-Mc-8Tj">
-                                                    <rect key="frame" x="88" y="30" width="270" height="53"/>
+                                                    <rect key="frame" x="88" y="30" width="228" height="53"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="date" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZbL-ow-y45">
-                                                    <rect key="frame" x="266" y="8" width="92" height="17"/>
+                                                    <rect key="frame" x="224" y="5" width="92" height="17"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <imageView clipsSubviews="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="star" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="AKM-4s-CD1">
+                                                    <rect key="frame" x="324" y="32.666666666666686" width="24" height="25"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <color key="tintColor" systemColor="systemOrangeColor"/>
+                                                </imageView>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="yxo-3W-ElL" firstAttribute="leading" secondItem="tct-MG-roR" secondAttribute="leading" constant="5" id="3AX-hi-8mk"/>
@@ -218,6 +223,7 @@
                                             <outlet property="descriptionLabel" destination="E0b-Mc-8Tj" id="HRg-iN-2KQ"/>
                                             <outlet property="lastUpdateLabel" destination="ZbL-ow-y45" id="MjX-Jl-6hE"/>
                                             <outlet property="mapImageView" destination="yxo-3W-ElL" id="YmE-XP-8QP"/>
+                                            <outlet property="starredImage" destination="AKM-4s-CD1" id="oMv-ha-bXb"/>
                                             <outlet property="titleLabel" destination="05Z-Hx-wqB" id="vTG-zj-FpZ"/>
                                         </connections>
                                     </tableViewCell>
@@ -1635,7 +1641,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="XC6-s5-8OB"/>
+        <segue reference="7bG-EX-YEr"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="arrowshape.turn.up.left.fill" catalog="system" width="128" height="106"/>
@@ -1644,6 +1650,7 @@
         <image name="pencil.circle" catalog="system" width="128" height="121"/>
         <image name="plus" catalog="system" width="128" height="113"/>
         <image name="printer" catalog="system" width="128" height="111"/>
+        <image name="star" catalog="system" width="128" height="116"/>
         <image name="tray" catalog="system" width="128" height="88"/>
         <image name="trippy_logo_textless" width="420" height="418"/>
         <systemColor name="labelColor">

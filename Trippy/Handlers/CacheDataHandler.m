@@ -79,6 +79,7 @@
     obj[@"departure"] = it.departureTime;
     obj[@"mileageConstraint"] = it.mileageConstraint;
     obj[@"budgetConstraint"] = it.budgetConstraint;
+    obj[@"isFavorited"] = [NSNumber numberWithBool:it.isFavorited];
     __weak CacheDataHandler *weakSelf = self;
     [obj saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
         if (succeeded) {

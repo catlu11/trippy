@@ -10,18 +10,22 @@
 #import "Location.h"
 #import "LocationCollection.h"
 #import "Itinerary.h"
+#import "CacheDataHandler.h"
 
 @interface StaticMapCell ()
 @property (weak, nonatomic) IBOutlet UIImageView *mapImageView;
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *lastUpdateLabel;
 @property (weak, nonatomic) IBOutlet UILabel *descriptionLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *starredImage;
+@property (strong, nonatomic) CacheDataHandler *parseHandler;
 @end
 
 @implementation StaticMapCell
 
 - (void)awakeFromNib {
     [super awakeFromNib];
+    self.parseHandler = [[CacheDataHandler alloc] init];
 }
 
 - (void) updateUIElements:(ListType)type {
@@ -39,6 +43,8 @@
 }
 
 - (void) updateUIElementsItinerary {
+    [self.starredImage setHidden:NO];
+    
     self.titleLabel.text = self.itinerary.name;
     self.descriptionLabel.text = [NSString stringWithFormat:@"Origin: %@\nSource: %@", self.itinerary.originLocation.title, self.itinerary.sourceCollection.title];
     [self.descriptionLabel sizeToFit];
@@ -55,11 +61,24 @@
         self.mapImageView.image = firstLoc.staticMap;
     }
     else {
-        self.mapImageView.image = [UIImage imageNamed:@"tray"];
+        self.mapImageView.image = [UIImage systemImageNamed:@"tray"];
     }
+    
+    self.starredImage.image = self.itinerary.isFavorited ? [UIImage systemImageNamed:@"star.fill"] : [UIImage systemImageNamed:@"star"];
+    UITapGestureRecognizer *tapStar = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didTapStar)];
+    [self.starredImage addGestureRecognizer:tapStar];
+    [self.starredImage setUserInteractionEnabled:YES];
+}
+
+- (void) didTapStar {
+    self.itinerary.isFavorited = !self.itinerary.isFavorited;
+    self.starredImage.image = self.itinerary.isFavorited ? [UIImage systemImageNamed:@"star.fill"] : [UIImage systemImageNamed:@"star"];
+    [self.parseHandler updateItinerary:self.itinerary];
 }
 
 - (void) updateUIElementsCollection {
+    [self.starredImage setHidden:YES];
+    
     self.titleLabel.text = self.collection.title;
     self.descriptionLabel.text = self.collection.snippet;
     [self.descriptionLabel sizeToFit];
@@ -81,6 +100,8 @@
 }
 
 - (void) updateUIElementsLocation {
+    [self.starredImage setHidden:YES];
+    
     self.titleLabel.text = self.location.title;
     self.descriptionLabel.text = self.location.snippet;
     [self.descriptionLabel sizeToFit];

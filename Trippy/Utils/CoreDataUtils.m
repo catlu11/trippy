@@ -50,13 +50,14 @@
     Location *originLocation = [self locationFromManagedObject:[obj valueForKey:@"originLocation"]];
     LocationCollection *sourceCollection = [self collectionFromManagedObject:[obj valueForKey:@"sourceCollection"]];
     Itinerary *it = [[Itinerary alloc] initWithDictionary:jsonResponse
-                                                 prefJson:nil
-                                                departure:nil
-                                        mileageConstraint:nil
-                                         budgetConstraint:nil
-                                         sourceCollection:sourceCollection
-                                           originLocation:originLocation
-                                                     name:[obj valueForKey:@"name"]];
+                                                  prefJson:nil
+                                                 departure:nil
+                                         mileageConstraint:nil
+                                          budgetConstraint:nil
+                                          sourceCollection:sourceCollection
+                                            originLocation:originLocation
+                                                      name:[obj valueForKey:@"name"]
+                                               isFavorited:[[obj valueForKey:@"isFavorited"] boolValue]];
     if ([obj valueForKey:@"synced"]) {
         it.parseObjectId = [obj valueForKey:@"parseObjectId"];
     }

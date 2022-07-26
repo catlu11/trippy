@@ -81,7 +81,8 @@
                                                      budgetConstraint:nil
                                                      sourceCollection:self.selectedCol
                                                        originLocation:self.selectedLoc
-                                                                 name:self.nameField.text];
+                                                                 name:self.nameField.text
+                                                          isFavorited:NO];
                 [self.colHandler postNewItinerary:it];
             }
         }];

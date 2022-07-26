@@ -22,7 +22,7 @@
 }
 
 + (NSArray *)getItineraryKeys {
-    return @[@"directionsJson", @"createdAt", @"name", @"createdBy", @"origin", @"sourceCollection", @"departure", @"mileageConstraint", @"budgetConstraint"];
+    return @[@"directionsJson", @"createdAt", @"name", @"createdBy", @"origin", @"sourceCollection", @"departure", @"mileageConstraint", @"budgetConstraint", @"isFavorited"];
 }
 
 + (NSString *)getLoggedInUsername {
@@ -71,7 +71,9 @@
                                                         departure:obj[@"departure"]
                                                 mileageConstraint:obj[@"mileageConstraint"]
                                                  budgetConstraint:obj[@"budgetConstraint"]
-                                                 sourceCollection:collection originLocation:originLocation name:obj[@"name"]];
+                                                 sourceCollection:collection originLocation:originLocation
+                                                             name:obj[@"name"]
+                                                      isFavorited:[obj[@"isFavorited"] boolValue]];
             PFUser *user = obj[@"createdBy"];
             it.userId = user.username;
             it.createdAt = obj.createdAt;
@@ -171,6 +173,7 @@
         obj[@"departure"] = it.departureTime;
         obj[@"mileageConstraint"] = it.mileageConstraint;
         obj[@"budgetConstraint"] = it.budgetConstraint;
+        obj[@"isFavorited"] = [NSNumber numberWithBool:it.isFavorited];
         return obj;
     }
 }
