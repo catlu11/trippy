@@ -154,6 +154,7 @@
         } else {
             for(PFObject *obj in objects) {
                 [strongSelf.delegate addFetchedLocation:[ParseUtils locationFromPFObj:obj]];
+                [[CoreDataHandler shared] saveNewLocation:[ParseUtils locationFromPFObj:obj]];
             }
         }
     }];

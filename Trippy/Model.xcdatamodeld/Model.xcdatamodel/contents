@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="20086" systemVersion="21E258" minimumToolsVersion="Automatic" sourceLanguage="Objective-C" userDefinedModelVersionIdentifier="">
     <entity name="Itinerary" representedClassName="" syncable="YES">
+        <attribute name="name" optional="YES" attributeType="String"/>
         <attribute name="parseObjectId" optional="YES" attributeType="String"/>
         <attribute name="routeJson" optional="YES" attributeType="String"/>
-        <attribute name="snippet" optional="YES" attributeType="String"/>
         <attribute name="staticImg" optional="YES" attributeType="Binary"/>
         <attribute name="synced" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
-        <attribute name="title" optional="YES" attributeType="String"/>
         <relationship name="originLocation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Location"/>
         <relationship name="sourceCollection" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="LocationCollection"/>
     </entity>
@@ -28,6 +27,6 @@
     <elements>
         <element name="Location" positionX="-63" positionY="-18" width="128" height="104"/>
         <element name="LocationCollection" positionX="-54" positionY="18" width="128" height="119"/>
-        <element name="Itinerary" positionX="-36" positionY="27" width="128" height="149"/>
+        <element name="Itinerary" positionX="-36" positionY="27" width="128" height="134"/>
     </elements>
 </model>

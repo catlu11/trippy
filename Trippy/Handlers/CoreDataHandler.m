@@ -32,6 +32,24 @@
     return ad.managedObjectContext;
 }
 
+- (NSManagedObject *)getEntityById:(NSString *)entity parseObjectId:(NSString *)parseObjectId {
+    NSManagedObjectContext *moc = [self getContext];
+    NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:entity];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"parseObjectId == %@", parseObjectId];
+    [request setPredicate:predicate];
+    
+    NSError *error = nil;
+    NSArray *results = [moc executeFetchRequest:request error:&error];
+    if (!results) {
+        NSLog(@"Error fetching entity object: %@\n%@", [error localizedDescription], [error userInfo]);
+        abort();
+    }
+    if (results.count == 0) {
+        return nil;
+    }
+    return [results firstObject];
+}
+
 - (void)clearEntity:(NSString *)entityName {
     NSManagedObjectContext *moc = [self getContext];
     NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:entityName];
@@ -48,7 +66,7 @@
     }
 }
 
-- (void)saveNewLocation:(Location *)loc {
+- (NSManagedObject *)saveNewLocation:(Location *)loc {
     NSManagedObjectContext *moc = [self getContext];
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"Location" inManagedObjectContext:moc];
     NSManagedObject *obj = [[NSManagedObject alloc] initWithEntity:entity insertIntoManagedObjectContext:moc];
@@ -65,19 +83,16 @@
     if ([moc save:&error] == NO) {
         NSAssert(NO, @"Error saving context: %@\n%@", [error localizedDescription], [error userInfo]);
     }
+    return obj;
 }
 
-- (void)saveNewCollection:(LocationCollection *)col {
+- (NSManagedObject *)saveNewCollection:(LocationCollection *)col {
     NSManagedObjectContext *moc = [self getContext];
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"LocationCollection" inManagedObjectContext:moc];
     NSManagedObject *obj = [[NSManagedObject alloc] initWithEntity:entity insertIntoManagedObjectContext:moc];
     [obj setValue:col.title forKey:@"title"];
     [obj setValue:col.snippet forKey:@"snippet"];
     [obj setValue:col.createdAt forKey:@"createdAt"];
-    if (col.locations.count > 0) {
-        Location *loc = col.locations[0];
-        [obj setValue:UIImagePNGRepresentation(loc.staticMap) forKey:@"staticMap"];
-    }
     if (col.parseObjectId) {
         [obj setValue:col.parseObjectId forKey:@"parseObjectId"];
         [obj setValue:[NSNumber numberWithBool:YES] forKey:@"synced"];
@@ -91,10 +106,28 @@
     if ([moc save:&error] == NO) {
         NSAssert(NO, @"Error saving context: %@\n%@", [error localizedDescription], [error userInfo]);
     }
+    return obj;
 }
 
-- (void)saveNewItinerary:(Itinerary *)it {
-    // TODO: Implement
+- (NSManagedObject *)saveNewItinerary:(Itinerary *)it {
+    NSManagedObjectContext *moc = [self getContext];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Itinerary" inManagedObjectContext:moc];
+    NSManagedObject *obj = [[NSManagedObject alloc] initWithEntity:entity insertIntoManagedObjectContext:moc];
+    [obj setValue:it.name forKey:@"name"];
+    if (it.parseObjectId) {
+        [obj setValue:it.parseObjectId forKey:@"parseObjectId"];
+        [obj setValue:[NSNumber numberWithBool:YES] forKey:@"synced"];
+    } else {
+        [obj setValue:[NSNumber numberWithBool:NO] forKey:@"synced"];
+    }
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:[it toRouteDictionary] options:0 error:nil];
+    NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+    [obj setValue:jsonString forKey:@"routeJson"];
+    [obj setValue:[CoreDataUtils managedObjectFromLocation:it.originLocation] forKey:@"originLocation"];
+    [obj setValue:[CoreDataUtils managedObjectFromCollection:it.sourceCollection] forKey:@"sourceCollection"];
+//    [[obj mutableSetValueForKey:@"originLocation"] addObject:[CoreDataUtils managedObjectFromLocation:it.originLocation]];
+//    [[obj mutableSetValueForKey:@"sourceCollection"] addObject:[CoreDataUtils managedObjectFromCollection:it.sourceCollection]];
+    return obj;
 }
 
 - (NSArray *)fetchObjects:(NSString *)entityName {
@@ -104,10 +137,37 @@
     NSError *error = nil;
     NSArray *results = [moc executeFetchRequest:request error:&error];
     if (!results) {
-        NSLog(@"Error fetching Location objects: %@\n%@", [error localizedDescription], [error userInfo]);
+        NSLog(@"Error fetching objects: %@\n%@", [error localizedDescription], [error userInfo]);
         abort();
     }
     return results;
+}
+
+- (NSArray *)fetchLocations {
+    NSArray *managedObjects = [self fetchObjects:@"Location"];
+    NSMutableArray *locs = [[NSMutableArray alloc] init];
+    for (NSManagedObject *obj in managedObjects) {
+        [locs addObject:[CoreDataUtils locationFromManagedObject:obj]];
+    }
+    return locs;
+}
+
+- (NSArray *)fetchCollections {
+    NSArray *managedObjects = [self fetchObjects:@"LocationCollection"];
+    NSMutableArray *cols = [[NSMutableArray alloc] init];
+    for (NSManagedObject *obj in managedObjects) {
+        [cols addObject:[CoreDataUtils collectionFromManagedObject:obj]];
+    }
+    return cols;
+}
+
+- (NSArray *)fetchItineraries {
+    NSArray *managedObjects = [self fetchObjects:@"Itinerary"];
+    NSMutableArray *its = [[NSMutableArray alloc] init];
+    for (NSManagedObject *obj in managedObjects) {
+        [its addObject:[CoreDataUtils itineraryFromManagedObject:obj]];
+    }
+    return its;
 }
 
 @end

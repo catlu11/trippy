@@ -7,6 +7,9 @@
 
 #import "CoreDataUtils.h"
 #import "Location.h"
+#import "LocationCollection.h"
+#import "Itinerary.h"
+#import "CoreDataHandler.h"
 @import CoreData;
 
 @implementation CoreDataUtils
@@ -23,28 +26,65 @@
 }
 
 + (LocationCollection *)collectionFromManagedObject:(NSManagedObject *)obj {
-    // TODO: Implement
-    return nil;
+    LocationCollection *col = [[LocationCollection alloc] init];
+    col.title = [obj valueForKey:@"title"];
+    col.snippet = [obj valueForKey:@"snippet"];
+    if ([obj valueForKey:@"synced"]) {
+        col.parseObjectId = [obj valueForKey:@"parseObjectId"];
+    }
+    NSSet *locRelation = [obj valueForKey:@"locations"];
+    NSMutableArray *locations = [[NSMutableArray alloc] init];
+    for (NSManagedObject *locObj in locRelation) {
+        [locations addObject:[self locationFromManagedObject:locObj]];
+    }
+    col.locations = locations;
+    col.createdAt = [obj valueForKey:@"createdAt"];
+    return col;
 }
 
 + (Itinerary *)itineraryFromManagedObject:(NSManagedObject *)obj {
-    // TODO: Implement
-    return nil;
+    NSData *data = [[obj valueForKey:@"routeJson"] dataUsingEncoding:NSUTF8StringEncoding];
+    NSDictionary *jsonResponse = [NSJSONSerialization JSONObjectWithData:data
+                                                                 options:kNilOptions
+                                                                   error:nil];
+    Location *originLocation = [self locationFromManagedObject:[obj valueForKey:@"originLocation"]];
+    LocationCollection *sourceCollection = [self collectionFromManagedObject:[obj valueForKey:@"sourceCollection"]];
+    Itinerary *it = [[Itinerary alloc] initWithDictionary:jsonResponse
+                                                 prefJson:nil
+                                                departure:nil
+                                        mileageConstraint:nil
+                                         budgetConstraint:nil
+                                         sourceCollection:sourceCollection
+                                           originLocation:originLocation
+                                                     name:[obj valueForKey:@"name"]];
+    if ([obj valueForKey:@"synced"]) {
+        it.parseObjectId = [obj valueForKey:@"parseObjectId"];
+    }
+    return it;
 }
 
 + (NSManagedObject *)managedObjectFromLocation:(Location *)loc {
-    // TODO: Implement
-    return nil;
+    NSManagedObject *obj = [[CoreDataHandler shared] getEntityById:@"Location" parseObjectId:loc.parseObjectId];
+    if (obj) {
+        return obj;
+    }
+    return [[CoreDataHandler shared] saveNewLocation:loc];
 }
 
 + (NSManagedObject *)managedObjectFromCollection:(LocationCollection *)col {
-    // TODO: Implement
-    return nil;
+    NSManagedObject *obj = [[CoreDataHandler shared] getEntityById:@"LocationCollection" parseObjectId:col.parseObjectId];
+    if (obj) {
+        return obj;
+    }
+    return [[CoreDataHandler shared] saveNewCollection:col];
 }
 
 + (NSManagedObject *)managedObjectFromItinerary:(Itinerary *)it {
-    // TODO: Implement
-    return nil;
+    NSManagedObject *obj = [[CoreDataHandler shared] getEntityById:@"Itinerary" parseObjectId:it.parseObjectId];
+    if (obj) {
+        return obj;
+    }
+    return [[CoreDataHandler shared] saveNewItinerary:it];
 }
 
 @end
