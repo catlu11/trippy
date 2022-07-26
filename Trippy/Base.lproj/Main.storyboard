@@ -444,6 +444,7 @@
                                                 </state>
                                                 <connections>
                                                     <action selector="tapEdit:" destination="h0c-gf-E4D" eventType="touchUpInside" id="GuR-PF-Fwx"/>
+                                                    <segue destination="OT3-xB-puv" kind="presentation" identifier="viewItinerarySegue" modalPresentationStyle="fullScreen" id="YoH-7d-IQJ"/>
                                                 </connections>
                                             </button>
                                         </subviews>
@@ -601,7 +602,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="-4312.3076923076924" y="2201.658767772512"/>
+            <point key="canvasLocation" x="-4652" y="2247"/>
         </scene>
         <!--Choose Route View Controller-->
         <scene sceneID="G6p-yB-E98">
@@ -883,6 +884,71 @@
             </objects>
             <point key="canvasLocation" x="-4312.3076923076924" y="1513.5071090047393"/>
         </scene>
+        <!--Itinerary-->
+        <scene sceneID="3Pf-HQ-7EX">
+            <objects>
+                <viewController id="FeH-41-HBh" customClass="ViewItineraryViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Rf0-3C-Gff">
+                        <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="qFP-TS-1ri">
+                                <rect key="frame" x="0.0" y="88" width="390" height="756"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="ItineraryItemCell" rowHeight="43" id="DCt-V1-YWP" customClass="ItineraryItemCell">
+                                        <rect key="frame" x="0.0" y="44.666666030883789" width="390" height="43"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="DCt-V1-YWP" id="dF8-cw-OwZ">
+                                            <rect key="frame" x="0.0" y="0.0" width="390" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="D0v-Qo-pnd">
+                                                    <rect key="frame" x="20" y="10.333333333333336" width="350" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="trailing" secondItem="D0v-Qo-pnd" secondAttribute="trailing" constant="20" symbolic="YES" id="2LG-UR-c8w"/>
+                                                <constraint firstItem="D0v-Qo-pnd" firstAttribute="leading" secondItem="dF8-cw-OwZ" secondAttribute="leading" constant="20" symbolic="YES" id="8Y5-ID-rNw"/>
+                                                <constraint firstItem="D0v-Qo-pnd" firstAttribute="top" secondItem="dF8-cw-OwZ" secondAttribute="top" constant="10.333333969116211" id="JLG-Rp-Bqy"/>
+                                                <constraint firstAttribute="bottom" secondItem="D0v-Qo-pnd" secondAttribute="bottom" constant="11.666666030883789" id="NTz-u6-Qm2"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="instructionLabel" destination="D0v-Qo-pnd" id="2c4-GJ-paI"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="4Rs-ej-uLc"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Itinerary" id="KLc-J5-7P3">
+                        <barButtonItem key="leftBarButtonItem" style="plain" id="rA1-om-zYE">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" id="dE9-Ea-7RO">
+                                <rect key="frame" x="16" y="5" width="86" height="34.333333333333336"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Back"/>
+                                <connections>
+                                    <action selector="tapBack:" destination="FeH-41-HBh" eventType="touchUpInside" id="Euk-Tv-gBf"/>
+                                </connections>
+                            </button>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="itemsTableView" destination="qFP-TS-1ri" id="gpf-f3-Lpn"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Th4-MY-Lig" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-3590.7692307692305" y="1526.3033175355449"/>
+        </scene>
         <!--Waypoint Preferences View Controller-->
         <scene sceneID="IRt-cn-J2S">
             <objects>
@@ -1069,7 +1135,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="-3592.3076923076924" y="1513.5071090047393"/>
+            <point key="canvasLocation" x="-3882" y="2246"/>
         </scene>
         <!--Collections-->
         <scene sceneID="Cuc-f9-6Mx">
@@ -1365,6 +1431,23 @@
                 </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="-2782" y="788"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="Fd4-MJ-veB">
+            <objects>
+                <navigationController id="OT3-xB-puv" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="PT9-rD-ZGM"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="RqF-xf-Hqc">
+                        <rect key="frame" x="0.0" y="44" width="390" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="FeH-41-HBh" kind="relationship" relationship="rootViewController" id="Hve-02-V6R"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="6Mh-QI-4B8" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-3583" y="788"/>
         </scene>
         <!--Locate-->
         <scene sceneID="2pe-tF-03J">

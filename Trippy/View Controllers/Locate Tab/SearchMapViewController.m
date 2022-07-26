@@ -178,7 +178,7 @@
                                message:@"Successfully posted location."
                                preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction* action = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
-                                   handler:^(UIAlertAction * action) {}];
+                                   handler:nil];
     [alert addAction:action];
     [self presentViewController:alert animated:YES completion:^{
         self.selectedLoc = nil;

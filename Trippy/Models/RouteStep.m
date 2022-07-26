@@ -31,7 +31,7 @@
 }
 
 - (NSString *)instruction {
-    return self.json[@"html_instructions"];
+    return [MapUtils cleanHTMLString:self.json[@"html_instructions"]];
 }
 
 - (NSString *)polyline {

@@ -34,7 +34,7 @@
 - (NSArray *)routeSteps {
     NSMutableArray *steps = [[NSMutableArray alloc] init];
     for (NSDictionary *step in self.json[@"steps"]) {
-        [steps addObject:[[RouteLeg alloc] initWithDictionary:step]];
+        [steps addObject:[[RouteStep alloc] initWithDictionary:step]];
     }
     return steps;
 }
