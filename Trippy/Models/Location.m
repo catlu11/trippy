@@ -6,6 +6,7 @@
 //
 
 #import "Location.h"
+#import "MapUtils.h"
 @import GooglePlaces;
 
 @implementation Location
@@ -30,6 +31,7 @@
         self.types = types;
         self.priceLevel = priceLevel;
         self.parseObjectId = parseObjectId;
+        self.staticMap = [MapUtils getStaticMapImage:self.coord width:100 height:100];
     }
     
     return self;

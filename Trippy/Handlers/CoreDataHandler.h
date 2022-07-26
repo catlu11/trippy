@@ -6,12 +6,15 @@
 //
 
 #import <Foundation/Foundation.h>
+@class Location;
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface CoreDataHandler : NSObject
 + (CoreDataHandler *)shared;
-- (void)saveLocation;
+- (void)clearEntity:(NSString *)entityName;
+- (void)saveNewLocation:(Location *)loc;
+- (NSArray *)fetchLocations;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -19,6 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) NSArray *types;
 @property (strong, nonatomic) NSNumber *priceLevel;
 @property (strong, nonatomic) NSString *parseObjectId; // nonnull when derived from Parse object
+@property (strong, nonatomic) UIImage *staticMap;
 
 - (instancetype) initWithParams:(NSString *)title
                         snippet:(NSString *)snippet

@@ -52,7 +52,7 @@
     // Get static thumbnail
     if(self.itinerary.sourceCollection.locations.count > 0) {
         Location *firstLoc = self.itinerary.sourceCollection.locations[0];
-        self.mapImageView.image = [MapUtils getStaticMapImage:firstLoc.coord width:self.mapImageView.frame.size.width height:self.mapImageView.frame.size.height];
+        self.mapImageView.image = firstLoc.staticMap;
     }
     else {
         self.mapImageView.image = [UIImage imageNamed:@"tray"];
@@ -73,7 +73,7 @@
     // Get static thumbnail
     if(self.collection.locations.count > 0) {
         Location *firstLoc = self.collection.locations[0];
-        self.mapImageView.image = [MapUtils getStaticMapImage:firstLoc.coord width:self.mapImageView.frame.size.width height:self.mapImageView.frame.size.height];
+        self.mapImageView.image = firstLoc.staticMap;
     }
     else {
         self.mapImageView.image = [UIImage imageNamed:@"tray"];
@@ -87,7 +87,7 @@
     
     // Get static thumbnail
     if (self.mapImageView != nil) {
-        self.mapImageView.image = [MapUtils getStaticMapImage:self.location.coord width:self.mapImageView.frame.size.width height:self.mapImageView.frame.size.height];
+        self.mapImageView.image = self.location.staticMap;
     }
 }
 

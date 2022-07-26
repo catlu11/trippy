@@ -7,7 +7,8 @@
 
 #import "CoreDataHandler.h"
 #import "AppDelegate.h"
-#import "LocationMO.h"
+#import "Location.h"
+#import "MapUtils.h"
 @import CoreData;
 
 @implementation CoreDataHandler
@@ -28,14 +29,47 @@
     return ad.managedObjectContext;
 }
 
-- (void)saveLocation {
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Location" inManagedObjectContext:[self getContext]];
-    LocationMO *obj = [[LocationMO alloc] initWithEntity:entity insertIntoManagedObjectContext:[self getContext]];
-    [[self getContext] save:nil];
+- (void)clearEntity:(NSString *)entityName {
+    NSManagedObjectContext *moc = [self getContext];
+    NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:entityName];
+    NSBatchDeleteRequest *request = [[NSBatchDeleteRequest alloc] initWithFetchRequest:fetchRequest];
+    request.resultType = NSBatchDeleteResultTypeObjectIDs;
+
+    NSError *error = nil;
+    NSBatchDeleteResult *deleteResult = [moc executeRequest:request error:&error];
+    if (error) {
+        NSAssert(NO, @"Error deleting Locations: %@\n%@", [error localizedDescription], [error userInfo]);
+    } else {
+        NSManagedObjectID *objectIds = deleteResult.result;
+        [NSManagedObjectContext mergeChangesFromRemoteContextSave:@{NSDeletedObjectsKey: objectIds} intoContexts:@[moc]];
+    }
 }
 
-- (void)fetchLocation {
+- (void)saveNewLocation:(Location *)loc {
+    NSManagedObjectContext *moc = [self getContext];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Location" inManagedObjectContext:moc];
+    NSManagedObject *obj = [[NSManagedObject alloc] initWithEntity:entity insertIntoManagedObjectContext:moc];
+    [obj setValue:loc.title forKey:@"title"];
+    [obj setValue:loc.snippet forKey:@"snippet"];
+    [obj setValue:UIImagePNGRepresentation([MapUtils getStaticMapImage:loc.coord width:100 height:100]) forKey:@"staticMap"];
     
+    NSError *error = nil;
+    if ([moc save:&error] == NO) {
+        NSAssert(NO, @"Error saving context: %@\n%@", [error localizedDescription], [error userInfo]);
+    }
+}
+
+- (NSArray *)fetchLocations {
+    NSManagedObjectContext *moc = [self getContext];
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Location"];
+     
+    NSError *error = nil;
+    NSArray *results = [moc executeFetchRequest:request error:&error];
+    if (!results) {
+        NSLog(@"Error fetching Location objects: %@\n%@", [error localizedDescription], [error userInfo]);
+        abort();
+    }
+    return results;
 }
 
 @end
