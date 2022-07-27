@@ -6,6 +6,7 @@
 //
 
 #import "NetworkManager.h"
+#import "Reachability.h"
 
 @implementation NetworkManager
 
@@ -14,29 +15,24 @@
     
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        _sharedManager = [AFNetworkReachabilityManager sharedManager];
-        [_sharedManager setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
-            switch (status) {
-                case AFNetworkReachabilityStatusReachableViaWWAN:
-                    _sharedManager.isConnected = YES;
-                    break;
-                case AFNetworkReachabilityStatusReachableViaWiFi:
-                    _sharedManager.isConnected = YES;
-                    break;
-                case AFNetworkReachabilityStatusUnknown:
-                    _sharedManager.isConnected = NO;
-                    break;
-                case AFNetworkReachabilityStatusNotReachable:
-                    _sharedManager.isConnected = NO;
-                    break;
-                default:
-                    break;
-            }
-        }];
-        [_sharedManager startMonitoring];
+        _sharedManager = [[self alloc] init];
     });
 
     return _sharedManager;
+}
+
+- (void)beginNotifier {
+    self.internetReachable = [Reachability reachabilityWithHostname:@"www.google.com"];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(reachabilityChanged)
+                                                 name:kReachabilityChangedNotification
+                                               object:self.internetReachable];
+    [self.internetReachable startNotifier];
+    self.isConnected = [self.internetReachable isReachable];
+}
+
+- (void)reachabilityChanged {
+    self.isConnected = [self.internetReachable isReachable];
 }
 
 @end

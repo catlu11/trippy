@@ -23,6 +23,7 @@ typedef NS_ENUM(NSInteger, ListType) {
 @property (strong, nonatomic) Location *location;
 @property (strong, nonatomic) Itinerary *itinerary;
 @property (assign, nonatomic) BOOL showCheckmark;
+@property (assign, nonatomic) BOOL isOffline;
 - (void) updateUIElements:(ListType)type;
 @end
 

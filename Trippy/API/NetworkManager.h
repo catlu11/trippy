@@ -6,13 +6,15 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "AFNetworkReachabilityManager.h"
+@class Reachability;
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface NetworkManager : AFNetworkReachabilityManager
+@interface NetworkManager : NSObject
 + (NetworkManager *)shared;
-@property (assign, nonatomic) BOOL isConnected;
+@property(strong, nonatomic) Reachability *internetReachable;
+@property(assign, nonatomic) BOOL isConnected;
+- (void)beginNotifier;
 @end
 
 NS_ASSUME_NONNULL_END

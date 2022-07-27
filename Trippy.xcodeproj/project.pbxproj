@@ -19,6 +19,7 @@
 		F07D031E288F48D60049F355 /* CoreDataHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = F07D031D288F48D60049F355 /* CoreDataHandler.m */; };
 		F07D0321289055D90049F355 /* CoreDataUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = F07D0320289055D80049F355 /* CoreDataUtils.m */; };
 		F07D032728919A7D0049F355 /* NetworkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F07D032628919A7D0049F355 /* NetworkManager.m */; };
+		F07D032A2891D43D0049F355 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = F07D03292891D43D0049F355 /* Reachability.m */; };
 		F0C75F6D287642C10015BB74 /* Keys.plist in Resources */ = {isa = PBXBuildFile; fileRef = F0C75F6C287642C10015BB74 /* Keys.plist */; };
 		F0C75F72287747A20015BB74 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F0C75F71287747A20015BB74 /* LoginViewController.m */; };
 		F0C75F7828775A680015BB74 /* SavedCollectionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F0C75F7728775A680015BB74 /* SavedCollectionsViewController.m */; };
@@ -109,6 +110,8 @@
 		F07D0320289055D80049F355 /* CoreDataUtils.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CoreDataUtils.m; sourceTree = "<group>"; };
 		F07D032528919A7D0049F355 /* NetworkManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NetworkManager.h; sourceTree = "<group>"; };
 		F07D032628919A7D0049F355 /* NetworkManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NetworkManager.m; sourceTree = "<group>"; };
+		F07D03282891D43D0049F355 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
+		F07D03292891D43D0049F355 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		F0C75F6C287642C10015BB74 /* Keys.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Keys.plist; sourceTree = "<group>"; };
 		F0C75F70287747A20015BB74 /* LoginViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		F0C75F71287747A20015BB74 /* LoginViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
@@ -421,6 +424,8 @@
 		F0F335B42875F2BD00470507 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				F07D03282891D43D0049F355 /* Reachability.h */,
+				F07D03292891D43D0049F355 /* Reachability.m */,
 				F0F335B52875F2E100470507 /* MapUtils.h */,
 				F0F335B62875F2E100470507 /* MapUtils.m */,
 				F0C75F90287799070015BB74 /* ParseUtils.h */,
@@ -742,6 +747,7 @@
 				F07D030C288EFCE30049F355 /* RouteOption.m in Sources */,
 				F0C75FA1287C9F4E0015BB74 /* CreateItineraryViewController.m in Sources */,
 				F0C75FA4287CA2430015BB74 /* ItineraryDetailViewController.m in Sources */,
+				F07D032A2891D43D0049F355 /* Reachability.m in Sources */,
 				F0C75F83287786B60015BB74 /* MapItemListViewController.m in Sources */,
 				F0F335752874A0E700470507 /* AppDelegate.m in Sources */,
 				F0C75FE6287E3CB30015BB74 /* RouteStep.m in Sources */,

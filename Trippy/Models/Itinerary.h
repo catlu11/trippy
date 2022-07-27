@@ -32,13 +32,16 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) NSNumber *mileageConstraint;
 @property (strong, nonatomic) NSNumber *budgetConstraint;
 @property (assign, nonatomic) BOOL isFavorited;
-@property (strong, nonatomic) UIImage *staticMap;
 
 // JSON fields
 @property (readonly) NSArray *routeLegs;
 @property (readonly) GMSCoordinateBounds *bounds;
 @property (readonly) NSString *overviewPolyline;
 @property (strong, nonatomic) NSArray *waypointOrder;
+
+// Offline caching
+@property (strong, nonatomic) UIImage *staticMap;
+@property (assign, nonatomic) BOOL isOffline;
 
 - (instancetype)initWithDictionary:(NSDictionary *)routesJson
                           prefJson:(NSDictionary *)prefJson

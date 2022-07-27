@@ -43,6 +43,12 @@
 }
 
 - (void) updateUIElementsItinerary {
+    if (self.itinerary.isOffline) {
+        self.backgroundColor = [UIColor lightGrayColor];
+    } else {
+        self.backgroundColor = [UIColor whiteColor];
+    }
+    
     [self.starredImage setHidden:NO];
     
     self.titleLabel.text = self.itinerary.name;
@@ -77,6 +83,11 @@
 }
 
 - (void) updateUIElementsCollection {
+    if (self.collection.isOffline) {
+        self.backgroundColor = [UIColor lightGrayColor];
+    } else {
+        self.backgroundColor = [UIColor whiteColor];
+    }
     [self.starredImage setHidden:YES];
     
     self.titleLabel.text = self.collection.title;
