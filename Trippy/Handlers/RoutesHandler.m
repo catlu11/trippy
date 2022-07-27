@@ -125,6 +125,7 @@
 
 - (void)calculateRoutes:(Itinerary *)itinerary completion:(void (^)(NSArray *routes, NSError *))completion {
     NSMutableArray *routes = [[NSMutableArray alloc] init];
+    // TODO: Refactor to allow cost and distance routes to compute separately
     if (itinerary.mileageConstraint > 0) {
         [self calculateDistanceOptimalRoute:itinerary completion:^(RouteOption *response, NSError *) {
             [routes addObject:response];

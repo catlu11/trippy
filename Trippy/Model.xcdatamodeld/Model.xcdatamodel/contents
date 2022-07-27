@@ -5,7 +5,7 @@
         <attribute name="name" optional="YES" attributeType="String"/>
         <attribute name="parseObjectId" optional="YES" attributeType="String"/>
         <attribute name="routeJson" optional="YES" attributeType="String"/>
-        <attribute name="staticImg" optional="YES" attributeType="Binary"/>
+        <attribute name="staticMap" optional="YES" attributeType="Binary"/>
         <attribute name="synced" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <relationship name="originLocation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Location"/>
         <relationship name="sourceCollection" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="LocationCollection"/>

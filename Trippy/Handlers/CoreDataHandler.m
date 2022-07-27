@@ -127,6 +127,10 @@
     [obj setValue:[CoreDataUtils managedObjectFromCollection:it.sourceCollection] forKey:@"sourceCollection"];
     [obj setValue:[NSNumber numberWithBool:it.isFavorited] forKey:@"isFavorited"];
     [obj setValue:UIImagePNGRepresentation(it.staticMap) forKey:@"staticMap"];
+    NSError *error = nil;
+    if ([moc save:&error] == NO) {
+        NSAssert(NO, @"Error saving context: %@\n%@", [error localizedDescription], [error userInfo]);
+    }
     return obj;
 }
 
@@ -168,6 +172,32 @@
         [its addObject:[CoreDataUtils itineraryFromManagedObject:obj]];
     }
     return its;
+}
+
+- (void)updateItinerary:(Itinerary *)it {
+    NSManagedObjectContext *moc = [self getContext];
+    NSManagedObject *obj = [CoreDataUtils managedObjectFromItinerary:it];
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:[it toRouteDictionary] options:0 error:nil];
+    NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+    [obj setValue:jsonString forKey:@"routeJson"];
+    [obj setValue:[NSNumber numberWithBool:it.isFavorited] forKey:@"isFavorited"];
+    [obj setValue:UIImagePNGRepresentation(it.staticMap) forKey:@"staticMap"];
+    NSError *error = nil;
+    if ([moc save:&error] == NO) {
+        NSAssert(NO, @"Error saving context: %@\n%@", [error localizedDescription], [error userInfo]);
+    }
+}
+
+- (void)updateCollection:(LocationCollection *)col {
+    NSManagedObjectContext *moc = [self getContext];
+    NSManagedObject *obj = [CoreDataUtils managedObjectFromCollection:col];
+    for (Location *l in col.locations) {
+        [[obj mutableSetValueForKey:@"locations"] addObject:[CoreDataUtils managedObjectFromLocation:l]];
+    }
+    NSError *error = nil;
+    if ([moc save:&error] == NO) {
+        NSAssert(NO, @"Error saving context: %@\n%@", [error localizedDescription], [error userInfo]);
+    }
 }
 
 @end

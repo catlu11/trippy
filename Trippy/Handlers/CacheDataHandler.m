@@ -21,6 +21,7 @@
     __weak CacheDataHandler *weakSelf = self;
     [newLocation saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
         if(succeeded) {
+            [[CoreDataHandler shared] saveNewLocation:location]; // post to local cache
             PFQuery *query = [PFQuery queryWithClassName:@"Collection"];
             [query whereKey:@"objectId" equalTo:collection.parseObjectId];
             [query getFirstObjectInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
@@ -33,6 +34,7 @@
                     [object saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
                         __strong CacheDataHandler *strongSelf = weakSelf;
                         if (succeeded) {
+                            [[CoreDataHandler shared] updateCollection:collection]; // update local cache
                             [strongSelf.delegate postedLocationSuccess:location];
                         } else {
                             [strongSelf.delegate generalRequestFail:error];
@@ -53,6 +55,7 @@
             collection.createdAt = newCollection.createdAt;
             collection.parseObjectId = newCollection.objectId;
             collection.lastUpdated = collection.createdAt;
+            [[CoreDataHandler shared] saveNewCollection:collection]; // post to local cache
             [strongSelf.delegate postedCollectionSuccess:collection];
         }
     }];
@@ -67,6 +70,7 @@
             it.createdAt = newItinerary.createdAt;
             it.parseObjectId = newItinerary.objectId;
             it.userId = [PFUser currentUser].username;
+            [[CoreDataHandler shared] saveNewItinerary:it]; // post to local cache
             [strongSelf.delegate postedItinerarySuccess:it];
         }
     }];
@@ -85,6 +89,7 @@
     [obj saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
         if (succeeded) {
             __strong CacheDataHandler *strongSelf = weakSelf;
+            [[CoreDataHandler shared] updateItinerary:it]; // update local cache
             [strongSelf.delegate updatedItinerarySuccess:it];
         }
     }];
@@ -102,12 +107,14 @@
             __strong CacheDataHandler *strongSelf = weakSelf;
             [strongSelf.delegate generalRequestFail:error];
         } else {
+            [[CoreDataHandler shared] clearEntity:@"Itinerary"]; // clear local cache
             for(PFObject *obj in objects) {
                 [ParseUtils itineraryFromPFObj:obj completion:^(Itinerary * _Nonnull itinerary, NSError * _Nonnull) {
                     __strong CacheDataHandler *strongSelf = weakSelf;
                     if(error) {
                         [strongSelf.delegate generalRequestFail:error];
                     } else {
+                        [[CoreDataHandler shared] saveNewItinerary:itinerary]; // save to local cache
                         [strongSelf.delegate addFetchedItinerary:itinerary];
                     }
                 }];
@@ -128,6 +135,7 @@
             __strong CacheDataHandler *strongSelf = weakSelf;
             [strongSelf.delegate generalRequestFail:error];
         } else {
+            [[CoreDataHandler shared] clearEntity:@"LocationCollection"]; // clear local cache
             for(PFObject *obj in objects) {
                 [ParseUtils collectionFromPFObj:obj completion:^(LocationCollection * _Nonnull collection, NSError * _Nonnull) {
                     __strong CacheDataHandler *strongSelf = weakSelf;
@@ -135,6 +143,7 @@
                         [strongSelf.delegate generalRequestFail:error];
                     } else {
                         [strongSelf.delegate addFetchedCollection:collection];
+                        [[CoreDataHandler shared] saveNewCollection:collection]; // save to local cache
                     }
                 }];
             }
@@ -154,6 +163,7 @@
         if (error) {
             [strongSelf.delegate generalRequestFail:error];
         } else {
+            [[CoreDataHandler shared] clearEntity:@"Location"];
             for(PFObject *obj in objects) {
                 [strongSelf.delegate addFetchedLocation:[ParseUtils locationFromPFObj:obj]];
                 [[CoreDataHandler shared] saveNewLocation:[ParseUtils locationFromPFObj:obj]];
