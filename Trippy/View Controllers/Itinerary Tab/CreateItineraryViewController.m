@@ -104,6 +104,7 @@
     if([[segue identifier] isEqualToString:@"itineraryDetailSegue"]) {
         ItineraryDetailViewController *vc = segue.destinationViewController;
         vc.itinerary = self.createdItinerary;
+        vc.screenshotFlag = YES;
     }
 }
 

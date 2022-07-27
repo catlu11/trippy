@@ -43,6 +43,7 @@
     if([[segue identifier] isEqualToString:@"itineraryDetailSegueFromHome"]) {
         ItineraryDetailViewController *vc = segue.destinationViewController;
         vc.itinerary = self.selectedIt;
+        vc.screenshotFlag = NO;
     }
 }
 

@@ -11,7 +11,12 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+@protocol SelectableMapDelegate
+- (void)didFinishLoading;
+@end
+
 @interface SelectableMap : UIView
+@property (nonatomic, weak) id<SelectableMapDelegate> delegate;
 - (void) initWithCenter:(CLLocationCoordinate2D)location;
 - (void) initWithBounds:(GMSCoordinateBounds *)bounds;
 - (void) addMarker:(Location *)location;

@@ -12,8 +12,9 @@
 #import "Location.h"
 #import "EditingItineraryViewController.h"
 #import "ViewItineraryViewController.h"
+#import "CacheDataHandler.h"
 
-@interface ItineraryDetailViewController () <EditingItineraryDelegate>
+@interface ItineraryDetailViewController () <EditingItineraryDelegate, SelectableMapDelegate>
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *detailsLabel;
 @property (weak, nonatomic) IBOutlet SelectableMap *mapView;
@@ -26,8 +27,9 @@
     [self updateUI];
 }
 
-- (void) updateUI {
+- (void)updateUI {
     // Set up map
+    self.mapView.delegate = self;
     [self.mapView initWithBounds:self.itinerary.bounds];
     [self.mapView addMarker:self.itinerary.originLocation];
     for (Location *point in [self.itinerary getOrderedLocations]) {
@@ -66,6 +68,23 @@
 
 - (void) didSaveItinerary {
     [self updateUI];
+    self.screenshotFlag = YES;
+}
+
+# pragma mark - SelectableMapDelegate
+
+- (void) didFinishLoading {
+    if (self.screenshotFlag) {
+        UIGraphicsBeginImageContext(self.mapView.frame.size);
+        [self.mapView.layer renderInContext:UIGraphicsGetCurrentContext()];
+        UIImage *screenshot = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
+        self.screenshotFlag = NO;
+        
+        self.itinerary.staticMap = screenshot;
+        CacheDataHandler *handler = [[CacheDataHandler alloc] init];
+        [handler updateItinerary:self.itinerary];
+    }
 }
 
 @end

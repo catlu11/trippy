@@ -10,7 +10,7 @@
 #import "MapUtils.h"
 @import GooglePlaces;
 
-@interface SelectableMap ()
+@interface SelectableMap () <GMSMapViewDelegate>
 @property (strong, nonatomic) GMSMapView *mapView;
 @property (strong, nonatomic) NSMutableArray *markersArray;
 @end
@@ -23,8 +23,8 @@
                                                                zoom:DEFAULT_ZOOM];
     GMSMapView *map = [GMSMapView mapWithFrame:self.frame camera:camera];
     map.myLocationEnabled = YES;
-    
     map.frame = self.bounds;
+    map.delegate = self;
     self.mapView = map;
     [self insertSubview:map atIndex:0];
 }
@@ -36,8 +36,8 @@
     GMSMapView *map = [GMSMapView mapWithFrame:self.frame camera:camera];
     [map animateWithCameraUpdate:[GMSCameraUpdate fitBounds:bounds withPadding:60.0f]];
     map.myLocationEnabled = YES;
-    
     map.frame = self.bounds;
+    map.delegate = self;
     self.mapView = map;
     [self addSubview:map];
 }
@@ -81,6 +81,12 @@
 - (CLLocationCoordinate2D) getCenter {
     CGPoint point = self.mapView.center;
     return [self.mapView.projection coordinateForPoint:point];
+}
+
+# pragma mark - GMSMapViewDelegate
+
+- (void) mapViewSnapshotReady:(GMSMapView *)mapView {
+    [self.delegate didFinishLoading];
 }
 
 @end

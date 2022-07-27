@@ -126,6 +126,7 @@
     [obj setValue:[CoreDataUtils managedObjectFromLocation:it.originLocation] forKey:@"originLocation"];
     [obj setValue:[CoreDataUtils managedObjectFromCollection:it.sourceCollection] forKey:@"sourceCollection"];
     [obj setValue:[NSNumber numberWithBool:it.isFavorited] forKey:@"isFavorited"];
+    [obj setValue:UIImagePNGRepresentation(it.staticMap) forKey:@"staticMap"];
     return obj;
 }
 

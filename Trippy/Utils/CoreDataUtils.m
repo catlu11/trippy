@@ -58,6 +58,7 @@
                                             originLocation:originLocation
                                                       name:[obj valueForKey:@"name"]
                                                isFavorited:[[obj valueForKey:@"isFavorited"] boolValue]];
+    it.staticMap = [UIImage imageWithData:[obj valueForKey:@"staticMap"]];
     if ([obj valueForKey:@"synced"]) {
         it.parseObjectId = [obj valueForKey:@"parseObjectId"];
     }

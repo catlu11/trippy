@@ -80,6 +80,7 @@
     obj[@"mileageConstraint"] = it.mileageConstraint;
     obj[@"budgetConstraint"] = it.budgetConstraint;
     obj[@"isFavorited"] = [NSNumber numberWithBool:it.isFavorited];
+    obj[@"staticMap"] = [ParseUtils pfFileFromImage:it.staticMap name:@"img"];
     __weak CacheDataHandler *weakSelf = self;
     [obj saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
         if (succeeded) {
