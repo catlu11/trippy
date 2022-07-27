@@ -26,24 +26,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     NSString *path = [[NSBundle mainBundle] pathForResource:@"Keys" ofType:@"plist"];
     NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile:path];
-    
-    // Set up network manager
-//    [[AFNetworkReachabilityManager sharedManager] setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
-//        switch (status) {
-//            case AFNetworkReachabilityStatusReachableViaWiFi:
-//                [NetworkManager shared].isConnected = YES;
-//                break;
-//            case AFNetworkReachabilityStatusReachableViaWWAN:
-//                [NetworkManager shared].isConnected = YES;
-//                break;
-//            case AFNetworkReachabilityStatusNotReachable:
-//                [NetworkManager shared].isConnected = NO;
-//                break;
-//            default:
-//                break;
-//        }
-//    }];
-//    [[AFNetworkReachabilityManager sharedManager] startMonitoring];
+
     [[NetworkManager shared] beginNotifier];
     
     // Set up Google SDKs

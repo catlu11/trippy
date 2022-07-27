@@ -14,6 +14,12 @@
 #import "CoreDataHandler.h"
 #import "NetworkManager.h"
 
+@interface CacheDataHandler ()
+@property (assign, nonatomic) BOOL isFetchingItinerary;
+@property (assign, nonatomic) BOOL isFetchingCollection;
+@property (assign, nonatomic) BOOL isFetchingLocation;
+@end
+
 @implementation CacheDataHandler
 
 - (void) postNewLocation:(Location *)location collection:(LocationCollection *)collection {
@@ -101,12 +107,18 @@
 }
 
 - (void) fetchSavedItineraries {
+    if (self.isFetchingItinerary) {
+        return;
+    }
+    
+    self.isFetchingItinerary = YES;
     if (![NetworkManager shared].isConnected) {
         NSArray *its = [[CoreDataHandler shared] fetchItineraries];
         for (Itinerary *it in its) {
             it.isOffline = YES;
             [self.delegate addFetchedItinerary:it];
         }
+        self.isFetchingItinerary = NO;
     } else {
         PFQuery *query = [PFQuery queryWithClassName:@"Itinerary"];
         [query whereKey:@"createdBy" equalTo:[PFUser currentUser]];
@@ -132,18 +144,25 @@
                         }
                     }];
                 }
+                self.isFetchingItinerary = NO;
             }
         }];
     }
 }
 
 - (void) fetchSavedCollections {
+    if (self.isFetchingCollection) {
+        return;
+    }
+    
+    self.isFetchingCollection = YES;
     if (![NetworkManager shared].isConnected) {
         NSArray *cols = [[CoreDataHandler shared] fetchCollections];
         for (LocationCollection *col in cols) {
             col.isOffline = YES;
             [self.delegate addFetchedCollection:col];
         }
+        self.isFetchingCollection = NO;
     } else {
         PFQuery *query = [PFQuery queryWithClassName:@"Collection"];
         [query whereKey:@"createdBy" equalTo:[PFUser currentUser]];
@@ -169,19 +188,28 @@
                         }
                     }];
                 }
+                self.isFetchingCollection = NO;
             }
         }];
     }
 }
 
 - (void) fetchSavedLocations {
+    if (self.isFetchingLocation) {
+        return;
+    }
+    
+    self.isFetchingLocation = YES;
     if (![NetworkManager shared].isConnected) {
         NSArray *locs = [[CoreDataHandler shared] fetchLocations];
         for (Location *loc in locs) {
             loc.isOffline = YES;
             [self.delegate addFetchedLocation:loc];
         }
-    } else {
+        self.isFetchingLocation = NO;
+    } else if (!self.isFetchingLocation) {
+        self.isFetchingLocation = YES;
+        
         PFQuery *query = [PFQuery queryWithClassName:@"Location"];
         [query whereKey:@"createdBy" equalTo:[PFUser currentUser]];
         [query includeKeys:[ParseUtils getLocationKeys]];
@@ -200,6 +228,7 @@
                     [strongSelf.delegate addFetchedLocation:loc];
                     [[CoreDataHandler shared] saveNewLocation:loc];
                 }
+                self.isFetchingLocation = NO;
             }
         }];
     }
