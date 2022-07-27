@@ -8,6 +8,7 @@
 #import "AppDelegate.h"
 #import "Parse/Parse.h"
 #import "CoreData/CoreData.h"
+#import "AFNetworkReachabilityManager.h"
 @import GoogleMaps;
 @import GooglePlaces;
 
