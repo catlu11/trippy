@@ -21,6 +21,7 @@
 #import "MapsAPIManager.h"
 #import "RoutesHandler.h"
 #import "CacheDataHandler.h"
+#import "NetworkManager.h"
 
 #define PLACES_ROW_HEIGHT 70;
 #define VIEW_SHADOW_OPACITY 0.45;
@@ -91,6 +92,16 @@
 }
 
 - (IBAction)tapReroute:(id)sender {
+    if (![[NetworkManager shared] isConnected]) {
+        UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"No internet connection"
+                                   message:@"Please try again later."
+                                   preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction* action = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
+                                       handler:nil];
+        [alert addAction:action];
+        [self presentViewController:alert animated:YES completion:nil];
+        return;
+    }
     [self.loadingIndicator startAnimating];
     NSString *matrixUrl = [MapUtils generateMatrixApiUrl:self.mutableItinerary.sourceCollection
                                             origin:self.mutableItinerary.originLocation

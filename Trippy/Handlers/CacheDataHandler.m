@@ -23,6 +23,7 @@
 @implementation CacheDataHandler
 
 - (void) postNewLocation:(Location *)location collection:(LocationCollection *)collection {
+    // Offline mode not possible
     PFObject *newLocation = [ParseUtils pfObjFromLocation:location];
     location.parseObjectId = newLocation.objectId;
     __weak CacheDataHandler *weakSelf = self;
@@ -54,23 +55,28 @@
 }
 
 - (void) postNewCollection:(LocationCollection *)collection {
-    // TODO: Handle offline mode
-    PFObject *newCollection = [ParseUtils pfObjFromCollection:collection];
-    __weak CacheDataHandler *weakSelf = self;
-    [newCollection saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
-        if (succeeded) {
-            __strong CacheDataHandler *strongSelf = weakSelf;
-            collection.createdAt = newCollection.createdAt;
-            collection.parseObjectId = newCollection.objectId;
-            collection.lastUpdated = collection.createdAt;
-            [[CoreDataHandler shared] saveCollection:collection]; // post to local cache
-            [strongSelf.delegate postedCollectionSuccess:collection];
-        }
-    }];
+    if (![[NetworkManager shared] isConnected]) {
+        [[CoreDataHandler shared] saveCollection:collection];
+        collection.isOffline = YES;
+        [self.delegate postedCollectionSuccess:collection];
+    } else {
+        PFObject *newCollection = [ParseUtils pfObjFromCollection:collection];
+        __weak CacheDataHandler *weakSelf = self;
+        [newCollection saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
+            if (succeeded) {
+                __strong CacheDataHandler *strongSelf = weakSelf;
+                collection.createdAt = newCollection.createdAt;
+                collection.parseObjectId = newCollection.objectId;
+                collection.lastUpdated = collection.createdAt;
+                [[CoreDataHandler shared] saveCollection:collection]; // post to local cache
+                [strongSelf.delegate postedCollectionSuccess:collection];
+            }
+        }];
+    }
 }
 
 - (void) postNewItinerary:(Itinerary *)it {
-    // TODO: Handle offline mode
+    // Offline mode not possible
     PFObject *newItinerary = [ParseUtils pfObjFromItinerary:it];
     __weak CacheDataHandler *weakSelf = self;
     [newItinerary saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
@@ -86,23 +92,26 @@
 }
 
 - (void) updateItinerary:(Itinerary *)it {
-    // TODO: Handle offline mode
-    PFObject *obj = [ParseUtils pfObjFromItinerary:it];
-    obj[@"directionsJson"] = [ParseUtils pfFileFromDict:[it toRouteDictionary] name:@"directions"];
-    obj[@"preferencesJson"] = [ParseUtils pfFileFromDict:[it toPrefsDictionary] name:@"preferences"];
-    obj[@"departure"] = it.departureTime;
-    obj[@"mileageConstraint"] = it.mileageConstraint;
-    obj[@"budgetConstraint"] = it.budgetConstraint;
-    obj[@"isFavorited"] = [NSNumber numberWithBool:it.isFavorited];
-    obj[@"staticMap"] = [ParseUtils pfFileFromImage:it.staticMap name:@"img"];
-    __weak CacheDataHandler *weakSelf = self;
-    [obj saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
-        if (succeeded) {
-            __strong CacheDataHandler *strongSelf = weakSelf;
-            [[CoreDataHandler shared] updateItinerary:it]; // update local cache
-            [strongSelf.delegate updatedItinerarySuccess:it];
-        }
-    }];
+    if (![[NetworkManager shared] isConnected]) {
+        [[CoreDataHandler shared] updateItinerary:it];
+    } else {
+        PFObject *obj = [ParseUtils pfObjFromItinerary:it];
+        obj[@"directionsJson"] = [ParseUtils pfFileFromDict:[it toRouteDictionary] name:@"directions"];
+        obj[@"preferencesJson"] = [ParseUtils pfFileFromDict:[it toPrefsDictionary] name:@"preferences"];
+        obj[@"departure"] = it.departureTime;
+        obj[@"mileageConstraint"] = it.mileageConstraint;
+        obj[@"budgetConstraint"] = it.budgetConstraint;
+        obj[@"isFavorited"] = [NSNumber numberWithBool:it.isFavorited];
+        obj[@"staticMap"] = [ParseUtils pfFileFromImage:it.staticMap name:@"img"];
+        __weak CacheDataHandler *weakSelf = self;
+        [obj saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
+            if (succeeded) {
+                __strong CacheDataHandler *strongSelf = weakSelf;
+                [[CoreDataHandler shared] updateItinerary:it]; // update local cache
+                [strongSelf.delegate updatedItinerarySuccess:it];
+            }
+        }];
+    }
 }
 
 - (void) fetchSavedItineraries {
@@ -119,7 +128,7 @@
         }
         self.isFetchingItinerary = NO;
     } else {
-        [[CoreDataHandler shared] clearEntity:@"Itinerary"]; // clear local cache
+//        [[CoreDataHandler shared] clearEntity:@"Itinerary"]; // clear local cache
         PFQuery *query = [PFQuery queryWithClassName:@"Itinerary"];
         [query whereKey:@"createdBy" equalTo:[PFUser currentUser]];
         [query includeKeys:[ParseUtils getItineraryKeys]];
@@ -163,7 +172,7 @@
         }
         self.isFetchingCollection = NO;
     } else {
-        [[CoreDataHandler shared] clearEntity:@"LocationCollection"]; // clear local cache
+//        [[CoreDataHandler shared] clearEntity:@"LocationCollection"]; // clear local cache
         PFQuery *query = [PFQuery queryWithClassName:@"Collection"];
         [query whereKey:@"createdBy" equalTo:[PFUser currentUser]];
         [query includeKeys:[ParseUtils getCollectionKeys]];
@@ -206,8 +215,8 @@
             [self.delegate addFetchedLocation:loc];
         }
         self.isFetchingLocation = NO;
-    } else if (!self.isFetchingLocation) {
-        [[CoreDataHandler shared] clearEntity:@"Location"];
+    } else {
+//        [[CoreDataHandler shared] clearEntity:@"Location"];
         self.isFetchingLocation = YES;
         
         PFQuery *query = [PFQuery queryWithClassName:@"Location"];

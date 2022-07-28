@@ -13,6 +13,7 @@
 #import "Itinerary.h"
 #import "MapsAPIManager.h"
 #import "MapUtils.h"
+#import "NetworkManager.h"
 
 @interface CreateItineraryViewController () <UIPickerViewDelegate, UIPickerViewDataSource, CacheDataHandlerDelegate, UISearchBarDelegate>
 @property (weak, nonatomic) IBOutlet UIButton *collectionButton;
@@ -68,24 +69,34 @@
         [self presentViewController:self.emptyAlert animated:YES completion:nil];
     }
     else {
-        NSString *apiUrl = [MapUtils generateOptimizedDirectionsApiUrl:self.selectedCol
-                                                       origin:self.selectedLoc
-                                                         omitWaypoints:@[]
-                                                departureTime:[NSDate now]];
-        [[MapsAPIManager shared] getDirectionsWithCompletion:apiUrl completion:^(NSDictionary * _Nonnull response, NSError * _Nonnull) {
-            if (response) {
-                Itinerary *it = [[Itinerary alloc] initWithDictionary:response
-                                                             prefJson:nil
-                                                            departure:[NSDate now]
-                                                    mileageConstraint:nil
-                                                     budgetConstraint:nil
-                                                     sourceCollection:self.selectedCol
-                                                       originLocation:self.selectedLoc
-                                                                 name:self.nameField.text
-                                                          isFavorited:NO];
-                [self.colHandler postNewItinerary:it];
-            }
-        }];
+        if ([[NetworkManager shared] isConnected]) {
+            NSString *apiUrl = [MapUtils generateOptimizedDirectionsApiUrl:self.selectedCol
+                                                           origin:self.selectedLoc
+                                                             omitWaypoints:@[]
+                                                    departureTime:[NSDate now]];
+            [[MapsAPIManager shared] getDirectionsWithCompletion:apiUrl completion:^(NSDictionary * _Nonnull response, NSError * _Nonnull) {
+                if (response) {
+                    Itinerary *it = [[Itinerary alloc] initWithDictionary:response
+                                                                 prefJson:nil
+                                                                departure:[NSDate now]
+                                                        mileageConstraint:nil
+                                                         budgetConstraint:nil
+                                                         sourceCollection:self.selectedCol
+                                                           originLocation:self.selectedLoc
+                                                                     name:self.nameField.text
+                                                              isFavorited:NO];
+                    [self.colHandler postNewItinerary:it];
+                }
+            }];
+        } else {
+            UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Itinerary Creation Disabled"
+                                       message:@"No internet connection, please try again later."
+                                       preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertAction* action = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
+                                           handler:nil];
+            [alert addAction:action];
+            [self presentViewController:alert animated:YES completion:nil];
+        }
     }
 }
 

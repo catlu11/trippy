@@ -8,6 +8,7 @@
 #import "LogoutHandler.h"
 #import "Parse/Parse.h"
 #import "NetworkManager.h"
+#import "CoreDataHandler.h"
 
 @implementation LogoutHandler
 
@@ -18,6 +19,9 @@
                 [self.delegate logoutFail:error];
             } else {
                 [self.delegate logoutSuccess];
+                [[CoreDataHandler shared] clearEntity:@"Location"];
+                [[CoreDataHandler shared] clearEntity:@"LocationCollection"];
+                [[CoreDataHandler shared] clearEntity:@"Itinerary"];
             }
         }];
     } else {

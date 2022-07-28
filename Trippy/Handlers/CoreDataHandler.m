@@ -51,16 +51,15 @@
 }
 
 - (void)clearEntity:(NSString *)entityName {
-//    NSManagedObjectContext *moc = [self getContext];
-//    NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:entityName];
-//    NSBatchDeleteRequest *request = [[NSBatchDeleteRequest alloc] initWithFetchRequest:fetchRequest];
-//    request.resultType = NSBatchDeleteResultTypeObjectIDs;
-//
-//    NSError *error = nil;
-//    NSBatchDeleteResult *deleteResult = [moc executeRequest:request error:&error];
-//    if (error) {
-//        NSAssert(NO, @"Error deleting entity: %@\n%@", [error localizedDescription], [error userInfo]);
-//    }
+    NSArray *objects = [self fetchObjects:entityName];
+    NSManagedObjectContext *moc = [self getContext];
+    for (NSManagedObject *obj in objects) {
+        [moc deleteObject:obj];
+    }
+    NSError *error = nil;
+    if ([moc save:&error] == NO) {
+        NSAssert(NO, @"Error saving context: %@\n%@", [error localizedDescription], [error userInfo]);
+    }
 }
 
 - (NSManagedObject *)saveLocation:(Location *)loc {
@@ -202,6 +201,7 @@
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:[it toRouteDictionary] options:0 error:nil];
     NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
     [obj setValue:jsonString forKey:@"routeJson"];
+    // TODO: Add constraints
     [obj setValue:[NSNumber numberWithBool:it.isFavorited] forKey:@"isFavorited"];
     [obj setValue:UIImagePNGRepresentation(it.staticMap) forKey:@"staticMap"];
     NSError *error = nil;
