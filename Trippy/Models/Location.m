@@ -48,6 +48,7 @@
         self.types = place.types;
         self.priceLevel = @(place.priceLevel);
         self.placeId = place.placeID;
+        self.staticMap = [MapUtils getStaticMapImage:self.coord width:100 height:100];
     }
     
     return self;

@@ -19,9 +19,8 @@
     loc.title = [obj valueForKey:@"title"];
     loc.snippet = [obj valueForKey:@"snippet"];
     loc.staticMap = [UIImage imageWithData:[obj valueForKey:@"staticMap"]];
-    if ([obj valueForKey:@"synced"]) {
-        loc.parseObjectId = [obj valueForKey:@"parseObjectId"];
-    }
+    loc.parseObjectId = [obj valueForKey:@"parseObjectId"];
+    NSLog(@"Retrieving loc from MO: %@", [obj valueForKey:@"parseObjectId"]);
     return loc;
 }
 
@@ -29,16 +28,15 @@
     LocationCollection *col = [[LocationCollection alloc] init];
     col.title = [obj valueForKey:@"title"];
     col.snippet = [obj valueForKey:@"snippet"];
-    if ([obj valueForKey:@"synced"]) {
-        col.parseObjectId = [obj valueForKey:@"parseObjectId"];
-    }
-    NSSet *locRelation = [obj valueForKey:@"locations"];
+    col.parseObjectId = [obj valueForKey:@"parseObjectId"];
+    NSArray *locRelation = [[obj mutableSetValueForKey:@"locations"] allObjects];
     NSMutableArray *locations = [[NSMutableArray alloc] init];
     for (NSManagedObject *locObj in locRelation) {
         [locations addObject:[self locationFromManagedObject:locObj]];
     }
     col.locations = locations;
     col.createdAt = [obj valueForKey:@"createdAt"];
+    NSLog(@"Retrieving col from MO: %@", [obj valueForKey:@"parseObjectId"]);
     return col;
 }
 
@@ -59,34 +57,36 @@
                                                       name:[obj valueForKey:@"name"]
                                                isFavorited:[[obj valueForKey:@"isFavorited"] boolValue]];
     it.staticMap = [UIImage imageWithData:[obj valueForKey:@"staticMap"]];
-    if ([obj valueForKey:@"synced"]) {
-        it.parseObjectId = [obj valueForKey:@"parseObjectId"];
-    }
+    it.parseObjectId = [obj valueForKey:@"parseObjectId"];
+    NSLog(@"Retrieving it from MO: %@", [obj valueForKey:@"parseObjectId"]);
     return it;
 }
 
 + (NSManagedObject *)managedObjectFromLocation:(Location *)loc {
     NSManagedObject *obj = [[CoreDataHandler shared] getEntityById:@"Location" parseObjectId:loc.parseObjectId];
+    NSLog(@"Retrieving MO from loc: %@", [obj valueForKey:@"parseObjectId"]);
     if (obj) {
         return obj;
     }
-    return [[CoreDataHandler shared] saveNewLocation:loc];
+    return [[CoreDataHandler shared] saveLocation:loc];
 }
 
 + (NSManagedObject *)managedObjectFromCollection:(LocationCollection *)col {
     NSManagedObject *obj = [[CoreDataHandler shared] getEntityById:@"LocationCollection" parseObjectId:col.parseObjectId];
+    NSLog(@"Retrieving MO from col: %@", [obj valueForKey:@"parseObjectId"]);
     if (obj) {
         return obj;
     }
-    return [[CoreDataHandler shared] saveNewCollection:col];
+    return [[CoreDataHandler shared] saveCollection:col];
 }
 
 + (NSManagedObject *)managedObjectFromItinerary:(Itinerary *)it {
     NSManagedObject *obj = [[CoreDataHandler shared] getEntityById:@"Itinerary" parseObjectId:it.parseObjectId];
+    NSLog(@"Retrieving MO from it: %@", [obj valueForKey:@"parseObjectId"]);
     if (obj) {
         return obj;
     }
-    return [[CoreDataHandler shared] saveNewItinerary:it];
+    return [[CoreDataHandler shared] saveItinerary:it];
 }
 
 @end

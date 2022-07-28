@@ -16,9 +16,9 @@ NS_ASSUME_NONNULL_BEGIN
 @interface CoreDataHandler : NSObject
 + (CoreDataHandler *)shared;
 - (void)clearEntity:(NSString *)entityName;
-- (NSManagedObject *)saveNewLocation:(Location *)loc;
-- (NSManagedObject *)saveNewCollection:(LocationCollection *)col;
-- (NSManagedObject *)saveNewItinerary:(Itinerary *)it;
+- (NSManagedObject *)saveLocation:(Location *)loc;
+- (NSManagedObject *)saveCollection:(LocationCollection *)col;
+- (NSManagedObject *)saveItinerary:(Itinerary *)it;
 - (NSArray *)fetchLocations;
 - (NSArray *)fetchCollections;
 - (NSArray *)fetchItineraries;

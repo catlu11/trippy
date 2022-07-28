@@ -23,13 +23,12 @@
 @implementation CacheDataHandler
 
 - (void) postNewLocation:(Location *)location collection:(LocationCollection *)collection {
-    // TODO: Handle offline mode
     PFObject *newLocation = [ParseUtils pfObjFromLocation:location];
     location.parseObjectId = newLocation.objectId;
     __weak CacheDataHandler *weakSelf = self;
     [newLocation saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
         if(succeeded) {
-            [[CoreDataHandler shared] saveNewLocation:location]; // post to local cache
+            [[CoreDataHandler shared] saveLocation:location]; // post to local cache
             PFQuery *query = [PFQuery queryWithClassName:@"Collection"];
             [query whereKey:@"objectId" equalTo:collection.parseObjectId];
             [query getFirstObjectInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
@@ -64,7 +63,7 @@
             collection.createdAt = newCollection.createdAt;
             collection.parseObjectId = newCollection.objectId;
             collection.lastUpdated = collection.createdAt;
-            [[CoreDataHandler shared] saveNewCollection:collection]; // post to local cache
+            [[CoreDataHandler shared] saveCollection:collection]; // post to local cache
             [strongSelf.delegate postedCollectionSuccess:collection];
         }
     }];
@@ -80,7 +79,7 @@
             it.createdAt = newItinerary.createdAt;
             it.parseObjectId = newItinerary.objectId;
             it.userId = [PFUser currentUser].username;
-            [[CoreDataHandler shared] saveNewItinerary:it]; // post to local cache
+            [[CoreDataHandler shared] saveItinerary:it]; // post to local cache
             [strongSelf.delegate postedItinerarySuccess:it];
         }
     }];
@@ -120,6 +119,7 @@
         }
         self.isFetchingItinerary = NO;
     } else {
+        [[CoreDataHandler shared] clearEntity:@"Itinerary"]; // clear local cache
         PFQuery *query = [PFQuery queryWithClassName:@"Itinerary"];
         [query whereKey:@"createdBy" equalTo:[PFUser currentUser]];
         [query includeKeys:[ParseUtils getItineraryKeys]];
@@ -131,7 +131,6 @@
                 __strong CacheDataHandler *strongSelf = weakSelf;
                 [strongSelf.delegate generalRequestFail:error];
             } else {
-                [[CoreDataHandler shared] clearEntity:@"Itinerary"]; // clear local cache
                 for(PFObject *obj in objects) {
                     [ParseUtils itineraryFromPFObj:obj completion:^(Itinerary * _Nonnull itinerary, NSError * _Nonnull) {
                         __strong CacheDataHandler *strongSelf = weakSelf;
@@ -139,7 +138,7 @@
                             [strongSelf.delegate generalRequestFail:error];
                         } else {
                             itinerary.isOffline = NO;
-                            [[CoreDataHandler shared] saveNewItinerary:itinerary]; // save to local cache
+                            [[CoreDataHandler shared] saveItinerary:itinerary]; // save to local cache
                             [strongSelf.delegate addFetchedItinerary:itinerary];
                         }
                     }];
@@ -164,6 +163,7 @@
         }
         self.isFetchingCollection = NO;
     } else {
+        [[CoreDataHandler shared] clearEntity:@"LocationCollection"]; // clear local cache
         PFQuery *query = [PFQuery queryWithClassName:@"Collection"];
         [query whereKey:@"createdBy" equalTo:[PFUser currentUser]];
         [query includeKeys:[ParseUtils getCollectionKeys]];
@@ -175,7 +175,6 @@
                 __strong CacheDataHandler *strongSelf = weakSelf;
                 [strongSelf.delegate generalRequestFail:error];
             } else {
-                [[CoreDataHandler shared] clearEntity:@"LocationCollection"]; // clear local cache
                 for(PFObject *obj in objects) {
                     [ParseUtils collectionFromPFObj:obj completion:^(LocationCollection * _Nonnull collection, NSError * _Nonnull) {
                         __strong CacheDataHandler *strongSelf = weakSelf;
@@ -184,7 +183,7 @@
                         } else {
                             collection.isOffline = NO;
                             [strongSelf.delegate addFetchedCollection:collection];
-                            [[CoreDataHandler shared] saveNewCollection:collection]; // save to local cache
+                            [[CoreDataHandler shared] saveCollection:collection]; // save to local cache
                         }
                     }];
                 }
@@ -208,6 +207,7 @@
         }
         self.isFetchingLocation = NO;
     } else if (!self.isFetchingLocation) {
+        [[CoreDataHandler shared] clearEntity:@"Location"];
         self.isFetchingLocation = YES;
         
         PFQuery *query = [PFQuery queryWithClassName:@"Location"];
@@ -221,12 +221,11 @@
             if (error) {
                 [strongSelf.delegate generalRequestFail:error];
             } else {
-                [[CoreDataHandler shared] clearEntity:@"Location"];
                 for(PFObject *obj in objects) {
                     Location *loc = [ParseUtils locationFromPFObj:obj];
                     loc.isOffline = NO;
                     [strongSelf.delegate addFetchedLocation:loc];
-                    [[CoreDataHandler shared] saveNewLocation:loc];
+                    [[CoreDataHandler shared] saveLocation:loc];
                 }
                 self.isFetchingLocation = NO;
             }
