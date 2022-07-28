@@ -12,6 +12,7 @@
 #import "LocationCollection.h"
 #import "ParseUtils.h"
 #import "CacheDataHandler.h"
+#import "NetworkManager.h"
 @import GooglePlaces;
 @import GoogleMaps;
 
@@ -34,35 +35,45 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    // Set up Map View
-    CLLocationCoordinate2D initialCenter = CLLocationCoordinate2DMake(47.629, -122.341);
-    [self.mapView initWithCenter:initialCenter];
+    if ([[NetworkManager shared] isConnected]) {
+        // Set up Map View
+        CLLocationCoordinate2D initialCenter = CLLocationCoordinate2DMake(47.629, -122.341);
+        [self.mapView initWithCenter:initialCenter];
 
-    // Set up Search Bar
-    self.searchBar.delegate = self;
-    
-    // Set up drop down table
-    self.tableDataSource = [[GMSAutocompleteTableDataSource alloc] init];
-    self.tableDataSource.delegate = self;
-    
-    GMSAutocompleteFilter *filter = [[GMSAutocompleteFilter alloc] init];
-    filter.locationBias = GMSPlaceRectangularLocationOption(initialCenter, initialCenter);
-    filter.type = kGMSPlacesAutocompleteTypeFilterEstablishment;
-    self.tableDataSource.autocompleteFilter = filter;
-    
-    self.itemsTableView.delegate = self.tableDataSource;
-    self.itemsTableView.dataSource = self.tableDataSource;
-    
-    // Set up Parse handler
-    self.handler = [[CacheDataHandler alloc] init];
-    self.handler.delegate = self;
-    
-    // Set up picker
-    self.collectionPickerView.delegate = self;
-    self.collectionPickerView.dataSource = self;
-    self.data = [[NSMutableArray alloc] init];
-    
-    [self.handler fetchSavedCollections];
+        // Set up Search Bar
+        self.searchBar.delegate = self;
+        
+        // Set up drop down table
+        self.tableDataSource = [[GMSAutocompleteTableDataSource alloc] init];
+        self.tableDataSource.delegate = self;
+        
+        GMSAutocompleteFilter *filter = [[GMSAutocompleteFilter alloc] init];
+        filter.locationBias = GMSPlaceRectangularLocationOption(initialCenter, initialCenter);
+        filter.type = kGMSPlacesAutocompleteTypeFilterEstablishment;
+        self.tableDataSource.autocompleteFilter = filter;
+        
+        self.itemsTableView.delegate = self.tableDataSource;
+        self.itemsTableView.dataSource = self.tableDataSource;
+        
+        // Set up Parse handler
+        self.handler = [[CacheDataHandler alloc] init];
+        self.handler.delegate = self;
+        
+        // Set up picker
+        self.collectionPickerView.delegate = self;
+        self.collectionPickerView.dataSource = self;
+        self.data = [[NSMutableArray alloc] init];
+        
+        [self.handler fetchSavedCollections];
+    } else {
+        UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"No internet connection"
+                                   message:@"Please try again later."
+                                   preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction* action = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
+                                       handler:nil];
+        [alert addAction:action];
+        [self presentViewController:alert animated:YES completion:nil];
+    }
 }
 
 - (IBAction)tapAdd:(id)sender {

@@ -13,6 +13,7 @@
 #import "EditingItineraryViewController.h"
 #import "ViewItineraryViewController.h"
 #import "CacheDataHandler.h"
+#import "NetworkManager.h"
 
 @interface ItineraryDetailViewController () <EditingItineraryDelegate, SelectableMapDelegate>
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
@@ -43,7 +44,17 @@
 }
 
 - (IBAction)tapEdit:(id)sender {
-    [self performSegueWithIdentifier:@"editItinerarySegue" sender:nil];
+    if ([[NetworkManager shared] isConnected]) {
+        [self performSegueWithIdentifier:@"editItinerarySegue" sender:nil];
+    } else {
+        UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Itinerary Editing Disabled"
+                                   message:@"No internet connection, please try again later."
+                                   preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction* action = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
+                                       handler:nil];
+        [alert addAction:action];
+        [self presentViewController:alert animated:YES completion:nil];
+    }
 }
 
 - (IBAction)tapBack:(id)sender {

@@ -55,6 +55,16 @@
     NSLog(@"Failed to log out user: %@", error.description);
 }
 
+- (void)offlineWarning {
+    UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Logout Failed"
+                               message:@"No internet connection, please try again later."
+                               preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction* action = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
+                                   handler:nil];
+    [alert addAction:action];
+    [self presentViewController:alert animated:YES completion:nil];
+}
+
 # pragma mark - CreateCollectionDelegate
 
 - (void)createdNew:(LocationCollection *)col {
