@@ -128,7 +128,7 @@
         }
         self.isFetchingItinerary = NO;
     } else {
-//        [[CoreDataHandler shared] clearEntity:@"Itinerary"]; // clear local cache
+        [[CoreDataHandler shared] clearEntity:@"Itinerary"]; // clear local cache
         PFQuery *query = [PFQuery queryWithClassName:@"Itinerary"];
         [query whereKey:@"createdBy" equalTo:[PFUser currentUser]];
         [query includeKeys:[ParseUtils getItineraryKeys]];
@@ -172,7 +172,7 @@
         }
         self.isFetchingCollection = NO;
     } else {
-//        [[CoreDataHandler shared] clearEntity:@"LocationCollection"]; // clear local cache
+        [[CoreDataHandler shared] clearEntity:@"LocationCollection"]; // clear local cache
         PFQuery *query = [PFQuery queryWithClassName:@"Collection"];
         [query whereKey:@"createdBy" equalTo:[PFUser currentUser]];
         [query includeKeys:[ParseUtils getCollectionKeys]];
