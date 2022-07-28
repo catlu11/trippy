@@ -15,9 +15,9 @@
 #import "NetworkManager.h"
 
 @interface CacheDataHandler ()
-@property (assign, nonatomic) BOOL isFetchingItinerary;
-@property (assign, nonatomic) BOOL isFetchingCollection;
-@property (assign, nonatomic) BOOL isFetchingLocation;
+@property (assign, nonatomic) BOOL isFetchingItineraries;
+@property (assign, nonatomic) BOOL isFetchingCollections;
+@property (assign, nonatomic) BOOL isFetchingLocations;
 @end
 
 @implementation CacheDataHandler
@@ -76,7 +76,7 @@
 }
 
 - (void) postNewItinerary:(Itinerary *)it {
-    // Offline mode not possible
+    // TODO: If itinerary is offline, delete the offline version after posting to Parse
     PFObject *newItinerary = [ParseUtils pfObjFromItinerary:it];
     __weak CacheDataHandler *weakSelf = self;
     [newItinerary saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
@@ -115,18 +115,18 @@
 }
 
 - (void) fetchSavedItineraries {
-    if (self.isFetchingItinerary) {
+    if (self.isFetchingItineraries) {
         return;
     }
     
-    self.isFetchingItinerary = YES;
+    self.isFetchingItineraries = YES;
     if (![NetworkManager shared].isConnected) {
         NSArray *its = [[CoreDataHandler shared] fetchItineraries];
         for (Itinerary *it in its) {
             it.isOffline = YES;
             [self.delegate addFetchedItinerary:it];
         }
-        self.isFetchingItinerary = NO;
+        self.isFetchingItineraries = NO;
     } else {
         [[CoreDataHandler shared] clearEntity:@"Itinerary"]; // clear local cache
         PFQuery *query = [PFQuery queryWithClassName:@"Itinerary"];
@@ -147,30 +147,32 @@
                             [strongSelf.delegate generalRequestFail:error];
                         } else {
                             itinerary.isOffline = NO;
-                            [[CoreDataHandler shared] saveItinerary:itinerary]; // save to local cache
+                            if (itinerary.isFavorited) {
+                                [[CoreDataHandler shared] saveItinerary:itinerary]; // save to local cache
+                            }
                             [strongSelf.delegate addFetchedItinerary:itinerary];
                         }
                     }];
                 }
-                self.isFetchingItinerary = NO;
+                self.isFetchingItineraries = NO;
             }
         }];
     }
 }
 
 - (void) fetchSavedCollections {
-    if (self.isFetchingCollection) {
+    if (self.isFetchingCollections) {
         return;
     }
     
-    self.isFetchingCollection = YES;
+    self.isFetchingCollections = YES;
     if (![NetworkManager shared].isConnected) {
         NSArray *cols = [[CoreDataHandler shared] fetchCollections];
         for (LocationCollection *col in cols) {
             col.isOffline = YES;
             [self.delegate addFetchedCollection:col];
         }
-        self.isFetchingCollection = NO;
+        self.isFetchingCollections = NO;
     } else {
         [[CoreDataHandler shared] clearEntity:@"LocationCollection"]; // clear local cache
         PFQuery *query = [PFQuery queryWithClassName:@"Collection"];
@@ -196,28 +198,28 @@
                         }
                     }];
                 }
-                self.isFetchingCollection = NO;
+                self.isFetchingCollections = NO;
             }
         }];
     }
 }
 
 - (void) fetchSavedLocations {
-    if (self.isFetchingLocation) {
+    if (self.isFetchingLocations) {
         return;
     }
     
-    self.isFetchingLocation = YES;
+    self.isFetchingLocations = YES;
     if (![NetworkManager shared].isConnected) {
         NSArray *locs = [[CoreDataHandler shared] fetchLocations];
         for (Location *loc in locs) {
             loc.isOffline = YES;
             [self.delegate addFetchedLocation:loc];
         }
-        self.isFetchingLocation = NO;
+        self.isFetchingLocations = NO;
     } else {
 //        [[CoreDataHandler shared] clearEntity:@"Location"];
-        self.isFetchingLocation = YES;
+        self.isFetchingLocations = YES;
         
         PFQuery *query = [PFQuery queryWithClassName:@"Location"];
         [query whereKey:@"createdBy" equalTo:[PFUser currentUser]];
@@ -236,7 +238,7 @@
                     [strongSelf.delegate addFetchedLocation:loc];
                     [[CoreDataHandler shared] saveLocation:loc];
                 }
-                self.isFetchingLocation = NO;
+                self.isFetchingLocations = NO;
             }
         }];
     }

@@ -54,6 +54,12 @@
     NSArray *objects = [self fetchObjects:entityName];
     NSManagedObjectContext *moc = [self getContext];
     for (NSManagedObject *obj in objects) {
+        if ([entityName isEqualToString:@"LocationCollection"] || [entityName isEqualToString:@"Location"]) {
+            int numDependents = [[obj valueForKey:@"dependents"] intValue];
+            if (numDependents > 0) {
+                continue;
+            }
+        }
         [moc deleteObject:obj];
     }
     NSError *error = nil;
@@ -74,6 +80,7 @@
         [obj setValue:loc.title forKey:@"title"];
         [obj setValue:loc.snippet forKey:@"snippet"];
         [obj setValue:UIImagePNGRepresentation([MapUtils getStaticMapImage:loc.coord width:100 height:100]) forKey:@"staticMap"];
+        [obj setValue:@(0) forKey:@"dependents"];
         if (loc.parseObjectId) {
             [obj setValue:loc.parseObjectId forKey:@"parseObjectId"];
             [obj setValue:[NSNumber numberWithBool:YES] forKey:@"synced"];
@@ -100,6 +107,7 @@
         [obj setValue:col.title forKey:@"title"];
         [obj setValue:col.snippet forKey:@"snippet"];
         [obj setValue:col.createdAt forKey:@"createdAt"];
+        [obj setValue:@(0) forKey:@"dependents"];
         if (col.parseObjectId) {
             [obj setValue:col.parseObjectId forKey:@"parseObjectId"];
             [obj setValue:[NSNumber numberWithBool:YES] forKey:@"synced"];
@@ -109,6 +117,8 @@
         for (Location *l in col.locations) {
             NSManagedObject *locMO = [CoreDataUtils managedObjectFromLocation:l];
             [[obj mutableSetValueForKey:@"locations"] addObject:locMO];
+            int newDependents = [[locMO valueForKey:@"dependents"] intValue] + 1;
+            [locMO setValue:@(newDependents) forKey:@"dependents"];
         }
     }
     NSError *error = nil;
@@ -138,8 +148,14 @@
         NSData *jsonData = [NSJSONSerialization dataWithJSONObject:[it toRouteDictionary] options:0 error:nil];
         NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
         [obj setValue:jsonString forKey:@"routeJson"];
-        [obj setValue:[CoreDataUtils managedObjectFromLocation:it.originLocation] forKey:@"originLocation"];
-        [obj setValue:[CoreDataUtils managedObjectFromCollection:it.sourceCollection] forKey:@"sourceCollection"];
+        NSManagedObject *originLoc = [CoreDataUtils managedObjectFromLocation:it.originLocation];
+        NSManagedObject *originCol = [CoreDataUtils managedObjectFromCollection:it.sourceCollection];
+        int newDependentsLoc = [[originLoc valueForKey:@"dependents"] intValue] + 1;
+        int newDependentsCol = [[originCol valueForKey:@"dependents"] intValue] + 1;
+        [originLoc setValue:@(newDependentsLoc) forKey:@"dependents"];
+        [originCol setValue:@(newDependentsCol) forKey:@"dependents"];
+        [obj setValue:originLoc forKey:@"originLocation"];
+        [obj setValue:originCol forKey:@"sourceCollection"];
         [obj setValue:[NSNumber numberWithBool:it.isFavorited] forKey:@"isFavorited"];
         [obj setValue:UIImagePNGRepresentation(it.staticMap) forKey:@"staticMap"];
     }
@@ -178,6 +194,8 @@
     NSMutableArray *cols = [[NSMutableArray alloc] init];
     NSLog(@"fetching offline collections");
     for (NSManagedObject *obj in managedObjects) {
+        NSLog(@"Col id: %@", [obj objectID]);
+        NSSet *relation = [obj valueForKey:@"locations"];
         [cols addObject:[CoreDataUtils collectionFromManagedObject:obj]];
     }
     NSLog(@"number of collections, %d", cols.count);
@@ -215,6 +233,74 @@
     NSManagedObject *obj = [CoreDataUtils managedObjectFromCollection:col];
     for (Location *l in col.locations) {
         [[obj mutableSetValueForKey:@"locations"] addObject:[CoreDataUtils managedObjectFromLocation:l]];
+    }
+    NSError *error = nil;
+    if ([moc save:&error] == NO) {
+        NSAssert(NO, @"Error saving context: %@\n%@", [error localizedDescription], [error userInfo]);
+    }
+}
+
+- (NSArray *)fetchUnsyncedObjects:(NSString *)entityName {
+    NSManagedObjectContext *moc = [self getContext];
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:entityName];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"synced == NO"];
+    [request setPredicate:predicate];
+    
+    NSError *error = nil;
+    NSArray *results = [moc executeFetchRequest:request error:&error];
+    if (!results) {
+        NSLog(@"Error fetching objects: %@\n%@", [error localizedDescription], [error userInfo]);
+        abort();
+    }
+    return results;
+}
+
+- (NSArray *)fetchUnsyncedCollections {
+    NSArray *collections = [self fetchUnsyncedObjects:@"LocationCollection"];
+    NSMutableArray *res = [[NSMutableArray alloc] init];
+    for (NSManagedObject *col in collections) {
+        [res addObject:[CoreDataUtils collectionFromManagedObject:col]];
+    }
+    return res;
+}
+
+- (NSArray *)fetchUnsyncedItineraries {
+    NSArray *itineraries = [self fetchUnsyncedObjects:@"Itinerary"];
+    NSMutableArray *res = [[NSMutableArray alloc] init];
+    for (NSManagedObject *it in itineraries) {
+        [res addObject:[CoreDataUtils itineraryFromManagedObject:it]];
+    }
+    return res;
+}
+
+- (void)deleteUnsyncedCollections {
+    NSManagedObjectContext *moc = [self getContext];
+    NSArray *collections = [self fetchUnsyncedObjects:@"LocationCollection"];
+    for (NSManagedObject *col in collections) {
+        NSSet *locs = [col valueForKey:@"locations"];
+        for (NSManagedObject *locObj in locs) {
+            int updated = [[locObj valueForKey:@"dependents"] intValue] - 1;
+            [locObj setValue:@(updated) forKey:@"dependents"];
+        }
+        [moc deleteObject:col];
+    }
+    NSError *error = nil;
+    if ([moc save:&error] == NO) {
+        NSAssert(NO, @"Error saving context: %@\n%@", [error localizedDescription], [error userInfo]);
+    }
+}
+
+- (void)deleteUnsyncedItineraries {
+    NSManagedObjectContext *moc = [self getContext];
+    NSArray *itineraries = [self fetchUnsyncedObjects:@"Itinerary"];
+    for (NSManagedObject *it in itineraries) {
+        NSManagedObject *locObj = [it valueForKey:@"originLocation"];
+        NSManagedObject *colObj = [it valueForKey:@"sourceCollection"];
+        int updatedLoc = [[locObj valueForKey:@"dependents"] intValue] - 1;
+        int updatedCol = [[colObj valueForKey:@"dependents"] intValue] - 1;
+        [locObj setValue:@(updatedLoc) forKey:@"dependents"];
+        [colObj setValue:@(updatedCol) forKey:@"dependents"];
+        [moc deleteObject:it];
     }
     NSError *error = nil;
     if ([moc save:&error] == NO) {

@@ -12,6 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 @protocol UserAuthHandlerDelegate
 - (void)loggedInSuccess;
 - (void)signUpSuccess;
+- (void)offlineWarning;
 - (void)generalRequestFail:(NSError *)error; // TODO: Extend for more specific error behaviors
 @end
 

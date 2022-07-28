@@ -25,6 +25,10 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)updateItinerary:(Itinerary *)it;
 - (void)updateCollection:(LocationCollection *)col;
 - (NSManagedObject *)getEntityById:(NSString *)entity parseObjectId:(NSString *)parseObjectId;
+- (NSArray *)fetchUnsyncedCollections;
+- (NSArray *)fetchUnsyncedItineraries;
+- (void)deleteUnsyncedItineraries;
+- (void)deleteUnsyncedCollections;
 @end
 
 NS_ASSUME_NONNULL_END

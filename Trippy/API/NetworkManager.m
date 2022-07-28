@@ -7,6 +7,12 @@
 
 #import "NetworkManager.h"
 #import "Reachability.h"
+#import "CoreDataHandler.h"
+#import "CacheDataHandler.h"
+
+@interface NetworkManager ()
+@property (strong, nonatomic) CacheDataHandler *parseHandler;
+@end
 
 @implementation NetworkManager
 
@@ -22,6 +28,7 @@
 }
 
 - (void)beginNotifier {
+    self.parseHandler = [[CacheDataHandler alloc] init];
     self.internetReachable = [Reachability reachabilityWithHostname:@"www.google.com"];
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(reachabilityChanged)
@@ -33,6 +40,19 @@
 
 - (void)reachabilityChanged {
     self.isConnected = [self.internetReachable isReachable];
+    // sync objects created offline
+    if (self.isConnected) {
+        NSArray *unsyncedCollections = [[CoreDataHandler shared] fetchUnsyncedCollections];
+        NSArray *unsyncedItineraries = [[CoreDataHandler shared] fetchUnsyncedItineraries];
+        for (LocationCollection *col in unsyncedCollections) {
+            [self.parseHandler postNewCollection:col];
+        }
+        for (Itinerary *it in unsyncedItineraries) {
+            [self.parseHandler postNewItinerary:it];
+        }
+        [[CoreDataHandler shared] deleteUnsyncedCollections];
+        [[CoreDataHandler shared] deleteUnsyncedItineraries];
+    }
 }
 
 @end
