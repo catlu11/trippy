@@ -109,7 +109,16 @@
         [self presentViewController:alert animated:YES completion:nil];
         return;
     }
-    // TODO: CHECK FOR VALID DEPARTURE DATE
+    if ([self.mutableItinerary.departureTime compare:[NSDate now]] == NSOrderedAscending) {
+        UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Departure Date Error"
+                                   message:@"Departure date must be in the future, please select a new date."
+                                   preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction* action = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
+                                       handler:^(UIAlertAction * action) {}];
+        [alert addAction:action];
+        [self presentViewController:alert animated:YES completion:nil];
+        return;
+    }
     [self.loadingIndicator startAnimating];
     NSString *matrixUrl = [MapUtils generateMatrixApiUrl:self.mutableItinerary.sourceCollection
                                             origin:self.mutableItinerary.originLocation
