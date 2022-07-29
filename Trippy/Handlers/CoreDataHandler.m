@@ -144,9 +144,12 @@
         } else {
             [obj setValue:[NSNumber numberWithBool:NO] forKey:@"synced"];
         }
-        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:[it toRouteDictionary] options:0 error:nil];
-        NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-        [obj setValue:jsonString forKey:@"routeJson"];
+        NSData *routeJsonData = [NSJSONSerialization dataWithJSONObject:[it toRouteDictionary] options:0 error:nil];
+        NSString *routeJsonString = [[NSString alloc] initWithData:routeJsonData encoding:NSUTF8StringEncoding];
+        [obj setValue:routeJsonString forKey:@"routeJson"];
+        NSData *prefJsonData = [NSJSONSerialization dataWithJSONObject:[it toPrefsDictionary] options:0 error:nil];
+        NSString *prefJsonString = [[NSString alloc] initWithData:prefJsonData encoding:NSUTF8StringEncoding];
+        [obj setValue:prefJsonString forKey:@"prefJson"];
         NSManagedObject *originLoc = [CoreDataUtils managedObjectFromLocation:it.originLocation];
         NSManagedObject *originCol = [CoreDataUtils managedObjectFromCollection:it.sourceCollection];
         int newDependentsLoc = [[originLoc valueForKey:@"dependents"] intValue] + 1;
@@ -157,6 +160,9 @@
         [obj setValue:originCol forKey:@"sourceCollection"];
         [obj setValue:[NSNumber numberWithBool:it.isFavorited] forKey:@"isFavorited"];
         [obj setValue:UIImagePNGRepresentation(it.staticMap) forKey:@"staticMap"];
+        [obj setValue:it.departureTime forKey:@"departureDate"];
+        [obj setValue:it.budgetConstraint forKey:@"budgetConstraint"];
+        [obj setValue:it.mileageConstraint forKey:@"mileageConstraint"];
     }
     NSError *error = nil;
     if ([moc save:&error] == NO) {
@@ -211,7 +217,12 @@
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:[it toRouteDictionary] options:0 error:nil];
     NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
     [obj setValue:jsonString forKey:@"routeJson"];
-    // TODO: Add constraints
+    NSData *prefJsonData = [NSJSONSerialization dataWithJSONObject:[it toPrefsDictionary] options:0 error:nil];
+    NSString *prefJsonString = [[NSString alloc] initWithData:prefJsonData encoding:NSUTF8StringEncoding];
+    [obj setValue:prefJsonString forKey:@"prefJson"];
+    [obj setValue:it.departureTime forKey:@"departureDate"];
+    [obj setValue:it.budgetConstraint forKey:@"budgetConstraint"];
+    [obj setValue:it.mileageConstraint forKey:@"mileageConstraint"];
     [obj setValue:[NSNumber numberWithBool:it.isFavorited] forKey:@"isFavorited"];
     [obj setValue:[NSNumber numberWithBool:NO] forKey:@"synced"];
     [obj setValue:UIImagePNGRepresentation(it.staticMap) forKey:@"staticMap"];

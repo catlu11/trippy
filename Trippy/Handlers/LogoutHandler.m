@@ -13,7 +13,7 @@
 @implementation LogoutHandler
 
 - (void) logoutCurrentUser {
-    if ([[NetworkManager shared] isConnected]) {
+    if ([[NetworkManager shared] isConnected] && [[NetworkManager shared] isSynced]) {
         [PFUser logOutInBackgroundWithBlock:^(NSError * _Nullable error) {
             if(error) {
                 [self.delegate logoutFail:error];

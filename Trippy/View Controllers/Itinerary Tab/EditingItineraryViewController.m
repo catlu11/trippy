@@ -59,6 +59,7 @@
                                                     originLocation:self.baseItinerary.originLocation
                                                               name:self.baseItinerary.name
                                                        isFavorited:self.baseItinerary.isFavorited];
+    self.mutableItinerary.staticMap = self.baseItinerary.staticMap;
     self.screenshotFlag = NO;
     self.cacheHandler = [[CacheDataHandler alloc] init];
     self.cacheHandler.delegate = self;
@@ -67,14 +68,18 @@
 
 - (void) updateUI {
     // Set up map
-    self.mapView.delegate = self;
-    [self.mapView initWithBounds:self.mutableItinerary.bounds];
-    [self.mapView addMarker:self.mutableItinerary.originLocation];
-    for (Location *point in [self.mutableItinerary getOrderedLocations]) {
-        [self.mapView addMarker:point];
+    if ([[NetworkManager shared] isConnected]) {
+        self.mapView.delegate = self;
+        [self.mapView initWithBounds:self.mutableItinerary.bounds];
+        [self.mapView addMarker:self.mutableItinerary.originLocation];
+        for (Location *point in [self.mutableItinerary getOrderedLocations]) {
+            [self.mapView addMarker:point];
+        }
+        [self.mapView addPolyline:self.mutableItinerary.overviewPolyline];
+    } else {
+        [self.mapView initWithStaticImage:self.mutableItinerary.staticMap];
     }
-    [self.mapView addPolyline:self.mutableItinerary.overviewPolyline];
-    
+
     // Set up table view
     self.placesTableView.dataSource = self;
     self.placesTableView.delegate = self;
@@ -104,6 +109,7 @@
         [self presentViewController:alert animated:YES completion:nil];
         return;
     }
+    // TODO: CHECK FOR VALID DEPARTURE DATE
     [self.loadingIndicator startAnimating];
     NSString *matrixUrl = [MapUtils generateMatrixApiUrl:self.mutableItinerary.sourceCollection
                                             origin:self.mutableItinerary.originLocation
@@ -224,7 +230,9 @@
     else {
         loc = self.orderedData[indexPath.row - 1];
     }
-    [self.mapView setCameraToLoc:loc.coord animate:YES];
+    if (self.mapView.isEnabled) {
+        [self.mapView setCameraToLoc:loc.coord animate:YES];
+    }
 }
 
 # pragma mark - EditPlaceCellDelegate

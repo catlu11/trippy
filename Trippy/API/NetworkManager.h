@@ -14,6 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (NetworkManager *)shared;
 @property(strong, nonatomic) Reachability *internetReachable;
 @property(assign, nonatomic) BOOL isConnected;
+@property (assign, nonatomic) BOOL isSynced;
 - (void)beginNotifier;
 - (void)initialFetchAll;
 @end

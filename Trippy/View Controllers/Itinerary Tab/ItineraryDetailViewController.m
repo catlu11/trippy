@@ -48,17 +48,7 @@
 }
 
 - (IBAction)tapEdit:(id)sender {
-    if ([[NetworkManager shared] isConnected]) {
-        [self performSegueWithIdentifier:@"editItinerarySegue" sender:nil];
-    } else {
-        UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Itinerary Editing Disabled"
-                                   message:@"No internet connection, please try again later."
-                                   preferredStyle:UIAlertControllerStyleAlert];
-        UIAlertAction* action = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
-                                       handler:nil];
-        [alert addAction:action];
-        [self presentViewController:alert animated:YES completion:nil];
-    }
+    [self performSegueWithIdentifier:@"editItinerarySegue" sender:nil];
 }
 
 - (IBAction)tapBack:(id)sender {
@@ -83,7 +73,6 @@
 
 - (void) didSaveItinerary {
     [self updateUI];
-//    self.screenshotFlag = YES;
 }
 
 # pragma mark - SelectableMapDelegate

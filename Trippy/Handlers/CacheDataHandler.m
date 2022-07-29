@@ -96,13 +96,11 @@
         [self.delegate updatedItinerarySuccess:it];
     } else {
         PFObject *obj = [ParseUtils pfObjFromItinerary:it];
-        if (!it.isOffline) {
-            obj[@"preferencesJson"] = [ParseUtils pfFileFromDict:[it toPrefsDictionary] name:@"preferences"];
-            obj[@"departure"] = it.departureTime;
-            obj[@"mileageConstraint"] = it.mileageConstraint;
-            obj[@"budgetConstraint"] = it.budgetConstraint;
-            obj[@"staticMap"] = [ParseUtils pfFileFromImage:it.staticMap name:@"img"];
-        }
+        obj[@"preferencesJson"] = [ParseUtils pfFileFromDict:[it toPrefsDictionary] name:@"preferences"];
+        obj[@"departure"] = it.departureTime;
+        obj[@"mileageConstraint"] = it.mileageConstraint;
+        obj[@"budgetConstraint"] = it.budgetConstraint;
+        obj[@"staticMap"] = [ParseUtils pfFileFromImage:it.staticMap name:@"img"];
         obj[@"directionsJson"] = [ParseUtils pfFileFromDict:[it toRouteDictionary] name:@"directions"];
         obj[@"isFavorited"] = [NSNumber numberWithBool:it.isFavorited];
         __weak CacheDataHandler *weakSelf = self;

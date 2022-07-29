@@ -39,17 +39,21 @@
 }
 
 + (Itinerary *)itineraryFromManagedObject:(NSManagedObject *)obj {
-    NSData *data = [[obj valueForKey:@"routeJson"] dataUsingEncoding:NSUTF8StringEncoding];
-    NSDictionary *jsonResponse = [NSJSONSerialization JSONObjectWithData:data
+    NSData *routeData = [[obj valueForKey:@"routeJson"] dataUsingEncoding:NSUTF8StringEncoding];
+    NSDictionary *routeJson = [NSJSONSerialization JSONObjectWithData:routeData
+                                                                 options:kNilOptions
+                                                                   error:nil];
+    NSData *prefData = [[obj valueForKey:@"prefJson"] dataUsingEncoding:NSUTF8StringEncoding];
+    NSDictionary *prefJson = [NSJSONSerialization JSONObjectWithData:prefData
                                                                  options:kNilOptions
                                                                    error:nil];
     Location *originLocation = [self locationFromManagedObject:[obj valueForKey:@"originLocation"]];
     LocationCollection *sourceCollection = [self collectionFromManagedObject:[obj valueForKey:@"sourceCollection"]];
-    Itinerary *it = [[Itinerary alloc] initWithDictionary:jsonResponse
-                                                  prefJson:nil
-                                                 departure:nil
-                                         mileageConstraint:nil
-                                          budgetConstraint:nil
+    Itinerary *it = [[Itinerary alloc] initWithDictionary:routeJson
+                                                  prefJson:prefJson
+                                                 departure:[obj valueForKey:@"departureDate"]
+                                         mileageConstraint:[obj valueForKey:@"mileageConstraint"]
+                                          budgetConstraint:[obj valueForKey:@"budgetConstraint"]
                                           sourceCollection:sourceCollection
                                             originLocation:originLocation
                                                       name:[obj valueForKey:@"name"]

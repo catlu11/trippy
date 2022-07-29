@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		08C570CEEB81796F78D90125 /* Pods_TrippyTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DACCD3192C823EF35DC05DDD /* Pods_TrippyTests.framework */; };
+		F0342E1E28946111006717CB /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F0342E1C28946111006717CB /* DataModel.xcdatamodeld */; };
 		F06174A228888108005AF616 /* RoutesHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = F06174A128888108005AF616 /* RoutesHandler.m */; };
 		F06174A52888812C005AF616 /* RouteCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F06174A42888812C005AF616 /* RouteCell.m */; };
 		F06174AE2889B914005AF616 /* LocationOptionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F06174AD2889B914005AF616 /* LocationOptionsViewController.m */; };
@@ -15,7 +16,6 @@
 		F07D030C288EFCE30049F355 /* RouteOption.m in Sources */ = {isa = PBXBuildFile; fileRef = F07D030B288EFCE30049F355 /* RouteOption.m */; };
 		F07D030F288F07260049F355 /* ItineraryItemCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F07D030E288F07260049F355 /* ItineraryItemCell.m */; };
 		F07D0312288F07540049F355 /* ViewItineraryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F07D0311288F07540049F355 /* ViewItineraryViewController.m */; };
-		F07D0315288F3F830049F355 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F07D0313288F3F830049F355 /* Model.xcdatamodeld */; };
 		F07D031E288F48D60049F355 /* CoreDataHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = F07D031D288F48D60049F355 /* CoreDataHandler.m */; };
 		F07D0321289055D90049F355 /* CoreDataUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = F07D0320289055D80049F355 /* CoreDataUtils.m */; };
 		F07D032728919A7D0049F355 /* NetworkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F07D032628919A7D0049F355 /* NetworkManager.m */; };
@@ -89,6 +89,7 @@
 		CCA5DB2AB9E0DEA96B5E2177 /* Pods-TrippyTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TrippyTests.debug.xcconfig"; path = "Target Support Files/Pods-TrippyTests/Pods-TrippyTests.debug.xcconfig"; sourceTree = "<group>"; };
 		DACCD3192C823EF35DC05DDD /* Pods_TrippyTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TrippyTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DCD6D797BDE2A5804AC47015 /* Pods_Trippy.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Trippy.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F0342E1D28946111006717CB /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
 		F06174A028888108005AF616 /* RoutesHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RoutesHandler.h; sourceTree = "<group>"; };
 		F06174A128888108005AF616 /* RoutesHandler.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RoutesHandler.m; sourceTree = "<group>"; };
 		F06174A32888812C005AF616 /* RouteCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RouteCell.h; sourceTree = "<group>"; };
@@ -103,7 +104,6 @@
 		F07D030E288F07260049F355 /* ItineraryItemCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ItineraryItemCell.m; sourceTree = "<group>"; };
 		F07D0310288F07540049F355 /* ViewItineraryViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewItineraryViewController.h; sourceTree = "<group>"; };
 		F07D0311288F07540049F355 /* ViewItineraryViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewItineraryViewController.m; sourceTree = "<group>"; };
-		F07D0314288F3F830049F355 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		F07D031C288F48D60049F355 /* CoreDataHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CoreDataHandler.h; sourceTree = "<group>"; };
 		F07D031D288F48D60049F355 /* CoreDataHandler.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CoreDataHandler.m; sourceTree = "<group>"; };
 		F07D031F289055D80049F355 /* CoreDataUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CoreDataUtils.h; sourceTree = "<group>"; };
@@ -337,7 +337,7 @@
 				F0F335842874A0EB00470507 /* Info.plist */,
 				F0C75F6C287642C10015BB74 /* Keys.plist */,
 				F0F335852874A0EB00470507 /* main.m */,
-				F07D0313288F3F830049F355 /* Model.xcdatamodeld */,
+				F0342E1C28946111006717CB /* DataModel.xcdatamodeld */,
 			);
 			path = Trippy;
 			sourceTree = "<group>";
@@ -739,6 +739,7 @@
 				F0F6581E2888804E00C04AB0 /* WaypointPreferences.m in Sources */,
 				F0F3357B2874A0E700470507 /* SearchMapViewController.m in Sources */,
 				F0F6580F28887F1700C04AB0 /* ChooseRouteViewController.m in Sources */,
+				F0342E1E28946111006717CB /* DataModel.xcdatamodeld in Sources */,
 				F0C75F982878D7750015BB74 /* CreateCollectionViewController.m in Sources */,
 				F0C75F92287799070015BB74 /* ParseUtils.m in Sources */,
 				F07D032728919A7D0049F355 /* NetworkManager.m in Sources */,
@@ -762,7 +763,6 @@
 				F0C75F86287786D70015BB74 /* StaticMapCell.m in Sources */,
 				F0C75FE4287E3CB20015BB74 /* Itinerary.m in Sources */,
 				F0F658092887158000C04AB0 /* TSPUtils.m in Sources */,
-				F07D0315288F3F830049F355 /* Model.xcdatamodeld in Sources */,
 				F06174A52888812C005AF616 /* RouteCell.m in Sources */,
 				F0F6581A28887FEE00C04AB0 /* CacheDataHandler.m in Sources */,
 				F07D0312288F07540049F355 /* ViewItineraryViewController.m in Sources */,
@@ -1117,13 +1117,13 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		F07D0313288F3F830049F355 /* Model.xcdatamodeld */ = {
+		F0342E1C28946111006717CB /* DataModel.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				F07D0314288F3F830049F355 /* Model.xcdatamodel */,
+				F0342E1D28946111006717CB /* DataModel.xcdatamodel */,
 			);
-			currentVersion = F07D0314288F3F830049F355 /* Model.xcdatamodel */;
-			path = Model.xcdatamodeld;
+			currentVersion = F0342E1D28946111006717CB /* DataModel.xcdatamodel */;
+			path = DataModel.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};

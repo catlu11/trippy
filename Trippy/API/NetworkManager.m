@@ -38,6 +38,7 @@
                                                object:self.internetReachable];
     [self.internetReachable startNotifier];
     self.isConnected = [self.internetReachable isReachable];
+    self.isSynced = YES;
 }
 
 - (void)initialFetchAll {
@@ -50,7 +51,9 @@
 - (void)reachabilityChanged {
     self.isConnected = [self.internetReachable isReachable];
     // sync objects created offline
-    if (self.isConnected) {
+    if (!self.isConnected) {
+        self.isSynced = NO;
+    } else if (self.isConnected) {
         NSArray *unsyncedCollections = [[CoreDataHandler shared] fetchUnsyncedCollections];
         NSArray *unsyncedItineraries = [[CoreDataHandler shared] fetchUnsyncedItineraries];
         for (LocationCollection *col in unsyncedCollections) {
@@ -67,6 +70,7 @@
         }
         [[CoreDataHandler shared] deleteUnsyncedCollections];
         [[CoreDataHandler shared] deleteUnsyncedItineraries];
+        self.isSynced = YES;
     }
 }
 

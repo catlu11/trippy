@@ -18,6 +18,7 @@
 @implementation SelectableMap
 
 - (void) initWithStaticImage:(UIImage *)image {
+    [[self subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
     UIImageView *newView = [[UIImageView alloc] init];
     newView.image = image;
     newView.frame = self.bounds;
@@ -27,6 +28,7 @@
 }
 
 - (void) initWithCenter:(CLLocationCoordinate2D)location {
+    [[self subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
     GMSCameraPosition *camera = [GMSCameraPosition cameraWithLatitude:location.latitude
                                                           longitude:location.longitude
                                                                zoom:DEFAULT_ZOOM];
@@ -40,6 +42,7 @@
 }
 
 - (void) initWithBounds:(GMSCoordinateBounds *)bounds {
+    [[self subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
     GMSCameraPosition *camera = [GMSCameraPosition cameraWithLatitude:0
                                                           longitude:0
                                                                zoom:DEFAULT_ZOOM];
