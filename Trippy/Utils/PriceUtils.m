@@ -50,8 +50,8 @@ const static NSDictionary *basePrices = @{@"food": @15,
     for (NSString *type in types) {
         if (basePrices[type]) {
             cumSum += [basePrices[type] doubleValue];
-            count++;
         }
+        count++;
     }
     int adjusted = [priceLevel intValue] > 0 ? [priceLevel intValue] - 1: 1;
     NSNumber *multiplier = multipliers[adjusted];

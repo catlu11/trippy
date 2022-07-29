@@ -13,9 +13,18 @@
 @interface SelectableMap () <GMSMapViewDelegate>
 @property (strong, nonatomic) GMSMapView *mapView;
 @property (strong, nonatomic) NSMutableArray *markersArray;
+@property (assign, nonatomic) BOOL isEnabled;
 @end
 
 @implementation SelectableMap
+
+- (void) initWithStaticImage:(UIImage *)image {
+    UIImageView *newView = [[UIImageView alloc] init];
+    newView.image = image;
+    newView.frame = self.bounds;
+    [self insertSubview:newView atIndex:0];
+    self.isEnabled = NO;
+}
 
 - (void) initWithCenter:(CLLocationCoordinate2D)location {
     GMSCameraPosition *camera = [GMSCameraPosition cameraWithLatitude:location.latitude
@@ -27,6 +36,7 @@
     map.delegate = self;
     self.mapView = map;
     [self insertSubview:map atIndex:0];
+    self.isEnabled = YES;
 }
 
 - (void) initWithBounds:(GMSCoordinateBounds *)bounds {
@@ -40,9 +50,14 @@
     map.delegate = self;
     self.mapView = map;
     [self addSubview:map];
+    self.isEnabled = YES;
 }
 
 - (void) addMarker:(Location *)location {
+    if (!self.isEnabled) {
+        return;
+    }
+    
     GMSMarker *marker = [[GMSMarker alloc] init];
 
     marker.position = location.coord;
@@ -54,6 +69,10 @@
 }
 
 - (void) addPolyline:(NSString *)polyline {
+    if (!self.isEnabled) {
+        return;
+    }
+    
     GMSPath *path = [GMSPath pathFromEncodedPath:polyline];
     GMSPolyline *line = [GMSPolyline polylineWithPath:path];
     line.strokeColor = [UIColor systemBlueColor];
@@ -62,6 +81,10 @@
 }
 
 - (void) clearMarkers {
+    if (!self.isEnabled) {
+        return;
+    }
+    
     for(GMSMarker *marker in self.markersArray) {
         marker.map = nil;
     }
@@ -69,6 +92,10 @@
 }
 
 - (void) setCameraToLoc:(CLLocationCoordinate2D)location animate:(BOOL)animate {
+    if (!self.isEnabled) {
+        return;
+    }
+    
     GMSCameraPosition *pos = [GMSCameraPosition cameraWithLatitude:location.latitude longitude:location.longitude zoom:self.mapView.camera.zoom];
     if(animate) {
         [self.mapView animateToCameraPosition:pos];

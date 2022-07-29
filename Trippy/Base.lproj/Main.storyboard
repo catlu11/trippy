@@ -386,7 +386,7 @@
                         <outlet property="listTableView" destination="PBO-dT-0Aj" id="wFv-Fy-lff"/>
                         <outlet property="nameField" destination="h3d-t7-2j7" id="gXb-9J-sbp"/>
                         <outlet property="startingSearchBar" destination="vi6-av-cuF" id="RHr-7B-2X1"/>
-                        <segue destination="h0c-gf-E4D" kind="presentation" identifier="itineraryDetailSegue" modalPresentationStyle="fullScreen" id="XC6-s5-8OB"/>
+                        <segue destination="h0c-gf-E4D" kind="presentation" identifier="itineraryDetailSegue" modalPresentationStyle="fullScreen" id="yqc-p2-qNS"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="G9D-1t-Nnr" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -1642,7 +1642,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="7bG-EX-YEr"/>
+        <segue reference="yqc-p2-qNS"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="arrowshape.turn.up.left.fill" catalog="system" width="128" height="106"/>

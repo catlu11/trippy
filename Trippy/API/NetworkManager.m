@@ -9,6 +9,8 @@
 #import "Reachability.h"
 #import "CoreDataHandler.h"
 #import "CacheDataHandler.h"
+#import "Itinerary.h"
+#import "LocationCollection.h"
 
 @interface NetworkManager ()
 @property (strong, nonatomic) CacheDataHandler *parseHandler;
@@ -45,10 +47,16 @@
         NSArray *unsyncedCollections = [[CoreDataHandler shared] fetchUnsyncedCollections];
         NSArray *unsyncedItineraries = [[CoreDataHandler shared] fetchUnsyncedItineraries];
         for (LocationCollection *col in unsyncedCollections) {
-            [self.parseHandler postNewCollection:col];
+            if (!col.parseObjectId) {
+                [self.parseHandler postNewCollection:col];
+            }
         }
         for (Itinerary *it in unsyncedItineraries) {
-            [self.parseHandler postNewItinerary:it];
+            if (it.parseObjectId) {
+                [self.parseHandler updateItinerary:it];
+            } else {
+                [self.parseHandler postNewItinerary:it];
+            }
         }
         [[CoreDataHandler shared] deleteUnsyncedCollections];
         [[CoreDataHandler shared] deleteUnsyncedItineraries];

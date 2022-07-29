@@ -19,6 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, weak) id<SelectableMapDelegate> delegate;
 - (void) initWithCenter:(CLLocationCoordinate2D)location;
 - (void) initWithBounds:(GMSCoordinateBounds *)bounds;
+- (void) initWithStaticImage:(UIImage *)image;
 - (void) addMarker:(Location *)location;
 - (void) addPolyline:(NSString *)polyline;
 - (void) clearMarkers;

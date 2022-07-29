@@ -221,6 +221,7 @@
     [obj setValue:jsonString forKey:@"routeJson"];
     // TODO: Add constraints
     [obj setValue:[NSNumber numberWithBool:it.isFavorited] forKey:@"isFavorited"];
+    [obj setValue:[NSNumber numberWithBool:NO] forKey:@"synced"];
     [obj setValue:UIImagePNGRepresentation(it.staticMap) forKey:@"staticMap"];
     NSError *error = nil;
     if ([moc save:&error] == NO) {
@@ -259,7 +260,9 @@
     NSArray *collections = [self fetchUnsyncedObjects:@"LocationCollection"];
     NSMutableArray *res = [[NSMutableArray alloc] init];
     for (NSManagedObject *col in collections) {
-        [res addObject:[CoreDataUtils collectionFromManagedObject:col]];
+        LocationCollection *newCol = [CoreDataUtils collectionFromManagedObject:col];
+        newCol.isOffline = YES;
+        [res addObject:newCol];
     }
     return res;
 }
@@ -268,7 +271,9 @@
     NSArray *itineraries = [self fetchUnsyncedObjects:@"Itinerary"];
     NSMutableArray *res = [[NSMutableArray alloc] init];
     for (NSManagedObject *it in itineraries) {
-        [res addObject:[CoreDataUtils itineraryFromManagedObject:it]];
+        Itinerary *newIt = [CoreDataUtils itineraryFromManagedObject:it];
+        newIt.isOffline = YES;
+        [res addObject:newIt];
     }
     return res;
 }

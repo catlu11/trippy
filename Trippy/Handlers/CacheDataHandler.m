@@ -76,7 +76,6 @@
 }
 
 - (void) postNewItinerary:(Itinerary *)it {
-    // TODO: If itinerary is offline, delete the offline version after posting to Parse
     PFObject *newItinerary = [ParseUtils pfObjFromItinerary:it];
     __weak CacheDataHandler *weakSelf = self;
     [newItinerary saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
@@ -96,13 +95,15 @@
         [[CoreDataHandler shared] updateItinerary:it];
     } else {
         PFObject *obj = [ParseUtils pfObjFromItinerary:it];
+        if (!it.isOffline) {
+            obj[@"preferencesJson"] = [ParseUtils pfFileFromDict:[it toPrefsDictionary] name:@"preferences"];
+            obj[@"departure"] = it.departureTime;
+            obj[@"mileageConstraint"] = it.mileageConstraint;
+            obj[@"budgetConstraint"] = it.budgetConstraint;
+            obj[@"staticMap"] = [ParseUtils pfFileFromImage:it.staticMap name:@"img"];
+        }
         obj[@"directionsJson"] = [ParseUtils pfFileFromDict:[it toRouteDictionary] name:@"directions"];
-        obj[@"preferencesJson"] = [ParseUtils pfFileFromDict:[it toPrefsDictionary] name:@"preferences"];
-        obj[@"departure"] = it.departureTime;
-        obj[@"mileageConstraint"] = it.mileageConstraint;
-        obj[@"budgetConstraint"] = it.budgetConstraint;
         obj[@"isFavorited"] = [NSNumber numberWithBool:it.isFavorited];
-        obj[@"staticMap"] = [ParseUtils pfFileFromImage:it.staticMap name:@"img"];
         __weak CacheDataHandler *weakSelf = self;
         [obj saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
             if (succeeded) {

@@ -30,14 +30,18 @@
 
 - (void)updateUI {
     // Set up map
-    self.mapView.delegate = self;
-    [self.mapView initWithBounds:self.itinerary.bounds];
-    [self.mapView addMarker:self.itinerary.originLocation];
-    for (Location *point in [self.itinerary getOrderedLocations]) {
-        [self.mapView addMarker:point];
+    if ([[NetworkManager shared] isConnected]) {
+        self.mapView.delegate = self;
+        [self.mapView initWithBounds:self.itinerary.bounds];
+        [self.mapView addMarker:self.itinerary.originLocation];
+        for (Location *point in [self.itinerary getOrderedLocations]) {
+            [self.mapView addMarker:point];
+        }
+        [self.mapView addPolyline:self.itinerary.overviewPolyline];
+    } else {
+        [self.mapView initWithStaticImage:self.itinerary.staticMap];
     }
-    [self.mapView addPolyline:self.itinerary.overviewPolyline];
-    
+
     // Set labels
     self.nameLabel.text = self.itinerary.name;
     self.detailsLabel.text = [NSString stringWithFormat:@"Origin: %@\nSource: %@", self.itinerary.originLocation.title, self.itinerary.sourceCollection.title];

@@ -190,7 +190,11 @@
         obj[@"mileageConstraint"] = it.mileageConstraint;
         obj[@"budgetConstraint"] = it.budgetConstraint;
         obj[@"isFavorited"] = [NSNumber numberWithBool:it.isFavorited];
-        obj[@"staticMap"] = [self pfFileFromImage:it.staticMap name:@"img"];
+        if (it.staticMap) {
+            obj[@"staticMap"] = [self pfFileFromImage:it.staticMap name:@"img"];
+        } else {
+            obj[@"staticMap"] = [NSNull null];
+        }
         return obj;
     }
 }
