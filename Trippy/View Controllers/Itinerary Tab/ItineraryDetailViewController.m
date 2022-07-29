@@ -83,7 +83,7 @@
 
 - (void) didSaveItinerary {
     [self updateUI];
-    self.screenshotFlag = YES;
+//    self.screenshotFlag = YES;
 }
 
 # pragma mark - SelectableMapDelegate

@@ -21,6 +21,7 @@
     UIImageView *newView = [[UIImageView alloc] init];
     newView.image = image;
     newView.frame = self.bounds;
+    newView.contentMode = UIViewContentModeScaleAspectFill;
     [self insertSubview:newView atIndex:0];
     self.isEnabled = NO;
 }

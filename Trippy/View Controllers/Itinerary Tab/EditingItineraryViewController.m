@@ -27,7 +27,7 @@
 #define VIEW_SHADOW_OPACITY 0.45;
 #define VIEW_SHADOW_RADIUS 7;
 
-@interface EditingItineraryViewController () <UITableViewDelegate, UITableViewDataSource, EditPlaceCellDelegate, WaypointPreferencesDelegate, ItinerarySettingsDelegate, ChooseRouteDelegate, CacheDataHandlerDelegate>
+@interface EditingItineraryViewController () <UITableViewDelegate, UITableViewDataSource, EditPlaceCellDelegate, WaypointPreferencesDelegate, ItinerarySettingsDelegate, ChooseRouteDelegate, CacheDataHandlerDelegate, SelectableMapDelegate>
 @property (weak, nonatomic) IBOutlet UIView *editView;
 @property (weak, nonatomic) IBOutlet UITableView *placesTableView;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *loadingIndicator;
@@ -41,6 +41,7 @@
 @property (strong, nonatomic) NSArray *routeOptions;
 
 @property (strong, nonatomic) CacheDataHandler *cacheHandler;
+@property (assign, nonatomic) BOOL screenshotFlag;
 
 @end
 
@@ -58,7 +59,7 @@
                                                     originLocation:self.baseItinerary.originLocation
                                                               name:self.baseItinerary.name
                                                        isFavorited:self.baseItinerary.isFavorited];
-    
+    self.screenshotFlag = NO;
     self.cacheHandler = [[CacheDataHandler alloc] init];
     self.cacheHandler.delegate = self;
     [self updateUI];
@@ -66,6 +67,7 @@
 
 - (void) updateUI {
     // Set up map
+    self.mapView.delegate = self;
     [self.mapView initWithBounds:self.mutableItinerary.bounds];
     [self.mapView addMarker:self.mutableItinerary.originLocation];
     for (Location *point in [self.mutableItinerary getOrderedLocations]) {
@@ -142,6 +144,7 @@
 
 - (IBAction)tapSave:(id)sender {
     [self.baseItinerary reinitialize:[self.mutableItinerary toRouteDictionary] prefJson:[self.mutableItinerary toPrefsDictionary] departure:self.mutableItinerary.departureTime mileageConstraint:self.mutableItinerary.mileageConstraint budgetConstraint:self.mutableItinerary.budgetConstraint];
+    self.baseItinerary.staticMap = self.mutableItinerary.staticMap;
     [self.cacheHandler updateItinerary:self.baseItinerary];
 }
 
@@ -263,6 +266,7 @@
     [self.mutableItinerary reinitialize:route.routeJson prefJson:[self.mutableItinerary toPrefsDictionary] departure:self.mutableItinerary.departureTime mileageConstraint:mileage budgetConstraint:cost];
     self.mutableItinerary.waypointOrder = route.waypoints;
     self.saveButton.hidden = NO;
+    self.screenshotFlag = YES;
     [self updateUI];
     [self.loadingIndicator stopAnimating];
 }
@@ -277,4 +281,18 @@
         [self performSegueWithIdentifier:@"waypointPrefsSegue" sender:nil];
     }
 }
+
+# pragma mark - SelectableMapDelegate
+
+- (void) didFinishLoading {
+    if (self.screenshotFlag) {
+        UIGraphicsBeginImageContext(self.mapView.frame.size);
+        [self.mapView.layer renderInContext:UIGraphicsGetCurrentContext()];
+        UIImage *screenshot = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
+        self.screenshotFlag = NO;
+        self.mutableItinerary.staticMap = screenshot;
+    }
+}
+
 @end
