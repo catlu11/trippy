@@ -125,7 +125,6 @@
     if ([moc save:&error] == NO) {
         NSAssert(NO, @"Error saving context: %@\n%@", [error localizedDescription], [error userInfo]);
     }
-    NSLog(@"Saved collections: %@", [obj valueForKey:@"parseObjectId"]);
     return obj;
 }
 
@@ -182,7 +181,6 @@
 - (NSArray *)fetchLocations {
     NSArray *managedObjects = [self fetchObjects:@"Location"];
     NSMutableArray *locs = [[NSMutableArray alloc] init];
-    NSLog(@"fetching offline locations");
     for (NSManagedObject *obj in managedObjects) {
         [locs addObject:[CoreDataUtils locationFromManagedObject:obj]];
     }
@@ -192,23 +190,17 @@
 - (NSArray *)fetchCollections {
     NSArray *managedObjects = [self fetchObjects:@"LocationCollection"];
     NSMutableArray *cols = [[NSMutableArray alloc] init];
-    NSLog(@"fetching offline collections");
     for (NSManagedObject *obj in managedObjects) {
-        NSLog(@"Col id: %@", [obj objectID]);
-        NSSet *relation = [obj valueForKey:@"locations"];
         [cols addObject:[CoreDataUtils collectionFromManagedObject:obj]];
     }
-    NSLog(@"number of collections, %d", cols.count);
     return cols;
 }
 
 - (NSArray *)fetchItineraries {
     NSArray *managedObjects = [self fetchObjects:@"Itinerary"];
     NSMutableArray *its = [[NSMutableArray alloc] init];
-    NSLog(@"fetching offline itineraries");
     for (NSManagedObject *obj in managedObjects) {
         [its addObject:[CoreDataUtils itineraryFromManagedObject:obj]];
-        NSLog(@"%@", [obj valueForKey:@"parseObjectId"]);
     }
     return its;
 }

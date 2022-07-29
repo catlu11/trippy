@@ -20,7 +20,6 @@
     loc.snippet = [obj valueForKey:@"snippet"];
     loc.staticMap = [UIImage imageWithData:[obj valueForKey:@"staticMap"]];
     loc.parseObjectId = [obj valueForKey:@"parseObjectId"];
-    NSLog(@"Retrieving loc from MO: %@", [obj valueForKey:@"parseObjectId"]);
     return loc;
 }
 
@@ -36,7 +35,6 @@
     }
     col.locations = locations;
     col.createdAt = [obj valueForKey:@"createdAt"];
-    NSLog(@"Retrieving col from MO: %@", [obj valueForKey:@"parseObjectId"]);
     return col;
 }
 
@@ -58,7 +56,6 @@
                                                isFavorited:[[obj valueForKey:@"isFavorited"] boolValue]];
     it.staticMap = [UIImage imageWithData:[obj valueForKey:@"staticMap"]];
     it.parseObjectId = [obj valueForKey:@"parseObjectId"];
-    NSLog(@"Retrieving it from MO: %@", [obj valueForKey:@"parseObjectId"]);
     return it;
 }
 

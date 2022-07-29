@@ -15,6 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(strong, nonatomic) Reachability *internetReachable;
 @property(assign, nonatomic) BOOL isConnected;
 - (void)beginNotifier;
+- (void)initialFetchAll;
 @end
 
 NS_ASSUME_NONNULL_END

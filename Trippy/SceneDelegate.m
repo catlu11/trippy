@@ -7,6 +7,7 @@
 
 #import "SceneDelegate.h"
 #import "Parse/Parse.h"
+#import "NetworkManager.h"
 
 @interface SceneDelegate ()
 
@@ -21,6 +22,7 @@
         UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
         UIViewController *tabNavigationController = [storyboard instantiateViewControllerWithIdentifier:@"TabNavigationController"];
         self.window.rootViewController = tabNavigationController;
+        [[NetworkManager shared] initialFetchAll];
     }
 }
 

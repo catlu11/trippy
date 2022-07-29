@@ -40,6 +40,13 @@
     self.isConnected = [self.internetReachable isReachable];
 }
 
+- (void)initialFetchAll {
+    // TODO: Create loading screen for this initial fetch
+    [self.parseHandler fetchSavedLocations];
+    [self.parseHandler fetchSavedCollections];
+    [self.parseHandler fetchSavedItineraries];
+}
+
 - (void)reachabilityChanged {
     self.isConnected = [self.internetReachable isReachable];
     // sync objects created offline
