@@ -89,7 +89,7 @@
 # pragma mark - SelectableMapDelegate
 
 - (void) didFinishLoading {
-    if (self.screenshotFlag) {
+    if (self.screenshotFlag && self.mapView.isEnabled) {
         UIGraphicsBeginImageContext(self.mapView.frame.size);
         [self.mapView.layer renderInContext:UIGraphicsGetCurrentContext()];
         UIImage *screenshot = UIGraphicsGetImageFromCurrentImageContext();

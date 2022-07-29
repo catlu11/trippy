@@ -93,6 +93,7 @@
 - (void) updateItinerary:(Itinerary *)it {
     if (![[NetworkManager shared] isConnected]) {
         [[CoreDataHandler shared] updateItinerary:it];
+        [self.delegate updatedItinerarySuccess:it];
     } else {
         PFObject *obj = [ParseUtils pfObjFromItinerary:it];
         if (!it.isOffline) {

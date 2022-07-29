@@ -13,7 +13,6 @@
 @interface SelectableMap () <GMSMapViewDelegate>
 @property (strong, nonatomic) GMSMapView *mapView;
 @property (strong, nonatomic) NSMutableArray *markersArray;
-@property (assign, nonatomic) BOOL isEnabled;
 @end
 
 @implementation SelectableMap
