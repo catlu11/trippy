@@ -63,30 +63,46 @@
     PFFileObject *imgFile = obj[@"staticMap"];
     UIImage *img = [self imgFromPfFile:imgFile];
     
-    // query location pointer
-    PFObject *locObj = obj[@"origin"];
-    PFQuery *locationQuery = [PFQuery queryWithClassName:@"Location"];
-    [locationQuery includeKeys:[self getLocationKeys]];
-    locObj = [locationQuery getObjectWithId:locObj.objectId];
-    // get location
-    Location *originLocation = [self locationFromPFObj:locObj];
-    
-    // query collection pointer
-    PFObject *colObj = obj[@"sourceCollection"];
-    PFQuery *colQuery = [PFQuery queryWithClassName:@"Collection"];
-    [colQuery includeKeys:[self getCollectionKeys]];
-    colObj = [colQuery getObjectWithId:colObj.objectId];
-    
-    // get collection
-    [self collectionFromPFObj:colObj completion:^(LocationCollection * _Nonnull collection, NSError * _Nonnull) {
-        if (collection) {
-            // create itinerary object
+    __block Location *originLocation = nil;
+    __block LocationCollection *sourceCollection = nil;
+    dispatch_async(dispatch_get_main_queue(), ^{
+        dispatch_group_t group = dispatch_group_create();
+        
+        // query location pointer
+        dispatch_group_enter(group);
+        PFObject *locObj = obj[@"origin"];
+        PFQuery *locationQuery = [PFQuery queryWithClassName:@"Location"];
+        [locationQuery includeKeys:[self getLocationKeys]];
+        [locationQuery getObjectInBackgroundWithId:locObj.objectId block:^(PFObject * _Nullable object, NSError * _Nullable error) {
+            if (object) {
+                originLocation = [self locationFromPFObj:object];
+            }
+            dispatch_group_leave(group);
+        }];
+        
+        // query collection pointer
+        dispatch_group_enter(group);
+        PFObject *colObj = obj[@"sourceCollection"];
+        PFQuery *colQuery = [PFQuery queryWithClassName:@"Collection"];
+        [colQuery includeKeys:[self getCollectionKeys]];
+        [colQuery getObjectInBackgroundWithId:colObj.objectId block:^(PFObject * _Nullable object, NSError * _Nullable error) {
+            [self collectionFromPFObj:object completion:^(LocationCollection * _Nonnull collection, NSError * _Nonnull) {
+                if (collection) {
+                    sourceCollection = collection;
+                }
+                dispatch_group_leave(group);
+            }];
+        }];
+        
+        // create itinerary
+        dispatch_group_notify(group, dispatch_get_main_queue(), ^{
             Itinerary *it = [[Itinerary alloc] initWithDictionary:routesDict
                                                          prefJson:prefsDict
                                                         departure:obj[@"departure"]
                                                 mileageConstraint:obj[@"mileageConstraint"]
                                                  budgetConstraint:obj[@"budgetConstraint"]
-                                                 sourceCollection:collection originLocation:originLocation
+                                                 sourceCollection:sourceCollection
+                                                   originLocation:originLocation
                                                              name:obj[@"name"]
                                                       isFavorited:[obj[@"isFavorited"] boolValue]];
             PFUser *user = obj[@"createdBy"];
@@ -95,8 +111,8 @@
             it.parseObjectId = obj.objectId;
             it.staticMap = img;
             completion(it, nil);
-        }
-    }];
+        });
+    });
 }
 
 + (void) collectionFromPFObj:(PFObject *)obj completion:(void (^)(LocationCollection *collection, NSError *))completion {
