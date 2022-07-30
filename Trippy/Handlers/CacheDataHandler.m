@@ -24,34 +24,37 @@
 
 - (void) postNewLocation:(Location *)location collection:(LocationCollection *)collection {
     // Offline mode not possible
-    PFObject *newLocation = [ParseUtils pfObjFromLocation:location];
-    location.parseObjectId = newLocation.objectId;
-    __weak CacheDataHandler *weakSelf = self;
-    [newLocation saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
-        if(succeeded) {
-            [[CoreDataHandler shared] saveLocation:location]; // post to local cache
-            PFQuery *query = [PFQuery queryWithClassName:@"Collection"];
-            [query whereKey:@"objectId" equalTo:collection.parseObjectId];
-            [query getFirstObjectInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
-                if (error) {
-                    __strong CacheDataHandler *strongSelf = weakSelf;
-                    [strongSelf.delegate generalRequestFail:error];
-                } else {
-                    PFRelation *relation = [object relationForKey:@"locations"];
-                    [relation addObject:newLocation];
-                    [object saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
+    [ParseUtils pfObjFromLocation:location completion:^(PFObject * _Nonnull obj, NSError * _Nonnull) {
+        PFObject *newLocation = obj;
+        location.parseObjectId = newLocation.objectId;
+        __weak CacheDataHandler *weakSelf = self;
+        [newLocation saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
+            if(succeeded) {
+                [[CoreDataHandler shared] saveLocation:location]; // post to local cache
+                PFQuery *query = [PFQuery queryWithClassName:@"Collection"];
+                [query whereKey:@"objectId" equalTo:collection.parseObjectId];
+                [query getFirstObjectInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
+                    if (error) {
                         __strong CacheDataHandler *strongSelf = weakSelf;
-                        if (succeeded) {
-                            [[CoreDataHandler shared] updateCollection:collection]; // update local cache
-                            [strongSelf.delegate postedLocationSuccess:location];
-                        } else {
-                            [strongSelf.delegate generalRequestFail:error];
-                        }
-                    }];
-                }
-            }];
-        }
+                        [strongSelf.delegate generalRequestFail:error];
+                    } else {
+                        PFRelation *relation = [object relationForKey:@"locations"];
+                        [relation addObject:newLocation];
+                        [object saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
+                            __strong CacheDataHandler *strongSelf = weakSelf;
+                            if (succeeded) {
+                                [[CoreDataHandler shared] updateCollection:collection]; // update local cache
+                                [strongSelf.delegate postedLocationSuccess:location];
+                            } else {
+                                [strongSelf.delegate generalRequestFail:error];
+                            }
+                        }];
+                    }
+                }];
+            }
+        }];
     }];
+    
 }
 
 - (void) postNewCollection:(LocationCollection *)collection {
@@ -60,33 +63,37 @@
         collection.isOffline = YES;
         [self.delegate postedCollectionSuccess:collection];
     } else {
-        PFObject *newCollection = [ParseUtils pfObjFromCollection:collection];
-        __weak CacheDataHandler *weakSelf = self;
-        [newCollection saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
-            if (succeeded) {
-                __strong CacheDataHandler *strongSelf = weakSelf;
-                collection.createdAt = newCollection.createdAt;
-                collection.parseObjectId = newCollection.objectId;
-                collection.lastUpdated = collection.createdAt;
-                [[CoreDataHandler shared] saveCollection:collection]; // post to local cache
-                [strongSelf.delegate postedCollectionSuccess:collection];
-            }
+        [ParseUtils pfObjFromCollection:collection completion:^(PFObject * _Nonnull obj, NSError * _Nonnull) {
+            PFObject *newCollection = obj;
+            __weak CacheDataHandler *weakSelf = self;
+            [newCollection saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
+                if (succeeded) {
+                    __strong CacheDataHandler *strongSelf = weakSelf;
+                    collection.createdAt = newCollection.createdAt;
+                    collection.parseObjectId = newCollection.objectId;
+                    collection.lastUpdated = collection.createdAt;
+                    [[CoreDataHandler shared] saveCollection:collection]; // post to local cache
+                    [strongSelf.delegate postedCollectionSuccess:collection];
+                }
+            }];
         }];
     }
 }
 
 - (void) postNewItinerary:(Itinerary *)it {
-    PFObject *newItinerary = [ParseUtils pfObjFromItinerary:it];
-    __weak CacheDataHandler *weakSelf = self;
-    [newItinerary saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
-        if (succeeded) {
-            __strong CacheDataHandler *strongSelf = weakSelf;
-            it.createdAt = newItinerary.createdAt;
-            it.parseObjectId = newItinerary.objectId;
-            it.userId = [PFUser currentUser].username;
-            [[CoreDataHandler shared] saveItinerary:it]; // post to local cache
-            [strongSelf.delegate postedItinerarySuccess:it];
-        }
+    [ParseUtils pfObjFromItinerary:it completion:^(PFObject * _Nonnull obj, NSError * _Nonnull) {
+        PFObject *newItinerary = obj;
+        __weak CacheDataHandler *weakSelf = self;
+        [newItinerary saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
+            if (succeeded) {
+                __strong CacheDataHandler *strongSelf = weakSelf;
+                it.createdAt = newItinerary.createdAt;
+                it.parseObjectId = newItinerary.objectId;
+                it.userId = [PFUser currentUser].username;
+                [[CoreDataHandler shared] saveItinerary:it]; // post to local cache
+                [strongSelf.delegate postedItinerarySuccess:it];
+            }
+        }];
     }];
 }
 
@@ -95,21 +102,22 @@
         [[CoreDataHandler shared] updateItinerary:it];
         [self.delegate updatedItinerarySuccess:it];
     } else {
-        PFObject *obj = [ParseUtils pfObjFromItinerary:it];
-        obj[@"preferencesJson"] = [ParseUtils pfFileFromDict:[it toPrefsDictionary] name:@"preferences"];
-        obj[@"departure"] = it.departureTime;
-        obj[@"mileageConstraint"] = it.mileageConstraint;
-        obj[@"budgetConstraint"] = it.budgetConstraint;
-        obj[@"staticMap"] = [ParseUtils pfFileFromImage:it.staticMap name:@"img"];
-        obj[@"directionsJson"] = [ParseUtils pfFileFromDict:[it toRouteDictionary] name:@"directions"];
-        obj[@"isFavorited"] = [NSNumber numberWithBool:it.isFavorited];
-        __weak CacheDataHandler *weakSelf = self;
-        [obj saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
-            if (succeeded) {
-                __strong CacheDataHandler *strongSelf = weakSelf;
-                [[CoreDataHandler shared] updateItinerary:it]; // update local cache
-                [strongSelf.delegate updatedItinerarySuccess:it];
-            }
+        [ParseUtils pfObjFromItinerary:it completion:^(PFObject * _Nonnull obj, NSError * _Nonnull) {
+            obj[@"preferencesJson"] = [ParseUtils pfFileFromDict:[it toPrefsDictionary] name:@"preferences"];
+            obj[@"departure"] = it.departureTime;
+            obj[@"mileageConstraint"] = it.mileageConstraint;
+            obj[@"budgetConstraint"] = it.budgetConstraint;
+            obj[@"staticMap"] = [ParseUtils pfFileFromImage:it.staticMap name:@"img"];
+            obj[@"directionsJson"] = [ParseUtils pfFileFromDict:[it toRouteDictionary] name:@"directions"];
+            obj[@"isFavorited"] = [NSNumber numberWithBool:it.isFavorited];
+            __weak CacheDataHandler *weakSelf = self;
+            [obj saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
+                if (succeeded) {
+                    __strong CacheDataHandler *strongSelf = weakSelf;
+                    [[CoreDataHandler shared] updateItinerary:it]; // update local cache
+                    [strongSelf.delegate updatedItinerarySuccess:it];
+                }
+            }];
         }];
     }
 }

@@ -152,30 +152,50 @@
     return [[Location alloc] initWithParams:obj[@"title"] snippet:obj[@"snippet"] latitude:coord.latitude longitude:coord.longitude user:user.username placeId:obj[@"placeId"] types:obj[@"types"] priceLevel:obj[@"priceLevel"] parseObjectId:obj.objectId];
 }
 
-+ (PFObject *)pfObjFromCollection:(LocationCollection *)collection {
++ (void)pfObjFromCollection:(LocationCollection *)collection completion:(void (^)(PFObject *obj, NSError *))completion {
     if (collection.parseObjectId != nil) {
         PFQuery *query = [PFQuery queryWithClassName:@"Collection"];
         [query includeKeys:[ParseUtils getCollectionKeys]];
-        return [query getObjectWithId:collection.parseObjectId];
+        [query getObjectInBackgroundWithId:collection.parseObjectId block:^(PFObject * _Nullable object, NSError * _Nullable error) {
+            if (object) {
+                completion(object, nil);
+            } else {
+                completion(nil, error);
+            }
+        }];
     } else {
         PFObject *obj = [PFObject objectWithClassName:@"Collection"];
         obj[@"title"] = collection.title;
         obj[@"snippet"] = collection.snippet;
         obj[@"createdBy"] = [PFUser currentUser];
         PFRelation *relation = [obj relationForKey:@"locations"];
-        for(Location *loc in collection.locations) {
-            PFObject *newObj = [self pfObjFromLocation:loc];
-            [relation addObject: newObj];
-        }
-        return obj;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            dispatch_group_t group = dispatch_group_create();
+            for(Location *loc in collection.locations) {
+                dispatch_group_enter(group);
+                [self pfObjFromLocation:loc completion:^(PFObject * _Nonnull newObj, NSError * _Nonnull) {
+                    [relation addObject: newObj];
+                    dispatch_group_leave(group);
+                }];
+            }
+            dispatch_group_notify(group, dispatch_get_main_queue(), ^{
+                completion(obj, nil);
+            });
+        });
     }
 }
 
-+ (PFObject *)pfObjFromLocation:(Location *)loc {
++ (void)pfObjFromLocation:(Location *)loc completion:(void (^)(PFObject *obj, NSError *))completion {
     if (loc.parseObjectId != nil) {
         PFQuery *query = [PFQuery queryWithClassName:@"Location"];
         [query includeKeys:[ParseUtils getLocationKeys]];
-        return [query getObjectWithId:loc.parseObjectId];
+        [query getObjectInBackgroundWithId:loc.parseObjectId block:^(PFObject * _Nullable object, NSError * _Nullable error) {
+            if (object) {
+                completion(object, nil);
+            } else {
+                completion(nil, error);
+            }
+        }];
     } else {
         PFObject *obj = [PFObject objectWithClassName:@"Location"];
         obj[@"placeId"] = loc.placeId;
@@ -185,33 +205,56 @@
         obj[@"createdBy"] = [PFUser currentUser];
         obj[@"types"] = loc.types;
         obj[@"priceLevel"] = loc.priceLevel;
-        return obj;
+        completion(obj, nil);
     }
 }
 
-+ (PFObject *)pfObjFromItinerary:(Itinerary *)it {
++ (void)pfObjFromItinerary:(Itinerary *)it completion:(void (^)(PFObject *obj, NSError *))completion {
     if (it.parseObjectId != nil) {
         PFQuery *query = [PFQuery queryWithClassName:@"Itinerary"];
         [query includeKeys:[ParseUtils getItineraryKeys]];
-        return [query getObjectWithId:it.parseObjectId];
+        [query getObjectInBackgroundWithId:it.parseObjectId block:^(PFObject * _Nullable object, NSError * _Nullable error) {
+            if (object) {
+                completion(object, nil);
+            } else {
+                completion(nil, error);
+            }
+        }];
     } else {
         PFObject *obj = [PFObject objectWithClassName:@"Itinerary"];
         obj[@"name"] = it.name;
         obj[@"createdBy"] = [PFUser currentUser];
-        obj[@"origin"] = [self pfObjFromLocation:it.originLocation];
-        obj[@"sourceCollection"] = [self pfObjFromCollection:it.sourceCollection];
-        obj[@"directionsJson"] = [self pfFileFromDict:[it toRouteDictionary] name:@"directions"];
-        obj[@"preferencesJson"] = [self pfFileFromDict:[it toPrefsDictionary] name:@"preferences"];
-        obj[@"departure"] = it.departureTime;
-        obj[@"mileageConstraint"] = it.mileageConstraint;
-        obj[@"budgetConstraint"] = it.budgetConstraint;
-        obj[@"isFavorited"] = [NSNumber numberWithBool:it.isFavorited];
-        if (it.staticMap) {
-            obj[@"staticMap"] = [self pfFileFromImage:it.staticMap name:@"img"];
-        } else {
-            obj[@"staticMap"] = [NSNull null];
-        }
-        return obj;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            dispatch_group_t group = dispatch_group_create();
+            dispatch_group_enter(group);
+            [self pfObjFromLocation:it.originLocation completion:^(PFObject * _Nonnull newObj, NSError * _Nonnull) {
+                if (obj) {
+                    obj[@"origin"] = newObj;
+                }
+                dispatch_group_leave(group);
+            }];
+            dispatch_group_enter(group);
+            [self pfObjFromCollection:it.sourceCollection completion:^(PFObject * _Nonnull newObj, NSError * _Nonnull) {
+                if (obj) {
+                    obj[@"sourceCollection"] = newObj;
+                }
+                dispatch_group_leave(group);
+            }];
+            dispatch_group_notify(group, dispatch_get_main_queue(), ^{
+                obj[@"directionsJson"] = [self pfFileFromDict:[it toRouteDictionary] name:@"directions"];
+                obj[@"preferencesJson"] = [self pfFileFromDict:[it toPrefsDictionary] name:@"preferences"];
+                obj[@"departure"] = it.departureTime;
+                obj[@"mileageConstraint"] = it.mileageConstraint;
+                obj[@"budgetConstraint"] = it.budgetConstraint;
+                obj[@"isFavorited"] = [NSNumber numberWithBool:it.isFavorited];
+                if (it.staticMap) {
+                    obj[@"staticMap"] = [self pfFileFromImage:it.staticMap name:@"img"];
+                } else {
+                    obj[@"staticMap"] = [NSNull null];
+                }
+                completion(obj, nil);
+            });
+        });
     }
 }
 
