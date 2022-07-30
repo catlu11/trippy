@@ -17,6 +17,7 @@
 
 @interface RoutesHandler ()
 @property (strong, nonatomic) NSDictionary *matrix;
+@property (strong, nonatomic) NSMutableArray *routes;
 @end
 
 @implementation RoutesHandler
@@ -124,28 +125,43 @@
 }
 
 - (void)calculateRoutes:(Itinerary *)itinerary completion:(void (^)(NSArray *routes, NSError *))completion {
-    NSMutableArray *routes = [[NSMutableArray alloc] init];
-    // TODO: Refactor to allow cost and distance routes to compute separately
-    if (itinerary.mileageConstraint > 0) {
-        [self calculateDistanceOptimalRoute:itinerary completion:^(RouteOption *response, NSError *) {
-            [routes addObject:response];
-            if (response.distance > [itinerary.mileageConstraint intValue]) {
-                [self calculateDefaultRoute:itinerary omitWaypoints:@[] completion:^(RouteOption *response, NSError *) {
-                    [routes addObject:response];
-                    if ([itinerary.budgetConstraint doubleValue] > 0 && response.cost > [itinerary.budgetConstraint doubleValue]) {
-                        [self calculateCostOptimalRoute:itinerary completion:^(RouteOption *response, NSError *) {
-                            [routes addObject:response];
-                            completion(routes, nil);
-                        }];
-                    } else {
-                        completion(routes, nil);
-                    }
-                }];
-            } else {
-                completion(routes, nil);
+    self.routes = [[NSMutableArray alloc] init];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        dispatch_group_t group = dispatch_group_create();
+        dispatch_group_enter(group);
+        double currentDistance = [MapUtils milesToMeters:[[itinerary getTotalDistance] doubleValue]];
+        if ([itinerary.mileageConstraint doubleValue] > 0 && currentDistance > [itinerary.mileageConstraint doubleValue]) {
+            [self calculateDistanceOptimalRoute:itinerary completion:^(RouteOption *response, NSError *) {
+                if (response) {
+                    [self.routes addObject:response];
+                }
+                dispatch_group_leave(group);
+            }];
+        } else {
+            dispatch_group_leave(group);
+        }
+        dispatch_group_enter(group);
+        if ([itinerary.budgetConstraint doubleValue] > 0 && [[itinerary getTotalCost:YES] doubleValue] > [itinerary.budgetConstraint doubleValue]) {
+            [self calculateCostOptimalRoute:itinerary completion:^(RouteOption *response, NSError *) {
+                if (response) {
+                    [self.routes addObject:response];
+                }
+                dispatch_group_leave(group);
+            }];
+        } else {
+            dispatch_group_leave(group);
+        }
+        dispatch_group_enter(group);
+        [self calculateDefaultRoute:itinerary omitWaypoints:@[] completion:^(RouteOption *response, NSError *) {
+            if (response) {
+                [self.routes addObject:response];
             }
+            dispatch_group_leave(group);
         }];
-    }
+        dispatch_group_notify(group, dispatch_get_main_queue(), ^{
+            completion(self.routes, nil);
+        });
+    });
 }
 
 @end
