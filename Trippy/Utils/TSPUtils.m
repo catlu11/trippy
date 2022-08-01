@@ -35,6 +35,11 @@
     return sum + [finalWeight intValue];
 }
 
++ (int)distanceFromOrigin:(NSNumber *)waypointIndex matrix:(NSDictionary *)matrix {
+    NSNumber *distance = matrix[@"rows"][0][@"elements"][waypointIndex+1][@"distance"][@"value"];
+    return [distance intValue];
+}
+
 + (int)totalDuration:(NSArray *)order matrix:(NSDictionary *)matrix {
     int sum = 0;
     int firstIndex = [[order firstObject] intValue];

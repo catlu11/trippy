@@ -14,6 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (NSArray *)reorder:(NSArray *)elements order:(NSArray *)order;
 + (int)totalDistance:(NSArray *)order matrix:(NSDictionary *)matrix;
 + (int)totalDuration:(NSArray *)order matrix:(NSDictionary *)matrix;
++ (int)distanceFromOrigin:(NSNumber *)waypointIndex matrix:(NSDictionary *)matrix;
 @end
 
 NS_ASSUME_NONNULL_END
