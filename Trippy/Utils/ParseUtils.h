@@ -5,6 +5,7 @@
 //  Created by Catherine Lu on 7/7/22.
 //
 
+#import <UIKit/UIKit.h>
 #import <Foundation/Foundation.h>
 @class Location;
 @class LocationCollection;
@@ -23,6 +24,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (void)collectionFromPFObj:(PFObject *)obj completion:(void (^)(LocationCollection *collection, NSError *))completion;
 + (Location *)locationFromPFObj:(PFObject *)obj;
 + (PFFileObject *)pfFileFromDict:(NSDictionary *)dict name:(NSString *)name;
++ (PFFileObject *)pfFileFromImage:(UIImage *)img name:(NSString *)name;
 + (PFObject *)pfObjFromCollection:(LocationCollection *)collection;
 + (PFObject *)pfObjFromLocation:(Location *)loc;
 + (PFObject *)pfObjFromItinerary:(Itinerary *)it;

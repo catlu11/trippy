@@ -12,8 +12,10 @@
 #import "Location.h"
 #import "EditingItineraryViewController.h"
 #import "ViewItineraryViewController.h"
+#import "CacheDataHandler.h"
+#import "NetworkManager.h"
 
-@interface ItineraryDetailViewController () <EditingItineraryDelegate>
+@interface ItineraryDetailViewController () <EditingItineraryDelegate, SelectableMapDelegate>
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *detailsLabel;
 @property (weak, nonatomic) IBOutlet SelectableMap *mapView;
@@ -26,15 +28,20 @@
     [self updateUI];
 }
 
-- (void) updateUI {
+- (void)updateUI {
     // Set up map
-    [self.mapView initWithBounds:self.itinerary.bounds];
-    [self.mapView addMarker:self.itinerary.originLocation];
-    for (Location *point in [self.itinerary getOrderedLocations]) {
-        [self.mapView addMarker:point];
+    if ([[NetworkManager shared] isConnected]) {
+        self.mapView.delegate = self;
+        [self.mapView initWithBounds:self.itinerary.bounds];
+        [self.mapView addMarker:self.itinerary.originLocation];
+        for (Location *point in [self.itinerary getOrderedLocations]) {
+            [self.mapView addMarker:point];
+        }
+        [self.mapView addPolyline:self.itinerary.overviewPolyline];
+    } else {
+        [self.mapView initWithStaticImage:self.itinerary.staticMap];
     }
-    [self.mapView addPolyline:self.itinerary.overviewPolyline];
-    
+
     // Set labels
     self.nameLabel.text = self.itinerary.name;
     self.detailsLabel.text = [NSString stringWithFormat:@"Origin: %@\nSource: %@", self.itinerary.originLocation.title, self.itinerary.sourceCollection.title];
@@ -66,6 +73,22 @@
 
 - (void) didSaveItinerary {
     [self updateUI];
+}
+
+# pragma mark - SelectableMapDelegate
+
+- (void) didFinishLoading {
+    if (self.screenshotFlag && self.mapView.isEnabled) {
+        UIGraphicsBeginImageContext(self.mapView.frame.size);
+        [self.mapView.layer renderInContext:UIGraphicsGetCurrentContext()];
+        UIImage *screenshot = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
+        self.screenshotFlag = NO;
+        
+        self.itinerary.staticMap = screenshot;
+        CacheDataHandler *handler = [[CacheDataHandler alloc] init];
+        [handler updateItinerary:self.itinerary];
+    }
 }
 
 @end

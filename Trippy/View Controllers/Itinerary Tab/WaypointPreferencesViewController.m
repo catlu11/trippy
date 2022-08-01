@@ -10,6 +10,7 @@
 #import "DateUtils.h"
 #import "WaypointPreferences.h"
 #import "Location.h"
+#import "NetworkManager.h"
 
 @interface WaypointPreferencesViewController () <UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
@@ -36,7 +37,12 @@
     // Set location data
     self.nameLabel.text = self.location.title;
     self.snippetLabel.text = self.location.snippet;
-    self.staticMapImage.image = [MapUtils getStaticMapImage:self.location.coord width:self.staticMapImage.frame.size.width height:self.staticMapImage.frame.size.height];
+    if ([[NetworkManager shared] isConnected]) {
+        self.staticMapImage.image = [MapUtils getStaticMapImage:self.location.coord width:self.staticMapImage.frame.size.width height:self.staticMapImage.frame.size.height];
+    } else {
+        self.staticMapImage.contentMode = UIViewContentModeScaleAspectFill;
+        self.staticMapImage.image = self.location.staticMap;
+    }
     
     // Set initial preferences
     if (self.preferences.preferredEtaStart) {
@@ -59,6 +65,7 @@
         [self.budgetSwitch setOn:YES];
         self.budgetField.hidden = NO;
         self.budgetField.text = [self.preferences.budget stringValue];
+        self.budgetField.enabled = YES;
     }
     
     // Set text field delegates
@@ -89,6 +96,7 @@
 - (IBAction)tapView:(id)sender {
     [self.stayHrField resignFirstResponder];
     [self.stayMinField resignFirstResponder];
+    [self.budgetField resignFirstResponder];
 }
 
 - (IBAction)tapUpdate:(id)sender {

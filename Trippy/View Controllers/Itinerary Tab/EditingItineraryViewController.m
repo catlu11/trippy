@@ -21,12 +21,13 @@
 #import "MapsAPIManager.h"
 #import "RoutesHandler.h"
 #import "CacheDataHandler.h"
+#import "NetworkManager.h"
 
 #define PLACES_ROW_HEIGHT 70;
 #define VIEW_SHADOW_OPACITY 0.45;
 #define VIEW_SHADOW_RADIUS 7;
 
-@interface EditingItineraryViewController () <UITableViewDelegate, UITableViewDataSource, EditPlaceCellDelegate, WaypointPreferencesDelegate, ItinerarySettingsDelegate, ChooseRouteDelegate, CacheDataHandlerDelegate>
+@interface EditingItineraryViewController () <UITableViewDelegate, UITableViewDataSource, EditPlaceCellDelegate, WaypointPreferencesDelegate, ItinerarySettingsDelegate, ChooseRouteDelegate, CacheDataHandlerDelegate, SelectableMapDelegate>
 @property (weak, nonatomic) IBOutlet UIView *editView;
 @property (weak, nonatomic) IBOutlet UITableView *placesTableView;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *loadingIndicator;
@@ -40,6 +41,7 @@
 @property (strong, nonatomic) NSArray *routeOptions;
 
 @property (strong, nonatomic) CacheDataHandler *cacheHandler;
+@property (assign, nonatomic) BOOL screenshotFlag;
 
 @end
 
@@ -50,13 +52,15 @@
     
     // Set up copy of itinerary as data source
     self.mutableItinerary = [[Itinerary alloc] initWithDictionary:[self.baseItinerary toRouteDictionary]
-                                                         prefJson:[self.baseItinerary toPrefsDictionary]
-                                                        departure:self.baseItinerary.departureTime
-                                                mileageConstraint:self.baseItinerary.mileageConstraint budgetConstraint:self.baseItinerary.budgetConstraint
-                                                 sourceCollection:self.baseItinerary.sourceCollection
-                                                   originLocation:self.baseItinerary.originLocation
-                                                             name:self.baseItinerary.name];
-    
+                                                          prefJson:[self.baseItinerary toPrefsDictionary]
+                                                         departure:self.baseItinerary.departureTime
+                                                 mileageConstraint:self.baseItinerary.mileageConstraint budgetConstraint:self.baseItinerary.budgetConstraint
+                                                  sourceCollection:self.baseItinerary.sourceCollection
+                                                    originLocation:self.baseItinerary.originLocation
+                                                              name:self.baseItinerary.name
+                                                       isFavorited:self.baseItinerary.isFavorited];
+    self.mutableItinerary.staticMap = self.baseItinerary.staticMap;
+    self.screenshotFlag = NO;
     self.cacheHandler = [[CacheDataHandler alloc] init];
     self.cacheHandler.delegate = self;
     [self updateUI];
@@ -64,13 +68,18 @@
 
 - (void) updateUI {
     // Set up map
-    [self.mapView initWithBounds:self.mutableItinerary.bounds];
-    [self.mapView addMarker:self.mutableItinerary.originLocation];
-    for (Location *point in [self.mutableItinerary getOrderedLocations]) {
-        [self.mapView addMarker:point];
+    if ([[NetworkManager shared] isConnected]) {
+        self.mapView.delegate = self;
+        [self.mapView initWithBounds:self.mutableItinerary.bounds];
+        [self.mapView addMarker:self.mutableItinerary.originLocation];
+        for (Location *point in [self.mutableItinerary getOrderedLocations]) {
+            [self.mapView addMarker:point];
+        }
+        [self.mapView addPolyline:self.mutableItinerary.overviewPolyline];
+    } else {
+        [self.mapView initWithStaticImage:self.mutableItinerary.staticMap];
     }
-    [self.mapView addPolyline:self.mutableItinerary.overviewPolyline];
-    
+
     // Set up table view
     self.placesTableView.dataSource = self;
     self.placesTableView.delegate = self;
@@ -90,6 +99,26 @@
 }
 
 - (IBAction)tapReroute:(id)sender {
+    if (![[NetworkManager shared] isConnected]) {
+        UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"No internet connection"
+                                   message:@"Please try again later."
+                                   preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction* action = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
+                                       handler:nil];
+        [alert addAction:action];
+        [self presentViewController:alert animated:YES completion:nil];
+        return;
+    }
+    if ([self.mutableItinerary.departureTime compare:[NSDate now]] == NSOrderedAscending) {
+        UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Departure Date Error"
+                                   message:@"Departure date must be in the future, please select a new date."
+                                   preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction* action = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
+                                       handler:^(UIAlertAction * action) {}];
+        [alert addAction:action];
+        [self presentViewController:alert animated:YES completion:nil];
+        return;
+    }
     [self.loadingIndicator startAnimating];
     NSString *matrixUrl = [MapUtils generateMatrixApiUrl:self.mutableItinerary.sourceCollection
                                             origin:self.mutableItinerary.originLocation
@@ -130,6 +159,7 @@
 
 - (IBAction)tapSave:(id)sender {
     [self.baseItinerary reinitialize:[self.mutableItinerary toRouteDictionary] prefJson:[self.mutableItinerary toPrefsDictionary] departure:self.mutableItinerary.departureTime mileageConstraint:self.mutableItinerary.mileageConstraint budgetConstraint:self.mutableItinerary.budgetConstraint];
+    self.baseItinerary.staticMap = self.mutableItinerary.staticMap;
     [self.cacheHandler updateItinerary:self.baseItinerary];
 }
 
@@ -209,7 +239,9 @@
     else {
         loc = self.orderedData[indexPath.row - 1];
     }
-    [self.mapView setCameraToLoc:loc.coord animate:YES];
+    if (self.mapView.isEnabled) {
+        [self.mapView setCameraToLoc:loc.coord animate:YES];
+    }
 }
 
 # pragma mark - EditPlaceCellDelegate
@@ -251,6 +283,7 @@
     [self.mutableItinerary reinitialize:route.routeJson prefJson:[self.mutableItinerary toPrefsDictionary] departure:self.mutableItinerary.departureTime mileageConstraint:mileage budgetConstraint:cost];
     self.mutableItinerary.waypointOrder = route.waypoints;
     self.saveButton.hidden = NO;
+    self.screenshotFlag = YES;
     [self updateUI];
     [self.loadingIndicator stopAnimating];
 }
@@ -265,4 +298,18 @@
         [self performSegueWithIdentifier:@"waypointPrefsSegue" sender:nil];
     }
 }
+
+# pragma mark - SelectableMapDelegate
+
+- (void) didFinishLoading {
+    if (self.screenshotFlag) {
+        UIGraphicsBeginImageContext(self.mapView.frame.size);
+        [self.mapView.layer renderInContext:UIGraphicsGetCurrentContext()];
+        UIImage *screenshot = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
+        self.screenshotFlag = NO;
+        self.mutableItinerary.staticMap = screenshot;
+    }
+}
+
 @end

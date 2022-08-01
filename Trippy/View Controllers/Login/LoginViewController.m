@@ -89,4 +89,14 @@
     self.passwordField.text = @"";
 }
 
+- (void)offlineWarning {
+    UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"No internet connection"
+                               message:@"Please try again later."
+                               preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction* action = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
+                                   handler:nil];
+    [alert addAction:action];
+    [self presentViewController:alert animated:YES completion:nil];
+}
+
 @end

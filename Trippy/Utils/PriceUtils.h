@@ -7,11 +7,12 @@
 
 #import <Foundation/Foundation.h>
 @class Itinerary;
+@class Location;
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface PriceUtils : NSObject
-+ (double)computeExpectedCost:(NSArray *)types priceLevel:(NSNumber *)priceLevel;
++ (double)computeExpectedCost:(Location *)loc itinerary:(Itinerary *)itinerary;
 + (double)computeTotalCost:(Itinerary *)itinerary locations:(NSArray *)locations omitWaypoints:(NSArray *)omitWaypoints;
 @end
 

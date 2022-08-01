@@ -90,13 +90,13 @@
     NSArray *sortedByCost = [locations sortedArrayUsingComparator:^NSComparisonResult(id  _Nonnull obj1, id  _Nonnull obj2) {
         Location *loc1 = obj1;
         Location *loc2 = obj2;
-        double cost1 = [PriceUtils computeExpectedCost:loc1.types priceLevel:loc1.priceLevel];
-        double cost2 = [PriceUtils computeExpectedCost:loc2.types priceLevel:loc2.priceLevel];
+        double cost1 = [PriceUtils computeExpectedCost:loc1 itinerary:itinerary];
+        double cost2 = [PriceUtils computeExpectedCost:loc2 itinerary:itinerary];
         if (cost1 > cost2) {
-            return (NSComparisonResult)NSOrderedDescending;
+            return (NSComparisonResult)NSOrderedAscending;
         }
         if (cost1 < cost2) {
-            return (NSComparisonResult)NSOrderedAscending;
+            return (NSComparisonResult)NSOrderedDescending;
         }
         return (NSComparisonResult)NSOrderedSame;
     }];
@@ -105,10 +105,10 @@
     double budget = [itinerary.budgetConstraint intValue];
     NSMutableArray *omittedIndices = [[NSMutableArray alloc] init];
     int count = 0;
-    while (remainingCost > budget) {
+    while (remainingCost > budget && count < sortedByCost.count) {
         Location *loc = [sortedByCost objectAtIndex:count];
         [omittedIndices addObject:@([itinerary.sourceCollection.locations indexOfObject:loc])];
-        remainingCost -= [PriceUtils computeExpectedCost:loc.types priceLevel:loc.priceLevel];
+        remainingCost -= [PriceUtils computeExpectedCost:loc itinerary:itinerary];
         count += 1;
     }
     // recompute route
@@ -125,6 +125,7 @@
 
 - (void)calculateRoutes:(Itinerary *)itinerary completion:(void (^)(NSArray *routes, NSError *))completion {
     NSMutableArray *routes = [[NSMutableArray alloc] init];
+    // TODO: Refactor to allow cost and distance routes to compute separately
     if (itinerary.mileageConstraint > 0) {
         [self calculateDistanceOptimalRoute:itinerary completion:^(RouteOption *response, NSError *) {
             [routes addObject:response];

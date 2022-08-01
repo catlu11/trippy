@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		08C570CEEB81796F78D90125 /* Pods_TrippyTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DACCD3192C823EF35DC05DDD /* Pods_TrippyTests.framework */; };
+		F0342E1E28946111006717CB /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F0342E1C28946111006717CB /* DataModel.xcdatamodeld */; };
 		F06174A228888108005AF616 /* RoutesHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = F06174A128888108005AF616 /* RoutesHandler.m */; };
 		F06174A52888812C005AF616 /* RouteCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F06174A42888812C005AF616 /* RouteCell.m */; };
 		F06174AE2889B914005AF616 /* LocationOptionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F06174AD2889B914005AF616 /* LocationOptionsViewController.m */; };
@@ -15,6 +16,10 @@
 		F07D030C288EFCE30049F355 /* RouteOption.m in Sources */ = {isa = PBXBuildFile; fileRef = F07D030B288EFCE30049F355 /* RouteOption.m */; };
 		F07D030F288F07260049F355 /* ItineraryItemCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F07D030E288F07260049F355 /* ItineraryItemCell.m */; };
 		F07D0312288F07540049F355 /* ViewItineraryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F07D0311288F07540049F355 /* ViewItineraryViewController.m */; };
+		F07D031E288F48D60049F355 /* CoreDataHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = F07D031D288F48D60049F355 /* CoreDataHandler.m */; };
+		F07D0321289055D90049F355 /* CoreDataUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = F07D0320289055D80049F355 /* CoreDataUtils.m */; };
+		F07D032728919A7D0049F355 /* NetworkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F07D032628919A7D0049F355 /* NetworkManager.m */; };
+		F07D032A2891D43D0049F355 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = F07D03292891D43D0049F355 /* Reachability.m */; };
 		F0C75F6D287642C10015BB74 /* Keys.plist in Resources */ = {isa = PBXBuildFile; fileRef = F0C75F6C287642C10015BB74 /* Keys.plist */; };
 		F0C75F72287747A20015BB74 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F0C75F71287747A20015BB74 /* LoginViewController.m */; };
 		F0C75F7828775A680015BB74 /* SavedCollectionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F0C75F7728775A680015BB74 /* SavedCollectionsViewController.m */; };
@@ -84,6 +89,7 @@
 		CCA5DB2AB9E0DEA96B5E2177 /* Pods-TrippyTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TrippyTests.debug.xcconfig"; path = "Target Support Files/Pods-TrippyTests/Pods-TrippyTests.debug.xcconfig"; sourceTree = "<group>"; };
 		DACCD3192C823EF35DC05DDD /* Pods_TrippyTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TrippyTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DCD6D797BDE2A5804AC47015 /* Pods_Trippy.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Trippy.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F0342E1D28946111006717CB /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
 		F06174A028888108005AF616 /* RoutesHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RoutesHandler.h; sourceTree = "<group>"; };
 		F06174A128888108005AF616 /* RoutesHandler.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RoutesHandler.m; sourceTree = "<group>"; };
 		F06174A32888812C005AF616 /* RouteCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RouteCell.h; sourceTree = "<group>"; };
@@ -98,6 +104,14 @@
 		F07D030E288F07260049F355 /* ItineraryItemCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ItineraryItemCell.m; sourceTree = "<group>"; };
 		F07D0310288F07540049F355 /* ViewItineraryViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewItineraryViewController.h; sourceTree = "<group>"; };
 		F07D0311288F07540049F355 /* ViewItineraryViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewItineraryViewController.m; sourceTree = "<group>"; };
+		F07D031C288F48D60049F355 /* CoreDataHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CoreDataHandler.h; sourceTree = "<group>"; };
+		F07D031D288F48D60049F355 /* CoreDataHandler.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CoreDataHandler.m; sourceTree = "<group>"; };
+		F07D031F289055D80049F355 /* CoreDataUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CoreDataUtils.h; sourceTree = "<group>"; };
+		F07D0320289055D80049F355 /* CoreDataUtils.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CoreDataUtils.m; sourceTree = "<group>"; };
+		F07D032528919A7D0049F355 /* NetworkManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NetworkManager.h; sourceTree = "<group>"; };
+		F07D032628919A7D0049F355 /* NetworkManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NetworkManager.m; sourceTree = "<group>"; };
+		F07D03282891D43D0049F355 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
+		F07D03292891D43D0049F355 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		F0C75F6C287642C10015BB74 /* Keys.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Keys.plist; sourceTree = "<group>"; };
 		F0C75F70287747A20015BB74 /* LoginViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		F0C75F71287747A20015BB74 /* LoginViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
@@ -323,6 +337,7 @@
 				F0F335842874A0EB00470507 /* Info.plist */,
 				F0C75F6C287642C10015BB74 /* Keys.plist */,
 				F0F335852874A0EB00470507 /* main.m */,
+				F0342E1C28946111006717CB /* DataModel.xcdatamodeld */,
 			);
 			path = Trippy;
 			sourceTree = "<group>";
@@ -400,6 +415,8 @@
 			children = (
 				F0C75FBC287CE4CB0015BB74 /* MapsAPIManager.h */,
 				F0C75FBD287CE4CB0015BB74 /* MapsAPIManager.m */,
+				F07D032528919A7D0049F355 /* NetworkManager.h */,
+				F07D032628919A7D0049F355 /* NetworkManager.m */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -407,6 +424,8 @@
 		F0F335B42875F2BD00470507 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				F07D03282891D43D0049F355 /* Reachability.h */,
+				F07D03292891D43D0049F355 /* Reachability.m */,
 				F0F335B52875F2E100470507 /* MapUtils.h */,
 				F0F335B62875F2E100470507 /* MapUtils.m */,
 				F0C75F90287799070015BB74 /* ParseUtils.h */,
@@ -417,6 +436,8 @@
 				F0F658082887158000C04AB0 /* TSPUtils.m */,
 				F0709D3C2889CCA400730D47 /* PriceUtils.h */,
 				F0709D3D2889CCA400730D47 /* PriceUtils.m */,
+				F07D031F289055D80049F355 /* CoreDataUtils.h */,
+				F07D0320289055D80049F355 /* CoreDataUtils.m */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -432,6 +453,8 @@
 				F0F6581528887FED00C04AB0 /* UserAuthHandler.m */,
 				F06174A028888108005AF616 /* RoutesHandler.h */,
 				F06174A128888108005AF616 /* RoutesHandler.m */,
+				F07D031C288F48D60049F355 /* CoreDataHandler.h */,
+				F07D031D288F48D60049F355 /* CoreDataHandler.m */,
 			);
 			path = Handlers;
 			sourceTree = "<group>";
@@ -716,13 +739,16 @@
 				F0F6581E2888804E00C04AB0 /* WaypointPreferences.m in Sources */,
 				F0F3357B2874A0E700470507 /* SearchMapViewController.m in Sources */,
 				F0F6580F28887F1700C04AB0 /* ChooseRouteViewController.m in Sources */,
+				F0342E1E28946111006717CB /* DataModel.xcdatamodeld in Sources */,
 				F0C75F982878D7750015BB74 /* CreateCollectionViewController.m in Sources */,
 				F0C75F92287799070015BB74 /* ParseUtils.m in Sources */,
+				F07D032728919A7D0049F355 /* NetworkManager.m in Sources */,
 				F0F658042881D08A00C04AB0 /* WaypointPreferencesViewController.m in Sources */,
 				F0C75F9E287C9EBF0015BB74 /* HomeViewController.m in Sources */,
 				F07D030C288EFCE30049F355 /* RouteOption.m in Sources */,
 				F0C75FA1287C9F4E0015BB74 /* CreateItineraryViewController.m in Sources */,
 				F0C75FA4287CA2430015BB74 /* ItineraryDetailViewController.m in Sources */,
+				F07D032A2891D43D0049F355 /* Reachability.m in Sources */,
 				F0C75F83287786B60015BB74 /* MapItemListViewController.m in Sources */,
 				F0F335752874A0E700470507 /* AppDelegate.m in Sources */,
 				F0C75FE6287E3CB30015BB74 /* RouteStep.m in Sources */,
@@ -745,9 +771,11 @@
 				F0F6581B28887FEE00C04AB0 /* UserAuthHandler.m in Sources */,
 				F0C75FBE287CE4CB0015BB74 /* MapsAPIManager.m in Sources */,
 				F0709D3E2889CCA400730D47 /* PriceUtils.m in Sources */,
+				F07D031E288F48D60049F355 /* CoreDataHandler.m in Sources */,
 				F07D030F288F07260049F355 /* ItineraryItemCell.m in Sources */,
 				F0F658012880DB2600C04AB0 /* DateUtils.m in Sources */,
 				F0F335782874A0E700470507 /* SceneDelegate.m in Sources */,
+				F07D0321289055D90049F355 /* CoreDataUtils.m in Sources */,
 				F0C75FE5287E3CB30015BB74 /* LocationCollection.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1087,6 +1115,18 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+/* Begin XCVersionGroup section */
+		F0342E1C28946111006717CB /* DataModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				F0342E1D28946111006717CB /* DataModel.xcdatamodel */,
+			);
+			currentVersion = F0342E1D28946111006717CB /* DataModel.xcdatamodel */;
+			path = DataModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = F0F335682874A0E700470507 /* Project object */;
 }

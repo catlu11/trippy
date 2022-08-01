@@ -12,6 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface ItineraryDetailViewController : UIViewController
 @property (strong, nonatomic) Itinerary *itinerary;
+@property (assign, nonatomic) BOOL screenshotFlag;
 @end
 
 NS_ASSUME_NONNULL_END

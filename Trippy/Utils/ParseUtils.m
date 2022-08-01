@@ -22,7 +22,7 @@
 }
 
 + (NSArray *)getItineraryKeys {
-    return @[@"directionsJson", @"createdAt", @"name", @"createdBy", @"origin", @"sourceCollection", @"departure", @"mileageConstraint", @"budgetConstraint"];
+    return @[@"directionsJson", @"createdAt", @"name", @"createdBy", @"origin", @"sourceCollection", @"departure", @"mileageConstraint", @"budgetConstraint", @"isFavorited", @"staticMap"];
 }
 
 + (NSString *)getLoggedInUsername {
@@ -36,9 +36,21 @@
     return jsonFile;
 }
 
++ (PFFileObject *)pfFileFromImage:(UIImage *)img name:(NSString *)name {
+    NSData *data = UIImagePNGRepresentation(img);
+    NSString *filename = [NSString stringWithFormat:@"%@.png", name];
+    PFFileObject *file = [PFFileObject fileObjectWithName:filename data:data];
+    return file;
+}
+
 + (NSDictionary *)dictFromPfFile:(PFFileObject *)file {
     NSData *data = [file getData:nil];
     return [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+}
+
++ (UIImage *)imgFromPfFile:(PFFileObject *)file {
+    NSData *data = [file getData:nil];
+    return [UIImage imageWithData:data];
 }
 
 + (void) itineraryFromPFObj:(PFObject *)obj completion:(void (^)(Itinerary *itinerary, NSError *))completion {
@@ -47,6 +59,9 @@
 
     PFFileObject *prefsJsonFile = obj[@"preferencesJson"];
     NSDictionary *prefsDict = [self dictFromPfFile:prefsJsonFile];
+    
+    PFFileObject *imgFile = obj[@"staticMap"];
+    UIImage *img = [self imgFromPfFile:imgFile];
     
     // query location pointer
     PFObject *locObj = obj[@"origin"];
@@ -71,11 +86,14 @@
                                                         departure:obj[@"departure"]
                                                 mileageConstraint:obj[@"mileageConstraint"]
                                                  budgetConstraint:obj[@"budgetConstraint"]
-                                                 sourceCollection:collection originLocation:originLocation name:obj[@"name"]];
+                                                 sourceCollection:collection originLocation:originLocation
+                                                             name:obj[@"name"]
+                                                      isFavorited:[obj[@"isFavorited"] boolValue]];
             PFUser *user = obj[@"createdBy"];
             it.userId = user.username;
             it.createdAt = obj.createdAt;
             it.parseObjectId = obj.objectId;
+            it.staticMap = img;
             completion(it, nil);
         }
     }];
@@ -171,6 +189,12 @@
         obj[@"departure"] = it.departureTime;
         obj[@"mileageConstraint"] = it.mileageConstraint;
         obj[@"budgetConstraint"] = it.budgetConstraint;
+        obj[@"isFavorited"] = [NSNumber numberWithBool:it.isFavorited];
+        if (it.staticMap) {
+            obj[@"staticMap"] = [self pfFileFromImage:it.staticMap name:@"img"];
+        } else {
+            obj[@"staticMap"] = [NSNull null];
+        }
         return obj;
     }
 }

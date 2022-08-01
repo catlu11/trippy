@@ -11,6 +11,7 @@
 #import "ItineraryDetailViewController.h"
 #import "LoginViewController.h"
 #import "SceneDelegate.h"
+#import "NetworkManager.h"
 
 @interface HomeViewController () <LogoutHandlerDelegate>
 @property (weak, nonatomic) IBOutlet UILabel *welcomeLabel;
@@ -37,12 +38,27 @@
     [self.logoutHandler logoutCurrentUser];
 }
 
+- (IBAction)tapCreate:(id)sender {
+    if ([[NetworkManager shared] isConnected]) {
+        [self performSegueWithIdentifier:@"createItinerarySegue" sender:nil];
+    } else {
+        UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Itinerary Creation Disabled"
+                                   message:@"No internet connection, please try again later."
+                                   preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction* action = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
+                                       handler:nil];
+        [alert addAction:action];
+        [self presentViewController:alert animated:YES completion:nil];
+    }
+}
+
 # pragma mark - Navigation
 
 - (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if([[segue identifier] isEqualToString:@"itineraryDetailSegueFromHome"]) {
         ItineraryDetailViewController *vc = segue.destinationViewController;
         vc.itinerary = self.selectedIt;
+        vc.screenshotFlag = NO;
     }
 }
 
@@ -55,7 +71,7 @@
 
 # pragma mark - LogoutHandlerDelegate
 
-- (void) logoutSuccess {
+- (void)logoutSuccess {
     SceneDelegate *appDelegate = (SceneDelegate *)self.view.window.windowScene.delegate;
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     LoginViewController *loginViewController = [storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
@@ -63,8 +79,18 @@
     NSLog(@"Successfully logged out user");
 }
 
-- (void) logoutFail:(NSError *)error {
+- (void)logoutFail:(NSError *)error {
     NSLog(@"Failed to log out user: %@", error.description);
+}
+
+- (void)offlineWarning {
+    UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Logout Failed"
+                               message:@"No internet connection, please try again later."
+                               preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction* action = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
+                                   handler:nil];
+    [alert addAction:action];
+    [self presentViewController:alert animated:YES completion:nil];
 }
 
 @end
