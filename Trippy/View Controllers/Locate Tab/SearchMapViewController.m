@@ -179,12 +179,12 @@
 
 # pragma mark - CacheDataHandlerDelegate
 
-- (void) addFetchedCollection:(LocationCollection *)collection {
+- (void)addFetchedCollection:(LocationCollection *)collection {
     [self.data addObject:collection];
     [self.collectionPickerView reloadAllComponents];
 }
 
-- (void) postedLocationSuccess:(Location *)location {
+- (void)postedLocationSuccess:(Location *)location {
     UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Success"
                                message:@"Successfully posted location."
                                preferredStyle:UIAlertControllerStyleAlert];
@@ -198,6 +198,10 @@
         [self.mapView clearMarkers];
         self.searchBar.text = @"";
     }];
+}
+
+- (void)didAddAll {
+    return;
 }
 
 # pragma mark - UIPopoverPresentationControllerDelegate

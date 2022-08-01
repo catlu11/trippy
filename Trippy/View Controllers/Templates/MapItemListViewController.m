@@ -7,13 +7,27 @@
 
 #import "MapItemListViewController.h"
 #import "CacheDataHandler.h"
+#import "JHUD.h"
 
 @interface MapItemListViewController () <UITableViewDelegate, UITableViewDataSource, CacheDataHandlerDelegate>
+@property (weak, nonatomic) IBOutlet UIView *loadingView;
 @property (strong, nonatomic) UIRefreshControl *refreshControl;
 @property (strong, nonatomic) CacheDataHandler *handler;
 @end
 
 @implementation MapItemListViewController
+
+- (void)viewWillAppear:(BOOL)animated {
+    if (self.handler.isFetchingItineraries || self.handler.isFetchingCollections || self.handler.isFetchingLocations) {
+        JHUD *hudView = [[JHUD alloc] initWithFrame:self.loadingView.bounds];
+        hudView.messageLabel.text = @"Loading your trip info...";
+        NSString *path = [[NSBundle mainBundle] pathForResource:@"paper_plane" ofType:@"gif"];
+        NSData *data = [NSData dataWithContentsOfFile:path];
+        hudView.indicatorViewSize = CGSizeMake(200, 200); // Maybe you can try to use (100,250);😂
+        [hudView setGifImageData:data];
+        [hudView showAtView:self.loadingView hudType:JHUDLoadingTypeGifImage];
+    }
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -103,6 +117,10 @@
         [self.data addObject:itinerary];
     }
     [self.listTableView reloadData];
+}
+
+- (void) didAddAll {
+    self.loadingView.hidden = YES;
 }
 
 - (void) generalRequestFail:(NSError *)error {

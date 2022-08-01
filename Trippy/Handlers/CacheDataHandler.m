@@ -15,9 +15,6 @@
 #import "NetworkManager.h"
 
 @interface CacheDataHandler ()
-@property (assign, nonatomic) BOOL isFetchingItineraries;
-@property (assign, nonatomic) BOOL isFetchingCollections;
-@property (assign, nonatomic) BOOL isFetchingLocations;
 @end
 
 @implementation CacheDataHandler
@@ -159,6 +156,9 @@
                                 [[CoreDataHandler shared] saveItinerary:itinerary]; // save to local cache
                             }
                             [strongSelf.delegate addFetchedItinerary:itinerary];
+                            if ([obj isEqual:[objects lastObject]]) {
+                                [strongSelf.delegate didAddAll];
+                            }
                         }
                     }];
                 }
@@ -203,6 +203,9 @@
                             collection.isOffline = NO;
                             [strongSelf.delegate addFetchedCollection:collection];
                             [[CoreDataHandler shared] saveCollection:collection]; // save to local cache
+                            if ([obj isEqual:[objects lastObject]]) {
+                                [strongSelf.delegate didAddAll];
+                            }
                         }
                     }];
                 }
@@ -226,7 +229,7 @@
         }
         self.isFetchingLocations = NO;
     } else {
-//        [[CoreDataHandler shared] clearEntity:@"Location"];
+        [[CoreDataHandler shared] clearEntity:@"Location"];
         self.isFetchingLocations = YES;
         
         PFQuery *query = [PFQuery queryWithClassName:@"Location"];
@@ -245,6 +248,9 @@
                     loc.isOffline = NO;
                     [strongSelf.delegate addFetchedLocation:loc];
                     [[CoreDataHandler shared] saveLocation:loc];
+                    if ([obj isEqual:[objects lastObject]]) {
+                        [strongSelf.delegate didAddAll];
+                    }
                 }
                 self.isFetchingLocations = NO;
             }

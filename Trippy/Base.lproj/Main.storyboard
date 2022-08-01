@@ -9,6 +9,14 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--Loading View Controller-->
+        <scene sceneID="Tef-0j-z2i">
+            <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="O7b-wC-z7A" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <viewController storyboardIdentifier="LoadingViewController" id="s6I-z7-zaQ" customClass="LoadingViewController" sceneMemberID="viewController"/>
+            </objects>
+            <point key="canvasLocation" x="-5564" y="-784"/>
+        </scene>
         <!--Login View Controller-->
         <scene sceneID="jle-fh-YsF">
             <objects>
@@ -229,6 +237,11 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
+                            <view contentMode="scaleToFill" id="hDH-tA-T6z">
+                                <rect key="frame" x="16" y="211" width="358" height="540"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" systemColor="systemGray6Color"/>
+                            </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Welcome &lt;username &gt;, happy travels!!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yvA-H5-AgY">
                                 <rect key="frame" x="16" y="111" width="358" height="24"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -257,6 +270,7 @@
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="listTableView" destination="ok7-2R-r4J" id="Fgy-Sg-dkV"/>
+                        <outlet property="loadingView" destination="hDH-tA-T6z" id="QK3-fe-gXl"/>
                         <outlet property="welcomeLabel" destination="yvA-H5-AgY" id="ghQ-4d-PxV"/>
                         <segue destination="h0c-gf-E4D" kind="presentation" identifier="itineraryDetailSegueFromHome" modalPresentationStyle="fullScreen" id="7bG-EX-YEr"/>
                         <segue destination="li6-rC-P7K" kind="show" identifier="createItinerarySegue" id="han-cu-oK7"/>
@@ -1247,6 +1261,11 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
+                            <view contentMode="scaleToFill" id="y2N-A7-5dd">
+                                <rect key="frame" x="0.0" y="88" width="390" height="673"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" systemColor="systemGray6Color"/>
+                            </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="s2U-8f-iNl"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -1283,11 +1302,12 @@
                     </navigationItem>
                     <connections>
                         <outlet property="listTableView" destination="W7U-jM-FEz" id="fyB-LF-ozS"/>
+                        <outlet property="loadingView" destination="y2N-A7-5dd" id="SHk-A2-14p"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wV3-6H-lOe" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-3025" y="45"/>
+            <point key="canvasLocation" x="-3026.1538461538462" y="44.7867298578199"/>
         </scene>
         <!--Create New Collection-->
         <scene sceneID="qg8-wb-wzw">
@@ -1401,6 +1421,11 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
+                            <view contentMode="scaleToFill" id="5zV-1x-X7A">
+                                <rect key="frame" x="16" y="336" width="358" height="425"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" systemColor="systemGray6Color"/>
+                            </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Create New Collection" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ush-ck-LK3">
                                 <rect key="frame" x="99" y="18" width="192" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -1435,6 +1460,7 @@
                     <connections>
                         <outlet property="descTextView" destination="y26-Wg-bVQ" id="8YR-NL-163"/>
                         <outlet property="listTableView" destination="2PI-Y0-dKj" id="j6Q-GN-3FS"/>
+                        <outlet property="loadingView" destination="5zV-1x-X7A" id="Mkj-qm-iIO"/>
                         <outlet property="nameField" destination="MwY-0B-l30" id="uAy-aY-r8I"/>
                     </connections>
                 </viewController>
@@ -1445,7 +1471,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="-2782" y="788"/>
+            <point key="canvasLocation" x="-2783.0769230769229" y="787.67772511848341"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Fd4-MJ-veB">
@@ -1650,7 +1676,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="yqc-p2-qNS"/>
+        <segue reference="7bG-EX-YEr"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="arrowshape.turn.up.left.fill" catalog="system" width="128" height="106"/>
