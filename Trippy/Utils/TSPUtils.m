@@ -7,6 +7,7 @@
 
 #import "TSPUtils.h"
 #import "Itinerary.h"
+#import "WaypointPreferences.h"
 
 @implementation TSPUtils
 
@@ -44,17 +45,15 @@
     int sum = 0;
     int firstIndex = [[order firstObject] intValue];
     NSNumber *initialWeight = matrix[@"rows"][0][@"elements"][firstIndex+1][@"duration"][@"value"];
-    NSDictionary *initialPrefs = preferences[@"preferences"][firstIndex];
-    NSNumber *initialDuration = [initialPrefs[@"stayDuration"] isEqual:[NSNull null]] ? @0 : initialPrefs[@"stayDuration"];
-    sum += ([initialWeight intValue] + [initialDuration intValue]);
+    WaypointPreferences *initialPrefs = [[WaypointPreferences alloc] initWithDictionary:preferences[@"preferences"][firstIndex]];
+    sum += ([initialWeight intValue] + [initialPrefs.stayDurationInSeconds doubleValue]);
     for (int i=1; i < order.count; i++) {
         int current = [order[i] intValue];
         int previous = [order[i-1] intValue];
         NSArray *edges = matrix[@"rows"][previous+1][@"elements"];
         NSNumber *weight = edges[current+1][@"duration"][@"value"];
-        NSDictionary *prefs = preferences[@"preferences"][i];
-        NSNumber *duration = [prefs[@"stayDuration"] isEqual:[NSNull null]] ? @0 : prefs[@"stayDuration"];
-        sum += ([weight intValue] + [duration intValue]);
+        WaypointPreferences *prefs = [[WaypointPreferences alloc] initWithDictionary:preferences[@"preferences"][i]];
+        sum += ([weight intValue] + [initialPrefs.stayDurationInSeconds intValue]);
     }
     int lastIndex = [[order lastObject] intValue];
     NSNumber *finalWeight = matrix[@"rows"][lastIndex+1][@"elements"][0][@"duration"][@"value"];
@@ -75,7 +74,7 @@
     int bestDistance = -1;
     for (NSArray *order in potentialOrders) {
         int dist = [self totalDistance:order matrix:matrix];
-        if (![self doesSatisfyTimeWindows:order matrix:matrix preferences:preferences departureTime:departureTime]) {
+        if (preferences && ![self doesSatisfyTimeWindows:order matrix:matrix preferences:preferences departureTime:departureTime]) {
             continue;
         }
         if (dist < bestDistance || bestDistance == -1) {
@@ -113,29 +112,27 @@
     NSDate *cumTime = departureTime;
     int firstIndex = [[order firstObject] intValue];
     NSNumber *initialWeight = matrix[@"rows"][0][@"elements"][firstIndex+1][@"duration"][@"value"];
-    NSDictionary *initialPrefs = preferences[@"preferences"][firstIndex];
-    NSNumber *initialDuration = [initialPrefs[@"stayDuration"] isEqual:[NSNull null]] ? @0 : initialPrefs[@"stayDuration"];
+    WaypointPreferences *initialPrefs = [[WaypointPreferences alloc] initWithDictionary:preferences[@"preferences"][firstIndex]];
     cumTime = [cumTime dateByAddingTimeInterval:[initialWeight intValue]];
-    if (![initialPrefs[@"preferredEtaStart"] isEqual:[NSNull null]]
-        && !([cumTime compare:initialPrefs[@"preferredEtaStart"]] == NSOrderedDescending &&
-             [cumTime compare:initialPrefs[@"preferredEtaEnd"]] == NSOrderedAscending)) {
+    if (initialPrefs.preferredEtaStart != nil
+        && ([cumTime compare:initialPrefs.preferredEtaStart] == NSOrderedAscending ||
+             [cumTime compare:initialPrefs.preferredEtaEnd] == NSOrderedDescending)) {
         return NO;
     }
-    cumTime = [cumTime dateByAddingTimeInterval:[initialDuration intValue]];
+    cumTime = [cumTime dateByAddingTimeInterval:[initialPrefs.stayDurationInSeconds doubleValue]];
     for (int i=1; i < order.count; i++) {
         int current = [order[i] intValue];
         int previous = [order[i-1] intValue];
         NSArray *edges = matrix[@"rows"][previous+1][@"elements"];
         NSNumber *weight = edges[current+1][@"duration"][@"value"];
-        NSDictionary *prefs = preferences[@"preferences"][i];
-        NSNumber *duration = [prefs[@"stayDuration"] isEqual:[NSNull null]] ? @0 : prefs[@"stayDuration"];
+        WaypointPreferences *prefs = [[WaypointPreferences alloc] initWithDictionary:preferences[@"preferences"][current]];
         cumTime = [cumTime dateByAddingTimeInterval:[weight intValue]];
-        if (![initialPrefs[@"preferredEtaStart"] isEqual:[NSNull null]]
-            && !([cumTime compare:prefs[@"preferredEtaStart"]] == NSOrderedDescending &&
-                 [cumTime compare:prefs[@"preferredEtaEnd"]] == NSOrderedAscending)) {
+        if (prefs.preferredEtaStart != nil
+            && ([cumTime compare:prefs.preferredEtaStart] == NSOrderedAscending ||
+                 [cumTime compare:prefs.preferredEtaEnd] == NSOrderedDescending)) {
             return NO;
         }
-        cumTime = [cumTime dateByAddingTimeInterval:[duration intValue]];
+        cumTime = [cumTime dateByAddingTimeInterval:[prefs.stayDurationInSeconds doubleValue]];
     }
     return YES;
 }

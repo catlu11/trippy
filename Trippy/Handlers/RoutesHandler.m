@@ -49,6 +49,7 @@
             }
             newOrder = [TSPUtils reorder:originalWaypoints order:newOrder];
             option.numOmitted = omitWaypoints.count;
+            option.metTimeWindows = [TSPUtils doesSatisfyTimeWindows:newOrder matrix:self.matrix preferences:[itinerary toPrefsDictionary] departureTime:itinerary.departureTime];
             option.waypoints = newOrder;
             option.distance = [TSPUtils totalDistance:newOrder matrix:self.matrix];
             option.time = [TSPUtils totalDuration:newOrder matrix:self.matrix preferences:[itinerary toPrefsDictionary]];
@@ -62,7 +63,12 @@
 }
 
 - (void)calculateDistanceOptimalRoute:(Itinerary *)itinerary completion:(void (^)(RouteOption *response, NSError *))completion {
+    BOOL withTimeWindows = YES;
     NSArray *order = [TSPUtils tspDistance:self.matrix preferences:[itinerary toPrefsDictionary] departureTime:itinerary.departureTime];
+    if (!order) {
+        order = [TSPUtils tspDistance:self.matrix preferences:nil departureTime:itinerary.departureTime];
+        withTimeWindows = NO;
+    }
     NSString *directionsUrl = [MapUtils generateOrderedDirectionsApiUrl:itinerary.sourceCollection
                                                           waypointOrder:order
                                                                  origin:itinerary.originLocation
@@ -73,6 +79,7 @@
             option.type = kDistance;
             option.routeJson = response;
             option.waypoints = order;
+            option.metTimeWindows = withTimeWindows;
             option.numOmitted = 0;
             option.distance = [TSPUtils totalDistance:order matrix:self.matrix];
             option.time = [TSPUtils totalDuration:order matrix:self.matrix preferences:[itinerary toPrefsDictionary]];

@@ -680,11 +680,19 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Omitted waypoints:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MXE-BS-a0u">
+                                                    <rect key="frame" x="0.0" y="48" width="168" height="17"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <color key="textColor" systemColor="systemGray2Color"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                             </subviews>
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="estCostLabel" destination="Zzs-CM-Acu" id="gyh-vW-QQT"/>
                                             <outlet property="omittedLabel" destination="adj-VF-WJK" id="CqL-ax-QK0"/>
+                                            <outlet property="timeWindowLabel" destination="MXE-BS-a0u" id="crk-i9-61O"/>
                                             <outlet property="totalDistLabel" destination="Mes-eu-O9i" id="YcW-El-RWg"/>
                                             <outlet property="totalDurationLabel" destination="RN1-bh-xde" id="WVa-t2-X6R"/>
                                             <outlet property="typeLabel" destination="mAJ-hf-3yX" id="u0r-Qa-VBh"/>

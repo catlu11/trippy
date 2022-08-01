@@ -11,6 +11,7 @@
 #import "DateUtils.h"
 
 @interface RouteCell ()
+@property (weak, nonatomic) IBOutlet UILabel *timeWindowLabel;
 @property (weak, nonatomic) IBOutlet UILabel *typeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *omittedLabel;
 @property (weak, nonatomic) IBOutlet UILabel *totalDistLabel;
@@ -40,6 +41,7 @@
     TimeInHrMin time = [DateUtils secondsToHourMin:self.route.time];
     self.totalDurationLabel.text = [NSString stringWithFormat:@"Total duration: %dhr%dmin", time.hours, time.minutes];
     self.omittedLabel.text = [NSString stringWithFormat:@"Omitted waypoints: %d", self.route.numOmitted];
+    self.timeWindowLabel.text = [NSString stringWithFormat:@"Met time windows: %@", (self.route.metTimeWindows ? @"Yes" : @"No")];
     self.estCostLabel.text = [NSString stringWithFormat:@"Estimated cost: %.2f", self.route.cost];
 }
 

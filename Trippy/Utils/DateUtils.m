@@ -13,14 +13,15 @@
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     NSLocale *enUSPOSIXLocale = [NSLocale localeWithLocaleIdentifier:@"en_US_POSIX"];
     [dateFormatter setLocale:enUSPOSIXLocale];
-    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ssZZZZZ"];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ssZZZZZ"];
     [dateFormatter setCalendar:[NSCalendar calendarWithIdentifier:NSCalendarIdentifierGregorian]];
     return [dateFormatter stringFromDate:date];
 }
 
 + (NSDate *)iso8601StringToDate:(NSString *)isoString {
     NSISO8601DateFormatter *dateFormatter = [[NSISO8601DateFormatter alloc] init];
-    return [dateFormatter dateFromString:isoString];
+    NSDate *date = [dateFormatter dateFromString:isoString];
+    return date;
 }
 
 + (int)aheadSecondsFrom1970:(NSDate *)date aheadBy:(int)aheadBy {
