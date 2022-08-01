@@ -1115,7 +1115,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
 /* Begin XCVersionGroup section */
 		F0342E1C28946111006717CB /* DataModel.xcdatamodeld */ = {
 			isa = XCVersionGroup;
