@@ -6,6 +6,7 @@
 //
 
 #import "TSPUtils.h"
+#import "DateUtils.h"
 #import "Itinerary.h"
 #import "WaypointPreferences.h"
 
@@ -115,8 +116,7 @@
     WaypointPreferences *initialPrefs = [[WaypointPreferences alloc] initWithDictionary:preferences[@"preferences"][firstIndex]];
     cumTime = [cumTime dateByAddingTimeInterval:[initialWeight intValue]];
     if (initialPrefs.preferredEtaStart != nil
-        && ([cumTime compare:initialPrefs.preferredEtaStart] == NSOrderedAscending ||
-             [cumTime compare:initialPrefs.preferredEtaEnd] == NSOrderedDescending)) {
+        && ![DateUtils isTimeInRange:initialPrefs.preferredEtaStart end:initialPrefs.preferredEtaEnd time:cumTime]) {
         return NO;
     }
     cumTime = [cumTime dateByAddingTimeInterval:[initialPrefs.stayDurationInSeconds doubleValue]];
@@ -128,8 +128,7 @@
         WaypointPreferences *prefs = [[WaypointPreferences alloc] initWithDictionary:preferences[@"preferences"][current]];
         cumTime = [cumTime dateByAddingTimeInterval:[weight intValue]];
         if (prefs.preferredEtaStart != nil
-            && ([cumTime compare:prefs.preferredEtaStart] == NSOrderedAscending ||
-                 [cumTime compare:prefs.preferredEtaEnd] == NSOrderedDescending)) {
+            && ![DateUtils isTimeInRange:prefs.preferredEtaStart end:prefs.preferredEtaEnd time:cumTime]) {
             return NO;
         }
         cumTime = [cumTime dateByAddingTimeInterval:[prefs.stayDurationInSeconds doubleValue]];

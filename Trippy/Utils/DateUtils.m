@@ -36,8 +36,23 @@
     return time;
 }
 
-+ (int) hourMinToSeconds:(TimeInHrMin)time {
++ (int)hourMinToSeconds:(TimeInHrMin)time {
     return (time.hours * 3600) + (time.minutes * 60);
+}
+
++ (BOOL)isTimeInRange:(NSDate *)start end:(NSDate *)end time:(NSDate *)time {
+    NSCalendar* calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+    [calendar setTimeZone:[NSTimeZone timeZoneWithName:@"GMT"]];
+    NSDateComponents *startComp = [calendar components:(NSCalendarUnitHour | NSCalendarUnitMinute) fromDate:start];
+    NSDateComponents *endComp = [calendar components:(NSCalendarUnitHour | NSCalendarUnitMinute) fromDate:end];
+    NSDateComponents *timeComp = [calendar components:(NSCalendarUnitHour | NSCalendarUnitMinute) fromDate:time];
+    if (timeComp.hour < startComp.hour || (timeComp.hour == startComp.hour && timeComp.minute < startComp.minute)) {
+        return NO;
+    }
+    if (timeComp.hour > endComp.hour || (timeComp.hour == endComp.hour && timeComp.minute > endComp.minute)) {
+        return NO;
+    }
+    return YES;
 }
 
 @end
