@@ -215,6 +215,7 @@
         estArrival = [self.mutableItinerary computeArrival:(indexPath.row - 1)];
         estDeparture = [self.mutableItinerary computeDeparture:(indexPath.row - 1)];
         cell.waypointIndex = indexPath.row - 1;
+        [cell enableArrow];
         cell.backgroundColor = [UIColor whiteColor];
     } else {
         loc = self.omittedData[indexPath.row - self.orderedData.count - 2];

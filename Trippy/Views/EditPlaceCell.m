@@ -13,7 +13,7 @@
     [super awakeFromNib];
 }
 
-- (void) updateUIElements:(NSString *)locName arrival:(NSDate * _Nullable)arrival departure:(NSDate * _Nullable)departure {
+- (void)updateUIElements:(NSString *)locName arrival:(NSDate * _Nullable)arrival departure:(NSDate * _Nullable)departure {
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     [formatter setLocale:[[NSLocale alloc] initWithLocaleIdentifier:@"en_US"]];
     [formatter setDateFormat:@"HH:mm a"];
@@ -29,13 +29,18 @@
     [self.arrowLabel setUserInteractionEnabled:YES];
 }
 
-- (void) didTapArrow {
+- (void)didTapArrow {
     [self.delegate didTapArrow:self.waypointIndex];
 }
 
-- (void) disableArrow {
+- (void)disableArrow {
     [self.arrowLabel setHidden:YES];
     [self.arrowLabel setUserInteractionEnabled:NO];
+}
+
+- (void)enableArrow {
+    [self.arrowLabel setHidden:NO];
+    [self.arrowLabel setUserInteractionEnabled:YES];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

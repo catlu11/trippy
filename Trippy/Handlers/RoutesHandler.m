@@ -51,7 +51,7 @@
             option.numOmitted = omitWaypoints.count;
             option.waypoints = newOrder;
             option.distance = [TSPUtils totalDistance:newOrder matrix:self.matrix];
-            option.time = [TSPUtils totalDuration:newOrder matrix:self.matrix];
+            option.time = [TSPUtils totalDuration:newOrder matrix:self.matrix preferences:[itinerary toPrefsDictionary]];
             option.cost = [PriceUtils computeTotalCost:itinerary locations:itinerary.sourceCollection.locations omitWaypoints:omitWaypoints];
             completion(option, nil);
         }
@@ -62,7 +62,7 @@
 }
 
 - (void)calculateDistanceOptimalRoute:(Itinerary *)itinerary completion:(void (^)(RouteOption *response, NSError *))completion {
-    NSArray *order = [TSPUtils tspDistance:self.matrix];
+    NSArray *order = [TSPUtils tspDistance:self.matrix preferences:[itinerary toPrefsDictionary] departureTime:itinerary.departureTime];
     NSString *directionsUrl = [MapUtils generateOrderedDirectionsApiUrl:itinerary.sourceCollection
                                                           waypointOrder:order
                                                                  origin:itinerary.originLocation
@@ -75,7 +75,7 @@
             option.waypoints = order;
             option.numOmitted = 0;
             option.distance = [TSPUtils totalDistance:order matrix:self.matrix];
-            option.time = [TSPUtils totalDuration:order matrix:self.matrix];
+            option.time = [TSPUtils totalDuration:order matrix:self.matrix preferences:[itinerary toPrefsDictionary]];
             option.cost = [[itinerary getTotalCost:YES] doubleValue];
             completion(option, nil);
         } else {

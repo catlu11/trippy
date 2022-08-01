@@ -10,10 +10,10 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface TSPUtils : NSObject
-+ (NSArray *)tspDistance:(NSDictionary *)matrix;
++ (NSArray *)tspDistance:(NSDictionary *)matrix preferences:(NSDictionary *)preferences departureTime:(NSDate *)departureTime;
 + (NSArray *)reorder:(NSArray *)elements order:(NSArray *)order;
 + (int)totalDistance:(NSArray *)order matrix:(NSDictionary *)matrix;
-+ (int)totalDuration:(NSArray *)order matrix:(NSDictionary *)matrix;
++ (int)totalDuration:(NSArray *)order matrix:(NSDictionary *)matrix preferences:(NSDictionary *)preferences;
 + (int)distanceFromOrigin:(NSNumber *)waypointIndex matrix:(NSDictionary *)matrix;
 @end
 

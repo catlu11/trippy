@@ -35,30 +35,34 @@
     return sum + [finalWeight intValue];
 }
 
-+ (int)distanceFromOrigin:(NSNumber *)waypointIndex matrix:(NSDictionary *)matrix {
++ (int)distanceFromOrigin:(int)waypointIndex matrix:(NSDictionary *)matrix {
     NSNumber *distance = matrix[@"rows"][0][@"elements"][waypointIndex+1][@"distance"][@"value"];
     return [distance intValue];
 }
 
-+ (int)totalDuration:(NSArray *)order matrix:(NSDictionary *)matrix {
++ (int)totalDuration:(NSArray *)order matrix:(NSDictionary *)matrix preferences:(NSDictionary *)preferences {
     int sum = 0;
     int firstIndex = [[order firstObject] intValue];
-    NSNumber *initialWeight = matrix[@"rows"][0][@"elements"][firstIndex][@"duration"][@"value"];
-    sum += [initialWeight intValue];
+    NSNumber *initialWeight = matrix[@"rows"][0][@"elements"][firstIndex+1][@"duration"][@"value"];
+    NSDictionary *initialPrefs = preferences[@"preferences"][firstIndex];
+    NSNumber *initialDuration = [initialPrefs[@"stayDuration"] isEqual:[NSNull null]] ? @0 : initialPrefs[@"stayDuration"];
+    sum += ([initialWeight intValue] + [initialDuration intValue]);
     for (int i=1; i < order.count; i++) {
         int current = [order[i] intValue];
         int previous = [order[i-1] intValue];
         NSArray *edges = matrix[@"rows"][previous+1][@"elements"];
         NSNumber *weight = edges[current+1][@"duration"][@"value"];
-        sum += [weight intValue];
+        NSDictionary *prefs = preferences[@"preferences"][i];
+        NSNumber *duration = [prefs[@"stayDuration"] isEqual:[NSNull null]] ? @0 : prefs[@"stayDuration"];
+        sum += ([weight intValue] + [duration intValue]);
     }
     int lastIndex = [[order lastObject] intValue];
-    NSNumber *finalWeight = matrix[@"rows"][lastIndex][@"elements"][0][@"duration"][@"value"];
+    NSNumber *finalWeight = matrix[@"rows"][lastIndex+1][@"elements"][0][@"duration"][@"value"];
     return sum + [finalWeight intValue];
 }
 
 // brute force solution
-+ (NSArray *)tspDistance:(NSDictionary *)matrix {
++ (NSArray *)tspDistance:(NSDictionary *)matrix preferences:(NSDictionary *)preferences departureTime:(NSDate *)departureTime {
     NSArray *locations = matrix[@"origin_addresses"];
     int n = locations.count - 1;
     
@@ -71,6 +75,9 @@
     int bestDistance = -1;
     for (NSArray *order in potentialOrders) {
         int dist = [self totalDistance:order matrix:matrix];
+        if (![self doesSatisfyTimeWindows:order matrix:matrix preferences:preferences departureTime:departureTime]) {
+            continue;
+        }
         if (dist < bestDistance || bestDistance == -1) {
             bestOrder = order;
             bestDistance = dist;
@@ -97,6 +104,40 @@
         }
     }
     return results;
+}
+
++ (BOOL)doesSatisfyTimeWindows:(NSArray *)order
+                        matrix:(NSDictionary *)matrix
+                   preferences:(NSDictionary *)preferences
+                 departureTime:(NSDate *)departureTime {
+    NSDate *cumTime = departureTime;
+    int firstIndex = [[order firstObject] intValue];
+    NSNumber *initialWeight = matrix[@"rows"][0][@"elements"][firstIndex+1][@"duration"][@"value"];
+    NSDictionary *initialPrefs = preferences[@"preferences"][firstIndex];
+    NSNumber *initialDuration = [initialPrefs[@"stayDuration"] isEqual:[NSNull null]] ? @0 : initialPrefs[@"stayDuration"];
+    cumTime = [cumTime dateByAddingTimeInterval:[initialWeight intValue]];
+    if (![initialPrefs[@"preferredEtaStart"] isEqual:[NSNull null]]
+        && !([cumTime compare:initialPrefs[@"preferredEtaStart"]] == NSOrderedDescending &&
+             [cumTime compare:initialPrefs[@"preferredEtaEnd"]] == NSOrderedAscending)) {
+        return NO;
+    }
+    cumTime = [cumTime dateByAddingTimeInterval:[initialDuration intValue]];
+    for (int i=1; i < order.count; i++) {
+        int current = [order[i] intValue];
+        int previous = [order[i-1] intValue];
+        NSArray *edges = matrix[@"rows"][previous+1][@"elements"];
+        NSNumber *weight = edges[current+1][@"duration"][@"value"];
+        NSDictionary *prefs = preferences[@"preferences"][i];
+        NSNumber *duration = [prefs[@"stayDuration"] isEqual:[NSNull null]] ? @0 : prefs[@"stayDuration"];
+        cumTime = [cumTime dateByAddingTimeInterval:[weight intValue]];
+        if (![initialPrefs[@"preferredEtaStart"] isEqual:[NSNull null]]
+            && !([cumTime compare:prefs[@"preferredEtaStart"]] == NSOrderedDescending &&
+                 [cumTime compare:prefs[@"preferredEtaEnd"]] == NSOrderedAscending)) {
+            return NO;
+        }
+        cumTime = [cumTime dateByAddingTimeInterval:[duration intValue]];
+    }
+    return YES;
 }
 
 @end

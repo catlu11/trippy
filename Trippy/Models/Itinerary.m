@@ -170,15 +170,15 @@
 }
 
 - (NSDate *)computeArrival:(int)waypointIndex {
-    NSDate *lastArrival = (waypointIndex > 0) ? [self computeArrival:waypointIndex-1] : self.departureTime;
+    NSDate *lastDeparture = (waypointIndex > 0) ? [self computeDeparture:waypointIndex-1] : self.departureTime;
     RouteLeg *leg = [self.routeLegs objectAtIndex:waypointIndex];
     int travelTime = [leg.durationVal intValue];
-    return [lastArrival dateByAddingTimeInterval:travelTime];
+    return [lastDeparture dateByAddingTimeInterval:travelTime];
 }
 
 - (NSDate *)computeDeparture:(int)waypointIndex {
     NSDate *arrivalTime = [self computeArrival:waypointIndex];
-    Location *loc = [self.sourceCollection.locations objectAtIndex:waypointIndex];
+    Location *loc =  [[self getOrderedLocations] objectAtIndex:waypointIndex];;
     WaypointPreferences *pref = [self getPreference:loc];
     return [arrivalTime dateByAddingTimeInterval:[pref.stayDurationInSeconds intValue]];
 }

@@ -7,16 +7,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "E5BEC345-A8BC-418D-8198-AA978160BF86"
-            shouldBeEnabled = "No"
+            uuid = "8CDCEA84-9E1A-47B0-A123-25631C43CE51"
+            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Trippy/Utils/ParseUtils.m"
+            filePath = "Trippy/View Controllers/Itinerary Tab/EditingItineraryViewController.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "108"
-            endingLineNumber = "108"
-            landmarkName = "+itineraryFromPFObj:completion:"
+            startingLineNumber = "286"
+            endingLineNumber = "286"
+            landmarkName = "-selectedRoute:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
