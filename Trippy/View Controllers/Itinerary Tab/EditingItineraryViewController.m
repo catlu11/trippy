@@ -150,7 +150,26 @@
 }
 
 - (IBAction)tapEdit:(id)sender {
-    [self.editView setHidden: !self.editView.isHidden];
+    CGRect rect = CGRectMake(self.editView.frame.origin.x, self.editView.frame.origin.y, self.editView.frame.size.width, self.editView.frame.size.height);
+  
+    if (self.editView.isHidden) {
+        rect.origin.x = rect.origin.x - 300;
+    } else {
+        rect.origin.x = rect.origin.x + 300;
+    }
+    
+    if (self.editView.isHidden) {
+        self.editView.hidden = NO;
+        [UIView animateWithDuration:0.7f delay:0.0f options:nil animations:^{
+            self.editView.frame = rect;
+        } completion:nil];
+    } else {
+        [UIView animateWithDuration:0.7f delay:0.0f options:nil animations:^{
+            self.editView.frame = rect;
+        } completion:^(BOOL finished) {
+            self.editView.hidden = !self.editView.hidden;
+        }];
+    }
 }
 
 - (IBAction)tapBack:(id)sender {
