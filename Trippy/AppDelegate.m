@@ -9,6 +9,7 @@
 #import "Parse/Parse.h"
 #import "CoreData/CoreData.h"
 #import "NetworkManager.h"
+#import "MapsAPIManager.h"
 #import "AFNetworkReachabilityManager.h"
 @import GoogleMaps;
 @import GooglePlaces;
@@ -32,6 +33,7 @@
     // Set up Google SDKs
     [GMSServices provideAPIKey:dict[@"GMapsKey"]];
     [GMSPlacesClient provideAPIKey:dict[@"GMapsKey"]];
+    [[MapsAPIManager shared] setupLocationManager];
     
     // Set up Parse client
     ParseClientConfiguration *config = [ParseClientConfiguration  configurationWithBlock:^(id<ParseMutableClientConfiguration> configuration) {
