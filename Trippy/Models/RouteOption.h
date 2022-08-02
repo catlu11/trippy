@@ -19,6 +19,7 @@ typedef NS_ENUM(NSInteger, RouteType) {
 @property (assign, nonatomic) RouteType type;
 @property (strong, nonatomic) NSDictionary *routeJson;
 @property (strong, nonatomic) NSArray *waypoints;
+@property (strong, nonatomic) NSArray *omittedWaypoints;
 @property BOOL metTimeWindows;
 @property int numOmitted;
 @property int distance;

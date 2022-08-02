@@ -323,7 +323,7 @@
     [self.loadingIndicator stopAnimating];
 }
 
-- (void) cancel {
+- (void)cancel {
     [self.loadingIndicator stopAnimating];
 }
 
