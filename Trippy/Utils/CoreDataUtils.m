@@ -15,6 +15,10 @@
 @implementation CoreDataUtils
 
 + (Location *)locationFromManagedObject:(NSManagedObject *)obj {
+    BOOL isLocation = [[obj.entity propertiesByName] objectForKey:@"title"] != nil && [[obj.entity propertiesByName] objectForKey:@"staticMap"] != nil;
+    if (!isLocation) {
+        return nil;
+    }
     Location *loc = [[Location alloc] init];
     loc.title = [obj valueForKey:@"title"];
     loc.snippet = [obj valueForKey:@"snippet"];
@@ -24,6 +28,10 @@
 }
 
 + (LocationCollection *)collectionFromManagedObject:(NSManagedObject *)obj {
+    BOOL isCollection = [[obj.entity propertiesByName] objectForKey:@"locations"] != nil;
+    if (!isCollection) {
+        return nil;
+    }
     LocationCollection *col = [[LocationCollection alloc] init];
     col.title = [obj valueForKey:@"title"];
     col.snippet = [obj valueForKey:@"snippet"];
@@ -39,6 +47,10 @@
 }
 
 + (Itinerary *)itineraryFromManagedObject:(NSManagedObject *)obj {
+    BOOL isItinerary = [[obj.entity propertiesByName] objectForKey:@"routeJson"] != nil;
+    if (!isItinerary) {
+        return nil;
+    }
     NSData *routeData = [[obj valueForKey:@"routeJson"] dataUsingEncoding:NSUTF8StringEncoding];
     NSDictionary *routeJson = [NSJSONSerialization JSONObjectWithData:routeData
                                                                  options:kNilOptions
