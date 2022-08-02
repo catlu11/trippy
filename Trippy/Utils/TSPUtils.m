@@ -53,8 +53,8 @@
         int previous = [order[i-1] intValue];
         NSArray *edges = matrix[@"rows"][previous+1][@"elements"];
         NSNumber *weight = edges[current+1][@"duration"][@"value"];
-        WaypointPreferences *prefs = [[WaypointPreferences alloc] initWithDictionary:preferences[@"preferences"][i]];
-        sum += ([weight intValue] + [initialPrefs.stayDurationInSeconds intValue]);
+        WaypointPreferences *prefs = [[WaypointPreferences alloc] initWithDictionary:preferences[@"preferences"][current]];
+        sum += ([weight intValue] + [prefs.stayDurationInSeconds intValue]);
     }
     int lastIndex = [[order lastObject] intValue];
     NSNumber *finalWeight = matrix[@"rows"][lastIndex+1][@"elements"][0][@"duration"][@"value"];
