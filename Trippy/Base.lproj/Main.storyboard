@@ -12,8 +12,8 @@
         <!--Loading View Controller-->
         <scene sceneID="Tef-0j-z2i">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="O7b-wC-z7A" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <viewController storyboardIdentifier="LoadingViewController" id="s6I-z7-zaQ" customClass="LoadingViewController" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="O7b-wC-z7A" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-5564" y="-784"/>
         </scene>
@@ -238,7 +238,7 @@
                                 </prototypes>
                             </tableView>
                             <view contentMode="scaleToFill" id="hDH-tA-T6z">
-                                <rect key="frame" x="16" y="211" width="358" height="540"/>
+                                <rect key="frame" x="0.0" y="211" width="390" height="540"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" systemColor="systemGray6Color"/>
                             </view>

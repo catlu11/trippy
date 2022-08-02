@@ -24,6 +24,7 @@
     loc.snippet = [obj valueForKey:@"snippet"];
     loc.staticMap = [UIImage imageWithData:[obj valueForKey:@"staticMap"]];
     loc.parseObjectId = [obj valueForKey:@"parseObjectId"];
+    loc.placeId = [obj valueForKey:@"placeId"];
     return loc;
 }
 

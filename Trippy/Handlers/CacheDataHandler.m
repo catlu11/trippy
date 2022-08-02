@@ -131,6 +131,7 @@
             it.isOffline = YES;
             [self.delegate addFetchedItinerary:it];
         }
+        [self.delegate didAddAll];
         self.isFetchingItineraries = NO;
     } else {
         [[CoreDataHandler shared] clearEntity:@"Itinerary"]; // clear local cache
@@ -180,6 +181,7 @@
             col.isOffline = YES;
             [self.delegate addFetchedCollection:col];
         }
+        [self.delegate didAddAll];
         self.isFetchingCollections = NO;
     } else {
         [[CoreDataHandler shared] clearEntity:@"LocationCollection"]; // clear local cache
@@ -227,6 +229,7 @@
             loc.isOffline = YES;
             [self.delegate addFetchedLocation:loc];
         }
+        [self.delegate didAddAll];
         self.isFetchingLocations = NO;
     } else {
         [[CoreDataHandler shared] clearEntity:@"Location"];

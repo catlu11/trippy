@@ -18,14 +18,15 @@
 @implementation MapItemListViewController
 
 - (void)viewWillAppear:(BOOL)animated {
+    JHUD *hudView = [[JHUD alloc] initWithFrame:self.loadingView.bounds];
+    hudView.messageLabel.text = @"Loading your trip info...";
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"paper_plane" ofType:@"gif"];
+    NSData *data = [NSData dataWithContentsOfFile:path];
+    hudView.indicatorViewSize = CGSizeMake(200, 200); // Maybe you can try to use (100,250);😂
+    [hudView setGifImageData:data];
+    [hudView showAtView:self.loadingView hudType:JHUDLoadingTypeGifImage];
     if (self.handler.isFetchingItineraries || self.handler.isFetchingCollections || self.handler.isFetchingLocations) {
-        JHUD *hudView = [[JHUD alloc] initWithFrame:self.loadingView.bounds];
-        hudView.messageLabel.text = @"Loading your trip info...";
-        NSString *path = [[NSBundle mainBundle] pathForResource:@"paper_plane" ofType:@"gif"];
-        NSData *data = [NSData dataWithContentsOfFile:path];
-        hudView.indicatorViewSize = CGSizeMake(200, 200); // Maybe you can try to use (100,250);😂
-        [hudView setGifImageData:data];
-        [hudView showAtView:self.loadingView hudType:JHUDLoadingTypeGifImage];
+        [self showLoading];
     }
 }
 
@@ -49,6 +50,10 @@
     [self refreshData];
 }
 
+- (void)showLoading {
+    self.loadingView.hidden = NO;
+}
+
 - (void) refreshData {
     switch (self.listType) {
         case kCollection:
@@ -64,6 +69,7 @@
 }
 
 - (void)beginRefresh:(UIRefreshControl *)refreshControl {
+    [self showLoading];
     self.data = [[NSMutableArray alloc] init];
     [self refreshData];
     [self.refreshControl endRefreshing];
