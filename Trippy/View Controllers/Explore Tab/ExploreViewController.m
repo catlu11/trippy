@@ -1,28 +1,22 @@
 //
-//  SavedCollectionsViewController.m
+//  ExploreViewController.m
 //  Trippy
 //
-//  Created by Catherine Lu on 7/7/22.
+//  Created by Catherine Lu on 8/2/22.
 //
 
-#import "SceneDelegate.h"
-#import "SavedCollectionsViewController.h"
-#import "CreateCollectionViewController.h"
-#import "SearchMapViewController.h"
-#import "MapItemListViewController.h"
+#import "ExploreViewController.h"
 #import "LoginViewController.h"
 #import "LogoutHandler.h"
+#import "SceneDelegate.h"
 
-@interface SavedCollectionsViewController () <LogoutHandlerDelegate, CreateCollectionDelegate>
+@interface ExploreViewController () <LogoutHandlerDelegate>
 @property (strong, nonatomic) LogoutHandler *logoutHandler;
 @end
 
-@implementation SavedCollectionsViewController
+@implementation ExploreViewController
 
 - (void)viewDidLoad {
-    self.listType = kCollection;
-    self.showSelection = NO;
-    
     [super viewDidLoad];
     
     // Set up Parse interface
@@ -32,13 +26,6 @@
 
 - (IBAction)tapLogout:(id)sender {
     [self.logoutHandler logoutCurrentUser];
-}
-
-# pragma mark - Navigation
-
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    CreateCollectionViewController *vc = [segue destinationViewController];
-    vc.delegate = self;
 }
 
 # pragma mark - LogoutHandlerDelegate
@@ -63,13 +50,6 @@
                                    handler:nil];
     [alert addAction:action];
     [self presentViewController:alert animated:YES completion:nil];
-}
-
-# pragma mark - CreateCollectionDelegate
-
-- (void)createdNew:(LocationCollection *)col {
-    [self.data insertObject:col atIndex:0];
-    [self.listTableView reloadData];
 }
 
 @end
