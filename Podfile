@@ -12,6 +12,7 @@ target 'Trippy' do
   pod 'Parse'
   pod 'GoogleMaps', '7.0.0'
   pod 'GooglePlaces', '7.0.0'
+  pod 'JHUD'
 
   target 'TrippyTests' do
     inherit! :search_paths

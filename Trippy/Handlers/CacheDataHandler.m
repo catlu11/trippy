@@ -15,9 +15,6 @@
 #import "NetworkManager.h"
 
 @interface CacheDataHandler ()
-@property (assign, nonatomic) BOOL isFetchingItineraries;
-@property (assign, nonatomic) BOOL isFetchingCollections;
-@property (assign, nonatomic) BOOL isFetchingLocations;
 @end
 
 @implementation CacheDataHandler
@@ -134,6 +131,7 @@
             it.isOffline = YES;
             [self.delegate addFetchedItinerary:it];
         }
+        [self.delegate didAddAll];
         self.isFetchingItineraries = NO;
     } else {
         [[CoreDataHandler shared] clearEntity:@"Itinerary"]; // clear local cache
@@ -159,6 +157,9 @@
                                 [[CoreDataHandler shared] saveItinerary:itinerary]; // save to local cache
                             }
                             [strongSelf.delegate addFetchedItinerary:itinerary];
+                            if ([obj isEqual:[objects lastObject]]) {
+                                [strongSelf.delegate didAddAll];
+                            }
                         }
                     }];
                 }
@@ -180,6 +181,7 @@
             col.isOffline = YES;
             [self.delegate addFetchedCollection:col];
         }
+        [self.delegate didAddAll];
         self.isFetchingCollections = NO;
     } else {
         [[CoreDataHandler shared] clearEntity:@"LocationCollection"]; // clear local cache
@@ -203,6 +205,9 @@
                             collection.isOffline = NO;
                             [strongSelf.delegate addFetchedCollection:collection];
                             [[CoreDataHandler shared] saveCollection:collection]; // save to local cache
+                            if ([obj isEqual:[objects lastObject]]) {
+                                [strongSelf.delegate didAddAll];
+                            }
                         }
                     }];
                 }
@@ -224,9 +229,10 @@
             loc.isOffline = YES;
             [self.delegate addFetchedLocation:loc];
         }
+        [self.delegate didAddAll];
         self.isFetchingLocations = NO;
     } else {
-//        [[CoreDataHandler shared] clearEntity:@"Location"];
+        [[CoreDataHandler shared] clearEntity:@"Location"];
         self.isFetchingLocations = YES;
         
         PFQuery *query = [PFQuery queryWithClassName:@"Location"];
@@ -245,6 +251,9 @@
                     loc.isOffline = NO;
                     [strongSelf.delegate addFetchedLocation:loc];
                     [[CoreDataHandler shared] saveLocation:loc];
+                    if ([obj isEqual:[objects lastObject]]) {
+                        [strongSelf.delegate didAddAll];
+                    }
                 }
                 self.isFetchingLocations = NO;
             }
