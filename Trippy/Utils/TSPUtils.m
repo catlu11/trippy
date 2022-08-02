@@ -62,14 +62,10 @@
 }
 
 // brute force solution
-+ (NSArray *)tspDistance:(NSDictionary *)matrix preferences:(NSDictionary *)preferences departureTime:(NSDate *)departureTime {
-    NSArray *locations = matrix[@"origin_addresses"];
-    int n = locations.count - 1;
-    
-    NSMutableArray *waypoints = [[NSMutableArray alloc] init];
-    for (int i = 0; i < n; i++) {
-        [waypoints addObject:[[NSNumber alloc] initWithInt:i]];
-    }
++ (NSArray *)tspDistance:(NSDictionary *)matrix
+               waypoints:(NSArray *)waypoints
+             preferences:(NSDictionary *)preferences
+           departureTime:(NSDate *)departureTime {
     NSArray *potentialOrders = [self permutations:waypoints];
     NSArray *bestOrder = nil;
     int bestDistance = -1;

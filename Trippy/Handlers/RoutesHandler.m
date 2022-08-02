@@ -30,7 +30,9 @@
     return self;
 }
 
-- (void)calculateDefaultRoute:(Itinerary *)itinerary omitWaypoints:(NSArray *)omitWaypoints completion:(void (^)(RouteOption *response, NSError *))completion {
+- (void)calculateDefaultRoute:(Itinerary *)itinerary
+                omitWaypoints:(NSArray *)omitWaypoints
+                   completion:(void (^)(RouteOption *response, NSError *))completion {
     NSString *directionsUrl = [MapUtils generateOptimizedDirectionsApiUrl:itinerary.sourceCollection
                                                                  origin:itinerary.originLocation
                                                             omitWaypoints:omitWaypoints
@@ -62,11 +64,25 @@
     }];
 }
 
-- (void)calculateDistanceOptimalRoute:(Itinerary *)itinerary completion:(void (^)(RouteOption *response, NSError *))completion {
+- (void)calculateDistanceOptimalRoute:(Itinerary *)itinerary
+                        omitWaypoints:(NSArray *)omitWaypoints
+                           completion:(void (^)(RouteOption *response, NSError *))completion {
     BOOL withTimeWindows = YES;
-    NSArray *order = [TSPUtils tspDistance:self.matrix preferences:[itinerary toPrefsDictionary] departureTime:itinerary.departureTime];
-    if (!order) {
-        order = [TSPUtils tspDistance:self.matrix preferences:nil departureTime:itinerary.departureTime];
+    NSMutableArray *waypoints = [[NSMutableArray alloc] init];
+    for (int i = 0; i < itinerary.sourceCollection.locations.count; i++) {
+        if (![omitWaypoints containsObject:@(i)]) {
+            [waypoints addObject:@(i)];
+        }
+    }
+    NSArray *order = [TSPUtils tspDistance:self.matrix
+                                 waypoints:waypoints
+                               preferences:[itinerary toPrefsDictionary]
+                             departureTime:itinerary.departureTime];
+    if (!order) { // if time windows cannot be met
+        order = [TSPUtils tspDistance:self.matrix
+                            waypoints:waypoints
+                          preferences:nil
+                        departureTime:itinerary.departureTime];
         withTimeWindows = NO;
     }
     NSString *directionsUrl = [MapUtils generateOrderedDirectionsApiUrl:itinerary.sourceCollection
@@ -80,7 +96,7 @@
             option.routeJson = response;
             option.waypoints = order;
             option.metTimeWindows = withTimeWindows;
-            option.numOmitted = 0;
+            option.numOmitted = omitWaypoints.count;
             option.distance = [TSPUtils totalDistance:order matrix:self.matrix];
             option.time = [TSPUtils totalDuration:order matrix:self.matrix preferences:[itinerary toPrefsDictionary]];
             option.cost = [[itinerary getTotalCost:YES] doubleValue];
@@ -138,7 +154,7 @@
         dispatch_group_enter(group);
         double currentDistance = [MapUtils milesToMeters:[[itinerary getTotalDistance] doubleValue]];
         if ([itinerary.mileageConstraint doubleValue] > 0 && currentDistance > [itinerary.mileageConstraint doubleValue]) {
-            [self calculateDistanceOptimalRoute:itinerary completion:^(RouteOption *response, NSError *) {
+            [self calculateDistanceOptimalRoute:itinerary omitWaypoints:@[] completion:^(RouteOption *response, NSError *) {
                 if (response) {
                     [self.routes addObject:response];
                 }
