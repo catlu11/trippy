@@ -13,6 +13,11 @@
 @interface SelectableMap () <GMSMapViewDelegate>
 @property (strong, nonatomic) GMSMapView *mapView;
 @property (strong, nonatomic) NSMutableArray *markersArray;
+@property (strong, nonatomic) GMSPath *path;
+@property (strong, nonatomic) GMSMutablePath *animatedPath;
+@property (strong, nonatomic) GMSPolyline *animatedPolyline;
+@property int i;
+@property (strong, nonatomic) NSTimer *timer;
 @end
 
 @implementation SelectableMap
@@ -71,16 +76,31 @@
     [self.markersArray addObject:marker];
 }
 
-- (void) addPolyline:(NSString *)polyline {
+- (void)addPolyline:(NSString *)polyline {
     if (!self.isEnabled) {
         return;
     }
-    
-    GMSPath *path = [GMSPath pathFromEncodedPath:polyline];
-    GMSPolyline *line = [GMSPolyline polylineWithPath:path];
-    line.strokeColor = [UIColor systemBlueColor];
-    line.strokeWidth = 5.0;
-    line.map = self.mapView;
+    self.i = 0;
+    self.animatedPath = [[GMSMutablePath alloc] init];
+    self.path = [GMSPath pathFromEncodedPath:polyline];
+    self.animatedPolyline = [GMSPolyline polylineWithPath:self.animatedPath];
+    self.animatedPolyline.map = self.mapView;
+    self.timer = [NSTimer scheduledTimerWithTimeInterval:0.005 repeats:YES block:^(NSTimer * _Nonnull timer) {
+        [self animatePolylinePath];
+    }];
+}
+
+- (void)animatePolylinePath {
+    if (self.i < self.path.count) {
+        [self.animatedPath addCoordinate:[self.path coordinateAtIndex:self.i]];
+        self.animatedPolyline = [GMSPolyline polylineWithPath:self.animatedPath];
+        self.animatedPolyline.strokeColor = [UIColor systemBlueColor];
+        self.animatedPolyline.strokeWidth = 4;
+        self.animatedPolyline.map = self.mapView;
+        self.i += 1;
+    } else {
+        [self.timer invalidate];
+    }
 }
 
 - (void) clearMarkers {
