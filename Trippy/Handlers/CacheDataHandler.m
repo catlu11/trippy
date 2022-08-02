@@ -15,6 +15,9 @@
 #import "NetworkManager.h"
 
 @interface CacheDataHandler ()
+@property (atomic) int itineraryFetchCount;
+@property (atomic) int collectionFetchCount;
+@property (atomic) int locationFetchCount;
 @end
 
 @implementation CacheDataHandler
@@ -142,10 +145,12 @@
         
         __weak CacheDataHandler *weakSelf = self;
         [query findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
+            __strong CacheDataHandler *strongSelf = weakSelf;
             if (error) {
-                __strong CacheDataHandler *strongSelf = weakSelf;
                 [strongSelf.delegate generalRequestFail:error];
             } else {
+                strongSelf.itineraryFetchCount = objects.count;
+                __weak CacheDataHandler *weakSelf = self;
                 for(PFObject *obj in objects) {
                     [ParseUtils itineraryFromPFObj:obj completion:^(Itinerary * _Nonnull itinerary, NSError * _Nonnull) {
                         __strong CacheDataHandler *strongSelf = weakSelf;
@@ -157,10 +162,8 @@
                                 [[CoreDataHandler shared] saveItinerary:itinerary]; // save to local cache
                             }
                             [strongSelf.delegate addFetchedItinerary:itinerary];
-                            if ([obj isEqual:[objects lastObject]]) {
-                                [strongSelf.delegate didAddAll];
-                            }
                         }
+                        [strongSelf decrementItineraryFetchCount];
                     }];
                 }
                 self.isFetchingItineraries = NO;
@@ -196,6 +199,7 @@
                 __strong CacheDataHandler *strongSelf = weakSelf;
                 [strongSelf.delegate generalRequestFail:error];
             } else {
+                self.collectionFetchCount = objects.count;
                 for(PFObject *obj in objects) {
                     [ParseUtils collectionFromPFObj:obj completion:^(LocationCollection * _Nonnull collection, NSError * _Nonnull) {
                         __strong CacheDataHandler *strongSelf = weakSelf;
@@ -205,9 +209,7 @@
                             collection.isOffline = NO;
                             [strongSelf.delegate addFetchedCollection:collection];
                             [[CoreDataHandler shared] saveCollection:collection]; // save to local cache
-                            if ([obj isEqual:[objects lastObject]]) {
-                                [strongSelf.delegate didAddAll];
-                            }
+                            [self decrementCollectionFetchCount];
                         }
                     }];
                 }
@@ -246,14 +248,13 @@
             if (error) {
                 [strongSelf.delegate generalRequestFail:error];
             } else {
+                self.locationFetchCount = objects.count;
                 for(PFObject *obj in objects) {
                     Location *loc = [ParseUtils locationFromPFObj:obj];
                     loc.isOffline = NO;
                     [strongSelf.delegate addFetchedLocation:loc];
                     [[CoreDataHandler shared] saveLocation:loc];
-                    if ([obj isEqual:[objects lastObject]]) {
-                        [strongSelf.delegate didAddAll];
-                    }
+                    [self decrementLocationFetchCount];
                 }
                 self.isFetchingLocations = NO;
             }
@@ -263,6 +264,29 @@
 
 - (void) fetchSavedLocationsByCollection:(LocationCollection *)collection {
     // TODO: Implement
+}
+
+# pragma mark - Private
+
+- (void)decrementItineraryFetchCount {
+    self.itineraryFetchCount -= 1;
+    if (self.itineraryFetchCount == 0) {
+        [self.delegate didAddAll];
+    }
+}
+
+- (void)decrementCollectionFetchCount {
+    self.collectionFetchCount -= 1;
+    if (self.collectionFetchCount == 0) {
+        [self.delegate didAddAll];
+    }
+}
+
+- (void)decrementLocationFetchCount {
+    self.locationFetchCount -= 1;
+    if (self.locationFetchCount == 0) {
+        [self.delegate didAddAll];
+    }
 }
 
 @end

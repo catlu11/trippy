@@ -16,7 +16,7 @@
 @property (strong, nonatomic) GMSPath *path;
 @property (strong, nonatomic) GMSMutablePath *animatedPath;
 @property (strong, nonatomic) GMSPolyline *animatedPolyline;
-@property int i;
+@property int curPathIndex;
 @property (strong, nonatomic) NSTimer *timer;
 @end
 
@@ -80,7 +80,7 @@
     if (!self.isEnabled) {
         return;
     }
-    self.i = 0;
+    self.curPathIndex = 0;
     self.animatedPath = [[GMSMutablePath alloc] init];
     self.path = [GMSPath pathFromEncodedPath:polyline];
     self.animatedPolyline = [GMSPolyline polylineWithPath:self.animatedPath];
@@ -91,13 +91,13 @@
 }
 
 - (void)animatePolylinePath {
-    if (self.i < self.path.count) {
-        [self.animatedPath addCoordinate:[self.path coordinateAtIndex:self.i]];
+    if (self.curPathIndex < self.path.count) {
+        [self.animatedPath addCoordinate:[self.path coordinateAtIndex:self.curPathIndex]];
         self.animatedPolyline = [GMSPolyline polylineWithPath:self.animatedPath];
         self.animatedPolyline.strokeColor = [UIColor systemBlueColor];
         self.animatedPolyline.strokeWidth = 4;
         self.animatedPolyline.map = self.mapView;
-        self.i += 1;
+        self.curPathIndex += 1;
     } else {
         [self.timer invalidate];
     }

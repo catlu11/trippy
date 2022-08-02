@@ -15,7 +15,6 @@
 		F06174AE2889B914005AF616 /* LocationOptionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F06174AD2889B914005AF616 /* LocationOptionsViewController.m */; };
 		F0709D3E2889CCA400730D47 /* PriceUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = F0709D3D2889CCA400730D47 /* PriceUtils.m */; };
 		F079EF6F28986D6D00F9BAA7 /* paper_plane.gif in Resources */ = {isa = PBXBuildFile; fileRef = F079EF6E28986D6D00F9BAA7 /* paper_plane.gif */; };
-		F079EF7228986EC500F9BAA7 /* LoadingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F079EF7128986EC500F9BAA7 /* LoadingViewController.m */; };
 		F079EF832899871C00F9BAA7 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = F079EF812899871C00F9BAA7 /* Reachability.m */; };
 		F07D030C288EFCE30049F355 /* RouteOption.m in Sources */ = {isa = PBXBuildFile; fileRef = F07D030B288EFCE30049F355 /* RouteOption.m */; };
 		F07D030F288F07260049F355 /* ItineraryItemCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F07D030E288F07260049F355 /* ItineraryItemCell.m */; };
@@ -102,8 +101,6 @@
 		F0709D3C2889CCA400730D47 /* PriceUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PriceUtils.h; sourceTree = "<group>"; };
 		F0709D3D2889CCA400730D47 /* PriceUtils.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PriceUtils.m; sourceTree = "<group>"; };
 		F079EF6E28986D6D00F9BAA7 /* paper_plane.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = paper_plane.gif; sourceTree = "<group>"; };
-		F079EF7028986EC500F9BAA7 /* LoadingViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LoadingViewController.h; sourceTree = "<group>"; };
-		F079EF7128986EC500F9BAA7 /* LoadingViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LoadingViewController.m; sourceTree = "<group>"; };
 		F079EF812899871C00F9BAA7 /* Reachability.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		F079EF822899871C00F9BAA7 /* Reachability.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		F07D030A288EFCE30049F355 /* RouteOption.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RouteOption.h; path = Trippy/Models/RouteOption.h; sourceTree = "<group>"; };
@@ -292,8 +289,6 @@
 			children = (
 				F0C75F70287747A20015BB74 /* LoginViewController.h */,
 				F0C75F71287747A20015BB74 /* LoginViewController.m */,
-				F079EF7028986EC500F9BAA7 /* LoadingViewController.h */,
-				F079EF7128986EC500F9BAA7 /* LoadingViewController.m */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -805,7 +800,6 @@
 				F079EF832899871C00F9BAA7 /* Reachability.m in Sources */,
 				F0F6581B28887FEE00C04AB0 /* UserAuthHandler.m in Sources */,
 				F0C75FBE287CE4CB0015BB74 /* MapsAPIManager.m in Sources */,
-				F079EF7228986EC500F9BAA7 /* LoadingViewController.m in Sources */,
 				F0709D3E2889CCA400730D47 /* PriceUtils.m in Sources */,
 				F07D031E288F48D60049F355 /* CoreDataHandler.m in Sources */,
 				F07D030F288F07260049F355 /* ItineraryItemCell.m in Sources */,
