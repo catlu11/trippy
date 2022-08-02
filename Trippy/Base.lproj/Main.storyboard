@@ -306,15 +306,15 @@
                                 <textInputTraits key="textInputTraits"/>
                             </searchBar>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="PBO-dT-0Aj">
-                                <rect key="frame" x="26" y="260" width="338" height="206"/>
+                                <rect key="frame" x="20" y="273" width="349" height="213"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="StaticMapCell" rowHeight="36" id="Qe0-u1-x5U" customClass="StaticMapCell">
-                                        <rect key="frame" x="0.0" y="44.666666030883789" width="338" height="36"/>
+                                        <rect key="frame" x="0.0" y="44.666666030883789" width="349" height="36"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Qe0-u1-x5U" id="7UC-4J-aja" customClass="StaticMapCell">
-                                            <rect key="frame" x="0.0" y="0.0" width="338" height="36"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="349" height="36"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Description" lineBreakMode="characterWrap" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="85F-c9-6u8">
@@ -365,6 +365,11 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" systemColor="separatorColor"/>
                             </pickerView>
+                            <view contentMode="scaleToFill" id="vjZ-Ry-gnD">
+                                <rect key="frame" x="20" y="273" width="349" height="213"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" systemColor="systemGray6Color"/>
+                            </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="g1c-6g-chz"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -390,6 +395,7 @@
                         <outlet property="collectionButton" destination="IFD-S2-lA1" id="b0H-tF-Gbe"/>
                         <outlet property="collectionPickerView" destination="2Xd-Bc-H6Q" id="OjH-ju-aZD"/>
                         <outlet property="listTableView" destination="PBO-dT-0Aj" id="wFv-Fy-lff"/>
+                        <outlet property="loadingView" destination="vjZ-Ry-gnD" id="U95-4d-HOa"/>
                         <outlet property="nameField" destination="h3d-t7-2j7" id="gXb-9J-sbp"/>
                         <outlet property="startingSearchBar" destination="vi6-av-cuF" id="RHr-7B-2X1"/>
                         <segue destination="h0c-gf-E4D" kind="presentation" identifier="itineraryDetailSegue" modalPresentationStyle="fullScreen" id="yqc-p2-qNS"/>
@@ -402,7 +408,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="-5088" y="788"/>
+            <point key="canvasLocation" x="-5090.7692307692305" y="787.67772511848341"/>
         </scene>
         <!--Itinerary Detail View Controller-->
         <scene sceneID="IaZ-A9-A7b">
@@ -1664,7 +1670,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="7bG-EX-YEr"/>
+        <segue reference="yqc-p2-qNS"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="arrowshape.turn.up.left.fill" catalog="system" width="128" height="106"/>
