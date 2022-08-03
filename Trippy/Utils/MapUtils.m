@@ -59,7 +59,6 @@
                                        origin:(Location *)origin
                                 departureTime:(NSDate *)departureTime {
     NSString *stops = @"optimize:false";
-    int count = 0;
     for (Location *loc in [TSPUtils reorder:collection.locations order:waypointOrder]) {
         stops = [stops stringByAppendingString:[NSString stringWithFormat:@"|place_id:%@", loc.placeId]];
     }
