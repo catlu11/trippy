@@ -103,11 +103,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1jH-hJ-hci">
-                                <rect key="frame" x="0.0" y="88" width="390" height="675"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" systemColor="systemGray5Color"/>
-                            </view>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hBj-C4-GZi">
                                 <rect key="frame" x="0.0" y="88" width="390" height="624"/>
                                 <subviews>
@@ -296,6 +291,11 @@
                                 <viewLayoutGuide key="contentLayoutGuide" id="tkh-Pz-ZLd"/>
                                 <viewLayoutGuide key="frameLayoutGuide" id="aFx-Qe-L0R"/>
                             </scrollView>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1jH-hJ-hci">
+                                <rect key="frame" x="0.0" y="88" width="390" height="675"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" systemColor="systemGray5Color"/>
+                            </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="d2o-oT-PTa"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>

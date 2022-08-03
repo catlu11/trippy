@@ -18,7 +18,6 @@
 @interface RoutesHandler ()
 @property (strong, nonatomic) NSDictionary *matrix;
 @property (strong, nonatomic) NSMutableDictionary *routes;
-//@property (strong, nonatomic) NSMutableDictionary *newRoutes;
 @end
 
 @implementation RoutesHandler

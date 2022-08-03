@@ -8,6 +8,7 @@
 #import "YelpBusinessCell.h"
 #import "YelpBusiness.h"
 
+#define CELL_CORNER_RADIUS 15;
 @interface YelpBusinessCell ()
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *addressLabel;
@@ -20,7 +21,8 @@
 
 - (void)awakeFromNib {
     [super awakeFromNib];
-    self.previewImageView.layer.cornerRadius = 15;
+    self.selectionStyle = UITableViewCellSelectionStyleNone;
+    self.previewImageView.layer.cornerRadius = CELL_CORNER_RADIUS;
 }
 
 - (void)updateUI {

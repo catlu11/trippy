@@ -11,8 +11,8 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface YelpBusinessCell : UITableViewCell
-- (void)updateUI;
 @property (strong, nonatomic) YelpBusiness *business;
+- (void)updateUI;
 @end
 
 NS_ASSUME_NONNULL_END

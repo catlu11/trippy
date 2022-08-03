@@ -59,7 +59,7 @@ static NSString * const baseURLString = @"https://maps.googleapis.com/maps/api/"
     }];
 }
 
-- (void)getUserAddressWithCompletion:(CLLocationCoordinate2D)coordinate completion:(void (^)(GMSAddress *response, NSError *))completion {
+- (void)getAddressWithCompletion:(CLLocationCoordinate2D)coordinate completion:(void (^)(GMSAddress *response, NSError *))completion {
     [[GMSGeocoder geocoder] reverseGeocodeCoordinate:coordinate completionHandler:^(GMSReverseGeocodeResponse * _Nullable response, NSError * _Nullable error) {
         if (response) {
             completion(response.firstResult, nil);

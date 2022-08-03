@@ -9,6 +9,7 @@
 #import "SceneDelegate.h"
 #import "JHUD.h"
 #import "Itinerary.h"
+#import "YelpBusiness.h"
 #import "NearbyTripCollectionCell.h"
 #import "YelpBusinessCell.h"
 #import "LocationManager.h"
@@ -18,8 +19,11 @@
 #import "MapUtils.h"
 #import "LoginViewController.h"
 #import "ItineraryDetailViewController.h"
+#import "SearchMapViewController.h"
 #import "LogoutHandler.h"
 #import "GeoDataHandler.h"
+
+#define CORNER_RADIUS 20;
 
 @interface ExploreViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UITableViewDataSource, UITableViewDelegate, LogoutHandlerDelegate, GeoDataHandlerDelegate, LocationManagerDelegate>
 @property (weak, nonatomic) IBOutlet UILabel *locationLabel;
@@ -35,10 +39,10 @@
 @property (strong, nonatomic) LogoutHandler *logoutHandler;
 @property (strong, nonatomic) GeoDataHandler *geoHandler;
 
-@property BOOL hasFetched;
-@property BOOL fetchedLocation;
-@property BOOL fetchedTrips;
-@property BOOL fetchedBusinesses;
+@property (atomic) BOOL hasFetched;
+@property (atomic) BOOL fetchedLocation;
+@property (atomic) BOOL fetchedTrips;
+@property (atomic) BOOL fetchedBusinesses;
 @end
 
 @implementation ExploreViewController
@@ -80,9 +84,9 @@
     self.geoHandler.delegate = self;
     
     self.locationView.clipsToBounds = YES;
-    self.locationView.layer.cornerRadius = 20;
+    self.locationView.layer.cornerRadius = CORNER_RADIUS;
     
-    self.yelpTableView.rowHeight = 107;
+    self.yelpTableView.rowHeight = 107; // temporary until autolayouting
     self.yelpTableView.dataSource = self;
     self.yelpTableView.delegate = self;
     self.nearbyCollectionView.dataSource = self;
@@ -132,7 +136,12 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
+    YelpBusiness *business = self.yelpData[indexPath.row];
+    UINavigationController *navController = [self.tabBarController.viewControllers objectAtIndex:2];
+    SearchMapViewController *vc = [[navController viewControllers] firstObject];
+    vc.initialSearch = business.name;
+    vc.initialCoord = CLLocationCoordinate2DMake([business.latitude doubleValue], [business.longitude doubleValue]);
+    [self.tabBarController setSelectedIndex:2];
 }
 
 # pragma mark - LogoutHandlerDelegate
@@ -171,7 +180,7 @@
 }
 
 - (void)generalRequestFail:(nonnull NSError *)error {
-    NSLog(@"something bad happened");
+    NSLog(@"Geoquery error: %@", error.description);
 }
 
 # pragma mark - LocationManagerDelegate
@@ -182,7 +191,7 @@
     }
     self.hasFetched = YES;
     CLLocation *currentLoc = [[LocationManager shared] currentLocation];
-    [[MapsAPIManager shared] getUserAddressWithCompletion:currentLoc.coordinate completion:^(GMSAddress * _Nonnull response, NSError * _Nonnull) {
+    [[MapsAPIManager shared] getAddressWithCompletion:currentLoc.coordinate completion:^(GMSAddress * _Nonnull response, NSError * _Nonnull) {
         if (response) {
             self.locationLabel.text = [NSString stringWithFormat:@"%@, %@", response.locality, response.administrativeArea];
             UIImage *banner = [MapUtils getStaticMapImage:currentLoc.coordinate width:self.bannerImageView.frame.size.width height:self.bannerImageView.frame.size.height];
@@ -196,10 +205,12 @@
     [self.geoHandler fetchItinerariesByCoordinate:currentLoc.coordinate rangeInKm:50.0];
     
     [[YelpAPIManager shared] getBusinessSearchWithCompletion:@(currentLoc.coordinate.latitude) longitude:@(currentLoc.coordinate.longitude) completion:^(NSArray * _Nonnull results, NSError * _Nonnull) {
-        self.yelpData = results;
-        [self.yelpTableView reloadData];
-        self.fetchedBusinesses = YES;
-        [self checkLoadingView];
+        if (results) {
+            self.yelpData = results;
+            [self.yelpTableView reloadData];
+            self.fetchedBusinesses = YES;
+            [self checkLoadingView];
+        }
     }];
 }
 

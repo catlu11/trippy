@@ -15,7 +15,7 @@
 
 @interface GeoDataHandler ()
 @property (atomic) int itineraryFetchCount;
-@property BOOL isFetchingItineraryByCoordinate;
+@property (atomic) BOOL isFetchingItineraryByCoordinate;
 @end
 
 @implementation GeoDataHandler

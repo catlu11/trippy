@@ -8,6 +8,10 @@
 #import "NearbyTripCollectionCell.h"
 #import "Itinerary.h"
 
+#define CELL_SHADOW_OPACITY 0.2;
+#define CELL_SHADOW_RADIUS 4;
+#define CELL_CORNER_RADIUS 15;
+
 @interface NearbyTripCollectionCell ()
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *authorLabel;
@@ -18,11 +22,11 @@
 
 - (void)updateUI {
     self.contentView.layer.shadowColor = [[UIColor blackColor] CGColor];
-    self.contentView.layer.shadowOpacity = 0.2;
-    self.contentView.layer.shadowRadius = 4;
+    self.contentView.layer.shadowOpacity = CELL_SHADOW_RADIUS;
+    self.contentView.layer.shadowRadius = CELL_SHADOW_OPACITY;
     
     self.mapImageView.clipsToBounds = YES;
-    self.mapImageView.layer.cornerRadius = 15;
+    self.mapImageView.layer.cornerRadius = CELL_CORNER_RADIUS;
     self.mapImageView.image = self.it.staticMap;
     
     self.nameLabel.text = self.it.name;

@@ -15,7 +15,6 @@
 #import "NetworkManager.h"
 #import "LocationManager.h"
 @import GooglePlaces;
-@import GoogleMaps;
 
 @interface SearchMapViewController () <UISearchBarDelegate, GMSAutocompleteTableDataSourceDelegate, UIPickerViewDelegate, UIPickerViewDataSource, CacheDataHandlerDelegate, UIPopoverPresentationControllerDelegate, LocationOptionsDelegate>
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
@@ -37,10 +36,10 @@
     if ([[NetworkManager shared] isConnected]) {
         // Set up Map View
         CLLocationCoordinate2D initialCenter = [[LocationManager shared] currentLocation].coordinate;
+        if (self.initialCoord.latitude) {
+            initialCenter = self.initialCoord;
+        }
         [self.mapView initWithCenter:initialCenter];
-
-        // Set up Search Bar
-        self.searchBar.delegate = self;
         
         // Set up drop down table
         self.tableDataSource = [[GMSAutocompleteTableDataSource alloc] init];
@@ -53,6 +52,14 @@
         
         self.itemsTableView.delegate = self.tableDataSource;
         self.itemsTableView.dataSource = self.tableDataSource;
+        
+        // Set up Search Bar
+        self.searchBar.delegate = self;
+        if (self.initialSearch) {
+            self.searchBar.text = self.initialSearch;
+            [self.tableDataSource sourceTextHasChanged:self.searchBar.text];
+            self.initialSearch = nil;
+        }
         
         // Set up Parse handler
         self.handler = [[CacheDataHandler alloc] init];

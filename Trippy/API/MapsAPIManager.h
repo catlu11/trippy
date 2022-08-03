@@ -17,7 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)setupLocationManager;
 - (void)getDirectionsWithCompletion:(NSString *)url completion:(void (^)(NSDictionary *response, NSError *))completion;
 - (void)getRouteMatrixWithCompletion:(NSString *)url completion:(void (^)(NSDictionary *response, NSError *))completion;
-- (void)getUserAddressWithCompletion:(CLLocationCoordinate2D)coordinate completion:(void (^)(GMSAddress *response, NSError *))completion;
+- (void)getAddressWithCompletion:(CLLocationCoordinate2D)coordinate completion:(void (^)(GMSAddress *response, NSError *))completion;
 @end
 
 NS_ASSUME_NONNULL_END
