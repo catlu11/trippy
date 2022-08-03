@@ -10,6 +10,7 @@
 
 @interface NearbyTripCollectionCell ()
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
+@property (weak, nonatomic) IBOutlet UILabel *authorLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *mapImageView;
 @end
 
@@ -25,6 +26,7 @@
     self.mapImageView.image = self.it.staticMap;
     
     self.nameLabel.text = self.it.name;
+    self.authorLabel.text = [NSString stringWithFormat:@"Created by: %@", self.it.userId];
 }
 
 @end

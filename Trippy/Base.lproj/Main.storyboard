@@ -103,11 +103,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1jH-hJ-hci">
-                                <rect key="frame" x="0.0" y="88" width="390" height="675"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" systemColor="systemGray5Color"/>
-                            </view>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hBj-C4-GZi">
                                 <rect key="frame" x="0.0" y="88" width="390" height="624"/>
                                 <subviews>
@@ -154,13 +149,22 @@
                                                                     </constraints>
                                                                 </imageView>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Name of itinerary" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fb2-3N-AvQ">
-                                                                    <rect key="frame" x="15" y="145" width="159" height="17"/>
+                                                                    <rect key="frame" x="15" y="132.00000000000003" width="159" height="17"/>
                                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
                                                                     <nil key="textColor"/>
                                                                     <nil key="highlightedColor"/>
                                                                     <color key="shadowColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                     <size key="shadowOffset" width="2" height="1"/>
+                                                                </label>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Created by: " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i1f-Ra-ld6">
+                                                                    <rect key="frame" x="15" y="148.00000000000003" width="159" height="17"/>
+                                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                                    <nil key="textColor"/>
+                                                                    <nil key="highlightedColor"/>
+                                                                    <color key="shadowColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                    <size key="shadowOffset" width="1" height="0.0"/>
                                                                 </label>
                                                             </subviews>
                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -173,6 +177,7 @@
                                                         </collectionViewCellContentView>
                                                         <size key="customSize" width="188" height="180"/>
                                                         <connections>
+                                                            <outlet property="authorLabel" destination="i1f-Ra-ld6" id="wWG-0l-f2N"/>
                                                             <outlet property="mapImageView" destination="7sT-Ye-s2v" id="Wcx-qj-3ZS"/>
                                                             <outlet property="nameLabel" destination="Fb2-3N-AvQ" id="CFa-TW-2Nr"/>
                                                         </connections>
@@ -253,6 +258,11 @@
                                 <viewLayoutGuide key="contentLayoutGuide" id="tkh-Pz-ZLd"/>
                                 <viewLayoutGuide key="frameLayoutGuide" id="aFx-Qe-L0R"/>
                             </scrollView>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1jH-hJ-hci">
+                                <rect key="frame" x="0.0" y="88" width="390" height="675"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" systemColor="systemGray5Color"/>
+                            </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="d2o-oT-PTa"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -669,7 +679,7 @@
         <!--Itinerary Detail View Controller-->
         <scene sceneID="IaZ-A9-A7b">
             <objects>
-                <viewController id="h0c-gf-E4D" customClass="ItineraryDetailViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ItineraryDetailViewController" id="h0c-gf-E4D" customClass="ItineraryDetailViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="MPS-Zd-qK6">
                         <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -753,6 +763,7 @@
                     <navigationItem key="navigationItem" id="lhw-wv-aIo"/>
                     <connections>
                         <outlet property="detailsLabel" destination="kkk-SI-57p" id="wKR-DL-2RX"/>
+                        <outlet property="editButton" destination="RQt-aN-87a" id="Xy9-Sh-cGp"/>
                         <outlet property="mapView" destination="8JD-1E-KF6" id="eNA-q1-vNg"/>
                         <outlet property="nameLabel" destination="ZI3-7i-mj6" id="dKU-42-WAe"/>
                         <segue destination="rbm-Pi-IKC" kind="presentation" identifier="editItinerarySegue" modalPresentationStyle="fullScreen" id="i8n-ym-eto"/>

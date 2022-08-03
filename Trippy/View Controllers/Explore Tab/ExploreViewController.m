@@ -16,6 +16,7 @@
 #import "JHUD.h"
 #import "Itinerary.h"
 #import "NearbyTripCollectionCell.h"
+#import "ItineraryDetailViewController.h"
 
 @interface ExploreViewController () <UICollectionViewDataSource, UICollectionViewDelegate, LogoutHandlerDelegate, GeoDataHandlerDelegate>
 @property (weak, nonatomic) IBOutlet UILabel *locationLabel;
@@ -95,6 +96,14 @@
 
 - (NSInteger)collectionView:(nonnull UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     return self.nearbyTripsData.count;
+}
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    ItineraryDetailViewController *vc = [storyboard instantiateViewControllerWithIdentifier:@"ItineraryDetailViewController"];
+    vc.itinerary = self.nearbyTripsData[indexPath.item];
+    [vc disableEdit];
+    [self presentViewController:vc animated:YES completion:nil];
 }
 
 # pragma mark - LogoutHandlerDelegate
