@@ -273,10 +273,6 @@
     }
 }
 
-- (void) fetchSavedLocationsByCollection:(LocationCollection *)collection {
-    // TODO: Implement
-}
-
 # pragma mark - Private
 
 - (void)decrementItineraryFetchCount {

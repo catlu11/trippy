@@ -105,7 +105,7 @@
                                                    originLocation:originLocation
                                                              name:obj[@"name"]
                                                       isFavorited:[obj[@"isFavorited"] boolValue]];
-            PFUser *user = obj[@"createdBy"];
+            PFUser *user = [obj[@"createdBy"] fetchIfNeeded];
             it.userId = user.username;
             it.createdAt = obj.createdAt;
             it.parseObjectId = obj.objectId;

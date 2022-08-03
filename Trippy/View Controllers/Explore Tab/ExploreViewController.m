@@ -8,21 +8,21 @@
 #import "ExploreViewController.h"
 #import "LoginViewController.h"
 #import "LogoutHandler.h"
+#import "GeoDataHandler.h"
 #import "SceneDelegate.h"
 #import "MapsAPIManager.h"
 #import "MapUtils.h"
 #import "GoogleMaps/GMSAddress.h"
 #import "JHUD.h"
+#import "Itinerary.h"
 
-#define VIEW_SHADOW_OPACITY 0.5;
-#define VIEW_SHADOW_RADIUS 10;
-
-@interface ExploreViewController () <LogoutHandlerDelegate>
+@interface ExploreViewController () <LogoutHandlerDelegate, GeoDataHandlerDelegate>
 @property (weak, nonatomic) IBOutlet UILabel *locationLabel;
 @property (weak, nonatomic) IBOutlet UIView *locationView;
 @property (weak, nonatomic) IBOutlet UIImageView *bannerImageView;
 @property (weak, nonatomic) IBOutlet UIView *loadingView;
 @property (strong, nonatomic) LogoutHandler *logoutHandler;
+@property (strong, nonatomic) GeoDataHandler *geoHandler;
 @end
 
 @implementation ExploreViewController
@@ -40,9 +40,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    // Set up Parse interface
+    // Set up handlers
     self.logoutHandler = [[LogoutHandler alloc] init];
     self.logoutHandler.delegate = self;
+    self.geoHandler = [[GeoDataHandler alloc] init];
+    self.geoHandler.delegate = self;
     
     self.locationView.clipsToBounds = YES;
     self.locationView.layer.cornerRadius = 20;
@@ -54,6 +56,7 @@
         self.bannerImageView.image = banner;
         self.loadingView.hidden = YES;
     }];
+    [self.geoHandler fetchItinerariesByCoordinate:currentLoc.coordinate rangeInKm:50.0];
 }
 
 - (IBAction)tapLogout:(id)sender {
@@ -82,6 +85,20 @@
                                    handler:nil];
     [alert addAction:action];
     [self presentViewController:alert animated:YES completion:nil];
+}
+
+# pragma mark - GeoDataHandlerDelegate
+
+- (void)addFetchedNearbyItinerary:(nonnull Itinerary *)itinerary {
+    NSLog(itinerary.name);
+}
+
+- (void)didAddAll {
+    NSLog(@"finished trips near you fetch");
+}
+
+- (void)generalRequestFail:(nonnull NSError *)error {
+    NSLog(@"something bad happened");
 }
 
 @end
