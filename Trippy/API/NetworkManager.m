@@ -42,7 +42,6 @@
 }
 
 - (void)initialFetchAll {
-    // TODO: Create loading screen for this initial fetch
     [self.parseHandler fetchSavedLocations];
     [self.parseHandler fetchSavedCollections];
     [self.parseHandler fetchSavedItineraries];

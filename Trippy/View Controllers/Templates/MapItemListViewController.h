@@ -7,6 +7,7 @@
 
 #import <UIKit/UIKit.h>
 #import "StaticMapCell.h"
+@class CacheDataHandler;
 
 NS_ASSUME_NONNULL_BEGIN
 

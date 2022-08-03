@@ -6,7 +6,9 @@
 //
 
 #import "TSPUtils.h"
+#import "DateUtils.h"
 #import "Itinerary.h"
+#import "WaypointPreferences.h"
 
 @implementation TSPUtils
 
@@ -35,37 +37,43 @@
     return sum + [finalWeight intValue];
 }
 
-+ (int)totalDuration:(NSArray *)order matrix:(NSDictionary *)matrix {
++ (int)distanceFromOrigin:(int)waypointIndex matrix:(NSDictionary *)matrix {
+    NSNumber *distance = matrix[@"rows"][0][@"elements"][waypointIndex+1][@"distance"][@"value"];
+    return [distance intValue];
+}
+
++ (int)totalDuration:(NSArray *)order matrix:(NSDictionary *)matrix preferences:(NSDictionary *)preferences {
     int sum = 0;
     int firstIndex = [[order firstObject] intValue];
-    NSNumber *initialWeight = matrix[@"rows"][0][@"elements"][firstIndex][@"duration"][@"value"];
-    sum += [initialWeight intValue];
+    NSNumber *initialWeight = matrix[@"rows"][0][@"elements"][firstIndex+1][@"duration"][@"value"];
+    WaypointPreferences *initialPrefs = [[WaypointPreferences alloc] initWithDictionary:preferences[@"preferences"][firstIndex]];
+    sum += ([initialWeight intValue] + [initialPrefs.stayDurationInSeconds doubleValue]);
     for (int i=1; i < order.count; i++) {
         int current = [order[i] intValue];
         int previous = [order[i-1] intValue];
         NSArray *edges = matrix[@"rows"][previous+1][@"elements"];
         NSNumber *weight = edges[current+1][@"duration"][@"value"];
-        sum += [weight intValue];
+        WaypointPreferences *prefs = [[WaypointPreferences alloc] initWithDictionary:preferences[@"preferences"][current]];
+        sum += ([weight intValue] + [prefs.stayDurationInSeconds intValue]);
     }
     int lastIndex = [[order lastObject] intValue];
-    NSNumber *finalWeight = matrix[@"rows"][lastIndex][@"elements"][0][@"duration"][@"value"];
+    NSNumber *finalWeight = matrix[@"rows"][lastIndex+1][@"elements"][0][@"duration"][@"value"];
     return sum + [finalWeight intValue];
 }
 
 // brute force solution
-+ (NSArray *)tspDistance:(NSDictionary *)matrix {
-    NSArray *locations = matrix[@"origin_addresses"];
-    int n = locations.count - 1;
-    
-    NSMutableArray *waypoints = [[NSMutableArray alloc] init];
-    for (int i = 0; i < n; i++) {
-        [waypoints addObject:[[NSNumber alloc] initWithInt:i]];
-    }
++ (NSArray *)tspDistance:(NSDictionary *)matrix
+               waypoints:(NSArray *)waypoints
+             preferences:(NSDictionary *)preferences
+           departureTime:(NSDate *)departureTime {
     NSArray *potentialOrders = [self permutations:waypoints];
     NSArray *bestOrder = nil;
     int bestDistance = -1;
     for (NSArray *order in potentialOrders) {
         int dist = [self totalDistance:order matrix:matrix];
+        if (preferences && ![self doesSatisfyTimeWindows:order matrix:matrix preferences:preferences departureTime:departureTime]) {
+            continue;
+        }
         if (dist < bestDistance || bestDistance == -1) {
             bestOrder = order;
             bestDistance = dist;
@@ -92,6 +100,36 @@
         }
     }
     return results;
+}
+
++ (BOOL)doesSatisfyTimeWindows:(NSArray *)order
+                        matrix:(NSDictionary *)matrix
+                   preferences:(NSDictionary *)preferences
+                 departureTime:(NSDate *)departureTime {
+    NSDate *cumTime = departureTime;
+    int firstIndex = [[order firstObject] intValue];
+    NSNumber *initialWeight = matrix[@"rows"][0][@"elements"][firstIndex+1][@"duration"][@"value"];
+    WaypointPreferences *initialPrefs = [[WaypointPreferences alloc] initWithDictionary:preferences[@"preferences"][firstIndex]];
+    cumTime = [cumTime dateByAddingTimeInterval:[initialWeight intValue]];
+    if (initialPrefs.preferredEtaStart != nil
+        && ![DateUtils isTimeInRange:initialPrefs.preferredEtaStart end:initialPrefs.preferredEtaEnd time:cumTime]) {
+        return NO;
+    }
+    cumTime = [cumTime dateByAddingTimeInterval:[initialPrefs.stayDurationInSeconds doubleValue]];
+    for (int i=1; i < order.count; i++) {
+        int current = [order[i] intValue];
+        int previous = [order[i-1] intValue];
+        NSArray *edges = matrix[@"rows"][previous+1][@"elements"];
+        NSNumber *weight = edges[current+1][@"duration"][@"value"];
+        WaypointPreferences *prefs = [[WaypointPreferences alloc] initWithDictionary:preferences[@"preferences"][current]];
+        cumTime = [cumTime dateByAddingTimeInterval:[weight intValue]];
+        if (prefs.preferredEtaStart != nil
+            && ![DateUtils isTimeInRange:prefs.preferredEtaStart end:prefs.preferredEtaEnd time:cumTime]) {
+            return NO;
+        }
+        cumTime = [cumTime dateByAddingTimeInterval:[prefs.stayDurationInSeconds doubleValue]];
+    }
+    return YES;
 }
 
 @end

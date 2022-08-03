@@ -25,9 +25,9 @@ NS_ASSUME_NONNULL_BEGIN
 + (Location *)locationFromPFObj:(PFObject *)obj;
 + (PFFileObject *)pfFileFromDict:(NSDictionary *)dict name:(NSString *)name;
 + (PFFileObject *)pfFileFromImage:(UIImage *)img name:(NSString *)name;
-+ (PFObject *)pfObjFromCollection:(LocationCollection *)collection;
-+ (PFObject *)pfObjFromLocation:(Location *)loc;
-+ (PFObject *)pfObjFromItinerary:(Itinerary *)it;
++ (void)pfObjFromCollection:(LocationCollection *)collection completion:(void (^)(PFObject *obj, NSError *))completion;
++ (void)pfObjFromLocation:(Location *)loc completion:(void (^)(PFObject *obj, NSError *))completio;
++ (void)pfObjFromItinerary:(Itinerary *)it completion:(void (^)(PFObject *obj, NSError *))completio;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -16,6 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)addFetchedCollection:(LocationCollection *)collection;
 - (void)addFetchedLocation:(Location *)location;
 - (void)addFetchedItinerary:(Itinerary *)itinerary;
+- (void)didAddAll;
 - (void)postedCollectionSuccess:(LocationCollection *)collection;
 - (void)postedItinerarySuccess:(Itinerary *)itinerary;
 - (void)postedLocationSuccess:(Location *)location;
@@ -25,6 +26,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface CacheDataHandler : NSObject
 @property (nonatomic, weak) id<CacheDataHandlerDelegate> delegate;
+@property (assign, nonatomic) BOOL isFetchingItineraries;
+@property (assign, nonatomic) BOOL isFetchingCollections;
+@property (assign, nonatomic) BOOL isFetchingLocations;
 - (void)fetchSavedCollections;
 - (void)fetchSavedLocations;
 - (void)fetchSavedItineraries;

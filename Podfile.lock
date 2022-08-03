@@ -21,6 +21,7 @@ PODS:
   - GoogleMaps/Maps (7.0.0):
     - GoogleMaps/Base
   - GooglePlaces (7.0.0)
+  - JHUD (0.3.0)
   - Parse (1.19.3):
     - Parse/Core (= 1.19.3)
   - Parse/Core (1.19.3):
@@ -30,6 +31,7 @@ DEPENDENCIES:
   - AFNetworking
   - GoogleMaps (= 7.0.0)
   - GooglePlaces (= 7.0.0)
+  - JHUD
   - Parse
 
 SPEC REPOS:
@@ -38,6 +40,7 @@ SPEC REPOS:
     - Bolts
     - GoogleMaps
     - GooglePlaces
+    - JHUD
     - Parse
 
 SPEC CHECKSUMS:
@@ -45,8 +48,9 @@ SPEC CHECKSUMS:
   Bolts: 8c1e8aab2f603387b8b9924f57d1d64f43d3ffdc
   GoogleMaps: 6e9c923ca035989709fcb5771544fda4cc5fa2a4
   GooglePlaces: 8dba710bed6160a2e4b85e84aaafdbcc0b4010d8
+  JHUD: 17650f65045d9843a7ad19f6a0b1eac6c78a45d2
   Parse: 0abb63a0ff6fa34a3f64b81d595a294e2ece143a
 
-PODFILE CHECKSUM: 43560e325fac1f0d01a1db257ee7a7c861854c81
+PODFILE CHECKSUM: 6947d25642c3033bfa1db6241dd930550a15c391
 
 COCOAPODS: 1.11.3

@@ -12,6 +12,7 @@
 #import "LoginViewController.h"
 #import "SceneDelegate.h"
 #import "NetworkManager.h"
+#import "CacheDataHandler.h"
 
 @interface HomeViewController () <LogoutHandlerDelegate>
 @property (weak, nonatomic) IBOutlet UILabel *welcomeLabel;

@@ -25,6 +25,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)updateUIElements:(NSString *)locName arrival:(NSDate * _Nullable)arrival departure:(NSDate * _Nullable)departure;
 - (void)addArrowTapWithSelector:(id)sender didTapArrow:(nullable SEL)didTapArrow;
 - (void)disableArrow;
+- (void)enableArrow;
 @end
 
 NS_ASSUME_NONNULL_END

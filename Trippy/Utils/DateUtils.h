@@ -20,6 +20,7 @@ typedef struct TimeInHrMin {
 + (int)aheadSecondsFrom1970:(NSDate *)date aheadBy:(int)aheadBy;
 + (TimeInHrMin)secondsToHourMin:(int)seconds;
 + (int)hourMinToSeconds:(TimeInHrMin)time;
++ (BOOL)isTimeInRange:(NSDate *)start end:(NSDate *)end time:(NSDate *)time;
 @end
 
 NS_ASSUME_NONNULL_END
