@@ -27,6 +27,7 @@
     geopoint.latitude = coord.latitude;
     geopoint.longitude = coord.longitude;
     PFQuery *query = [PFQuery queryWithClassName:@"Itinerary"];
+    [query setLimit:20];
     [query whereKey:@"startCoord" nearGeoPoint:geopoint withinKilometers:rangeInKm];
     [query whereKey:@"createdBy" notEqualTo:[PFUser currentUser]];
     __weak GeoDataHandler *weakSelf = self;

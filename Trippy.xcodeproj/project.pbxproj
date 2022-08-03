@@ -19,6 +19,7 @@
 		F079EF892899DEC800F9BAA7 /* ExploreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F079EF882899DEC800F9BAA7 /* ExploreViewController.m */; };
 		F079EF8C2899DEDA00F9BAA7 /* SegmentedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F079EF8B2899DEDA00F9BAA7 /* SegmentedViewController.m */; };
 		F079EF8F289AE7FC00F9BAA7 /* GeoDataHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = F079EF8E289AE7FC00F9BAA7 /* GeoDataHandler.m */; };
+		F079EF92289AEDA000F9BAA7 /* NearbyTripCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F079EF91289AEDA000F9BAA7 /* NearbyTripCollectionCell.m */; };
 		F07D030C288EFCE30049F355 /* RouteOption.m in Sources */ = {isa = PBXBuildFile; fileRef = F07D030B288EFCE30049F355 /* RouteOption.m */; };
 		F07D030F288F07260049F355 /* ItineraryItemCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F07D030E288F07260049F355 /* ItineraryItemCell.m */; };
 		F07D0312288F07540049F355 /* ViewItineraryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F07D0311288F07540049F355 /* ViewItineraryViewController.m */; };
@@ -112,6 +113,8 @@
 		F079EF8B2899DEDA00F9BAA7 /* SegmentedViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SegmentedViewController.m; sourceTree = "<group>"; };
 		F079EF8D289AE7FC00F9BAA7 /* GeoDataHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GeoDataHandler.h; sourceTree = "<group>"; };
 		F079EF8E289AE7FC00F9BAA7 /* GeoDataHandler.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GeoDataHandler.m; sourceTree = "<group>"; };
+		F079EF90289AEDA000F9BAA7 /* NearbyTripCollectionCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NearbyTripCollectionCell.h; sourceTree = "<group>"; };
+		F079EF91289AEDA000F9BAA7 /* NearbyTripCollectionCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NearbyTripCollectionCell.m; sourceTree = "<group>"; };
 		F07D030A288EFCE30049F355 /* RouteOption.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RouteOption.h; path = Trippy/Models/RouteOption.h; sourceTree = "<group>"; };
 		F07D030B288EFCE30049F355 /* RouteOption.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RouteOption.m; path = Trippy/Models/RouteOption.m; sourceTree = "<group>"; };
 		F07D030D288F07260049F355 /* ItineraryItemCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ItineraryItemCell.h; sourceTree = "<group>"; };
@@ -431,6 +434,8 @@
 				F06174A42888812C005AF616 /* RouteCell.m */,
 				F07D030D288F07260049F355 /* ItineraryItemCell.h */,
 				F07D030E288F07260049F355 /* ItineraryItemCell.m */,
+				F079EF90289AEDA000F9BAA7 /* NearbyTripCollectionCell.h */,
+				F079EF91289AEDA000F9BAA7 /* NearbyTripCollectionCell.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -827,6 +832,7 @@
 				F079EF8C2899DEDA00F9BAA7 /* SegmentedViewController.m in Sources */,
 				F0F658092887158000C04AB0 /* TSPUtils.m in Sources */,
 				F06174A52888812C005AF616 /* RouteCell.m in Sources */,
+				F079EF92289AEDA000F9BAA7 /* NearbyTripCollectionCell.m in Sources */,
 				F0F6581A28887FEE00C04AB0 /* CacheDataHandler.m in Sources */,
 				F07D0312288F07540049F355 /* ViewItineraryViewController.m in Sources */,
 				F0C75FE8287E3CB30015BB74 /* RouteLeg.m in Sources */,

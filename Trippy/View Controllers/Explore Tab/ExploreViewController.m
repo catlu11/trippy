@@ -15,14 +15,22 @@
 #import "GoogleMaps/GMSAddress.h"
 #import "JHUD.h"
 #import "Itinerary.h"
+#import "NearbyTripCollectionCell.h"
 
-@interface ExploreViewController () <LogoutHandlerDelegate, GeoDataHandlerDelegate>
+@interface ExploreViewController () <UICollectionViewDataSource, UICollectionViewDelegate, LogoutHandlerDelegate, GeoDataHandlerDelegate>
 @property (weak, nonatomic) IBOutlet UILabel *locationLabel;
 @property (weak, nonatomic) IBOutlet UIView *locationView;
 @property (weak, nonatomic) IBOutlet UIImageView *bannerImageView;
 @property (weak, nonatomic) IBOutlet UIView *loadingView;
+
+@property (weak, nonatomic) IBOutlet UICollectionView *nearbyCollectionView;
+@property (strong, nonatomic) NSMutableArray *nearbyTripsData;
+
 @property (strong, nonatomic) LogoutHandler *logoutHandler;
 @property (strong, nonatomic) GeoDataHandler *geoHandler;
+
+@property BOOL fetchedLocation;
+@property BOOL fetchedTrips;
 @end
 
 @implementation ExploreViewController
@@ -40,6 +48,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.fetchedTrips = NO;
+    self.fetchedLocation = NO;
+    self.loadingView.hidden = NO;
+    
     // Set up handlers
     self.logoutHandler = [[LogoutHandler alloc] init];
     self.logoutHandler.delegate = self;
@@ -54,13 +66,35 @@
         self.locationLabel.text = [NSString stringWithFormat:@"%@, %@", response.locality, response.administrativeArea];
         UIImage *banner = [MapUtils getStaticMapImage:currentLoc.coordinate width:self.bannerImageView.frame.size.width height:self.bannerImageView.frame.size.height];
         self.bannerImageView.image = banner;
-        self.loadingView.hidden = YES;
+        self.fetchedLocation = YES;
+        [self checkLoadingView];
     }];
+    
+    self.nearbyCollectionView.dataSource = self;
+    self.nearbyCollectionView.delegate = self;
+    self.nearbyTripsData = [[NSMutableArray alloc] init];
     [self.geoHandler fetchItinerariesByCoordinate:currentLoc.coordinate rangeInKm:50.0];
+}
+
+- (void)checkLoadingView {
+    self.loadingView.hidden = self.fetchedTrips && self.fetchedLocation;
 }
 
 - (IBAction)tapLogout:(id)sender {
     [self.logoutHandler logoutCurrentUser];
+}
+
+# pragma mark - UICollectionViewDataSource
+
+- (nonnull __kindof UICollectionViewCell *)collectionView:(nonnull UICollectionView *)collectionView cellForItemAtIndexPath:(nonnull NSIndexPath *)indexPath {
+    NearbyTripCollectionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"NearbyTripCollectionCell" forIndexPath:indexPath];
+    cell.it = [self.nearbyTripsData objectAtIndex:indexPath.item];
+    [cell updateUI];
+    return cell;
+}
+
+- (NSInteger)collectionView:(nonnull UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
+    return self.nearbyTripsData.count;
 }
 
 # pragma mark - LogoutHandlerDelegate
@@ -90,11 +124,13 @@
 # pragma mark - GeoDataHandlerDelegate
 
 - (void)addFetchedNearbyItinerary:(nonnull Itinerary *)itinerary {
-    NSLog(itinerary.name);
+    [self.nearbyTripsData addObject:itinerary];
 }
 
 - (void)didAddAll {
-    NSLog(@"finished trips near you fetch");
+    [self.nearbyCollectionView reloadData];
+    self.fetchedTrips = YES;
+    [self checkLoadingView];
 }
 
 - (void)generalRequestFail:(nonnull NSError *)error {
