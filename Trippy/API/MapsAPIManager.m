@@ -11,7 +11,6 @@
 
 @interface MapsAPIManager () <CLLocationManagerDelegate>
 @property (strong, nonatomic) CLLocationManager *locationManager;
-@property (strong, nonatomic) CLLocation * _Nullable currentLocation;
 @property (strong, nonatomic) GMSPlacesClient *placesClient;
 @end
 
@@ -76,6 +75,16 @@ static NSString * const baseURLString = @"https://maps.googleapis.com/maps/api/"
         }
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         completion(nil, error);
+    }];
+}
+
+- (void)getUserAddress:(void (^)(GMSAddress *response, NSError *))completion {
+    [[GMSGeocoder geocoder] reverseGeocodeCoordinate:self.currentLocation.coordinate completionHandler:^(GMSReverseGeocodeResponse * _Nullable response, NSError * _Nullable error) {
+        if (response) {
+            completion(response.firstResult, nil);
+        } else {
+            completion(nil, error);
+        }
     }];
 }
 

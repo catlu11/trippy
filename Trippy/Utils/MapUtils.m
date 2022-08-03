@@ -6,11 +6,13 @@
 //
 
 #import "MapUtils.h"
+#import "MapsAPIManager.h"
 #import "DateUtils.h"
 #import "TSPUtils.h"
 #import "Location.h"
 #import "LocationCollection.h"
 @import GooglePlaces;
+@import GoogleMaps;
 
 #define STATIC_MAP_URL @"https://maps.googleapis.com/maps/api/staticmap?center=%f,%f&zoom=%d&size=%dx%d&key=%@"
 #define DIRECTIONS_URL @"directions/json?origin=place_id:%@&destination=place_id:%@&departure_time=%d&mode=driving&waypoints=%@&key=%@"
@@ -107,5 +109,7 @@
     double inMeters = miles * 1609.0;
     return inMeters;
 }
+
+
 
 @end
