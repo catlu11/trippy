@@ -13,6 +13,7 @@
 #import "LocationManager.h"
 #import "NetworkManager.h"
 #import "MapsAPIManager.h"
+#import "YelpAPIManager.h"
 #import "MapUtils.h"
 #import "LoginViewController.h"
 #import "ItineraryDetailViewController.h"
@@ -163,6 +164,8 @@
     self.nearbyCollectionView.delegate = self;
     self.nearbyTripsData = [[NSMutableArray alloc] init];
     [self.geoHandler fetchItinerariesByCoordinate:currentLoc.coordinate rangeInKm:50.0];
+    
+    [[YelpAPIManager shared] getBusinessSearchWithCompletion:@(currentLoc.coordinate.latitude) longitude:@(currentLoc.coordinate.longitude)];
 }
 
 @end

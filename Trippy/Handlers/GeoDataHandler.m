@@ -15,14 +15,16 @@
 
 @interface GeoDataHandler ()
 @property (atomic) int itineraryFetchCount;
+@property BOOL isFetchingItineraryByCoordinate;
 @end
 
 @implementation GeoDataHandler
 
 - (void) fetchItinerariesByCoordinate:(CLLocationCoordinate2D)coord rangeInKm:(double)rangeInKm {
-    if (![NetworkManager shared].isConnected) {
+    if (![NetworkManager shared].isConnected || self.isFetchingItineraryByCoordinate) {
         return;
     }
+    self.isFetchingItineraryByCoordinate = YES;
     PFGeoPoint *geopoint = [[PFGeoPoint alloc] init];
     geopoint.latitude = coord.latitude;
     geopoint.longitude = coord.longitude;
@@ -54,6 +56,7 @@
                 }];
             }
         }
+        self.isFetchingItineraryByCoordinate = NO;
     }];
 }
 

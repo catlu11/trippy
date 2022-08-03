@@ -44,7 +44,7 @@
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray<CLLocation *> *)locations {
     CLLocation *location = locations.lastObject;
-    if (location) {
+    if (location && ![location isEqual:self.currentLocation]) {
         self.currentLocation = location;
         [self.delegate didFetchLocation];
     }
