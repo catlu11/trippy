@@ -150,6 +150,10 @@
                 [strongSelf.delegate generalRequestFail:error];
             } else {
                 strongSelf.itineraryFetchCount = objects.count;
+                if (objects.count == 0) {
+                    __strong CacheDataHandler *strongSelf = weakSelf;
+                    [strongSelf.delegate didAddAll];
+                }
                 __weak CacheDataHandler *weakSelf = self;
                 for(PFObject *obj in objects) {
                     [ParseUtils itineraryFromPFObj:obj completion:^(Itinerary * _Nonnull itinerary, NSError * _Nonnull) {
@@ -200,6 +204,10 @@
                 [strongSelf.delegate generalRequestFail:error];
             } else {
                 self.collectionFetchCount = objects.count;
+                if (objects.count == 0) {
+                    __strong CacheDataHandler *strongSelf = weakSelf;
+                    [strongSelf.delegate didAddAll];
+                }
                 for(PFObject *obj in objects) {
                     [ParseUtils collectionFromPFObj:obj completion:^(LocationCollection * _Nonnull collection, NSError * _Nonnull) {
                         __strong CacheDataHandler *strongSelf = weakSelf;
@@ -249,6 +257,9 @@
                 [strongSelf.delegate generalRequestFail:error];
             } else {
                 self.locationFetchCount = objects.count;
+                if (objects.count == 0) {
+                    [strongSelf.delegate didAddAll];
+                }
                 for(PFObject *obj in objects) {
                     Location *loc = [ParseUtils locationFromPFObj:obj];
                     loc.isOffline = NO;

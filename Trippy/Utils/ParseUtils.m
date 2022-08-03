@@ -22,7 +22,7 @@
 }
 
 + (NSArray *)getItineraryKeys {
-    return @[@"directionsJson", @"createdAt", @"name", @"createdBy", @"origin", @"sourceCollection", @"departure", @"mileageConstraint", @"budgetConstraint", @"isFavorited", @"staticMap"];
+    return @[@"directionsJson", @"createdAt", @"name", @"createdBy", @"origin", @"startCoord", @"sourceCollection", @"departure", @"mileageConstraint", @"budgetConstraint", @"isFavorited", @"staticMap"];
 }
 
 + (NSString *)getLoggedInUsername {
@@ -230,6 +230,7 @@
             [self pfObjFromLocation:it.originLocation completion:^(PFObject * _Nonnull newObj, NSError * _Nonnull) {
                 if (obj) {
                     obj[@"origin"] = newObj;
+                    obj[@"startCoord"] = [newObj valueForKey:@"coord"];
                 }
                 dispatch_group_leave(group);
             }];

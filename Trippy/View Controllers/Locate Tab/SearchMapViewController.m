@@ -13,6 +13,7 @@
 #import "ParseUtils.h"
 #import "CacheDataHandler.h"
 #import "NetworkManager.h"
+#import "MapsAPIManager.h"
 @import GooglePlaces;
 @import GoogleMaps;
 
@@ -32,12 +33,10 @@
 
 @implementation SearchMapViewController
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    
+- (void)viewWillAppear:(BOOL)animated {
     if ([[NetworkManager shared] isConnected]) {
         // Set up Map View
-        CLLocationCoordinate2D initialCenter = CLLocationCoordinate2DMake(47.629, -122.341);
+        CLLocationCoordinate2D initialCenter = [[MapsAPIManager shared] currentLocation].coordinate;
         [self.mapView initWithCenter:initialCenter];
 
         // Set up Search Bar
@@ -74,6 +73,10 @@
         [alert addAction:action];
         [self presentViewController:alert animated:YES completion:nil];
     }
+}
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
 }
 
 - (IBAction)tapAdd:(id)sender {
@@ -193,8 +196,6 @@
     [alert addAction:action];
     [self presentViewController:alert animated:YES completion:^{
         self.selectedLoc = nil;
-        self.selectedCol = nil;
-        [self.collectionPickerView reloadAllComponents];
         [self.mapView clearMarkers];
         self.searchBar.text = @"";
     }];
