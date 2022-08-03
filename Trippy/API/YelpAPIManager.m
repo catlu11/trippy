@@ -6,6 +6,7 @@
 //
 
 #import "YelpAPIManager.h"
+#import "YelpBusiness.h"
 
 static NSString * const baseURLString = @"https://api.yelp.com/v3/businesses/";
 
@@ -39,12 +40,17 @@ static NSString * const baseURLString = @"https://api.yelp.com/v3/businesses/";
     return [NSString stringWithFormat:@"Bearer %@", dict[@"YelpApiKey"]];
 }
 
-- (void)getBusinessSearchWithCompletion:(NSNumber *)latitude longitude:(NSNumber *)longitude {
+- (void)getBusinessSearchWithCompletion:(NSNumber *)latitude longitude:(NSNumber *)longitude completion:(void (^)(NSArray *results, NSError *))completion {
     NSDictionary *params = @{@"latitude":latitude, @"longitude": longitude, @"limit": @20};
-//    [self GET:@"search" parameters:params headers:@{@"Authorization": [self getYelpKey]} progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-//        NSLog(@"%@", responseObject);
-//    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-//        NSLog(@"Yelp API Error: %@", error.description);
-//    }];
+    [self GET:@"search" parameters:params headers:@{@"Authorization": [self getYelpKey]} progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        NSMutableArray *businesses = [[NSMutableArray alloc] init];
+        for (NSDictionary *dict in responseObject[@"businesses"]) {
+            [businesses addObject:[[YelpBusiness alloc] initWithDictionary:dict]];
+        }
+        completion(businesses, nil);
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        NSLog(@"Yelp API Error: %@", error.description);
+        completion(nil, error);
+    }];
 }
 @end
