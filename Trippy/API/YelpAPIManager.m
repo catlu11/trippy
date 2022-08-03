@@ -10,6 +10,10 @@
 
 static NSString * const baseURLString = @"https://api.yelp.com/v3/businesses/";
 
+@interface YelpAPIManager ()
+@property BOOL isFetchingBusinesses;
+@end
+
 @implementation YelpAPIManager
 
 + (YelpAPIManager *)shared {

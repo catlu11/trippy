@@ -10,6 +10,7 @@
 #import "JHUD.h"
 #import "Itinerary.h"
 #import "NearbyTripCollectionCell.h"
+#import "YelpBusinessCell.h"
 #import "LocationManager.h"
 #import "NetworkManager.h"
 #import "MapsAPIManager.h"
@@ -20,20 +21,24 @@
 #import "LogoutHandler.h"
 #import "GeoDataHandler.h"
 
-@interface ExploreViewController () <UICollectionViewDataSource, UICollectionViewDelegate, LogoutHandlerDelegate, GeoDataHandlerDelegate, LocationManagerDelegate>
+@interface ExploreViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UITableViewDataSource, UITableViewDelegate, LogoutHandlerDelegate, GeoDataHandlerDelegate, LocationManagerDelegate>
 @property (weak, nonatomic) IBOutlet UILabel *locationLabel;
 @property (weak, nonatomic) IBOutlet UIView *locationView;
 @property (weak, nonatomic) IBOutlet UIImageView *bannerImageView;
 @property (weak, nonatomic) IBOutlet UIView *loadingView;
 
+@property (weak, nonatomic) IBOutlet UITableView *yelpTableView;
 @property (weak, nonatomic) IBOutlet UICollectionView *nearbyCollectionView;
 @property (strong, nonatomic) NSMutableArray *nearbyTripsData;
+@property (strong, nonatomic) NSMutableArray *yelpData;
 
 @property (strong, nonatomic) LogoutHandler *logoutHandler;
 @property (strong, nonatomic) GeoDataHandler *geoHandler;
 
+@property BOOL hasFetched;
 @property BOOL fetchedLocation;
 @property BOOL fetchedTrips;
+@property BOOL fetchedBusinesses;
 @end
 
 @implementation ExploreViewController
@@ -53,6 +58,7 @@
     
     self.fetchedTrips = NO;
     self.fetchedLocation = NO;
+    self.fetchedBusinesses = NO;
     self.loadingView.hidden = NO;
     [LocationManager shared].delegate = self;
     
@@ -75,10 +81,16 @@
     
     self.locationView.clipsToBounds = YES;
     self.locationView.layer.cornerRadius = 20;
+    
+    self.yelpTableView.rowHeight = 107;
+    self.yelpTableView.dataSource = self;
+    self.yelpTableView.delegate = self;
+    self.nearbyCollectionView.dataSource = self;
+    self.nearbyCollectionView.delegate = self;
 }
 
 - (void)checkLoadingView {
-    self.loadingView.hidden = self.fetchedTrips && self.fetchedLocation;
+    self.loadingView.hidden = self.fetchedLocation && self.fetchedTrips && self.fetchedBusinesses;
 }
 
 - (IBAction)tapLogout:(id)sender {
@@ -104,6 +116,23 @@
     vc.itinerary = self.nearbyTripsData[indexPath.item];
     [vc disableEdit];
     [self presentViewController:vc animated:YES completion:nil];
+}
+
+# pragma mark - UITableViewDataSource
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    YelpBusinessCell *cell = [self.yelpTableView dequeueReusableCellWithIdentifier:@"YelpBusinessCell"];
+    cell.business = [self.yelpData objectAtIndex:indexPath.item];
+    [cell updateUI];
+    return cell;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return self.yelpData.count;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
 }
 
 # pragma mark - LogoutHandlerDelegate
@@ -134,11 +163,10 @@
 
 - (void)addFetchedNearbyItinerary:(nonnull Itinerary *)itinerary {
     [self.nearbyTripsData addObject:itinerary];
+    [self.nearbyCollectionView reloadData];
 }
 
-- (void)didAddAll {
-    [self.nearbyCollectionView reloadData];
-    self.fetchedTrips = YES;
+- (void)didAddAll {    self.fetchedTrips = YES;
     [self checkLoadingView];
 }
 
@@ -149,6 +177,10 @@
 # pragma mark - LocationManagerDelegate
 
 - (void) didFetchLocation {
+    if (self.hasFetched) {
+        return;
+    }
+    self.hasFetched = YES;
     CLLocation *currentLoc = [[LocationManager shared] currentLocation];
     [[MapsAPIManager shared] getUserAddressWithCompletion:currentLoc.coordinate completion:^(GMSAddress * _Nonnull response, NSError * _Nonnull) {
         if (response) {
@@ -160,13 +192,14 @@
         }
     }];
     
-    self.nearbyCollectionView.dataSource = self;
-    self.nearbyCollectionView.delegate = self;
     self.nearbyTripsData = [[NSMutableArray alloc] init];
     [self.geoHandler fetchItinerariesByCoordinate:currentLoc.coordinate rangeInKm:50.0];
     
     [[YelpAPIManager shared] getBusinessSearchWithCompletion:@(currentLoc.coordinate.latitude) longitude:@(currentLoc.coordinate.longitude) completion:^(NSArray * _Nonnull results, NSError * _Nonnull) {
-        NSLog(@"%@", results);
+        self.yelpData = results;
+        [self.yelpTableView reloadData];
+        self.fetchedBusinesses = YES;
+        [self checkLoadingView];
     }];
 }
 

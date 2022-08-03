@@ -14,8 +14,11 @@
 
     if (self) {
         self.name = dict[@"name"];
+        self.city = dict[@"location"][@"city"];
+        self.state = dict[@"location"][@"state"];
         self.rating = dict[@"rating"];
-        self.imageUrl = dict[@"image_url"];
+        NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:dict[@"image_url"]]];
+        self.image = [UIImage imageWithData:data];
         self.pricePoint = ((NSString *)dict[@"price"]).length;
         self.latitude = dict[@"coordinates"][@"latitude"];
         self.longitude = dict[@"coordinates"][@"longitude"];
