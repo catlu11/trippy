@@ -8,6 +8,7 @@
 #import <Foundation/Foundation.h>
 #import "AFHTTPSessionManager.h"
 @class CLLocation;
+@class GMSAddress;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -17,6 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)setupLocationManager;
 - (void)getDirectionsWithCompletion:(NSString *)url completion:(void (^)(NSDictionary *response, NSError *))completion;
 - (void)getRouteMatrixWithCompletion:(NSString *)url completion:(void (^)(NSDictionary *response, NSError *))completion;
+- (void)getUserAddressWithCompletion:(void (^)(GMSAddress *response, NSError *))completion;
 @property (strong, nonatomic) CLLocation * _Nullable currentLocation;
 @end
 

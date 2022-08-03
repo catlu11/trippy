@@ -78,7 +78,7 @@ static NSString * const baseURLString = @"https://maps.googleapis.com/maps/api/"
     }];
 }
 
-- (void)getUserAddress:(void (^)(GMSAddress *response, NSError *))completion {
+- (void)getUserAddressWithCompletion:(void (^)(GMSAddress *response, NSError *))completion {
     [[GMSGeocoder geocoder] reverseGeocodeCoordinate:self.currentLocation.coordinate completionHandler:^(GMSReverseGeocodeResponse * _Nullable response, NSError * _Nullable error) {
         if (response) {
             completion(response.firstResult, nil);
