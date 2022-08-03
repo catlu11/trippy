@@ -117,7 +117,7 @@
 
 + (void) collectionFromPFObj:(PFObject *)obj completion:(void (^)(LocationCollection *collection, NSError *))completion {
     LocationCollection *newColl = [[LocationCollection alloc] init];
-    PFUser *user = obj[@"createdBy"];
+    PFUser *user = [obj[@"createdBy"] fetchIfNeeded];
     
     newColl.title = obj[@"title"];
     newColl.snippet = obj[@"snippet"];
@@ -148,7 +148,7 @@
 
 + (Location *)locationFromPFObj:(PFObject *)obj {
     PFGeoPoint *coord = obj[@"coord"];
-    PFUser *user = obj[@"createdBy"];
+    PFUser *user = [obj[@"createdBy"] fetchIfNeeded];
     return [[Location alloc] initWithParams:obj[@"title"] snippet:obj[@"snippet"] latitude:coord.latitude longitude:coord.longitude user:user.username placeId:obj[@"placeId"] types:obj[@"types"] priceLevel:obj[@"priceLevel"] parseObjectId:obj.objectId];
 }
 

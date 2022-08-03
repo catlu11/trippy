@@ -6,19 +6,20 @@
 //
 
 #import "ExploreViewController.h"
-#import "LoginViewController.h"
-#import "LogoutHandler.h"
-#import "GeoDataHandler.h"
 #import "SceneDelegate.h"
-#import "MapsAPIManager.h"
-#import "MapUtils.h"
-#import "GoogleMaps/GMSAddress.h"
 #import "JHUD.h"
 #import "Itinerary.h"
 #import "NearbyTripCollectionCell.h"
+#import "LocationManager.h"
+#import "NetworkManager.h"
+#import "MapsAPIManager.h"
+#import "MapUtils.h"
+#import "LoginViewController.h"
 #import "ItineraryDetailViewController.h"
+#import "LogoutHandler.h"
+#import "GeoDataHandler.h"
 
-@interface ExploreViewController () <UICollectionViewDataSource, UICollectionViewDelegate, LogoutHandlerDelegate, GeoDataHandlerDelegate>
+@interface ExploreViewController () <UICollectionViewDataSource, UICollectionViewDelegate, LogoutHandlerDelegate, GeoDataHandlerDelegate, LocationManagerDelegate>
 @property (weak, nonatomic) IBOutlet UILabel *locationLabel;
 @property (weak, nonatomic) IBOutlet UIView *locationView;
 @property (weak, nonatomic) IBOutlet UIImageView *bannerImageView;
@@ -52,6 +53,18 @@
     self.fetchedTrips = NO;
     self.fetchedLocation = NO;
     self.loadingView.hidden = NO;
+    [LocationManager shared].delegate = self;
+    
+    if (![[NetworkManager shared] isConnected]) {
+        UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Explore Tab Unavailable"
+                                   message:@"No internet connection, please try again later."
+                                   preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction* action = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
+                                       handler:nil];
+        [alert addAction:action];
+        [self presentViewController:alert animated:YES completion:nil];
+        return;
+    }
     
     // Set up handlers
     self.logoutHandler = [[LogoutHandler alloc] init];
@@ -61,20 +74,6 @@
     
     self.locationView.clipsToBounds = YES;
     self.locationView.layer.cornerRadius = 20;
-    
-    CLLocation *currentLoc = [[MapsAPIManager shared] currentLocation];
-    [[MapsAPIManager shared] getUserAddressWithCompletion:^(GMSAddress * _Nonnull response, NSError * _Nonnull) {
-        self.locationLabel.text = [NSString stringWithFormat:@"%@, %@", response.locality, response.administrativeArea];
-        UIImage *banner = [MapUtils getStaticMapImage:currentLoc.coordinate width:self.bannerImageView.frame.size.width height:self.bannerImageView.frame.size.height];
-        self.bannerImageView.image = banner;
-        self.fetchedLocation = YES;
-        [self checkLoadingView];
-    }];
-    
-    self.nearbyCollectionView.dataSource = self;
-    self.nearbyCollectionView.delegate = self;
-    self.nearbyTripsData = [[NSMutableArray alloc] init];
-    [self.geoHandler fetchItinerariesByCoordinate:currentLoc.coordinate rangeInKm:50.0];
 }
 
 - (void)checkLoadingView {
@@ -144,6 +143,26 @@
 
 - (void)generalRequestFail:(nonnull NSError *)error {
     NSLog(@"something bad happened");
+}
+
+# pragma mark - LocationManagerDelegate
+
+- (void) didFetchLocation {
+    CLLocation *currentLoc = [[LocationManager shared] currentLocation];
+    [[MapsAPIManager shared] getUserAddressWithCompletion:currentLoc.coordinate completion:^(GMSAddress * _Nonnull response, NSError * _Nonnull) {
+        if (response) {
+            self.locationLabel.text = [NSString stringWithFormat:@"%@, %@", response.locality, response.administrativeArea];
+            UIImage *banner = [MapUtils getStaticMapImage:currentLoc.coordinate width:self.bannerImageView.frame.size.width height:self.bannerImageView.frame.size.height];
+            self.bannerImageView.image = banner;
+            self.fetchedLocation = YES;
+            [self checkLoadingView];
+        }
+    }];
+    
+    self.nearbyCollectionView.dataSource = self;
+    self.nearbyCollectionView.delegate = self;
+    self.nearbyTripsData = [[NSMutableArray alloc] init];
+    [self.geoHandler fetchItinerariesByCoordinate:currentLoc.coordinate rangeInKm:50.0];
 }
 
 @end

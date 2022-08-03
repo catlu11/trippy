@@ -13,7 +13,7 @@
 #import "ParseUtils.h"
 #import "CacheDataHandler.h"
 #import "NetworkManager.h"
-#import "MapsAPIManager.h"
+#import "LocationManager.h"
 @import GooglePlaces;
 @import GoogleMaps;
 
@@ -36,7 +36,7 @@
 - (void)viewWillAppear:(BOOL)animated {
     if ([[NetworkManager shared] isConnected]) {
         // Set up Map View
-        CLLocationCoordinate2D initialCenter = [[MapsAPIManager shared] currentLocation].coordinate;
+        CLLocationCoordinate2D initialCenter = [[LocationManager shared] currentLocation].coordinate;
         [self.mapView initWithCenter:initialCenter];
 
         // Set up Search Bar

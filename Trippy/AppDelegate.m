@@ -33,7 +33,6 @@
     // Set up Google SDKs
     [GMSServices provideAPIKey:dict[@"GMapsKey"]];
     [GMSPlacesClient provideAPIKey:dict[@"GMapsKey"]];
-    [[MapsAPIManager shared] setupLocationManager];
     
     // Set up Parse client
     ParseClientConfiguration *config = [ParseClientConfiguration  configurationWithBlock:^(id<ParseMutableClientConfiguration> configuration) {
