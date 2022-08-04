@@ -13,6 +13,8 @@
 #import "Itinerary.h"
 #import "NetworkManager.h"
 
+#define QUERY_LIMIT 20
+
 @interface GeoDataHandler ()
 @property (atomic) int itineraryFetchCount;
 @property (atomic) BOOL isFetchingItineraryByCoordinate;
@@ -29,20 +31,20 @@
     geopoint.latitude = coord.latitude;
     geopoint.longitude = coord.longitude;
     PFQuery *query = [PFQuery queryWithClassName:@"Itinerary"];
-    [query setLimit:20];
+    [query setLimit:QUERY_LIMIT];
     [query whereKey:@"startCoord" nearGeoPoint:geopoint withinKilometers:rangeInKm];
     [query whereKey:@"createdBy" notEqualTo:[PFUser currentUser]];
     __weak GeoDataHandler *weakSelf = self;
     [query findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
+        __strong GeoDataHandler *strongSelf = weakSelf;
         if (error) {
-            __strong GeoDataHandler *strongSelf = weakSelf;
             [strongSelf.delegate generalRequestFail:error];
         } else {
             self.itineraryFetchCount = objects.count;
             if (objects.count == 0) {
-                __strong GeoDataHandler *strongSelf = weakSelf;
                 [strongSelf.delegate didAddAll];
             }
+            __weak GeoDataHandler *weakSelf = strongSelf;
             for(PFObject *obj in objects) {
                 [ParseUtils itineraryFromPFObj:obj completion:^(Itinerary * _Nonnull itinerary, NSError * _Nonnull) {
                     __strong GeoDataHandler *strongSelf = weakSelf;
@@ -56,7 +58,7 @@
                 }];
             }
         }
-        self.isFetchingItineraryByCoordinate = NO;
+        strongSelf.isFetchingItineraryByCoordinate = NO;
     }];
 }
 

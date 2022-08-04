@@ -154,7 +154,7 @@
                 if (objects.count == 0) {
                     [strongSelf.delegate didAddAll];
                 }
-                __weak CacheDataHandler *weakSelf = self;
+                __weak CacheDataHandler *weakSelf = strongSelf;
                 for(PFObject *obj in objects) {
                     [ParseUtils itineraryFromPFObj:obj completion:^(Itinerary * _Nonnull itinerary, NSError * _Nonnull) {
                         __strong CacheDataHandler *strongSelf = weakSelf;
@@ -170,7 +170,7 @@
                         }
                     }];
                 }
-                self.isFetchingItineraries = NO;
+                strongSelf.isFetchingItineraries = NO;
             }
         }];
     }
@@ -199,15 +199,15 @@
         
         __weak CacheDataHandler *weakSelf = self;
         [query findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
+            __strong CacheDataHandler *strongSelf = weakSelf;
             if (error) {
-                __strong CacheDataHandler *strongSelf = weakSelf;
                 [strongSelf.delegate generalRequestFail:error];
             } else {
-                self.collectionFetchCount = objects.count;
+                strongSelf.collectionFetchCount = objects.count;
                 if (objects.count == 0) {
-                    __strong CacheDataHandler *strongSelf = weakSelf;
                     [strongSelf.delegate didAddAll];
                 }
+                __weak CacheDataHandler *weakSelf = self;
                 for(PFObject *obj in objects) {
                     [ParseUtils collectionFromPFObj:obj completion:^(LocationCollection * _Nonnull collection, NSError * _Nonnull) {
                         __strong CacheDataHandler *strongSelf = weakSelf;
@@ -219,11 +219,11 @@
                             if (!excludeDependents || [[collectionMO valueForKey:@"dependents"] intValue] == 0) {
                                 [strongSelf.delegate addFetchedCollection:collection];
                             }
-                            [self decrementCollectionFetchCount];
+                            [strongSelf decrementCollectionFetchCount];
                         }
                     }];
                 }
-                self.isFetchingCollections = NO;
+                strongSelf.isFetchingCollections = NO;
             }
         }];
     }
@@ -258,7 +258,7 @@
             if (error) {
                 [strongSelf.delegate generalRequestFail:error];
             } else {
-                self.locationFetchCount = objects.count;
+                strongSelf.locationFetchCount = objects.count;
                 if (objects.count == 0) {
                     [strongSelf.delegate didAddAll];
                 }
@@ -267,9 +267,9 @@
                     loc.isOffline = NO;
                     [strongSelf.delegate addFetchedLocation:loc];
                     [[CoreDataHandler shared] saveLocation:loc];
-                    [self decrementLocationFetchCount];
+                    [strongSelf decrementLocationFetchCount];
                 }
-                self.isFetchingLocations = NO;
+                strongSelf.isFetchingLocations = NO;
             }
         }];
     }

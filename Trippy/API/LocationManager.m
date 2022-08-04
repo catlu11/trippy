@@ -8,6 +8,8 @@
 #import "LocationManager.h"
 @import GoogleMaps;
 
+#define DISTANCE_FILTER_KM 50;
+
 @interface LocationManager () <CLLocationManagerDelegate>
 @property (strong, nonatomic) CLLocationManager *locationManager;
 @end
@@ -32,7 +34,7 @@
         self.locationManager = [[CLLocationManager alloc] init];
         self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
         [self.locationManager requestWhenInUseAuthorization];
-        self.locationManager.distanceFilter = 50;
+        self.locationManager.distanceFilter = DISTANCE_FILTER_KM;
         [self.locationManager startUpdatingLocation];
         self.locationManager.delegate = self;
     }
