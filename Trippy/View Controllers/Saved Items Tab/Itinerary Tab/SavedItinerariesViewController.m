@@ -5,38 +5,25 @@
 //  Created by Catherine Lu on 7/11/22.
 //
 
-#import "HomeViewController.h"
+#import "SavedItinerariesViewController.h"
 #import "ParseUtils.h"
-#import "LogoutHandler.h"
 #import "ItineraryDetailViewController.h"
 #import "LoginViewController.h"
 #import "SceneDelegate.h"
 #import "NetworkManager.h"
 #import "CacheDataHandler.h"
 
-@interface HomeViewController () <LogoutHandlerDelegate>
-@property (weak, nonatomic) IBOutlet UILabel *welcomeLabel;
-@property (strong, nonatomic) LogoutHandler *logoutHandler;
+@interface SavedItinerariesViewController ()
 @property (strong, nonatomic) Itinerary *selectedIt;
 @end
 
-@implementation HomeViewController
+@implementation SavedItinerariesViewController
 
 - (void)viewDidLoad {
     self.listType = kItinerary;
     self.showSelection = NO;
     
     [super viewDidLoad];
-    
-    self.welcomeLabel.text = [NSString stringWithFormat:@"Welcome %@. Happy traveling!", [ParseUtils getLoggedInUsername]];
-    
-    // Set up Parse interface
-    self.logoutHandler = [[LogoutHandler alloc] init];
-    self.logoutHandler.delegate = self;
-}
-
-- (IBAction)tapLogout:(id)sender {
-    [self.logoutHandler logoutCurrentUser];
 }
 
 - (IBAction)tapCreate:(id)sender {
@@ -68,30 +55,6 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     self.selectedIt = self.data[indexPath.row];
     [self performSegueWithIdentifier:@"itineraryDetailSegueFromHome" sender:nil];
-}
-
-# pragma mark - LogoutHandlerDelegate
-
-- (void)logoutSuccess {
-    SceneDelegate *appDelegate = (SceneDelegate *)self.view.window.windowScene.delegate;
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    LoginViewController *loginViewController = [storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
-    appDelegate.window.rootViewController = loginViewController;
-    NSLog(@"Successfully logged out user");
-}
-
-- (void)logoutFail:(NSError *)error {
-    NSLog(@"Failed to log out user: %@", error.description);
-}
-
-- (void)offlineWarning {
-    UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Logout Failed"
-                               message:@"No internet connection, please try again later."
-                               preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction* action = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
-                                   handler:nil];
-    [alert addAction:action];
-    [self presentViewController:alert animated:YES completion:nil];
 }
 
 @end

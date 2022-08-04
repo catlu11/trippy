@@ -22,7 +22,7 @@
 }
 
 + (NSArray *)getItineraryKeys {
-    return @[@"directionsJson", @"createdAt", @"name", @"createdBy", @"origin", @"sourceCollection", @"departure", @"mileageConstraint", @"budgetConstraint", @"isFavorited", @"staticMap"];
+    return @[@"directionsJson", @"createdAt", @"name", @"createdBy", @"origin", @"startCoord", @"sourceCollection", @"departure", @"mileageConstraint", @"budgetConstraint", @"isFavorited", @"staticMap"];
 }
 
 + (NSString *)getLoggedInUsername {
@@ -105,7 +105,7 @@
                                                    originLocation:originLocation
                                                              name:obj[@"name"]
                                                       isFavorited:[obj[@"isFavorited"] boolValue]];
-            PFUser *user = obj[@"createdBy"];
+            PFUser *user = [obj[@"createdBy"] fetchIfNeeded];
             it.userId = user.username;
             it.createdAt = obj.createdAt;
             it.parseObjectId = obj.objectId;
@@ -117,7 +117,7 @@
 
 + (void) collectionFromPFObj:(PFObject *)obj completion:(void (^)(LocationCollection *collection, NSError *))completion {
     LocationCollection *newColl = [[LocationCollection alloc] init];
-    PFUser *user = obj[@"createdBy"];
+    PFUser *user = [obj[@"createdBy"] fetchIfNeeded];
     
     newColl.title = obj[@"title"];
     newColl.snippet = obj[@"snippet"];
@@ -148,7 +148,7 @@
 
 + (Location *)locationFromPFObj:(PFObject *)obj {
     PFGeoPoint *coord = obj[@"coord"];
-    PFUser *user = obj[@"createdBy"];
+    PFUser *user = [obj[@"createdBy"] fetchIfNeeded];
     return [[Location alloc] initWithParams:obj[@"title"] snippet:obj[@"snippet"] latitude:coord.latitude longitude:coord.longitude user:user.username placeId:obj[@"placeId"] types:obj[@"types"] priceLevel:obj[@"priceLevel"] parseObjectId:obj.objectId];
 }
 
@@ -230,6 +230,7 @@
             [self pfObjFromLocation:it.originLocation completion:^(PFObject * _Nonnull newObj, NSError * _Nonnull) {
                 if (obj) {
                     obj[@"origin"] = newObj;
+                    obj[@"startCoord"] = [newObj valueForKey:@"coord"];
                 }
                 dispatch_group_leave(group);
             }];

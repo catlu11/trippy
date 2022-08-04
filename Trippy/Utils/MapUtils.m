@@ -6,11 +6,13 @@
 //
 
 #import "MapUtils.h"
+#import "MapsAPIManager.h"
 #import "DateUtils.h"
 #import "TSPUtils.h"
 #import "Location.h"
 #import "LocationCollection.h"
 @import GooglePlaces;
+@import GoogleMaps;
 
 #define STATIC_MAP_URL @"https://maps.googleapis.com/maps/api/staticmap?center=%f,%f&zoom=%d&size=%dx%d&key=%@"
 #define DIRECTIONS_URL @"directions/json?origin=place_id:%@&destination=place_id:%@&departure_time=%d&mode=driving&waypoints=%@&key=%@"
@@ -57,7 +59,6 @@
                                        origin:(Location *)origin
                                 departureTime:(NSDate *)departureTime {
     NSString *stops = @"optimize:false";
-    int count = 0;
     for (Location *loc in [TSPUtils reorder:collection.locations order:waypointOrder]) {
         stops = [stops stringByAppendingString:[NSString stringWithFormat:@"|place_id:%@", loc.placeId]];
     }
@@ -107,5 +108,7 @@
     double inMeters = miles * 1609.0;
     return inMeters;
 }
+
+
 
 @end

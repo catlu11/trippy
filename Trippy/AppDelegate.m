@@ -9,6 +9,7 @@
 #import "Parse/Parse.h"
 #import "CoreData/CoreData.h"
 #import "NetworkManager.h"
+#import "MapsAPIManager.h"
 #import "AFNetworkReachabilityManager.h"
 @import GoogleMaps;
 @import GooglePlaces;
@@ -32,8 +33,8 @@
     
     // Set up Parse client
     ParseClientConfiguration *config = [ParseClientConfiguration  configurationWithBlock:^(id<ParseMutableClientConfiguration> configuration) {
-            configuration.applicationId = dict[@"appId"];
-            configuration.clientKey = dict[@"clientKey"];
+            configuration.applicationId = dict[@"ParseAppId"];
+            configuration.clientKey = dict[@"ParseClientKey"];
             configuration.server = @"https://parseapi.back4app.com";
         }];
     [Parse initializeWithConfiguration:config];

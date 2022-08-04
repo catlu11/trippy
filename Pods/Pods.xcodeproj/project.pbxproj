@@ -15,7 +15,6 @@
 			dependencies = (
 			);
 			name = GooglePlaces;
-			productName = GooglePlaces;
 		};
 		E5B4BBC6DD552AC8943C7E22772FC1D3 /* GoogleMaps */ = {
 			isa = PBXAggregateTarget;
@@ -25,7 +24,6 @@
 			dependencies = (
 			);
 			name = GoogleMaps;
-			productName = GoogleMaps;
 		};
 /* End PBXAggregateTarget section */
 
@@ -919,7 +917,7 @@
 		9C9CAAE3C8991B6AD454944AD45A7747 /* PFCloudCodeController.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = PFCloudCodeController.h; path = Parse/Parse/Internal/CloudCode/PFCloudCodeController.h; sourceTree = "<group>"; };
 		9CAC163348C72A5541AEBEB6F635DA52 /* UIProgressView+AFNetworking.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UIProgressView+AFNetworking.m"; path = "UIKit+AFNetworking/UIProgressView+AFNetworking.m"; sourceTree = "<group>"; };
 		9D4E673400FB5D394817DA1F6C5234DC /* PFPersistenceController.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = PFPersistenceController.m; path = Parse/Parse/Internal/Persistence/PFPersistenceController.m; sourceTree = "<group>"; };
-		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		9DD3712EE5627ADCE04FA49CC21DC242 /* PFDecoder.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = PFDecoder.m; path = Parse/Parse/PFDecoder.m; sourceTree = "<group>"; };
 		9ECB0F1007C817BA8C7D868F0EE8617C /* AFAutoPurgingImageCache.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = AFAutoPurgingImageCache.h; path = "UIKit+AFNetworking/AFAutoPurgingImageCache.h"; sourceTree = "<group>"; };
 		9F26C093BB942453DD5A4D0D8756B1CA /* Pods-Trippy.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-Trippy.modulemap"; sourceTree = "<group>"; };
@@ -978,7 +976,7 @@
 		B761A8EBA27C9745BF3D8F86CE284187 /* PFInternalUtils.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = PFInternalUtils.m; path = Parse/Parse/Internal/PFInternalUtils.m; sourceTree = "<group>"; };
 		B7F57EC8187D676032B7A8A9559A0D44 /* PFSessionController.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = PFSessionController.m; path = Parse/Parse/Internal/Session/Controller/PFSessionController.m; sourceTree = "<group>"; };
 		B83DDE220CB93E3EE9505EF01CC297CF /* BFCancellationTokenRegistration.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = BFCancellationTokenRegistration.h; path = Bolts/Common/BFCancellationTokenRegistration.h; sourceTree = "<group>"; };
-		B8F2F72BD23D133202E64B528B0A87FB /* en.lproj */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder; name = en.lproj; path = Parse/Parse/Resources/en.lproj; sourceTree = "<group>"; };
+		B8F2F72BD23D133202E64B528B0A87FB /* en.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = en.lproj; path = Parse/Parse/Resources/en.lproj; sourceTree = "<group>"; };
 		B975FAFB707F7CB762F257534457CC0F /* PFFileStagingController.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = PFFileStagingController.m; path = Parse/Parse/Internal/File/Controller/PFFileStagingController.m; sourceTree = "<group>"; };
 		BA12379104FA17FF9D5221ABB73A1583 /* JHUD-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "JHUD-dummy.m"; sourceTree = "<group>"; };
 		BA804F1B72BBBF761C5322C0F98D45BC /* BFCancellationToken.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = BFCancellationToken.h; path = Bolts/Common/BFCancellationToken.h; sourceTree = "<group>"; };
@@ -1238,6 +1236,7 @@
 				24C6FA222D151410EFE225B1B4A00A29 /* Resources */,
 				6C84B1906AB21ADDCE23ECF303D566E8 /* Support Files */,
 			);
+			name = GooglePlaces;
 			path = GooglePlaces;
 			sourceTree = "<group>";
 		};
@@ -1710,6 +1709,7 @@
 				AD6D134AF502ADD3C6DF128F77E409B8 /* Support Files */,
 				D1F7925DC944B59CF449282C754C9793 /* UIKit */,
 			);
+			name = AFNetworking;
 			path = AFNetworking;
 			sourceTree = "<group>";
 		};
@@ -1744,6 +1744,7 @@
 				1FC230D2F1BEC2DD413980614910A6EA /* UIView+JHUD.m */,
 				A32606431BC2C2D3804BE57CDB35E585 /* Support Files */,
 			);
+			name = JHUD;
 			path = JHUD;
 			sourceTree = "<group>";
 		};
@@ -1791,6 +1792,7 @@
 				3C5D1C88C91AD526BC0F4E50435504E1 /* Core */,
 				54D984F9C02C030A524B71A1FD058207 /* Support Files */,
 			);
+			name = Parse;
 			path = Parse;
 			sourceTree = "<group>";
 		};
@@ -1811,6 +1813,7 @@
 				B55F5001FD6A6B12271AE036E361E0F2 /* Maps */,
 				BABC7702A74BC84223FDF8E62DD60454 /* Support Files */,
 			);
+			name = GoogleMaps;
 			path = GoogleMaps;
 			sourceTree = "<group>";
 		};
@@ -1843,6 +1846,7 @@
 				03A5317E7E9E029EF00D5CA2497D8D56 /* Support Files */,
 				5F6CC94A3D70FA8BF2B7B2890FB9C846 /* Tasks */,
 			);
+			name = Bolts;
 			path = Bolts;
 			sourceTree = "<group>";
 		};
@@ -3202,7 +3206,6 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
-				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;

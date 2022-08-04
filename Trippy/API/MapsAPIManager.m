@@ -6,8 +6,6 @@
 //
 
 #import "MapsAPIManager.h"
-#import "MapUtils.h"
-#import "Location.h"
 
 static NSString * const baseURLString = @"https://maps.googleapis.com/maps/api/";
 
@@ -58,6 +56,16 @@ static NSString * const baseURLString = @"https://maps.googleapis.com/maps/api/"
         }
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         completion(nil, error);
+    }];
+}
+
+- (void)getAddressWithCompletion:(CLLocationCoordinate2D)coordinate completion:(void (^)(GMSAddress *response, NSError *))completion {
+    [[GMSGeocoder geocoder] reverseGeocodeCoordinate:coordinate completionHandler:^(GMSReverseGeocodeResponse * _Nullable response, NSError * _Nullable error) {
+        if (response) {
+            completion(response.firstResult, nil);
+        } else {
+            completion(nil, error);
+        }
     }];
 }
 

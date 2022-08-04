@@ -18,6 +18,7 @@
 @interface ItineraryDetailViewController () <EditingItineraryDelegate, SelectableMapDelegate>
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *detailsLabel;
+@property (weak, nonatomic) IBOutlet UIButton *editButton;
 @property (weak, nonatomic) IBOutlet SelectableMap *mapView;
 @end
 
@@ -45,6 +46,12 @@
     // Set labels
     self.nameLabel.text = self.itinerary.name;
     self.detailsLabel.text = [NSString stringWithFormat:@"Origin: %@\nSource: %@", self.itinerary.originLocation.title, self.itinerary.sourceCollection.title];
+}
+
+- (void)disableEdit {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        self.editButton.hidden = YES;
+    });
 }
 
 - (IBAction)tapEdit:(id)sender {

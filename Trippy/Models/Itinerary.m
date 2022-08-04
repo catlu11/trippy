@@ -178,7 +178,7 @@
 
 - (NSDate *)computeDeparture:(int)waypointIndex {
     NSDate *arrivalTime = [self computeArrival:waypointIndex];
-    Location *loc =  [[self getOrderedLocations] objectAtIndex:waypointIndex];;
+    Location *loc =  [[self getOrderedLocations] objectAtIndex:waypointIndex];
     WaypointPreferences *pref = [self getPreference:loc];
     return [arrivalTime dateByAddingTimeInterval:[pref.stayDurationInSeconds intValue]];
 }

@@ -6,8 +6,10 @@
 //
 
 #import <UIKit/UIKit.h>
+@import GoogleMaps;
 
 @interface SearchMapViewController : UIViewController
-
+@property (strong, nonatomic) NSString *initialSearch;
+@property (assign, nonatomic) CLLocationCoordinate2D initialCoord;
 @end
 

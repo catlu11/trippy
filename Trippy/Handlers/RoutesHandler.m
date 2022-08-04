@@ -18,7 +18,6 @@
 @interface RoutesHandler ()
 @property (strong, nonatomic) NSDictionary *matrix;
 @property (strong, nonatomic) NSMutableDictionary *routes;
-//@property (strong, nonatomic) NSMutableDictionary *newRoutes;
 @end
 
 @implementation RoutesHandler
@@ -183,7 +182,7 @@
         [finalOptions addObject:route2];
     } else {
         if (returnOne) {
-            (power1 > power2) ? [finalOptions addObject:route1] : [finalOptions addObject:route2];
+            [finalOptions addObject:route2];
         } else {
             [finalOptions addObject:route1];
             [finalOptions addObject:route2];

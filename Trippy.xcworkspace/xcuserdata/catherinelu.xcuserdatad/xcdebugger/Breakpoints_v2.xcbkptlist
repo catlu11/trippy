@@ -1,54 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Bucket
-   uuid = "614F53C4-2FB5-4818-AA88-A934FABC20C3"
+   uuid = "DE0E8B21-8608-4662-BEC0-69B69F45FD7C"
    type = "0"
    version = "2.0">
    <Breakpoints>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "0C893818-6108-4E92-9C5F-08AB5313C24F"
+            uuid = "EE44487D-41E9-40BC-85AE-21A420AAB732"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Trippy/View Controllers/Templates/MapItemListViewController.m"
+            filePath = "Trippy/View Controllers/Explore Tab/ExploreViewController.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "21"
-            endingLineNumber = "21"
-            landmarkName = "-viewWillAppear:"
+            startingLineNumber = "97"
+            endingLineNumber = "97"
+            landmarkName = "-checkLoadingView"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "AC57A0D9-887C-46E2-B6F1-32694A958899"
+            uuid = "ED231C08-19FC-4648-B59F-AB5E53943814"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Trippy/View Controllers/Itinerary Tab/HomeViewController.m"
+            filePath = "Trippy/View Controllers/Explore Tab/ExploreViewController.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "44"
-            endingLineNumber = "44"
-            landmarkName = "-tapCreate:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "70EA3484-2482-4C50-B220-C5DAEDA36C69"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Trippy/View Controllers/Itinerary Tab/CreateItineraryViewController.m"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "37"
-            endingLineNumber = "37"
-            landmarkName = "-viewDidLoad"
+            startingLineNumber = "144"
+            endingLineNumber = "144"
+            landmarkName = "-tableView:didSelectRowAtIndexPath:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
