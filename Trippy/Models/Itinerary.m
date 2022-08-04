@@ -155,9 +155,15 @@
     return instructions;
 }
 
-- (WaypointPreferences *)getPreference:(Location *)loc {
+- (WaypointPreferences *)getPreferenceByLocation:(Location *)loc {
     NSArray *prefsArray = self.prefJson[@"preferences"];
     NSDictionary *json = [prefsArray objectAtIndex:[self.sourceCollection.locations indexOfObject:loc]];
+    return [[WaypointPreferences alloc] initWithDictionary:json];
+}
+
+- (WaypointPreferences *)getPreferenceByIndex:(int)waypointIndex {
+    NSArray *prefsArray = self.prefJson[@"preferences"];
+    NSDictionary *json = [prefsArray objectAtIndex:waypointIndex];
     return [[WaypointPreferences alloc] initWithDictionary:json];
 }
 
@@ -179,7 +185,7 @@
 - (NSDate *)computeDeparture:(int)waypointIndex {
     NSDate *arrivalTime = [self computeArrival:waypointIndex];
     Location *loc =  [[self getOrderedLocations] objectAtIndex:waypointIndex];
-    WaypointPreferences *pref = [self getPreference:loc];
+    WaypointPreferences *pref = [self getPreferenceByLocation:loc];
     return [arrivalTime dateByAddingTimeInterval:[pref.stayDurationInSeconds intValue]];
 }
 

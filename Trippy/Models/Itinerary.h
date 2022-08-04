@@ -59,7 +59,8 @@ NS_ASSUME_NONNULL_BEGIN
     budgetConstraint:(NSNumber *)budgetConstraint;
 
 - (void)updatePreference:(Location *)location pref:(WaypointPreferences *)pref;
-- (WaypointPreferences *)getPreference:(Location *)loc;
+- (WaypointPreferences *)getPreferenceByLocation:(Location *)loc;
+- (WaypointPreferences *)getPreferenceByIndex:(int)waypointIndex;
 - (NSDictionary *)toRouteDictionary;
 - (NSDictionary *)toPrefsDictionary;
 - (NSArray *)getOrderedLocations;
