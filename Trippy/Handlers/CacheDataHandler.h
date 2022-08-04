@@ -29,7 +29,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (assign, nonatomic) BOOL isFetchingItineraries;
 @property (assign, nonatomic) BOOL isFetchingCollections;
 @property (assign, nonatomic) BOOL isFetchingLocations;
-- (void)fetchSavedCollections;
+- (void)fetchSavedCollections:(BOOL)excludeDependents;
 - (void)fetchSavedLocations;
 - (void)fetchSavedItineraries;
 - (void)postNewLocation:(Location *)location collection:(LocationCollection *)collection;

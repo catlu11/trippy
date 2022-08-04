@@ -52,7 +52,7 @@
     self.collectionPickerView.dataSource = self;
     self.collectionData = [[NSMutableArray alloc] init];
     
-    [self.colHandler fetchSavedCollections];
+    [self.colHandler fetchSavedCollections:NO];
     
     // Set up empty alert
     self.emptyAlert = [UIAlertController alertControllerWithTitle:@"Error"

@@ -65,7 +65,7 @@
     
     __block Location *originLocation = nil;
     __block LocationCollection *sourceCollection = nil;
-    dispatch_async(dispatch_get_main_queue(), ^{
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
         dispatch_group_t group = dispatch_group_create();
         
         // query location pointer

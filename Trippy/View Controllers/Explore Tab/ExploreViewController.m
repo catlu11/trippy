@@ -175,8 +175,10 @@
     [self.nearbyCollectionView reloadData];
 }
 
-- (void)didAddAll {    self.fetchedTrips = YES;
+- (void)didAddAll {
+    self.fetchedTrips = YES;
     [self checkLoadingView];
+    NSLog(@"did fetch all");
 }
 
 - (void)generalRequestFail:(nonnull NSError *)error {
@@ -198,6 +200,7 @@
             self.bannerImageView.image = banner;
             self.fetchedLocation = YES;
             [self checkLoadingView];
+            NSLog(@"got address");
         }
     }];
     
@@ -210,6 +213,7 @@
             [self.yelpTableView reloadData];
             self.fetchedBusinesses = YES;
             [self checkLoadingView];
+            NSLog(@"got business");
         }
     }];
 }

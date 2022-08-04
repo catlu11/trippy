@@ -13,6 +13,7 @@
 #import "Itinerary.h"
 #import "CoreDataHandler.h"
 #import "NetworkManager.h"
+#import "CoreData/NSManagedObject.h"
 
 @interface CacheDataHandler ()
 @property (atomic) int itineraryFetchCount;
@@ -151,7 +152,6 @@
             } else {
                 strongSelf.itineraryFetchCount = objects.count;
                 if (objects.count == 0) {
-                    __strong CacheDataHandler *strongSelf = weakSelf;
                     [strongSelf.delegate didAddAll];
                 }
                 __weak CacheDataHandler *weakSelf = self;
@@ -166,8 +166,8 @@
                                 [[CoreDataHandler shared] saveItinerary:itinerary]; // save to local cache
                             }
                             [strongSelf.delegate addFetchedItinerary:itinerary];
+                            [strongSelf decrementItineraryFetchCount];
                         }
-                        [strongSelf decrementItineraryFetchCount];
                     }];
                 }
                 self.isFetchingItineraries = NO;
@@ -176,7 +176,7 @@
     }
 }
 
-- (void) fetchSavedCollections {
+- (void) fetchSavedCollections:(BOOL)excludeDependents {
     if (self.isFetchingCollections) {
         return;
     }
@@ -215,8 +215,10 @@
                             [strongSelf.delegate generalRequestFail:error];
                         } else {
                             collection.isOffline = NO;
-                            [strongSelf.delegate addFetchedCollection:collection];
-                            [[CoreDataHandler shared] saveCollection:collection]; // save to local cache
+                            NSManagedObject *collectionMO = [[CoreDataHandler shared] saveCollection:collection]; // save to local cache
+                            if (!excludeDependents || [[collectionMO valueForKey:@"dependents"] intValue] == 0) {
+                                [strongSelf.delegate addFetchedCollection:collection];
+                            }
                             [self decrementCollectionFetchCount];
                         }
                     }];
