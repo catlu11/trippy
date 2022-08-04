@@ -91,6 +91,10 @@
     self.yelpTableView.delegate = self;
     self.nearbyCollectionView.dataSource = self;
     self.nearbyCollectionView.delegate = self;
+    
+    if ([[LocationManager shared] currentLocation]) {
+        [self didFetchLocation];
+    }
 }
 
 - (void)checkLoadingView {
@@ -205,8 +209,9 @@
     }];
     
     self.nearbyTripsData = [[NSMutableArray alloc] init];
-    [self.geoHandler fetchItinerariesByCoordinate:currentLoc.coordinate rangeInKm:50.0];
-    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+        [self.geoHandler fetchItinerariesByCoordinate:currentLoc.coordinate rangeInKm:50.0];
+    });
     [[YelpAPIManager shared] getBusinessSearchWithCompletion:@(currentLoc.coordinate.latitude) longitude:@(currentLoc.coordinate.longitude) completion:^(NSArray * _Nonnull results, NSError * _Nonnull) {
         if (results) {
             self.yelpData = results;

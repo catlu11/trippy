@@ -30,6 +30,39 @@
     return self;
 }
 
+- (void)calculateRoutes:(Itinerary *)itinerary completion:(void (^)(NSArray *routes, NSError *))completion {
+    self.routes = [[NSMutableDictionary alloc] init];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        dispatch_group_t group = dispatch_group_create();
+        dispatch_group_enter(group);
+        [self calculateCostOptimalRoute:itinerary completion:^(RouteOption *response, NSError *) {
+            if (response) {
+                [self.routes setObject:response forKey:@"cost"];
+            }
+            dispatch_group_leave(group);
+        }];
+        dispatch_group_enter(group);
+        [self calculateDistanceOptimalRoute:itinerary omitWaypoints:@[] completion:^(RouteOption *response, NSError *) {
+            if (response) {
+                [self.routes setObject:response forKey:@"distance"];
+            }
+            dispatch_group_leave(group);
+        }];
+        dispatch_group_enter(group);
+        [self calculateDefaultRoute:itinerary omitWaypoints:@[] completion:^(RouteOption *response, NSError *) {
+            if (response) {
+                [self.routes setObject:response forKey:@"default"];
+            }
+            dispatch_group_leave(group);
+        }];
+        dispatch_group_notify(group, dispatch_get_main_queue(), ^{
+            [self synthesizeRoutes:self.routes[@"cost"] distanceOption:self.routes[@"distance"] defaultOption:self.routes[@"default"] itinerary:itinerary completion:completion];
+        });
+    });
+}
+
+# pragma mark - Private
+
 - (void)calculateDefaultRoute:(Itinerary *)itinerary
                 omitWaypoints:(NSArray *)omitWaypoints
                    completion:(void (^)(RouteOption *response, NSError *))completion {
@@ -229,37 +262,6 @@
     } else {
         completion([self compareForBestRoutes:distanceOption route2:defaultOption itinerary:itinerary returnOne:NO], nil);
     }
-}
-
-- (void)calculateRoutes:(Itinerary *)itinerary completion:(void (^)(NSArray *routes, NSError *))completion {
-    self.routes = [[NSMutableDictionary alloc] init];
-    dispatch_async(dispatch_get_main_queue(), ^{
-        dispatch_group_t group = dispatch_group_create();
-        dispatch_group_enter(group);
-        [self calculateCostOptimalRoute:itinerary completion:^(RouteOption *response, NSError *) {
-            if (response) {
-                [self.routes setObject:response forKey:@"cost"];
-            }
-            dispatch_group_leave(group);
-        }];
-        dispatch_group_enter(group);
-        [self calculateDistanceOptimalRoute:itinerary omitWaypoints:@[] completion:^(RouteOption *response, NSError *) {
-            if (response) {
-                [self.routes setObject:response forKey:@"distance"];
-            }
-            dispatch_group_leave(group);
-        }];
-        dispatch_group_enter(group);
-        [self calculateDefaultRoute:itinerary omitWaypoints:@[] completion:^(RouteOption *response, NSError *) {
-            if (response) {
-                [self.routes setObject:response forKey:@"default"];
-            }
-            dispatch_group_leave(group);
-        }];
-        dispatch_group_notify(group, dispatch_get_main_queue(), ^{
-            [self synthesizeRoutes:self.routes[@"cost"] distanceOption:self.routes[@"distance"] defaultOption:self.routes[@"default"] itinerary:itinerary completion:completion];
-        });
-    });
 }
 
 @end

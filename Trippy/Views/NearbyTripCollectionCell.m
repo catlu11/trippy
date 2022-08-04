@@ -8,7 +8,7 @@
 #import "NearbyTripCollectionCell.h"
 #import "Itinerary.h"
 
-#define CELL_SHADOW_OPACITY 0.2;
+#define CELL_SHADOW_OPACITY 0.25;
 #define CELL_SHADOW_RADIUS 4;
 #define CELL_CORNER_RADIUS 15;
 
@@ -22,8 +22,8 @@
 
 - (void)updateUI {
     self.contentView.layer.shadowColor = [[UIColor blackColor] CGColor];
-    self.contentView.layer.shadowOpacity = CELL_SHADOW_RADIUS;
-    self.contentView.layer.shadowRadius = CELL_SHADOW_OPACITY;
+    self.contentView.layer.shadowOpacity = CELL_SHADOW_OPACITY;
+    self.contentView.layer.shadowRadius = CELL_SHADOW_RADIUS;
     
     self.mapImageView.clipsToBounds = YES;
     self.mapImageView.layer.cornerRadius = CELL_CORNER_RADIUS;
