@@ -11,7 +11,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface NearbyTripCollectionCell : UICollectionViewCell
-@property (strong, nonatomic) Itinerary *it;
+@property (strong, nonatomic) Itinerary *itin;
 - (void)updateUI;
 @end
 

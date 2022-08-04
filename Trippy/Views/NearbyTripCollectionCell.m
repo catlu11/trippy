@@ -27,10 +27,10 @@
     
     self.mapImageView.clipsToBounds = YES;
     self.mapImageView.layer.cornerRadius = CELL_CORNER_RADIUS;
-    self.mapImageView.image = self.it.staticMap;
+    self.mapImageView.image = self.itin.staticMap;
     
-    self.nameLabel.text = self.it.name;
-    self.authorLabel.text = [NSString stringWithFormat:@"Created by: %@", self.it.userId];
+    self.nameLabel.text = self.itin.name;
+    self.authorLabel.text = [NSString stringWithFormat:@"Created by: %@", self.itin.userId];
 }
 
 @end
