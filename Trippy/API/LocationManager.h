@@ -16,7 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface LocationManager : NSObject
 + (LocationManager *)shared;
-@property (nonatomic, weak) id<LocationManagerDelegate> delegate;
+@property (weak, nonatomic) id<LocationManagerDelegate> delegate;
 @property (strong, nonatomic) CLLocation * _Nullable currentLocation;
 @end
 

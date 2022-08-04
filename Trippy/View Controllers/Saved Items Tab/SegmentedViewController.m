@@ -12,13 +12,18 @@
 #import "SavedItinerariesViewController.h"
 #import "SavedCollectionsViewController.h"
 
+typedef NS_ENUM(NSInteger, ViewControllerType) {
+    kItineraryView = 0,
+    kCollectionView = 1,
+};
+
 @interface SegmentedViewController () <LogoutHandlerDelegate>
 @property (strong, nonatomic) LogoutHandler *logoutHandler;
 @property (weak, nonatomic) IBOutlet UIView *contentView;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *segmentedControl;
 
-@property (strong, nonatomic) SavedItinerariesViewController *itVC;
-@property (strong, nonatomic) SavedCollectionsViewController *colVC;
+@property (strong, nonatomic) SavedItinerariesViewController *itineraryVC;
+@property (strong, nonatomic) SavedCollectionsViewController *collectionVC;
 @property (strong, nonatomic) UIViewController *currentVC;
 @end
 
@@ -32,8 +37,8 @@
     self.logoutHandler.delegate = self;
     
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    self.itVC = [storyboard instantiateViewControllerWithIdentifier:@"SavedItinerariesViewController"];
-    self.colVC = [storyboard instantiateViewControllerWithIdentifier:@"SavedCollectionsViewController"];
+    self.itineraryVC = [storyboard instantiateViewControllerWithIdentifier:@"SavedItinerariesViewController"];
+    self.collectionVC = [storyboard instantiateViewControllerWithIdentifier:@"SavedCollectionsViewController"];
     
     [self displayCurrentTab:self.segmentedControl.selectedSegmentIndex];
 }
@@ -47,11 +52,11 @@
 
 - (UIViewController *)viewControllerForSelectedSegmentIndex:(int)index {
     switch (index) {
-        case 0:
-            return self.itVC;
+        case kItineraryView:
+            return self.itineraryVC;
             break;
-        case 1:
-            return self.colVC;
+        case kCollectionView:
+            return self.collectionVC;
             break;
         default:
             return nil;

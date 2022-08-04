@@ -208,7 +208,7 @@
     if([[segue identifier] isEqualToString:@"waypointPrefsSegue"]) {
         WaypointPreferencesViewController *vc = [segue destinationViewController];
         vc.location = self.selectedLoc;
-        vc.preferences = [self.mutableItinerary getPreference:self.selectedLoc];
+        vc.preferences = [self.mutableItinerary getPreferenceByLocation:self.selectedLoc];
         vc.delegate = self;
     } else if ([[segue identifier] isEqualToString:@"itPrefsSegue"]) {
         ItinerarySettingsViewController *vc = [segue destinationViewController];

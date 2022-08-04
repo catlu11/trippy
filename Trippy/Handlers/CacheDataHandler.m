@@ -13,6 +13,7 @@
 #import "Itinerary.h"
 #import "CoreDataHandler.h"
 #import "NetworkManager.h"
+#import "CoreData/NSManagedObject.h"
 
 @interface CacheDataHandler ()
 @property (atomic) int itineraryFetchCount;
@@ -151,10 +152,9 @@
             } else {
                 strongSelf.itineraryFetchCount = objects.count;
                 if (objects.count == 0) {
-                    __strong CacheDataHandler *strongSelf = weakSelf;
                     [strongSelf.delegate didAddAll];
                 }
-                __weak CacheDataHandler *weakSelf = self;
+                __weak CacheDataHandler *weakSelf = strongSelf;
                 for(PFObject *obj in objects) {
                     [ParseUtils itineraryFromPFObj:obj completion:^(Itinerary * _Nonnull itinerary, NSError * _Nonnull) {
                         __strong CacheDataHandler *strongSelf = weakSelf;
@@ -166,17 +166,17 @@
                                 [[CoreDataHandler shared] saveItinerary:itinerary]; // save to local cache
                             }
                             [strongSelf.delegate addFetchedItinerary:itinerary];
+                            [strongSelf decrementItineraryFetchCount];
                         }
-                        [strongSelf decrementItineraryFetchCount];
                     }];
                 }
-                self.isFetchingItineraries = NO;
+                strongSelf.isFetchingItineraries = NO;
             }
         }];
     }
 }
 
-- (void) fetchSavedCollections {
+- (void) fetchSavedCollections:(BOOL)excludeDependents {
     if (self.isFetchingCollections) {
         return;
     }
@@ -199,15 +199,15 @@
         
         __weak CacheDataHandler *weakSelf = self;
         [query findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
+            __strong CacheDataHandler *strongSelf = weakSelf;
             if (error) {
-                __strong CacheDataHandler *strongSelf = weakSelf;
                 [strongSelf.delegate generalRequestFail:error];
             } else {
-                self.collectionFetchCount = objects.count;
+                strongSelf.collectionFetchCount = objects.count;
                 if (objects.count == 0) {
-                    __strong CacheDataHandler *strongSelf = weakSelf;
                     [strongSelf.delegate didAddAll];
                 }
+                __weak CacheDataHandler *weakSelf = self;
                 for(PFObject *obj in objects) {
                     [ParseUtils collectionFromPFObj:obj completion:^(LocationCollection * _Nonnull collection, NSError * _Nonnull) {
                         __strong CacheDataHandler *strongSelf = weakSelf;
@@ -215,13 +215,15 @@
                             [strongSelf.delegate generalRequestFail:error];
                         } else {
                             collection.isOffline = NO;
-                            [strongSelf.delegate addFetchedCollection:collection];
-                            [[CoreDataHandler shared] saveCollection:collection]; // save to local cache
-                            [self decrementCollectionFetchCount];
+                            NSManagedObject *collectionMO = [[CoreDataHandler shared] saveCollection:collection]; // save to local cache
+                            if (!excludeDependents || [[collectionMO valueForKey:@"dependents"] intValue] == 0) {
+                                [strongSelf.delegate addFetchedCollection:collection];
+                            }
+                            [strongSelf decrementCollectionFetchCount];
                         }
                     }];
                 }
-                self.isFetchingCollections = NO;
+                strongSelf.isFetchingCollections = NO;
             }
         }];
     }
@@ -256,7 +258,7 @@
             if (error) {
                 [strongSelf.delegate generalRequestFail:error];
             } else {
-                self.locationFetchCount = objects.count;
+                strongSelf.locationFetchCount = objects.count;
                 if (objects.count == 0) {
                     [strongSelf.delegate didAddAll];
                 }
@@ -265,9 +267,9 @@
                     loc.isOffline = NO;
                     [strongSelf.delegate addFetchedLocation:loc];
                     [[CoreDataHandler shared] saveLocation:loc];
-                    [self decrementLocationFetchCount];
+                    [strongSelf decrementLocationFetchCount];
                 }
-                self.isFetchingLocations = NO;
+                strongSelf.isFetchingLocations = NO;
             }
         }];
     }

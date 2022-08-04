@@ -43,7 +43,7 @@
 
 - (void)initialFetchAll {
     [self.parseHandler fetchSavedLocations];
-    [self.parseHandler fetchSavedCollections];
+    [self.parseHandler fetchSavedCollections:NO];
     [self.parseHandler fetchSavedItineraries];
 }
 

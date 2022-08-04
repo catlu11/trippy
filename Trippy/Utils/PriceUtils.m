@@ -45,7 +45,7 @@ const static NSDictionary *basePrices = @{@"food": @15,
 @implementation PriceUtils
 
 + (double)computeExpectedCost:(Location *)loc itinerary:(Itinerary *)itinerary {
-    WaypointPreferences *pref = [itinerary getPreference:loc];
+    WaypointPreferences *pref = [itinerary getPreferenceByLocation:loc];
     if (pref.budget) {
         return [pref.budget doubleValue];
     }

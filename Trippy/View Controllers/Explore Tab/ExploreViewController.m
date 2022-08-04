@@ -34,7 +34,7 @@
 @property (weak, nonatomic) IBOutlet UITableView *yelpTableView;
 @property (weak, nonatomic) IBOutlet UICollectionView *nearbyCollectionView;
 @property (strong, nonatomic) NSMutableArray *nearbyTripsData;
-@property (strong, nonatomic) NSMutableArray *yelpData;
+@property (strong, nonatomic) NSArray *yelpData;
 
 @property (strong, nonatomic) LogoutHandler *logoutHandler;
 @property (strong, nonatomic) GeoDataHandler *geoHandler;
@@ -91,6 +91,10 @@
     self.yelpTableView.delegate = self;
     self.nearbyCollectionView.dataSource = self;
     self.nearbyCollectionView.delegate = self;
+    
+    if ([[LocationManager shared] currentLocation]) {
+        [self didFetchLocation];
+    }
 }
 
 - (void)checkLoadingView {
@@ -105,7 +109,7 @@
 
 - (nonnull __kindof UICollectionViewCell *)collectionView:(nonnull UICollectionView *)collectionView cellForItemAtIndexPath:(nonnull NSIndexPath *)indexPath {
     NearbyTripCollectionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"NearbyTripCollectionCell" forIndexPath:indexPath];
-    cell.it = [self.nearbyTripsData objectAtIndex:indexPath.item];
+    cell.itin = [self.nearbyTripsData objectAtIndex:indexPath.item];
     [cell updateUI];
     return cell;
 }
@@ -175,7 +179,8 @@
     [self.nearbyCollectionView reloadData];
 }
 
-- (void)didAddAll {    self.fetchedTrips = YES;
+- (void)didAddAll {
+    self.fetchedTrips = YES;
     [self checkLoadingView];
 }
 
@@ -191,25 +196,30 @@
     }
     self.hasFetched = YES;
     CLLocation *currentLoc = [[LocationManager shared] currentLocation];
+    __weak ExploreViewController *weakSelf = self;
     [[MapsAPIManager shared] getAddressWithCompletion:currentLoc.coordinate completion:^(GMSAddress * _Nonnull response, NSError * _Nonnull) {
         if (response) {
-            self.locationLabel.text = [NSString stringWithFormat:@"%@, %@", response.locality, response.administrativeArea];
+            __strong ExploreViewController *strongSelf = weakSelf;
+            strongSelf.locationLabel.text = [NSString stringWithFormat:@"%@, %@", response.locality, response.administrativeArea];
             UIImage *banner = [MapUtils getStaticMapImage:currentLoc.coordinate width:self.bannerImageView.frame.size.width height:self.bannerImageView.frame.size.height];
-            self.bannerImageView.image = banner;
-            self.fetchedLocation = YES;
-            [self checkLoadingView];
+            strongSelf.bannerImageView.image = banner;
+            strongSelf.fetchedLocation = YES;
+            [strongSelf checkLoadingView];
         }
     }];
     
     self.nearbyTripsData = [[NSMutableArray alloc] init];
-    [self.geoHandler fetchItinerariesByCoordinate:currentLoc.coordinate rangeInKm:50.0];
-    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+        __strong ExploreViewController *strongSelf = weakSelf;
+        [strongSelf.geoHandler fetchItinerariesByCoordinate:currentLoc.coordinate rangeInKm:50.0];
+    });
     [[YelpAPIManager shared] getBusinessSearchWithCompletion:@(currentLoc.coordinate.latitude) longitude:@(currentLoc.coordinate.longitude) completion:^(NSArray * _Nonnull results, NSError * _Nonnull) {
         if (results) {
-            self.yelpData = results;
-            [self.yelpTableView reloadData];
-            self.fetchedBusinesses = YES;
-            [self checkLoadingView];
+            __strong ExploreViewController *strongSelf = weakSelf;
+            strongSelf.yelpData = results;
+            [strongSelf.yelpTableView reloadData];
+            strongSelf.fetchedBusinesses = YES;
+            [strongSelf checkLoadingView];
         }
     }];
 }

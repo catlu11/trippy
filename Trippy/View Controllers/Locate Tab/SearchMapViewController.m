@@ -70,7 +70,7 @@
         self.collectionPickerView.dataSource = self;
         self.data = [[NSMutableArray alloc] init];
         
-        [self.handler fetchSavedCollections];
+        [self.handler fetchSavedCollections:YES];
     } else {
         UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"No internet connection"
                                    message:@"Please try again later."

@@ -57,7 +57,7 @@
 - (void) refreshData {
     switch (self.listType) {
         case kCollection:
-            [self.handler fetchSavedCollections];
+            [self.handler fetchSavedCollections:NO];
             break;
         case kLocation:
             [self.handler fetchSavedLocations];
