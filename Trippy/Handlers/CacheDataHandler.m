@@ -104,6 +104,7 @@
         [[CoreDataHandler shared] updateItinerary:it];
         [self.delegate updatedItinerarySuccess:it];
     } else {
+        __weak CacheDataHandler *weakSelf = self;
         [ParseUtils pfObjFromItinerary:it completion:^(PFObject * _Nonnull obj, NSError * _Nonnull) {
             obj[@"preferencesJson"] = [ParseUtils pfFileFromDict:[it toPrefsDictionary] name:@"preferences"];
             obj[@"departure"] = it.departureTime;
@@ -112,7 +113,6 @@
             obj[@"staticMap"] = [ParseUtils pfFileFromImage:it.staticMap name:@"img"];
             obj[@"directionsJson"] = [ParseUtils pfFileFromDict:[it toRouteDictionary] name:@"directions"];
             obj[@"isFavorited"] = [NSNumber numberWithBool:it.isFavorited];
-            __weak CacheDataHandler *weakSelf = self;
             [obj saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
                 if (succeeded) {
                     __strong CacheDataHandler *strongSelf = weakSelf;
@@ -155,7 +155,6 @@
                 if (objects.count == 0) {
                     [strongSelf.delegate didAddAll];
                 }
-                __weak CacheDataHandler *weakSelf = strongSelf;
                 for(PFObject *obj in objects) {
                     [ParseUtils itineraryFromPFObj:obj completion:^(Itinerary * _Nonnull itinerary, NSError * _Nonnull) {
                         __strong CacheDataHandler *strongSelf = weakSelf;
@@ -208,7 +207,6 @@
                 if (objects.count == 0) {
                     [strongSelf.delegate didAddAll];
                 }
-                __weak CacheDataHandler *weakSelf = self;
                 for(PFObject *obj in objects) {
                     [ParseUtils collectionFromPFObj:obj completion:^(LocationCollection * _Nonnull collection, NSError * _Nonnull) {
                         __strong CacheDataHandler *strongSelf = weakSelf;
