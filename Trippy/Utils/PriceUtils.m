@@ -44,10 +44,9 @@ const static NSDictionary *basePrices = @{@"food": @15,
 
 @implementation PriceUtils
 
-+ (double)computeExpectedCost:(Location *)loc itinerary:(Itinerary *)itinerary {
-    WaypointPreferences *pref = [itinerary getPreferenceByLocation:loc];
-    if (pref.budget) {
-        return [pref.budget doubleValue];
++ (double)computeLocationCost:(Location *)loc {
+    if (loc.estPrice) {
+        return [loc.estPrice doubleValue];
     }
     double cumSum = 0;
     int count = 0;
@@ -60,6 +59,14 @@ const static NSDictionary *basePrices = @{@"food": @15,
     int adjusted = [loc.priceLevel intValue] > 0 ? [loc.priceLevel intValue] - 1: 1;
     NSNumber *multiplier = multipliers[adjusted];
     return (cumSum / count) * [multiplier doubleValue];
+}
+
++ (double)computeExpectedCost:(Location *)loc itinerary:(Itinerary *)itinerary {
+    WaypointPreferences *pref = [itinerary getPreferenceByLocation:loc];
+    if (pref.budget) {
+        return [pref.budget doubleValue];
+    }
+    return [self computeLocationCost:loc];
 }
 
 + (double)computeTotalCost:(Itinerary *)itinerary locations:(NSArray *)locations omitWaypoints:(NSArray *)omitWaypoints {

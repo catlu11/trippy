@@ -25,6 +25,7 @@
     loc.staticMap = [UIImage imageWithData:[obj valueForKey:@"staticMap"]];
     loc.parseObjectId = [obj valueForKey:@"parseObjectId"];
     loc.placeId = [obj valueForKey:@"placeId"];
+    loc.estPrice = [obj valueForKey:@"estPrice"];
     return loc;
 }
 

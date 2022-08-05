@@ -11,6 +11,7 @@
 #import "LocationCollection.h"
 #import "Itinerary.h"
 #import "MapUtils.h"
+#import "PriceUtils.h"
 #import "CoreDataUtils.h"
 @import CoreData;
 
@@ -80,6 +81,7 @@
         [obj setValue:loc.title forKey:@"title"];
         [obj setValue:loc.snippet forKey:@"snippet"];
         [obj setValue:loc.placeId forKey:@"placeId"];
+        [obj setValue:@([PriceUtils computeLocationCost:loc]) forKey:@"estPrice"];
         [obj setValue:UIImagePNGRepresentation([MapUtils getStaticMapImage:loc.coord width:100 height:100]) forKey:@"staticMap"];
         [obj setValue:@(0) forKey:@"dependents"];
         if (loc.parseObjectId) {
