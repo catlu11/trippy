@@ -83,9 +83,9 @@
 }
 
 - (void) postNewItinerary:(Itinerary *)it {
+    __weak CacheDataHandler *weakSelf = self;
     [ParseUtils pfObjFromItinerary:it completion:^(PFObject * _Nonnull obj, NSError * _Nonnull) {
         PFObject *newItinerary = obj;
-        __weak CacheDataHandler *weakSelf = self;
         [newItinerary saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
             if (succeeded) {
                 __strong CacheDataHandler *strongSelf = weakSelf;
