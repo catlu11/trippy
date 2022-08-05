@@ -10,7 +10,6 @@
 #import "Itinerary.h"
 #import "LocationCollection.h"
 #import "Location.h"
-#import "MapUtils.h"
 
 @implementation ParseUtils
 
@@ -253,7 +252,7 @@
                 coord.latitude = center.latitude;
                 coord.longitude = center.longitude;
                 obj[@"startCoord"] = coord;
-                obj[@"radius"] = @([MapUtils getRadiusOfBounds:it.bounds] / 1000);
+                obj[@"radius"] = [it getRadius];
                 if (it.staticMap) {
                     obj[@"staticMap"] = [self pfFileFromImage:it.staticMap name:@"img"];
                 } else {

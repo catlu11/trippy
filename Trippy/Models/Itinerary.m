@@ -202,6 +202,10 @@
     return @([PriceUtils computeTotalCost:self locations:locs omitWaypoints:@[]]);
 }
 
+- (NSNumber *)getRadius {
+    return @([MapUtils getRadiusOfBounds:self.bounds] / 1000); // in km
+}
+
 - (CLLocationCoordinate2D)getCentroid {
     int count = 1;
     double lat = self.originLocation.coord.latitude;

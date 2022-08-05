@@ -8,7 +8,6 @@
 #import "CacheDataHandler.h"
 #import "ParseUtils.h"
 #import "PriceUtils.h"
-#import "MapUtils.h"
 #import "Parse/Parse.h"
 #import "Location.h"
 #import "LocationCollection.h"
@@ -119,7 +118,7 @@
             coord.latitude = center.latitude;
             coord.longitude = center.longitude;
             obj[@"startCoord"] = coord;
-            obj[@"radius"] = @([MapUtils getRadiusOfBounds:it.bounds] / 1000);
+            obj[@"radius"] = [it getRadius];
             [obj saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
                 if (succeeded) {
                     __strong CacheDataHandler *strongSelf = weakSelf;

@@ -71,6 +71,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSNumber *)getTotalDistance;
 - (NSNumber *)getTotalCost:(BOOL)includeAll;
 - (CLLocationCoordinate2D)getCentroid;
+- (NSNumber *)getRadius;
 @end
 
 NS_ASSUME_NONNULL_END
