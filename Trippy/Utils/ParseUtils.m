@@ -248,7 +248,7 @@
                 obj[@"mileageConstraint"] = it.mileageConstraint;
                 obj[@"budgetConstraint"] = it.budgetConstraint;
                 obj[@"isFavorited"] = [NSNumber numberWithBool:it.isFavorited];
-                CLLocationCoordinate2D center = [MapUtils getCenterOfBounds:it.bounds];
+                CLLocationCoordinate2D center = [it getCentroid];
                 PFGeoPoint *coord = [[PFGeoPoint alloc] init];
                 coord.latitude = center.latitude;
                 coord.longitude = center.longitude;

@@ -70,6 +70,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSDate *)computeDeparture:(int)waypointIndex;
 - (NSNumber *)getTotalDistance;
 - (NSNumber *)getTotalCost:(BOOL)includeAll;
+- (CLLocationCoordinate2D)getCentroid;
 @end
 
 NS_ASSUME_NONNULL_END

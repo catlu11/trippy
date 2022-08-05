@@ -114,7 +114,7 @@
             obj[@"staticMap"] = [ParseUtils pfFileFromImage:it.staticMap name:@"img"];
             obj[@"directionsJson"] = [ParseUtils pfFileFromDict:[it toRouteDictionary] name:@"directions"];
             obj[@"isFavorited"] = [NSNumber numberWithBool:it.isFavorited];
-            CLLocationCoordinate2D center = [MapUtils getCenterOfBounds:it.bounds];
+            CLLocationCoordinate2D center = [it getCentroid];
             PFGeoPoint *coord = [[PFGeoPoint alloc] init];
             coord.latitude = center.latitude;
             coord.longitude = center.longitude;
