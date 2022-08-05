@@ -24,6 +24,7 @@
 		F079EF98289B1F6100F9BAA7 /* YelpAPIManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F079EF97289B1F6100F9BAA7 /* YelpAPIManager.m */; };
 		F079EF9B289B262300F9BAA7 /* YelpBusiness.m in Sources */ = {isa = PBXBuildFile; fileRef = F079EF9A289B262300F9BAA7 /* YelpBusiness.m */; };
 		F079EF9E289B2A8300F9BAA7 /* YelpBusinessCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F079EF9D289B2A8300F9BAA7 /* YelpBusinessCell.m */; };
+		F079EFA3289DBAB100F9BAA7 /* main.js in Resources */ = {isa = PBXBuildFile; fileRef = F079EFA2289DBAB100F9BAA7 /* main.js */; };
 		F07D030C288EFCE30049F355 /* RouteOption.m in Sources */ = {isa = PBXBuildFile; fileRef = F07D030B288EFCE30049F355 /* RouteOption.m */; };
 		F07D030F288F07260049F355 /* ItineraryItemCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F07D030E288F07260049F355 /* ItineraryItemCell.m */; };
 		F07D0312288F07540049F355 /* ViewItineraryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F07D0311288F07540049F355 /* ViewItineraryViewController.m */; };
@@ -127,6 +128,7 @@
 		F079EF9A289B262300F9BAA7 /* YelpBusiness.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = YelpBusiness.m; path = Trippy/Models/YelpBusiness.m; sourceTree = "<group>"; };
 		F079EF9C289B2A8300F9BAA7 /* YelpBusinessCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YelpBusinessCell.h; sourceTree = "<group>"; };
 		F079EF9D289B2A8300F9BAA7 /* YelpBusinessCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YelpBusinessCell.m; sourceTree = "<group>"; };
+		F079EFA2289DBAB100F9BAA7 /* main.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = main.js; sourceTree = "<group>"; };
 		F07D030A288EFCE30049F355 /* RouteOption.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RouteOption.h; path = Trippy/Models/RouteOption.h; sourceTree = "<group>"; };
 		F07D030B288EFCE30049F355 /* RouteOption.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RouteOption.m; path = Trippy/Models/RouteOption.m; sourceTree = "<group>"; };
 		F07D030D288F07260049F355 /* ItineraryItemCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ItineraryItemCell.h; sourceTree = "<group>"; };
@@ -306,6 +308,14 @@
 			path = "Explore Tab";
 			sourceTree = "<group>";
 		};
+		F079EFA1289DBA9800F9BAA7 /* ParseCloud */ = {
+			isa = PBXGroup;
+			children = (
+				F079EFA2289DBAB100F9BAA7 /* main.js */,
+			);
+			path = ParseCloud;
+			sourceTree = "<group>";
+		};
 		F0C75FA5287CC1BA0015BB74 /* Collections Tab */ = {
 			isa = PBXGroup;
 			children = (
@@ -394,6 +404,7 @@
 		F0F335722874A0E700470507 /* Trippy */ = {
 			isa = PBXGroup;
 			children = (
+				F079EFA1289DBA9800F9BAA7 /* ParseCloud */,
 				F079EF842899872900F9BAA7 /* External Libraries */,
 				F079EF732898797C00F9BAA7 /* Assets */,
 				F0F6581228887FE000C04AB0 /* Handlers */,
@@ -656,6 +667,7 @@
 				F079EF6F28986D6D00F9BAA7 /* paper_plane.gif in Resources */,
 				F0C75F6D287642C10015BB74 /* Keys.plist in Resources */,
 				F0F335832874A0EB00470507 /* LaunchScreen.storyboard in Resources */,
+				F079EFA3289DBAB100F9BAA7 /* main.js in Resources */,
 				F0F335802874A0EB00470507 /* Assets.xcassets in Resources */,
 				F0F3357E2874A0E700470507 /* Main.storyboard in Resources */,
 			);
@@ -1210,6 +1222,7 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
 /* Begin XCVersionGroup section */
 		F0342E1C28946111006717CB /* DataModel.xcdatamodeld */ = {
 			isa = XCVersionGroup;
