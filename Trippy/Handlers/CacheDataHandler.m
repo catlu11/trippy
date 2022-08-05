@@ -7,6 +7,7 @@
 
 #import "CacheDataHandler.h"
 #import "ParseUtils.h"
+#import "PriceUtils.h"
 #import "Parse/Parse.h"
 #import "Location.h"
 #import "LocationCollection.h"

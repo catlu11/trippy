@@ -12,6 +12,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface PriceUtils : NSObject
++ (double)computeLocationCost:(Location *)loc;
 + (double)computeExpectedCost:(Location *)loc itinerary:(Itinerary *)itinerary;
 + (double)computeTotalCost:(Itinerary *)itinerary locations:(NSArray *)locations omitWaypoints:(NSArray *)omitWaypoints;
 @end
