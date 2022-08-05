@@ -44,7 +44,6 @@
             if (objects.count == 0) {
                 [strongSelf.delegate didAddAll];
             }
-            __weak GeoDataHandler *weakSelf = strongSelf;
             for(PFObject *obj in objects) {
                 [ParseUtils itineraryFromPFObj:obj completion:^(Itinerary * _Nonnull itinerary, NSError * _Nonnull) {
                     __strong GeoDataHandler *strongSelf = weakSelf;

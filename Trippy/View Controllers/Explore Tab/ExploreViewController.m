@@ -92,6 +92,7 @@
     self.nearbyCollectionView.dataSource = self;
     self.nearbyCollectionView.delegate = self;
     
+//    NSLog(@"%@", [[LocationManager shared] currentLocation]);
     if ([[LocationManager shared] currentLocation]) {
         [self didFetchLocation];
     }
@@ -194,6 +195,7 @@
     if (self.hasFetched) {
         return;
     }
+    NSLog(@"fetched user location");
     self.hasFetched = YES;
     CLLocation *currentLoc = [[LocationManager shared] currentLocation];
     __weak ExploreViewController *weakSelf = self;
@@ -201,10 +203,11 @@
         if (response) {
             __strong ExploreViewController *strongSelf = weakSelf;
             strongSelf.locationLabel.text = [NSString stringWithFormat:@"%@, %@", response.locality, response.administrativeArea];
-            UIImage *banner = [MapUtils getStaticMapImage:currentLoc.coordinate width:self.bannerImageView.frame.size.width height:self.bannerImageView.frame.size.height];
+            UIImage *banner = [MapUtils getStaticMapImage:currentLoc.coordinate width:strongSelf.bannerImageView.frame.size.width height:strongSelf.bannerImageView.frame.size.height];
             strongSelf.bannerImageView.image = banner;
             strongSelf.fetchedLocation = YES;
             [strongSelf checkLoadingView];
+            NSLog(@"fetch user address");
         }
     }];
     
@@ -220,6 +223,7 @@
             [strongSelf.yelpTableView reloadData];
             strongSelf.fetchedBusinesses = YES;
             [strongSelf checkLoadingView];
+            NSLog(@"fetched yelp data");
         }
     }];
 }

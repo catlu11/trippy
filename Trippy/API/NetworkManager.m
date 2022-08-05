@@ -42,9 +42,15 @@
 }
 
 - (void)initialFetchAll {
-    [self.parseHandler fetchSavedLocations];
-    [self.parseHandler fetchSavedCollections:NO];
-    [self.parseHandler fetchSavedItineraries];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.parseHandler fetchSavedLocations];
+    });
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.parseHandler fetchSavedCollections:NO];
+    });
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.parseHandler fetchSavedItineraries];
+    });
 }
 
 - (void)reachabilityChanged {

@@ -56,11 +56,14 @@
     CLAccuracyAuthorization accuracy = manager.accuracyAuthorization;
     switch (accuracy) {
         case CLAccuracyAuthorizationFullAccuracy:
-          NSLog(@"Location accuracy is precise.");
+            NSLog(@"Location accuracy is precise.");
+            if (self.currentLocation) {
+                [self.delegate didFetchLocation];
+            }
           break;
         case CLAccuracyAuthorizationReducedAccuracy:
-          NSLog(@"Location accuracy is not precise.");
-          break;
+            NSLog(@"Location accuracy is not precise.");
+            break;
     }
 
     switch (status) {
