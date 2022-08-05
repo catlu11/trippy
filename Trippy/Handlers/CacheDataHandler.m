@@ -26,18 +26,18 @@
 
 - (void) postNewLocation:(Location *)location collection:(LocationCollection *)collection {
     // Offline mode not possible
+    __weak CacheDataHandler *weakSelf = self;
     [ParseUtils pfObjFromLocation:location completion:^(PFObject * _Nonnull obj, NSError * _Nonnull) {
         PFObject *newLocation = obj;
         location.parseObjectId = newLocation.objectId;
-        __weak CacheDataHandler *weakSelf = self;
         [newLocation saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
             if(succeeded) {
                 [[CoreDataHandler shared] saveLocation:location]; // post to local cache
                 PFQuery *query = [PFQuery queryWithClassName:@"Collection"];
                 [query whereKey:@"objectId" equalTo:collection.parseObjectId];
                 [query getFirstObjectInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
+                    __strong CacheDataHandler *strongSelf = weakSelf;
                     if (error) {
-                        __strong CacheDataHandler *strongSelf = weakSelf;
                         [strongSelf.delegate generalRequestFail:error];
                     } else {
                         PFRelation *relation = [object relationForKey:@"locations"];
@@ -65,9 +65,9 @@
         collection.isOffline = YES;
         [self.delegate postedCollectionSuccess:collection];
     } else {
+        __weak CacheDataHandler *weakSelf = self;
         [ParseUtils pfObjFromCollection:collection completion:^(PFObject * _Nonnull obj, NSError * _Nonnull) {
             PFObject *newCollection = obj;
-            __weak CacheDataHandler *weakSelf = self;
             [newCollection saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
                 if (succeeded) {
                     __strong CacheDataHandler *strongSelf = weakSelf;

@@ -22,7 +22,7 @@
         UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
         UIViewController *tabNavigationController = [storyboard instantiateViewControllerWithIdentifier:@"TabNavigationController"];
         self.window.rootViewController = tabNavigationController;
-//        [[NetworkManager shared] initialFetchAll];
+        [[NetworkManager shared] initialFetchAll];
     }
 }
 
