@@ -109,4 +109,16 @@
     return inMeters;
 }
 
++ (CLLocationCoordinate2D)getCenterOfBounds:(GMSCoordinateBounds *)bounds {
+    double lat1 = bounds.northEast.latitude;
+    double lat2 = bounds.southWest.latitude;
+    double lon1 = bounds.northEast.longitude;
+    double lon2 = bounds.southWest.longitude;
+    return CLLocationCoordinate2DMake((lat1 + lat2) / 2, (lon1 + lon2) / 2);
+}
+
++ (double)getRadiusOfBounds:(GMSCoordinateBounds *)bounds {
+    return GMSGeometryDistance(bounds.northEast, bounds.southWest) / 2;
+}
+
 @end

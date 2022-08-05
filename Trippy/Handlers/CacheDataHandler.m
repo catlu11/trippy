@@ -8,6 +8,7 @@
 #import "CacheDataHandler.h"
 #import "ParseUtils.h"
 #import "PriceUtils.h"
+#import "MapUtils.h"
 #import "Parse/Parse.h"
 #import "Location.h"
 #import "LocationCollection.h"
@@ -113,6 +114,12 @@
             obj[@"staticMap"] = [ParseUtils pfFileFromImage:it.staticMap name:@"img"];
             obj[@"directionsJson"] = [ParseUtils pfFileFromDict:[it toRouteDictionary] name:@"directions"];
             obj[@"isFavorited"] = [NSNumber numberWithBool:it.isFavorited];
+            CLLocationCoordinate2D center = [MapUtils getCenterOfBounds:it.bounds];
+            PFGeoPoint *coord = [[PFGeoPoint alloc] init];
+            coord.latitude = center.latitude;
+            coord.longitude = center.longitude;
+            obj[@"startCoord"] = coord;
+            obj[@"radius"] = @([MapUtils getRadiusOfBounds:it.bounds] / 1000);
             [obj saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
                 if (succeeded) {
                     __strong CacheDataHandler *strongSelf = weakSelf;
