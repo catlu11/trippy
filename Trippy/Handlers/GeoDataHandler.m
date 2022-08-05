@@ -40,7 +40,7 @@
         if (error) {
             [strongSelf.delegate generalRequestFail:error];
         } else {
-            self.itineraryFetchCount = objects.count;
+            strongSelf.itineraryFetchCount = objects.count;
             if (objects.count == 0) {
                 [strongSelf.delegate didAddAll];
             }
