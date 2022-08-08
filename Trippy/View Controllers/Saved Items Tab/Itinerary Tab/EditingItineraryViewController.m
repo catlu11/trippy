@@ -103,7 +103,7 @@
     self.editView.layer.shadowOpacity = VIEW_SHADOW_OPACITY;
     self.editView.layer.shadowRadius = VIEW_SHADOW_RADIUS;
     
-    self.editView.backgroundColor = [UIColor whiteColor];
+    self.editView.backgroundColor = [UIColor systemBackgroundColor];
     
     [self.loadingIndicator setHidesWhenStopped:YES];
 }
@@ -238,19 +238,19 @@
         loc = self.mutableItinerary.originLocation;
         estDeparture = self.mutableItinerary.departureTime;
         [cell disableArrow];
-        cell.backgroundColor = [UIColor whiteColor];
+        cell.backgroundColor = [UIColor systemBackgroundColor];
     } else if (indexPath.row == self.orderedData.count + 1) { // if ending destination (back to origin)
         loc = self.mutableItinerary.originLocation;
         estArrival = [self.mutableItinerary computeArrival:(indexPath.row - 1)];
         [cell disableArrow];
-        cell.backgroundColor = [UIColor whiteColor];
+        cell.backgroundColor = [UIColor systemBackgroundColor];
     } else if (indexPath.row < self.orderedData.count + 1) { // if waypoint
         loc = self.orderedData[indexPath.row - 1];
         estArrival = [self.mutableItinerary computeArrival:(indexPath.row - 1)];
         estDeparture = [self.mutableItinerary computeDeparture:(indexPath.row - 1)];
         cell.waypointIndex = indexPath.row - 1;
         [cell enableArrow];
-        cell.backgroundColor = [UIColor whiteColor];
+        cell.backgroundColor = [UIColor systemBackgroundColor];
     } else {
         loc = self.omittedData[indexPath.row - self.orderedData.count - 2];
         [cell disableArrow];

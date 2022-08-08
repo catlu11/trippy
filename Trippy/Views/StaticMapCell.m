@@ -44,9 +44,9 @@
 
 - (void) updateUIElementsItinerary {
     if (self.itinerary.isOffline) {
-        self.backgroundColor = [UIColor lightGrayColor];
+        self.backgroundColor = [UIColor systemGrayColor];
     } else {
-        self.backgroundColor = [UIColor whiteColor];
+        self.backgroundColor = [UIColor systemBackgroundColor];
     }
     
     [self.starredImage setHidden:NO];
@@ -83,10 +83,10 @@
 }
 
 - (void) updateUIElementsCollection {
-    if (self.collection.isOffline) {
-        self.backgroundColor = [UIColor lightGrayColor];
+    if (self.itinerary.isOffline) {
+        self.backgroundColor = [UIColor systemGrayColor];
     } else {
-        self.backgroundColor = [UIColor whiteColor];
+        self.backgroundColor = [UIColor systemBackgroundColor];
     }
     [self.starredImage setHidden:YES];
     

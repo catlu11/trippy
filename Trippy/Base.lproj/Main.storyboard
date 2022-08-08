@@ -152,7 +152,7 @@
                                                                     <rect key="frame" x="15" y="132.00000000000003" width="159" height="17"/>
                                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
-                                                                    <nil key="textColor"/>
+                                                                    <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                     <nil key="highlightedColor"/>
                                                                     <color key="shadowColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                     <size key="shadowOffset" width="2" height="1"/>
@@ -161,7 +161,7 @@
                                                                     <rect key="frame" x="15" y="148.00000000000003" width="159" height="17"/>
                                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                                    <nil key="textColor"/>
+                                                                    <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                     <nil key="highlightedColor"/>
                                                                     <color key="shadowColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                     <size key="shadowOffset" width="1" height="0.0"/>
@@ -439,7 +439,6 @@
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="165-Ys-0PF">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBar>
                     <connections>
                         <segue destination="wDZ-En-vDN" kind="relationship" relationship="viewControllers" id="gR6-PA-gpA"/>
@@ -1073,6 +1072,7 @@
                                         <rect key="frame" x="37" y="90" width="302" height="669"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <color key="sectionIndexBackgroundColor" systemColor="systemBackgroundColor"/>
                                         <prototypes>
                                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="EditPlaceCell" rowHeight="77" id="2I0-Sg-qyO" customClass="EditPlaceCell">
                                                 <rect key="frame" x="0.0" y="44.666666030883789" width="302" height="77"/>
@@ -1124,6 +1124,7 @@
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                     </subviews>
+                                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                 </tableViewCellContentView>
                                                 <connections>
                                                     <outlet property="arrowLabel" destination="OvT-Mi-MqE" id="QGO-R9-LLK"/>
