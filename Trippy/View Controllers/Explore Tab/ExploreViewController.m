@@ -23,7 +23,10 @@
 #import "LogoutHandler.h"
 #import "GeoDataHandler.h"
 
-#define CORNER_RADIUS 20;
+#define CORNER_RADIUS 20
+#define ROW_HEIGHT 107
+#define LOADING_SIZE 200
+#define NEARBY_RANGE_KM 50
 
 @interface ExploreViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UITableViewDataSource, UITableViewDelegate, LogoutHandlerDelegate, GeoDataHandlerDelegate, LocationManagerDelegate>
 @property (weak, nonatomic) IBOutlet UILabel *locationLabel;
@@ -52,7 +55,7 @@
     hudView.messageLabel.text = @"Loading your trip info...";
     NSString *path = [[NSBundle mainBundle] pathForResource:@"paper_plane" ofType:@"gif"];
     NSData *data = [NSData dataWithContentsOfFile:path];
-    hudView.indicatorViewSize = CGSizeMake(200, 200);
+    hudView.indicatorViewSize = CGSizeMake(LOADING_SIZE, LOADING_SIZE);
     [hudView setGifImageData:data];
     [hudView showAtView:self.loadingView hudType:JHUDLoadingTypeGifImage];
 }
@@ -86,7 +89,7 @@
     self.locationView.clipsToBounds = YES;
     self.locationView.layer.cornerRadius = CORNER_RADIUS;
     
-    self.yelpTableView.rowHeight = 107; // temporary until autolayouting
+    self.yelpTableView.rowHeight = ROW_HEIGHT; // temporary until autolayouting
     self.yelpTableView.dataSource = self;
     self.yelpTableView.delegate = self;
     self.nearbyCollectionView.dataSource = self;
@@ -214,7 +217,7 @@
     self.nearbyTripsData = [[NSMutableArray alloc] init];
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
         __strong ExploreViewController *strongSelf = weakSelf;
-        [strongSelf.geoHandler fetchItinerariesByCoordinate:currentLoc.coordinate rangeInKm:50.0];
+        [strongSelf.geoHandler fetchItinerariesByCoordinate:currentLoc.coordinate rangeInKm:NEARBY_RANGE_KM];
     });
     [[YelpAPIManager shared] getBusinessSearchWithCompletion:@(currentLoc.coordinate.latitude) longitude:@(currentLoc.coordinate.longitude) completion:^(NSArray * _Nonnull results, NSError * _Nonnull) {
         if (results) {
