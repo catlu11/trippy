@@ -95,7 +95,6 @@
     self.nearbyCollectionView.dataSource = self;
     self.nearbyCollectionView.delegate = self;
     
-//    NSLog(@"%@", [[LocationManager shared] currentLocation]);
     if ([[LocationManager shared] currentLocation]) {
         [self didFetchLocation];
     }
@@ -217,15 +216,19 @@
         __strong ExploreViewController *strongSelf = weakSelf;
         [strongSelf.geoHandler fetchItinerariesByCoordinate:currentLoc.coordinate rangeInKm:NEARBY_RANGE_KM];
     });
-    [[YelpAPIManager shared] getBusinessSearchWithCompletion:@(currentLoc.coordinate.latitude) longitude:@(currentLoc.coordinate.longitude) completion:^(NSArray * _Nonnull results, NSError * _Nonnull) {
-        if (results) {
-            __strong ExploreViewController *strongSelf = weakSelf;
-            strongSelf.yelpData = results;
-            [strongSelf.yelpTableView reloadData];
-            strongSelf.fetchedBusinesses = YES;
-            [strongSelf checkLoadingView];
-        }
-    }];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+        [[YelpAPIManager shared] getBusinessSearchWithCompletion:@(currentLoc.coordinate.latitude) longitude:@(currentLoc.coordinate.longitude) completion:^(NSArray * _Nonnull results, NSError * _Nonnull) {
+            if (results) {
+                __strong ExploreViewController *strongSelf = weakSelf;
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    strongSelf.yelpData = results;
+                    [strongSelf.yelpTableView reloadData];
+                    strongSelf.fetchedBusinesses = YES;
+                    [strongSelf checkLoadingView];
+                });
+            }
+        }];
+    });
 }
 
 @end

@@ -12,7 +12,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface YelpAPIManager : AFHTTPSessionManager
 + (YelpAPIManager *)shared;
-- (void)getBusinessSearchWithCompletion:(NSNumber *)latitude longitude:(NSNumber *)longitude completion:(void (^)(NSArray *results, NSError *))completion;
+- (void)getBusinessSearchWithCompletion:(NSNumber *)latitude
+                              longitude:(NSNumber *)longitude
+                             completion:(void (^)(NSArray *results, NSError *))completion;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -19,12 +19,12 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSManagedObject *)saveLocation:(Location *)loc;
 - (NSManagedObject *)saveCollection:(LocationCollection *)col;
 - (NSManagedObject *)saveItinerary:(Itinerary *)it;
+- (NSManagedObject *)getEntityById:(NSString *)entity parseObjectId:(NSString *)parseObjectId;
 - (NSArray *)fetchLocations;
 - (NSArray *)fetchCollections;
 - (NSArray *)fetchItineraries;
 - (void)updateItinerary:(Itinerary *)it;
 - (void)updateCollection:(LocationCollection *)col;
-- (NSManagedObject *)getEntityById:(NSString *)entity parseObjectId:(NSString *)parseObjectId;
 - (NSArray *)fetchUnsyncedCollections;
 - (NSArray *)fetchUnsyncedItineraries;
 - (void)deleteUnsyncedItineraries;

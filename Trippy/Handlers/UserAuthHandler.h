@@ -13,7 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)loggedInSuccess;
 - (void)signUpSuccess;
 - (void)offlineWarning;
-- (void)generalRequestFail:(NSError *)error; // TODO: Extend for more specific error behaviors
+- (void)generalRequestFail:(NSError *)error;
 @end
 
 @interface UserAuthHandler : NSObject

@@ -38,13 +38,9 @@ static NSString * const baseURLString = @"https://api.yelp.com/v3/businesses/";
     return self;
 }
 
-- (NSString *)getYelpKey {
-    NSString *path = [[NSBundle mainBundle] pathForResource:@"Keys" ofType:@"plist"];
-    NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile:path];
-    return [NSString stringWithFormat:@"Bearer %@", dict[@"YelpApiKey"]];
-}
-
-- (void)getBusinessSearchWithCompletion:(NSNumber *)latitude longitude:(NSNumber *)longitude completion:(void (^)(NSArray *results, NSError *))completion {
+- (void)getBusinessSearchWithCompletion:(NSNumber *)latitude
+                              longitude:(NSNumber *)longitude
+                             completion:(void (^)(NSArray *results, NSError *))completion {
     NSDictionary *params = @{@"latitude":latitude, @"longitude": longitude, @"limit": @20};
     [self GET:@"search" parameters:params headers:@{@"Authorization": [self getYelpKey]} progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         NSMutableArray *businesses = [[NSMutableArray alloc] init];
@@ -57,4 +53,13 @@ static NSString * const baseURLString = @"https://api.yelp.com/v3/businesses/";
         completion(nil, error);
     }];
 }
+
+# pragma mark - Private
+
+- (NSString *)getYelpKey {
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"Keys" ofType:@"plist"];
+    NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile:path];
+    return [NSString stringWithFormat:@"Bearer %@", dict[@"YelpApiKey"]];
+}
+
 @end
