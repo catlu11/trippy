@@ -120,6 +120,7 @@
     }
     
     GMSCameraPosition *pos = [GMSCameraPosition cameraWithLatitude:location.latitude longitude:location.longitude zoom:self.mapView.camera.zoom];
+
     if(animate) {
         [self.mapView animateToCameraPosition:pos];
     }

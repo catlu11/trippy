@@ -22,7 +22,7 @@
 }
 
 + (NSArray *)getItineraryKeys {
-    return @[@"directionsJson", @"createdAt", @"name", @"createdBy", @"origin", @"startCoord", @"sourceCollection", @"departure", @"mileageConstraint", @"budgetConstraint", @"isFavorited", @"staticMap"];
+    return @[@"directionsJson", @"createdAt", @"name", @"createdBy", @"origin", @"startCoord", @"radius", @"sourceCollection", @"departure", @"mileageConstraint", @"budgetConstraint", @"isFavorited", @"staticMap"];
 }
 
 + (NSString *)getLoggedInUsername {
@@ -230,7 +230,6 @@
             [self pfObjFromLocation:it.originLocation completion:^(PFObject * _Nonnull newObj, NSError * _Nonnull) {
                 if (obj) {
                     obj[@"origin"] = newObj;
-                    obj[@"startCoord"] = [newObj valueForKey:@"coord"];
                 }
                 dispatch_group_leave(group);
             }];
@@ -248,6 +247,12 @@
                 obj[@"mileageConstraint"] = it.mileageConstraint;
                 obj[@"budgetConstraint"] = it.budgetConstraint;
                 obj[@"isFavorited"] = [NSNumber numberWithBool:it.isFavorited];
+                CLLocationCoordinate2D center = [it getCentroid];
+                PFGeoPoint *coord = [[PFGeoPoint alloc] init];
+                coord.latitude = center.latitude;
+                coord.longitude = center.longitude;
+                obj[@"startCoord"] = coord;
+                obj[@"radius"] = [it getRadius];
                 if (it.staticMap) {
                     obj[@"staticMap"] = [self pfFileFromImage:it.staticMap name:@"img"];
                 } else {

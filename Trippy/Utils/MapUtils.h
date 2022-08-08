@@ -31,6 +31,8 @@ NS_ASSUME_NONNULL_BEGIN
 + (NSString *)generateMatrixApiUrl:(LocationCollection *)collection
                             origin:(Location *)origin
                      departureTime:(NSDate *)departureTime;
++ (CLLocationCoordinate2D)getCenterOfBounds:(GMSCoordinateBounds *)bounds;
++ (double)getRadiusOfBounds:(GMSCoordinateBounds *)bounds;
 + (double)metersToMiles:(int)meters;
 + (int)milesToMeters:(double)miles;
 @end
