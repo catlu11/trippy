@@ -199,7 +199,7 @@
 
 - (void)itineraryHasChanged {
     // TODO: Create more informative change indicator
-    self.editView.backgroundColor = [UIColor systemPinkColor];
+//    self.editView.backgroundColor = [UIColor systemPinkColor];
 }
 
 # pragma mark - Navigation
@@ -238,19 +238,19 @@
         loc = self.mutableItinerary.originLocation;
         estDeparture = self.mutableItinerary.departureTime;
         [cell disableArrow];
-        cell.backgroundColor = [UIColor secondarySystemFillColor];
+        cell.backgroundColor = [UIColor secondarySystemBackgroundColor];
     } else if (indexPath.row == self.orderedData.count + 1) { // if ending destination (back to origin)
         loc = self.mutableItinerary.originLocation;
         estArrival = [self.mutableItinerary computeArrival:(indexPath.row - 1)];
         [cell disableArrow];
-        cell.backgroundColor = [UIColor secondarySystemFillColor];
+        cell.backgroundColor = [UIColor secondarySystemBackgroundColor];
     } else if (indexPath.row < self.orderedData.count + 1) { // if waypoint
         loc = self.orderedData[indexPath.row - 1];
         estArrival = [self.mutableItinerary computeArrival:(indexPath.row - 1)];
         estDeparture = [self.mutableItinerary computeDeparture:(indexPath.row - 1)];
         cell.waypointIndex = indexPath.row - 1;
         [cell enableArrow];
-        cell.backgroundColor = [UIColor secondarySystemFillColor];
+        cell.backgroundColor = [UIColor secondarySystemBackgroundColor];
     } else {
         loc = self.omittedData[indexPath.row - self.orderedData.count - 2];
         [cell disableArrow];

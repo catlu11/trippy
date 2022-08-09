@@ -64,9 +64,8 @@
     self.lastUpdateLabel.text = stringFromDate;
     
     // Get static thumbnail
-    if(self.itinerary.sourceCollection.locations.count > 0) {
-        Location *firstLoc = self.itinerary.sourceCollection.locations[0];
-        self.mapImageView.image = firstLoc.staticMap;
+    if(self.itinerary.staticMap) {
+        self.mapImageView.image = self.itinerary.staticMap;
     }
     else {
         self.mapImageView.image = [UIImage systemImageNamed:@"tray"];
