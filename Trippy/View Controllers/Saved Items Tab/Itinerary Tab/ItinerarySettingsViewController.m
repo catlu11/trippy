@@ -13,13 +13,20 @@
 @property (weak, nonatomic) IBOutlet UILabel *currentMileageLabel;
 @property (weak, nonatomic) IBOutlet UITextField *budgetTextField;
 @property (weak, nonatomic) IBOutlet UILabel *currentBudgetLabel;
+@property (weak, nonatomic) IBOutlet UIView *mileageView;
+@property (weak, nonatomic) IBOutlet UIView *budgetView;
 @property (weak, nonatomic) IBOutlet UIDatePicker *departureDatePicker;
+@property (weak, nonatomic) IBOutlet UIView *departureView;
 @end
 
 @implementation ItinerarySettingsViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.departureView.layer.cornerRadius = 10;
+    self.mileageView.layer.cornerRadius = 10;
+    self.budgetView.layer.cornerRadius = 10;
     
     [self.departureDatePicker setDate:self.departure];
     

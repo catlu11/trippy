@@ -13,6 +13,9 @@
 #import "NetworkManager.h"
 
 @interface WaypointPreferencesViewController () <UITextFieldDelegate>
+@property (weak, nonatomic) IBOutlet UIView *etaView;
+@property (weak, nonatomic) IBOutlet UIView *stayView;
+@property (weak, nonatomic) IBOutlet UIView *budgetView;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *snippetLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *staticMapImage;
@@ -33,6 +36,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.etaView.layer.cornerRadius = 10;
+    self.stayView.layer.cornerRadius = 10;
+    self.budgetView.layer.cornerRadius = 10;
     
     // Set location data
     self.nameLabel.text = self.location.title;
