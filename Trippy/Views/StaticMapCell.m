@@ -26,6 +26,8 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     self.parseHandler = [[CacheDataHandler alloc] init];
+    
+    self.mapImageView.layer.cornerRadius = self.mapImageView.frame.size.height / 2;
 }
 
 - (void) updateUIElements:(ListType)type {

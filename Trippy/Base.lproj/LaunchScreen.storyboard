@@ -16,8 +16,12 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="trippy-logos_white" translatesAutoresizingMaskIntoConstraints="NO" id="cPa-BK-5DO">
-                                <rect key="frame" x="-4" y="220" width="423" height="457"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="trippy-logos_white" translatesAutoresizingMaskIntoConstraints="NO" id="cPa-BK-5DO">
+                                <rect key="frame" x="0.0" y="246" width="414" height="414"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="414" id="RIv-Op-46C"/>
+                                    <constraint firstAttribute="width" secondItem="cPa-BK-5DO" secondAttribute="height" multiplier="1:1" id="YJ3-kQ-2lN"/>
+                                </constraints>
                             </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
