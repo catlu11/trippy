@@ -31,6 +31,7 @@
 		F07D031E288F48D60049F355 /* CoreDataHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = F07D031D288F48D60049F355 /* CoreDataHandler.m */; };
 		F07D0321289055D90049F355 /* CoreDataUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = F07D0320289055D80049F355 /* CoreDataUtils.m */; };
 		F07D032728919A7D0049F355 /* NetworkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F07D032628919A7D0049F355 /* NetworkManager.m */; };
+		F0C30AF128A2D23A003F4740 /* LandingPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F0C30AF028A2D23A003F4740 /* LandingPageViewController.m */; };
 		F0C75F6D287642C10015BB74 /* Keys.plist in Resources */ = {isa = PBXBuildFile; fileRef = F0C75F6C287642C10015BB74 /* Keys.plist */; };
 		F0C75F72287747A20015BB74 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F0C75F71287747A20015BB74 /* LoginViewController.m */; };
 		F0C75F7828775A680015BB74 /* SavedCollectionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F0C75F7728775A680015BB74 /* SavedCollectionsViewController.m */; };
@@ -141,6 +142,8 @@
 		F07D0320289055D80049F355 /* CoreDataUtils.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CoreDataUtils.m; sourceTree = "<group>"; };
 		F07D032528919A7D0049F355 /* NetworkManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NetworkManager.h; sourceTree = "<group>"; };
 		F07D032628919A7D0049F355 /* NetworkManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NetworkManager.m; sourceTree = "<group>"; };
+		F0C30AEF28A2D23A003F4740 /* LandingPageViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LandingPageViewController.h; sourceTree = "<group>"; };
+		F0C30AF028A2D23A003F4740 /* LandingPageViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LandingPageViewController.m; sourceTree = "<group>"; };
 		F0C75F6C287642C10015BB74 /* Keys.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Keys.plist; sourceTree = "<group>"; };
 		F0C75F70287747A20015BB74 /* LoginViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		F0C75F71287747A20015BB74 /* LoginViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
@@ -343,6 +346,8 @@
 			children = (
 				F0C75F70287747A20015BB74 /* LoginViewController.h */,
 				F0C75F71287747A20015BB74 /* LoginViewController.m */,
+				F0C30AEF28A2D23A003F4740 /* LandingPageViewController.h */,
+				F0C30AF028A2D23A003F4740 /* LandingPageViewController.m */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -853,6 +858,7 @@
 				F079EF9E289B2A8300F9BAA7 /* YelpBusinessCell.m in Sources */,
 				F0C75F7828775A680015BB74 /* SavedCollectionsViewController.m in Sources */,
 				F0F6581928887FEE00C04AB0 /* LogoutHandler.m in Sources */,
+				F0C30AF128A2D23A003F4740 /* LandingPageViewController.m in Sources */,
 				F06174AE2889B914005AF616 /* LocationOptionsViewController.m in Sources */,
 				F079EF8F289AE7FC00F9BAA7 /* GeoDataHandler.m in Sources */,
 				F0F335AE2875F0B400470507 /* SelectableMap.m in Sources */,

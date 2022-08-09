@@ -28,7 +28,7 @@
 - (void)updateUI {
     self.nameLabel.text = self.business.name;
     self.addressLabel.text = [NSString stringWithFormat:@"%@, %@", self.business.city, self.business.state];
-    self.ratingLabel.text = [self.business.rating stringValue];
+    self.ratingLabel.text = [[self.business.rating stringValue] stringByAppendingString:@"★"];
     NSString *catString = @"";
     for (NSString *category in self.business.categories) {
         catString = [catString stringByAppendingString:category];

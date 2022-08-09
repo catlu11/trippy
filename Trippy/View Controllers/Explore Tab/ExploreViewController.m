@@ -68,6 +68,7 @@
     self.fetchedBusinesses = NO;
     self.loadingView.hidden = NO;
     [LocationManager shared].delegate = self;
+    [[LocationManager shared] getUserLocation];
     
     if (![[NetworkManager shared] isConnected]) {
         UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Explore Tab Unavailable"
@@ -95,6 +96,7 @@
     self.nearbyCollectionView.dataSource = self;
     self.nearbyCollectionView.delegate = self;
     
+    CLLocation *loc = [[LocationManager shared] currentLocation];
     if ([[LocationManager shared] currentLocation]) {
         [self didFetchLocation];
     }

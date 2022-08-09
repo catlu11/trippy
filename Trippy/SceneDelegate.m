@@ -18,9 +18,9 @@
 
 
 - (void)scene:(UIScene *)scene willConnectToSession:(UISceneSession *)session options:(UISceneConnectionOptions *)connectionOptions {
+    self.window.tintColor = [UIColor systemTealColor];
     PFUser *user = [PFUser currentUser];
     if (user != nil) {
-        [LocationManager shared];
         UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
         UIViewController *tabNavigationController = [storyboard instantiateViewControllerWithIdentifier:@"TabNavigationController"];
         self.window.rootViewController = tabNavigationController;

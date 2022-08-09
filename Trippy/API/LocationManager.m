@@ -33,13 +33,17 @@
     if (self) {
         self.locationManager = [[CLLocationManager alloc] init];
         self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+        [self.locationManager startUpdatingLocation];
         [self.locationManager requestWhenInUseAuthorization];
         self.locationManager.distanceFilter = DISTANCE_FILTER_KM;
-        [self.locationManager startUpdatingLocation];
         self.locationManager.delegate = self;
     }
     
     return self;
+}
+
+- (void) getUserLocation {
+   [self.locationManager requestLocation];
 }
 
 #pragma mark - CLLocationManagerDelegate
@@ -47,6 +51,7 @@
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray<CLLocation *> *)locations {
     CLLocation *location = locations.lastObject;
     if (location && ![location isEqual:self.currentLocation]) {
+        [manager stopUpdatingLocation];
         self.currentLocation = location;
         [self.delegate didFetchLocation];
     }
@@ -57,9 +62,7 @@
     switch (accuracy) {
         case CLAccuracyAuthorizationFullAccuracy:
             NSLog(@"Location accuracy is precise.");
-            if (self.currentLocation) {
-                [self.delegate didFetchLocation];
-            }
+            [self.locationManager requestLocation];
           break;
         case CLAccuracyAuthorizationReducedAccuracy:
             NSLog(@"Location accuracy is not precise.");
