@@ -8,6 +8,7 @@
 #import "ViewItineraryViewController.h"
 #import "ItineraryItemCell.h"
 #import "Itinerary.h"
+#import "Location.h"
 
 @interface ViewItineraryViewController () <UITableViewDataSource>
 @property (weak, nonatomic) IBOutlet UITableView *itemsTableView;
@@ -33,15 +34,31 @@
 
 # pragma mark - UITableViewDataSource
 
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return self.data.count;
+}
+
 - (nonnull UITableViewCell *)tableView:(nonnull UITableView *)tableView cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
     ItineraryItemCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ItineraryItemCell" forIndexPath:indexPath];
-    cell.instructionLabel.text = self.data[indexPath.row];
+    cell.instructionLabel.text = self.data[indexPath.section][indexPath.row];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
 }
 
 - (NSInteger)tableView:(nonnull UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.data.count;
+    NSDictionary *legInstructions = self.data[section];
+    return legInstructions.count;
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    NSString *dest;
+    if (section == [self.itinerary getOrderedLocations].count) {
+        dest = self.itinerary.originLocation.title;
+    } else {
+        Location *loc = [self.itinerary getOrderedLocations][section];
+        dest = loc.title;
+    }
+    return [NSString stringWithFormat:@"To %@", dest];
 }
 
 @end

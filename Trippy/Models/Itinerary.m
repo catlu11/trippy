@@ -148,9 +148,11 @@
 - (NSArray *)getInstructions {
     NSMutableArray *instructions = [[NSMutableArray alloc] init];
     for (RouteLeg *leg in self.routeLegs) {
+        NSMutableArray *legInstructions = [[NSMutableArray alloc] init];
         for (RouteStep *step in leg.routeSteps) {
-            [instructions addObject:step.instruction];
+            [legInstructions addObject:step.instruction];
         }
+        [instructions addObject:legInstructions];
     }
     return instructions;
 }
