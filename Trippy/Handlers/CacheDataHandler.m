@@ -285,7 +285,6 @@
 - (void)decrementItineraryFetchCount {
     self.itineraryFetchCount -= 1;
     if (self.itineraryFetchCount == 0) {
-        NSLog(@"fetched all itineraries");
         [self.delegate didAddAll];
     }
 }
@@ -293,7 +292,6 @@
 - (void)decrementCollectionFetchCount {
     self.collectionFetchCount -= 1;
     if (self.collectionFetchCount == 0) {
-        NSLog(@"fetched all collections");
         [self.delegate didAddAll];
     }
 }
@@ -301,7 +299,6 @@
 - (void)decrementLocationFetchCount {
     self.locationFetchCount -= 1;
     if (self.locationFetchCount == 0) {
-        NSLog(@"fetched all locations");
         [self.delegate didAddAll];
     }
 }

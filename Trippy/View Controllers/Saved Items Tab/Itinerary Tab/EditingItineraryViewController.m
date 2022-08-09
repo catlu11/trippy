@@ -199,7 +199,6 @@
 
 - (void)itineraryHasChanged {
     // TODO: Create more informative change indicator
-//    self.editView.backgroundColor = [UIColor systemPinkColor];
 }
 
 # pragma mark - Navigation
