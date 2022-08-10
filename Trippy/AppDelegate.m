@@ -9,6 +9,7 @@
 #import "Parse/Parse.h"
 #import "CoreData/CoreData.h"
 #import "NetworkManager.h"
+#import "LocationManager.h"
 #import "MapsAPIManager.h"
 #import "AFNetworkReachabilityManager.h"
 @import GoogleMaps;
@@ -29,6 +30,7 @@
     NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile:path];
 
     [[NetworkManager shared] beginNotifier];
+    [[LocationManager shared] getUserLocation];
     
     // Set up Google SDKs
     [GMSServices provideAPIKey:dict[@"GMapsKey"]];

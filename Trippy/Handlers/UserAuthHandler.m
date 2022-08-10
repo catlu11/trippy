@@ -18,7 +18,6 @@
                 [self.delegate generalRequestFail:error];
             } else {
                 [self.delegate loggedInSuccess];
-                [[NetworkManager shared] initialFetchAll];
             }
         }];
     } else {

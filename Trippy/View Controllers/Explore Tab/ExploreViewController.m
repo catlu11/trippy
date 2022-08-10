@@ -68,7 +68,6 @@
     self.fetchedBusinesses = NO;
     self.loadingView.hidden = NO;
     [LocationManager shared].delegate = self;
-    [[LocationManager shared] getUserLocation];
     
     if (![[NetworkManager shared] isConnected]) {
         UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Explore Tab Unavailable"
@@ -214,23 +213,16 @@
     }];
     
     self.nearbyTripsData = [[NSMutableArray alloc] init];
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-        __strong ExploreViewController *strongSelf = weakSelf;
-        [strongSelf.geoHandler fetchItinerariesByCoordinate:currentLoc.coordinate rangeInKm:NEARBY_RANGE_KM];
-    });
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-        [[YelpAPIManager shared] getBusinessSearchWithCompletion:@(currentLoc.coordinate.latitude) longitude:@(currentLoc.coordinate.longitude) completion:^(NSArray * _Nonnull results, NSError * _Nonnull) {
+    [self.geoHandler fetchItinerariesByCoordinate:currentLoc.coordinate rangeInKm:NEARBY_RANGE_KM];
+    [[YelpAPIManager shared] getBusinessSearchWithCompletion:@(currentLoc.coordinate.latitude) longitude:@(currentLoc.coordinate.longitude) completion:^(NSArray * _Nonnull results, NSError * _Nonnull) {
             if (results) {
                 __strong ExploreViewController *strongSelf = weakSelf;
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    strongSelf.yelpData = results;
-                    [strongSelf.yelpTableView reloadData];
-                    strongSelf.fetchedBusinesses = YES;
-                    [strongSelf checkLoadingView];
-                });
+                strongSelf.yelpData = results;
+                [strongSelf.yelpTableView reloadData];
+                strongSelf.fetchedBusinesses = YES;
+                [strongSelf checkLoadingView];
             }
-        }];
-    });
+    }];
 }
 
 @end

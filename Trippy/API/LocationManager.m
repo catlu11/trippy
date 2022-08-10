@@ -50,11 +50,8 @@
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray<CLLocation *> *)locations {
     CLLocation *location = locations.lastObject;
-    if (location && ![location isEqual:self.currentLocation]) {
-        [manager stopUpdatingLocation];
-        self.currentLocation = location;
-        [self.delegate didFetchLocation];
-    }
+    self.currentLocation = location;
+    [self.delegate didFetchLocation];
 }
 
 - (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status {
@@ -62,7 +59,6 @@
     switch (accuracy) {
         case CLAccuracyAuthorizationFullAccuracy:
             NSLog(@"Location accuracy is precise.");
-            [self.locationManager requestLocation];
           break;
         case CLAccuracyAuthorizationReducedAccuracy:
             NSLog(@"Location accuracy is not precise.");
@@ -81,6 +77,7 @@
           break;
         case kCLAuthorizationStatusAuthorizedWhenInUse:
           NSLog(@"Location status is OK.");
+          [self.locationManager requestLocation];
           break;
     }
 }

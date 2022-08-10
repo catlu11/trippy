@@ -169,7 +169,7 @@
         obj[@"snippet"] = collection.snippet;
         obj[@"createdBy"] = [PFUser currentUser];
         PFRelation *relation = [obj relationForKey:@"locations"];
-        dispatch_async(dispatch_get_main_queue(), ^{
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
             dispatch_group_t group = dispatch_group_create();
             for(Location *loc in collection.locations) {
                 dispatch_group_enter(group);
@@ -224,7 +224,7 @@
         PFObject *obj = [PFObject objectWithClassName:@"Itinerary"];
         obj[@"name"] = it.name;
         obj[@"createdBy"] = [PFUser currentUser];
-        dispatch_async(dispatch_get_main_queue(), ^{
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
             dispatch_group_t group = dispatch_group_create();
             dispatch_group_enter(group);
             [self pfObjFromLocation:it.originLocation completion:^(PFObject * _Nonnull newObj, NSError * _Nonnull) {
