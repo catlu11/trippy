@@ -134,7 +134,7 @@
             option.omittedWaypoints = omitWaypoints;
             option.distance = [TSPUtils totalDistance:order matrix:self.matrix];
             option.time = [TSPUtils totalDuration:order matrix:self.matrix preferences:[itinerary toPrefsDictionary]];
-            option.cost = [[itinerary getTotalCost:YES] doubleValue];
+            option.cost = [PriceUtils computeTotalCost:itinerary locations:itinerary.sourceCollection.locations omitWaypoints:omitWaypoints];
             completion(option, nil);
         } else {
             NSLog(@"Error: %@", error.description);
@@ -176,7 +176,7 @@
         completion(nil, nil);
     } else {
         // recompute route
-        [self calculateDefaultRoute:itinerary omitWaypoints:omittedIndices completion:^(RouteOption *response, NSError *error) {
+        [self calculateDistanceOptimalRoute:itinerary omitWaypoints:omittedIndices completion:^(RouteOption *response, NSError *error) {
             if (response) {
                 response.type = kCost;
                 completion(response, nil);
@@ -215,7 +215,7 @@
         [finalOptions addObject:route2];
     } else {
         if (returnOne) {
-            [finalOptions addObject:route2];
+            [finalOptions addObject:route1];
         } else {
             [finalOptions addObject:route1];
             [finalOptions addObject:route2];

@@ -216,7 +216,10 @@
 
 - (void)updateItinerary:(Itinerary *)it {
     NSManagedObjectContext *moc = [self getContext];
-    NSManagedObject *obj = [CoreDataUtils managedObjectFromItinerary:it];
+    NSManagedObject *obj = [self getEntityById:@"Itinerary" parseObjectId:it.parseObjectId];
+    if (!obj) {
+        return; // itinerary is not cached
+    }
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:[it toRouteDictionary] options:0 error:nil];
     NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
     [obj setValue:jsonString forKey:@"routeJson"];

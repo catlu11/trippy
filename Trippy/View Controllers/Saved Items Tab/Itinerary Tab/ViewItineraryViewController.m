@@ -52,6 +52,7 @@
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     NSString *dest;
+    NSArray *help = [self.itinerary getOrderedLocations];
     if (section == [self.itinerary getOrderedLocations].count) {
         dest = self.itinerary.originLocation.title;
     } else {
