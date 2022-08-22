@@ -2,6 +2,8 @@
 Trippy is a mobile iOS app that allows users to pin and save different types of locations around their city, generate personalized travel itineraries, and share their favorite sights with others. The goal is to become a one-stop shop for conceptualizing, planning, and carrying out local outings with friends. 
 
 # Demo
+*for version with narration, see trippy_updated_demo.mp4 in the repo
+
 https://user-images.githubusercontent.com/29513108/185846283-99293e6c-e538-466c-ad2f-2133e7fb6306.mp4
 
 # Credits
